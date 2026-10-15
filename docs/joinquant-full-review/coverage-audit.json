@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-15",
+  "status": "complete",
+  "total_files": 594,
+  "covered_files": 594,
+  "full_read": 557,
+  "exact_duplicate": 37,
+  "not_completed": 0,
+  "missing": [],
+  "record_errors": [],
+  "groups": {
+    "2020年度精选策略": {
+      "total": 99,
+      "full_read": 99,
+      "exact_duplicate": 0,
+      "not_completed": 0
+    },
+    "2022年度精选策略": {
+      "total": 101,
+      "full_read": 101,
+      "exact_duplicate": 0,
+      "not_completed": 0
+    },
+    "2023年度精选策略": {
+      "total": 97,
+      "full_read": 87,
+      "exact_duplicate": 10,
+      "not_completed": 0
+    },
+    "2024年度精选策略1": {
+      "total": 98,
+      "full_read": 93,
+      "exact_duplicate": 5,
+      "not_completed": 0
+    },
+    "2025年度精选策略": {
+      "total": 99,
+      "full_read": 92,
+      "exact_duplicate": 7,
+      "not_completed": 0
+    },
+    "ROOT": {
+      "total": 1,
+      "full_read": 1,
+      "exact_duplicate": 0,
+      "not_completed": 0
+    },
+    "聚宽2026年精选": {
+      "total": 99,
+      "full_read": 84,
+      "exact_duplicate": 15,
+      "not_completed": 0
+    }
+  },
+  "source_reopened_during_closeout": false,
+  "strategies_executed": false,
+  "product_code_implemented": false,
+  "history": [
+    {
+      "status": "closed_incomplete_by_user",
+      "covered_files": 593,
+      "not_completed": 1,
+      "note": "Owner曾要求停止，随后明确授权补完最后一份。"
+    }
+  ],
+  "last_completion": {
+    "id": "JQ0594",
+    "date": "2026-10-15",
+    "source_sha256_matches": true,
+    "sanitized_characters": 13789,
+    "source_lines_read": "1–379"
+  }
+}

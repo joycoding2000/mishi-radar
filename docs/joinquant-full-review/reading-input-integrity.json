@@ -1,0 +1,9 @@
+{
+  "chunks_verified": 228,
+  "canonical_contents_with_continuous_ranges": 557,
+  "unique_end_markers": 557,
+  "errors": [],
+  "hash_method": "UTF-8 text with LF normalization, matching preparation manifest; original source hashes use raw bytes.",
+  "windows_crlf_chunks": 228,
+  "note": "初次按磁盘字节比较阅读块哈希不匹配；单块复现确认CRLF写入与LF文本哈希口径不同，统一文本口径后核对全部块。原始资料字节核验独立通过。"
+}

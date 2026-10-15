@@ -1,0 +1,173 @@
+{
+  "date": "2026-10-15",
+  "purpose": "综合已有竞品材料拟定每日机会雷达可售范围",
+  "image_count_this_turn": 25,
+  "image_groups_this_turn": 7,
+  "total_material_groups_considered": 8,
+  "prior_image_count": 30,
+  "overlap_with_prior_images": "not_deduplicated; do not add counts as unique evidence",
+  "images": [
+    {
+      "group": "竞品4量化交易选股系统源码58.65",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\竞品4量化交易选股系统源码58.65\\微信图片_20261013095104_115_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "竞品4量化交易选股系统源码58.65",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\竞品4量化交易选股系统源码58.65\\微信图片_20261013095106_117_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "竞品4量化交易选股系统源码58.65",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\竞品4量化交易选股系统源码58.65\\微信图片_20261013095105_116_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "竞品4量化交易选股系统源码58.65",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\竞品4量化交易选股系统源码58.65\\微信图片_20261013095107_118_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "竞品4量化交易选股系统源码58.65",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\竞品4量化交易选股系统源码58.65\\微信图片_20261013095108_119_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "量化选股软件月卡29.9",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\量化选股软件月卡29.9\\微信图片_20261013094255_97_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "量化选股软件月卡29.9",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\量化选股软件月卡29.9\\微信图片_20261013094258_100_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "量化选股软件月卡29.9",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\量化选股软件月卡29.9\\微信图片_20261013094256_98_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "量化选股软件月卡29.9",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\量化选股软件月卡29.9\\微信图片_20261013094257_99_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "A股个人量化系统卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\A股个人量化系统卖源码\\微信图片_20260902110717_74_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "A股个人量化系统卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\A股个人量化系统卖源码\\微信图片_20260902110720_78_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "A股个人量化系统卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\A股个人量化系统卖源码\\微信图片_20260902110717_75_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "QuantXpro卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\QuantXpro卖源码\\微信图片_20260827102620_48_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "QuantXpro卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\QuantXpro卖源码\\微信图片_20260827102628_51_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "QuantXpro卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\QuantXpro卖源码\\微信图片_20260827102643_56_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "QuantXpro卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\QuantXpro卖源码\\微信图片_20260827102631_52_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "QuantXpro卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\QuantXpro卖源码\\微信图片_20260827102637_54_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "ptrade卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\ptrade卖源码\\微信图片_20260902110456_68_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "ptrade卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\ptrade卖源码\\微信图片_20260902110459_70_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "ptrade卖源码",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\ptrade卖源码\\微信图片_20260902110534_73_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "智能AI选股六大章节深度报告31.8",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\智能AI选股六大章节深度报告31.8\\微信图片_20261013094753_103_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "智能AI选股六大章节深度报告31.8",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\智能AI选股六大章节深度报告31.8\\微信图片_20261013094758_109_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "智能AI选股六大章节深度报告31.8",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\智能AI选股六大章节深度报告31.8\\微信图片_20261013094801_113_15.jpg",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "三因子ETF",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\三因子ETF\\ScreenShot_2026-10-13_160258_018.png",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    },
+    {
+      "group": "三因子ETF",
+      "path": "C:\\Users\\Administrator\\Documents\\竞品分析\\三因子ETF\\ScreenShot_2026-10-13_160220_259.png",
+      "read_method": "view_image",
+      "evidence_level": "seller_screenshot_or_display_only"
+    }
+  ],
+  "documents_rechecked": [
+    "docs/2026-10-14-XIANYU_EVIDENCE.md",
+    "docs/2026-10-15-PRODUCT_DIRECTION.md",
+    "C:/Users/Administrator/Documents/Codex/2026-10-13/3-a-http-124-221-98/outputs/competitor-3-feature-inventory.md"
+  ],
+  "limitations": [
+    "未逐一审阅全部68张图片",
+    "除竞品3既有现场记录，其他产品未购买/实测",
+    "商品图中的行情/券商画面不证明自有功能或收益",
+    "不转录账号、凭据、私人服务地址或联系方式",
+    "功能出现频率不能当作付费需求排名"
+  ]
+}

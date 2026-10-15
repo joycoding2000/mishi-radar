@@ -1,0 +1,8 @@
+# Local source-reading copies and extracted images; keep on disk.
+/docs/joinquant-full-review/reading-inputs/
+/docs/joinquant-full-review/middle-reading-inputs/
+/docs/joinquant-full-review/tail-reading-inputs/
+/docs/joinquant-full-review/2026-tail-reading-inputs/
+
+# Local web-search cache.
+/.firecrawl/

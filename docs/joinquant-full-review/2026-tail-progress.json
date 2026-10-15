@@ -1,0 +1,30 @@
+{
+  "owner": "read_2020_2022",
+  "completed_ids": [
+    "JQ0581",
+    "JQ0582",
+    "JQ0583",
+    "JQ0584",
+    "JQ0585",
+    "JQ0586",
+    "JQ0587",
+    "JQ0588",
+    "JQ0589",
+    "JQ0590",
+    "JQ0591",
+    "JQ0593",
+    "JQ0594"
+  ],
+  "last_complete_id": "JQ0594",
+  "read_inputs": "2026-tail-reading-inputs/JQxxxx.txt",
+  "segments": [],
+  "status": "complete",
+  "scope": "JQ0581–JQ0594除0592（父任务独立全文）；0582精确重复引用JQ0353；不运行策略",
+  "closed_date": "2026-10-15",
+  "not_completed_ids": [],
+  "parent_completed_ids": [
+    "JQ0592",
+    "JQ0594"
+  ],
+  "reason": "Owner明确授权补完最后一份；已完成，回到产品讨论。"
+}
