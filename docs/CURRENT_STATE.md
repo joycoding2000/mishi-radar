@@ -27,6 +27,7 @@
 - WF列为有条件同期提供，单独确定窗口、有限选参和工作量；分钟回放与公式/代码回测单独评估。不能用日频结果证明盘中瞬时成交效果。
 - 桌面/Web、本地/托管、成品/源码、买断/期限、试用/激活与价格仍未决定。此前Web倾向不等于最终选择。
 - 1–2周只是初始理想目标；范围、数据路径与工作量未定，不构成开发工期承诺。
+- [命名提案](2026-10-15-PRODUCT_NAMING.md)：主推荐“觅势”，全称“觅势 · A股机会雷达”，英文Mishi Radar，工程名候选`mishi-radar`；Owner未确认，工作目录未改名。
 
 ## 已撤回或被更新的判断
 
@@ -65,3 +66,4 @@
 - [首款方向比较](2026-10-15-PRODUCT_DIRECTION.md)、[综合范围](2026-10-15-V0_1_SCOPE_DISCUSSION.md)
 - [策略清单](2026-10-15-LAUNCH_STRATEGIES.md)、[回测清单](2026-10-15-BACKTEST_CAPABILITIES.md)、[三款竞品对照](2026-10-15-COMPETITOR_STRATEGY_BACKTEST.md)
 - [闲鱼截图证据](2026-10-14-XIANYU_EVIDENCE.md)、[本机资料](LOCAL_RESEARCH_ASSETS.md)、[源码阅读入口](joinquant-full-review/README.md)
+- [交付软件命名提案](2026-10-15-PRODUCT_NAMING.md)
