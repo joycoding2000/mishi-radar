@@ -1,0 +1,5 @@
+[
+  {"label":"sse-suspension-D-new-p1","url":"https://query.sse.com.cn/commonSoaQuery.do","params":{"sqlId":"GW_PL_JYTS_TFPXX","isPagination":"true","pageHelp.pageSize":"25","pageHelp.pageNo":"1","productCode":"","keyWords":"","startStopDate":"20261016","endStopDate":"20261016"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/"}},
+  {"label":"sse-suspension-D-legacy","url":"https://query.sse.com.cn/sseQuery/commonQuery.do","params":{"sqlId":"COMMON_SSE_XXPL_JYTS_TFPXX_L","isPagination":"true","SEARCH_DATE":"2026-10-16","pageHelp.pageSize":"100","pageHelp.pageNo":"1","pageHelp.beginPage":"1","pageHelp.cacheSize":"1","pageHelp.endPage":"1"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/"}},
+  {"label":"sse-trade-day","url":"https://query.sse.com.cn/commonSoaQuery.do","params":{"sqlId":"GW_PL_JYTS_TFPXX_TRADEDAY","bizDate":"20261018"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/"}}
+]

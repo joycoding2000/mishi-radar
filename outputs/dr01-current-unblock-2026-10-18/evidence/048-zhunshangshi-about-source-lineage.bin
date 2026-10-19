@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于准上市 - IPO 新股数据平台介绍、数据来源与联系方式</title>
+    <meta name="keywords" content="准上市,关于准上市,IPO数据平台,新股数据,上市公司信息,数据来源,联系方式">
+    <meta name="description" content="准上市（www.zhunshangshi.com）是专注企业上市信息的专业服务平台，为投资者与分析师提供拟上市、已上市、退市公司的财务数据、公司治理、公告与投资机构信息；数据来源包括证监会、沪深北交易所、上市公司年报与 Tushare 等。">
+    <link rel="canonical" href="https://www.zhunshangshi.com/about.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="关于准上市 - IPO 新股数据平台">
+    <meta property="og:description" content="专注企业上市信息的专业服务平台，数据来源、平台特点与联系方式。">
+    <meta property="og:url" content="https://www.zhunshangshi.com/about.html">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet" href="/css/content.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "关于准上市",
+      "description": "准上市是专注企业上市信息的专业服务平台，提供 IPO 新股申购、上会排队、注册进展与打新工具。",
+      "url": "https://www.zhunshangshi.com/about.html",
+      "isPartOf": { "@type": "WebSite", "name": "准上市", "url": "https://www.zhunshangshi.com/" }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- ① 顶栏 -->
+    <div class="topbar">
+        <div class="wrap">
+            <div class="brand">
+                <div class="brand-logo"><a href="/"><span class="brand-text">准上市</span></a></div>
+                <div>
+                    <div class="brand-sub">IPO 新股数据 · 打新研究中心</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ② 导航条 -->
+    <nav class="navbar">
+        <div class="wrap">
+            <div class="nav-list">
+                <a href="/">首页</a>
+                <a href="/iposh/">注册IPO</a>
+                <a href="/xgsh/">新股上会</a>
+                <a href="/apply/">新股申购</a>
+                <a href="/stock/">A股</a>
+                <a href="/industry/">行业数据</a>
+                <a href="/org/">上市企业</a>
+                <a href="/etf/">ETF</a>
+                <a href="/bk/">概念板块</a>
+                <a href="/hm/">游资</a>
+                <a href="/a/">资讯信息</a>
+                <a href="/k/">新手入门</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ③ 页头 -->
+    <div class="hero">
+        <div class="wrap">
+            <div class="location-bar">
+                <span class="loc-label">当前位置：</span>
+                <a href="/">首页</a> <span>/</span>
+                关于准上市
+            </div>
+            <h1 class="hero-title">关于准上市</h1>
+            <div class="hero-sub">专注企业上市信息的专业数据平台 · www.zhunshangshi.com<br>覆盖科创板、主板、创业板、北交所全市场，提供新股申购、上会排队、注册进展与打新工具</div>
+        </div>
+    </div>
+
+    <!-- ④ 网站介绍 -->
+    <section class="block">
+        <div class="wrap">
+            <div class="data-card">
+                <h2>
+                    网站基本介绍
+                    <span class="dim">准上市是什么</span>
+                </h2>
+                <div class="md-body">
+                    <p>准上市（www.zhunshangshi.com）是一个专注于企业上市信息的专业服务平台。我们致力于为投资者、分析师、企业高管及相关从业人员提供全面、准确、及时的企业上市相关信息。</p>
+                    <p>我们的平台汇集了大量拟上市公司、已上市公司以及退市公司的详细信息，包括财务数据、公司治理结构、重大事件公告、投资机构信息等关键数据。通过先进的数据分析技术和专业的研究团队，我们为用户提供深度的行业洞察和投资参考。</p>
+
+                    <h3>平台特点</h3>
+                    <ul>
+                        <li><strong>实时数据更新</strong>：数据系统 24 小时不间断监控，确保所有上市相关信息的实时性和准确性。</li>
+                        <li><strong>专业分析报告</strong>：由资深金融分析师团队提供深度的公司分析报告和行业趋势预测。</li>
+                        <li><strong>智能筛选工具</strong>：提供多维度的筛选和排序功能，帮助用户快速定位目标公司和投资机会。</li>
+                    </ul>
+
+                    <h3>主要栏目</h3>
+                    <ul>
+                        <li><a href="/iposh/">注册 IPO</a>：按审核状态（已受理、已问询、提交注册、注册生效）跟踪拟上市企业。</li>
+                        <li><a href="/xgsh/">新股上会</a>：上会日期、审议状态与主承销商。</li>
+                        <li><a href="/apply/">新股申购</a>：申购日期、发行价格、中签率与上市表现。</li>
+                        <li><a href="/stock/">A股</a>、<a href="/industry/">行业数据</a>、<a href="/org/">上市企业</a>、<a href="/etf/">ETF</a>、<a href="/bk/">概念板块</a>、<a href="/hm/">游资</a>：行情、估值与资金动向。</li>
+                        <li><a href="/a/">资讯信息</a>、<a href="/k/">新手入门</a>：招股书解读、打新日报与交易规则教程。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ⑤ 数据来源 -->
+    <section class="block">
+        <div class="wrap">
+            <div class="data-card">
+                <h2>
+                    数据来源
+                    <span class="dim">均来自公开可核验渠道</span>
+                </h2>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>来源类型</th>
+                                <th>具体说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="来源类型"><strong>官方监管机构</strong></td>
+                                <td data-label="具体说明">中国证监会（CSRC）、上海证券交易所（SSE）、深圳证券交易所（SZSE）、北京证券交易所（BSE）等官方发布的公告和数据</td>
+                            </tr>
+                            <tr>
+                                <td data-label="来源类型"><strong>上市公司年报</strong></td>
+                                <td data-label="具体说明">各上市公司定期披露的年度报告、半年度报告及季度报告</td>
+                            </tr>
+                            <tr>
+                                <td data-label="来源类型"><strong>第三方数据提供商</strong></td>
+                                <td data-label="具体说明">东方财富、Tushare 等权威金融数据服务商</td>
+                            </tr>
+                            <tr>
+                                <td data-label="来源类型"><strong>新闻媒体</strong></td>
+                                <td data-label="具体说明">财新网、第一财经、证券时报、中国证券报等权威财经媒体</td>
+                            </tr>
+                            <tr>
+                                <td data-label="来源类型"><strong>行业协会</strong></td>
+                                <td data-label="具体说明">中国上市公司协会、各地证监局等行业组织发布的统计数据</td>
+                            </tr>
+                            <tr>
+                                <td data-label="来源类型"><strong>企业官网</strong></td>
+                                <td data-label="具体说明">各企业官方网站公布的相关信息和公告</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ⑥ 联系我们 -->
+    <section class="block">
+        <div class="wrap">
+            <div class="data-card">
+                <h2>
+                    联系我们
+                    <span class="dim">欢迎提供好的建议</span>
+                </h2>
+                <div class="md-body">
+                    <p>使用中遇到问题、发现数据有误，或者有功能建议，都欢迎发邮件告诉我们：<a href="mailto:baimishuo@qq.com"><strong>baimishuo@qq.com</strong></a></p>
+                    <p>我们会在收到后尽快回复。数据均来源于网络收集，仅供参考，不构成投资建议。</p>
+                </div>
+            </div>
+
+            <div class="cal-tools">
+                <h3>相关工具</h3>
+                <div class="chip-row">
+                    <a class="chip" href="/tools/calendar.html">打新日历</a>
+                    <a class="chip" href="/tools/bucangpro.html">补仓计算器</a>
+                    <a class="chip" href="/tools/shouyi.html">年化收益计算器</a>
+                    <a class="chip" href="/tools/yingkuipro.html">盈亏计算器</a>
+                    <a class="chip" href="/yongjin.html">券商佣金参考</a>
+                    <a class="chip" href="/rank/">股票排行榜</a>
+                    <a class="chip" href="/site/">证券导航</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ⑦ 页脚 -->
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-bottom">
+                <div>© 2023 准上市 版权所有 | <a href="/about.html">关于本站</a> | <a href="/privacy.html">隐私政策</a> | <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">鄂ICP备2023000073号-1</a></div>
+                <div class="beian">本站数据均来源于网络收集，仅供参考，不构成投资建议。</div>
+            </div>
+        </div>
+    </footer>
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?365f4eb83a0b59f1db3a9549c235b2a7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+
+</html>

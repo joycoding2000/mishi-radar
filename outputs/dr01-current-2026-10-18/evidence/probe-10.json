@@ -1,0 +1,6 @@
+[
+  {"label":"sse-main-risk","url":"https://query.sse.com.cn/commonSoaQuery.do","params":{"sqlId":"PL_SSGSXX_FXJSBGPLB","domesticIndicator":"S","productType":"0"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/listedinfo/riskplate/"}},
+  {"label":"sse-main-delisting-period","url":"https://query.sse.com.cn/commonSoaQuery.do","params":{"sqlId":"PL_SSGSXX_FXJSBGPLB","domesticIndicator":"P","productType":"0"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/listedinfo/riskplate/"}},
+  {"label":"sse-star-risk","url":"https://query.sse.com.cn/commonSoaQuery.do","params":{"sqlId":"SSE_PL_SSGSXX_KCBFXTS_L","type":"0"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/listedinfo/starriskplate/"}},
+  {"label":"sse-star-delisting-period","url":"https://query.sse.com.cn/commonSoaQuery.do","params":{"sqlId":"SSE_PL_SSGSXX_KCBFXTS_L","type":"1"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/listedinfo/starriskplate/"}}
+]

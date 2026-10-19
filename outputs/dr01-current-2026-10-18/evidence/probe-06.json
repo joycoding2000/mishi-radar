@@ -1,0 +1,4 @@
+[
+  {"label":"szse-risk-metadata","url":"https://www.szse.cn/api/report/ShowReport/data","params":{"SHOWTYPE":"JSON","CATALOGID":"fxjsb","TABKEY":"tab1","PAGENO":"1"},"headers":{"Referer":"https://www.szse.cn/disclosure/listed/warn/index.html"}},
+  {"label":"szse-risk-export","url":"https://www.szse.cn/api/report/ShowReport","params":{"SHOWTYPE":"xlsx","CATALOGID":"fxjsb","TABKEY":"tab1"},"headers":{"Referer":"https://www.szse.cn/disclosure/listed/warn/index.html"}}
+]

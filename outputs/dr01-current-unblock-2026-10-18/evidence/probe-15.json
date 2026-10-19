@@ -1,0 +1,5 @@
+[
+  {"label":"szse-phase-normal","url":"https://www.szse.cn/api/market/ssjjhq/getTimeData","params":{"marketId":"1","code":"000001"},"headers":{"Referer":"https://www.szse.cn/market/trend/index.html?code=000001"}},
+  {"label":"szse-phase-suspended","url":"https://www.szse.cn/api/market/ssjjhq/getTimeData","params":{"marketId":"1","code":"000016"},"headers":{"Referer":"https://www.szse.cn/market/trend/index.html?code=000016"}},
+  {"label":"szse-phase-multicode-capability","url":"https://www.szse.cn/api/market/ssjjhq/getTimeData","params":{"marketId":"1","code":"000001,000016"},"headers":{"Referer":"https://www.szse.cn/market/trend/index.html"}}
+]

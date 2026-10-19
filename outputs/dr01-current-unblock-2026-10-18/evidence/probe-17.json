@@ -1,0 +1,5 @@
+[
+  {"label":"zhunshangshi-full-day-suspensions","url":"https://www.zhunshangshi.com/tfp/","params":{"t":"S"}},
+  {"label":"zhunshangshi-day-resumptions","url":"https://www.zhunshangshi.com/tfp/","params":{"t":"R"}},
+  {"label":"zhunshangshi-summary","url":"https://www.zhunshangshi.com/tfp/"}
+]

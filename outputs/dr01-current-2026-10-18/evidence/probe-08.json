@@ -1,0 +1,3 @@
+[
+  {"label":"szse-delisting-period-metadata","url":"https://www.szse.cn/api/report/ShowReport/data","params":{"SHOWTYPE":"JSON","CATALOGID":"fxjsb","TABKEY":"tab2","PAGENO":"1"},"headers":{"Referer":"https://www.szse.cn/disclosure/listed/warn/index.html"}}
+]

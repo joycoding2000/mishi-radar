@@ -1,0 +1,10 @@
+{
+  "schema": "mishi-delivery-sha256/1",
+  "algorithm": "SHA-256",
+  "excludes_self": true,
+  "files": {
+    "DR02-DR06-consolidated-gap-report.md": "21f62d51e2caf17e6cefa5deed6300c642f1a7e05765ff1c072c827f21eca118",
+    "evidence/baseline-and-reuse.json": "c836d0ae964d764e7eada49690c8604f83e91cd50fd76fa6849019239a5bbc08",
+    "evidence/verification.json": "0e644d0732ca236982aeb5b43bccbf9eb04c26e0899f41018e91973f3c1ff48a"
+  }
+}

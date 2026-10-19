@@ -1,0 +1,93 @@
+{
+  "state": "OWNER_REVIEW",
+  "reports": [
+    {
+      "name": "competitive-feature-gap.md",
+      "bytes": 14815,
+      "sha256": "337acafb6f0624baae22dc642978ca2ba80712b6f4b192ce849367d71b773e59"
+    },
+    {
+      "name": "consumer-data-requirements.md",
+      "bytes": 24131,
+      "sha256": "48b6a9920cd4042a2d369cfb68d479d2d89bdf80cc8280fc6ae4a9fef8019ec3"
+    },
+    {
+      "name": "implementation-cost-risks.md",
+      "bytes": 20226,
+      "sha256": "bd0f7f6109fff50434a13b9f9c40a47ce06a22aa935a8ac45c4b6b66eb9f8d60"
+    }
+  ],
+  "local_links_checked": 57,
+  "broken_links": [],
+  "required_status_fields": {
+    "CURRENT_SHA": true,
+    "COMPETITOR_EVIDENCE": true,
+    "FEATURE_GAPS": true,
+    "STRATEGY_FACTOR_OVERLAP": true,
+    "S07_FEASIBILITY": true,
+    "HOLDINGS_SCOPE": true,
+    "WF_AND_CUSTOM_RULES": true,
+    "DATA_CONTRACT_GAPS": true,
+    "IMPLEMENTATION_RISKS": true,
+    "OWNER_DECISIONS_REQUIRED": true,
+    "FINAL_VERDICT": true
+  },
+  "consumer_requirement_rows": {
+    "S01": true,
+    "S02": true,
+    "S03": true,
+    "S04": true,
+    "S05": true,
+    "S06": true,
+    "S07": true,
+    "S08": true,
+    "F3": true,
+    "F4": true,
+    "F5": true,
+    "F6": true
+  },
+  "competitor4_images": 7,
+  "competitor4_inventory_all7": true,
+  "source_hash_checks": [
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\README.md",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\CURRENT_STATE.md",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_V0_1_SPEC_OWNER_REVIEW_R2.md",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_FUND_FLOW_ADDENDUM_2026-10-16.md",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\2026-10-15-LAUNCH_STRATEGIES.md",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\2026-10-15-BACKTEST_CAPABILITIES.md",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\2026-10-15-COMPETITOR_STRATEGY_BACKTEST.md",
+      "unchanged": true
+    }
+  ],
+  "original_mishi_status_unchanged": true,
+  "supplier_readonly": {
+    "supplier_status_unchanged": true,
+    "supplier_head": "0dc85e3e43588c5781771486a3c6f80c4be7714f",
+    "tracked_changes": 0
+  },
+  "supplier_src_tests_pyproject_migration_identical_to_v042_tag": true,
+  "offline_test_result": "72 passed in 6.57s",
+  "network_requests": 0,
+  "product_implementation_authorized": false,
+  "git_commit_or_push_performed": false,
+  "delivery_checks_passed": true
+}

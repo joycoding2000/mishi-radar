@@ -1,0 +1,1000 @@
+/**
+* 停复牌信息
+* 股票和可转债
+*/
+
+var suspension = {
+  suspensionUrl: sseQueryURL + 'sseQuery/commonQuery.do',  //停复牌提示url
+  suspensionParams: { //停复牌参数
+    "isPagination": true,
+    "sqlId":'COMMON_SSE_XXPL_JYTS_TFPXX_L',
+    "SEARCH_DATE": get_systemDate_global(),
+    "pageHelp.pageSize": 25,
+    "pageHelp.pageNo": 1,
+    "pageHelp.beginPage": 1,
+    "pageHelp.cacheSize": 1,
+    "pageHelp.endPage": 1
+  },
+  init: function () {
+    this.loadEvents();
+  },
+  loadEvents: function () {
+    var _this = this;
+    laydate({
+      elem: ".js_date input",
+      theme: '#b50005',
+      format: 'yyyy-MM-dd',
+      min: '1990-12-19',
+      max: get_systemDate_global(),
+      trigger: 'click',
+      value: get_systemDate_global(),
+      btns: ['confirm'],
+      done: function (value, date, endDate) {
+        //选择时间触发查询
+        setTimeout(function () {
+          _this.setSuspensionParams();
+        }, 500);
+      },
+    });
+    _this.getSuspensionList(1);
+  },
+  //接口数据
+  setSuspensionParams: function () {
+    var _this = this;
+    _this.suspensionParams.SEARCH_DATE = $(".js_date input").val();
+    _this.getSuspensionList(1);
+  },
+  getSuspensionList: function (pageIndex) {
+    var _this = this;
+    if (!paginationChange(this.suspensionParams, pageIndex)) {  //触发分页改变分页参数
+      return;
+    }
+
+    var suspensionHtml = '<thead><tr>';
+    suspensionHtml += '<th>证券代码</th>';
+    suspensionHtml += '<th>证券简称</th>';
+    suspensionHtml += '<th>停(复)牌时间</th>';
+    suspensionHtml += '<th>停牌期限</th>';
+    suspensionHtml += '<th>停(复)牌原因</th>';
+    suspensionHtml += '</tr></thead><tbody>';
+    var emptyTr = '<tr><td colspan="5">暂无数据</tr>'
+    getJSONP({
+      type: 'post',
+      url: _this.suspensionUrl,
+      data: _this.suspensionParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          $.each(data.result, function (k, v) {
+            suspensionHtml += '<tr>';
+            suspensionHtml += '<td class="text-nowrap"><span>' + v.PRODUCT_CODE + '</span></td>'; //证券代码
+            if (v.PRODUCT_NAME && v.PRODUCT_NAME != '-' && (v.CONTROLTYPE == 'CB' || v.CONTROLTYPE == 'GB')) {
+              suspensionHtml += '<td class="text-nowrap"><span>' + v.PRODUCT_NAME + '(转股)' + '</span></td>'; 
+            } else if (v.PRODUCT_NAME && v.PRODUCT_NAME != '-' && (v.CONTROLTYPE == 'EEC' || v.CONTROLTYPE == 'IEC')){
+              suspensionHtml += '<td class="text-nowrap"><span>' + v.PRODUCT_NAME + '(申购)' + '</span></td>'; 
+            } else if (v.PRODUCT_NAME && v.PRODUCT_NAME != '-' && (v.CONTROLTYPE == 'EER' || v.CONTROLTYPE == 'IER')){
+              suspensionHtml += '<td class="text-nowrap"><span>' + v.PRODUCT_NAME + '(赎回)' + '</span></td>'; 
+            } else if (v.PRODUCT_NAME && v.PRODUCT_NAME != '-') {
+              suspensionHtml += '<td class="text-nowrap"><span>' + v.PRODUCT_NAME + '</span></td>'; 
+            } 
+            //suspensionHtml += '<td class="text-nowrap"><span>' + ((v.PRODUCT_NAME && v.PRODUCT_NAME != '-' && (v.CONTROLTYPE == 'CB' || v.CONTROLTYPE == 'GB') ? v.PRODUCT_NAME + "(转股)" : v.PRODUCT_NAME)) + '</span></td>'; //证券简称
+            suspensionHtml += '<td class="text-nowrap">' + v.STOP_DATE + '</td>';  //停复牌时间
+            suspensionHtml += '<td class="text-nowrap">' + v.STOP_TIME + '</td>';  //停牌期限
+            suspensionHtml += '<td class="text-nowrap">' + v.STOP_REASON + '</td>';  //停(复)牌原因
+          })
+          suspensionHtml += '</tbody>';
+          $(".js_suspension .table").html(suspensionHtml);
+          //调用分页
+          Page.navigation(".js_suspension .pagination-box", data.pageHelp.pageCount, data.pageHelp.total, data.pageHelp.pageNo, data.pageHelp.pageSize, "suspension.getSuspensionList");
+        } else {
+          suspensionHtml += emptyTr;
+          suspensionHtml += '</tbody>';
+          $(".js_suspension .table").html(suspensionHtml);
+          $(".js_suspension .pagination-box").html("");
+        }
+      },
+      errCallback: function () {
+        suspensionHtml += emptyTr;
+        suspensionHtml += '</tbody>';
+        $(".js_suspension .table").html(suspensionHtml);
+        $(".js_suspension .pagination-box").html("");
+      }
+    })
+  }
+}
+if ($(".js_suspension").length > 0) {
+  suspension.init();
+}
+//停复牌信息-股票和可转债end
+
+
+/**
+* 停复牌信息
+* 股票和可转债（新）
+*/
+
+var suspension_stock = {
+  todayDate: get_systemDate_global(),
+  suspensionUrl: sseQueryURL + 'commonSoaQuery.do',  //停复牌提示url
+  suspensionParams: { //停复牌参数
+    "isPagination": true,
+    "sqlId":'GW_PL_JYTS_TFPXX',
+    "pageHelp.pageSize": 25,
+    "pageHelp.pageNo": 1,
+    productCode:'',//证券代码
+    keyWords:'',//关键字
+    startStopDate:'',//停牌起始日YYYY-MM-DD
+    endStopDate:'',//停牌结束日YYYY-MM-DD
+  },
+  tradeDateParams:{
+    "sqlId":'GW_PL_JYTS_TFPXX_TRADEDAY',
+    bizDate:get_systemDate_global().replace(/-/g, ""),//默认的日期 yyyymmdd
+  },
+  init: function () {
+    this.loadEvents();
+    $("#inputCode").attr("placeholder", "6位代码");
+    $(".js_keyWords input").attr("placeholder", "关键字");
+    $(".js_keyWords").append('<div class="errorMessage"></div>');
+    //点击关键字搜索
+    $(".search_btn").on("click", function (e) {
+      e.stopPropagation();
+      suspension_stock.setSuspensionParams();
+    });
+    //enter关键字
+    $(".js_keyWords input").on(bind_name, function (e) {
+      var keyCode = e.keyCode || e.which || e.charCode;
+      if (keyCode == 13) {
+        suspension_stock.setSuspensionParams();
+      }
+    });
+    var _this = this;
+    getJSONP({
+      type: 'post',
+      url: _this.suspensionUrl,
+      data: _this.tradeDateParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          _this.suspensionParams.startStopDate = data.result[0].beforeTradeDay;
+          _this.suspensionParams.endStopDate = '';
+          _this.getSuspensionList(1);
+        } else {
+          _this.suspensionParams.startStopDate = get_systemDate_global().replace(/-/g, "");
+          _this.suspensionParams.endStopDate = '';
+          _this.getSuspensionList(1);
+        }
+      },
+      errCallback: function () {
+        _this.suspensionParams.startStopDate = get_systemDate_global().replace(/-/g, "");
+        _this.suspensionParams.endStopDate = '';
+        _this.getSuspensionList(1);
+      }
+    })
+  },
+  loadEvents: function () {
+    var _this = this;
+    laydate({
+      elem: ".js_date input",
+      theme: '#b50005',
+      format: 'yyyy-MM-dd',
+      range: true,
+      min: '1990-12-19',
+      trigger: 'click',
+      btns: ['confirm'],
+      done: function (value, date, endDate) {
+        //选择时间触发查询
+        setTimeout(function () {
+          _this.setSuspensionParams();
+        }, 500);
+      },
+    });
+  },
+  //接口数据
+  setSuspensionParams: function () {
+    var inputCode = $("#inputCode").val() ? $("#inputCode").val() : ""; //证券代码
+    if (inputCode && (inputCode.length != 6 || isNaN(inputCode))) {
+      bootstrapModal({
+        text: "证券代码必须为6位数字",
+      });
+      return;
+    }
+    var rangeTime = $(".js_date input").val();
+    var _this = this;
+    _this.suspensionParams.productCode = $(".js_code input").val();
+    var newKeywords = keywordFiltration($(".js_keyWords input").val());
+    if(newKeywords.length !=  $(".js_keyWords input").val().length){
+      $(".errorMessage").text("请勿输入非法字符！");
+      return;
+    }
+    $(".errorMessage").text("");
+    _this.suspensionParams.keyWords = newKeywords;
+    if (!IsDayLimit(rangeTime.substring(0,10), rangeTime.substring(13,rangeTime.length),0,0,3)){
+      bootstrapModal({
+        text: "查询只提供日期间隔不超过3年的停牌信息",
+      });
+      if(_this.suspensionParams.startStopDate == ''){
+        var startDate = get_systemDate_global();
+      } else {
+        var startDate = turnDateAddLine(_this.suspensionParams.startStopDate);
+      }
+      if(_this.suspensionParams.endStopDate == ''){
+        var endStopDate = get_systemDate_global();
+      } else {
+        var endStopDate = turnDateAddLine(_this.suspensionParams.endStopDate);
+      }
+      $(".js_date input").val(startDate + ' - ' + endStopDate);
+      return;
+    } else {
+      _this.suspensionParams.startStopDate = rangeTime.substring(0,10).replace(/-/g, "");
+      _this.suspensionParams.endStopDate = rangeTime.substring(13,rangeTime.length).replace(/-/g, "");
+    }
+    _this.getSuspensionList(1);
+  },
+  /**
+   * 业务类型转换
+   * @param {*} value 
+   * @returns 
+   */
+   businessConversion:function(value){
+    if(value == 'CP' || value == 'GP'){
+      return '可转债';
+    } else if(value == 'CB' || value == 'GB'){
+      return '转股';
+    } else if(value == 'CR' || value == 'GR'){
+      return '回售';
+    } else {
+      return '-';
+    }
+  },
+
+  /**
+   * 停牌时间转换
+   * @param {*} value 
+   * @returns 
+   * WH：全天、930：9:30-10:30、AM：上午、其他表示为 空格
+   */
+   stopTimeConversion:function(value){
+    if(value == 'WH'){
+      return '全天';
+    } else if(value == '930'){
+      return '9:30-10:30';
+    } else if(value == 'AM'){
+      return '上午';
+    } else if(value == 'PM'){
+      return '下午';
+    } else {
+      return '-';
+    }
+  },
+  getSuspensionList: function (pageIndex) {
+    var _this = this;
+    if (!paginationChange(this.suspensionParams, pageIndex)) {  //触发分页改变分页参数
+      return;
+    }
+    var suspensionHtml = '<thead><tr>';
+    suspensionHtml += '<th>证券代码</th>';
+    suspensionHtml += '<th>证券简称</th>';
+    suspensionHtml += '<th>业务类型</th>';
+    suspensionHtml += '<th>停牌起始日</th>';
+    suspensionHtml += '<th>停牌终止日</th>';
+    suspensionHtml += '<th>停牌时间</th>';
+    suspensionHtml += '<th>停(复)牌原因</th>';
+    suspensionHtml += '</tr></thead><tbody>';
+    var emptyTr = '<tr><td colspan="7">暂无数据</tr>'
+    getJSONP({
+      type: 'post',
+      url: _this.suspensionUrl,
+      data: _this.suspensionParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          if( _this.suspensionParams.endStopDate == '' && _this.suspensionParams["pageHelp.pageNo"] == 1){
+            if(turnDateAddLine(_this.suspensionParams.startStopDate) > turnDateAddLine(data.result[0].startStopDate)){
+              $(".js_date input").val(turnDateAddLine(_this.suspensionParams.startStopDate) + ' - ' + get_systemDate_global());
+            } else {
+              $(".js_date input").val(turnDateAddLine(_this.suspensionParams.startStopDate) + ' - ' + turnDateAddLine(data.result[0].startStopDate));
+            }
+          }
+          $.each(data.result, function (k, v) {
+            suspensionHtml += '<tr>';
+            suspensionHtml += '<td class="text-nowrap"><span>' + (v.productCode != "" ? v.productCode : '-') + '</span></td>'; //证券代码
+            suspensionHtml += '<td class="text-nowrap">' + (v.productName != "" ? v.productName : '-') + '</td>';  //证券简称
+            suspensionHtml += '<td class="text-nowrap">' + _this.businessConversion(v.controlType) + '</td>';  //业务类型
+            suspensionHtml += '<td class="text-nowrap">' + (v.startStopDate != "" ? turnDateAddLine(v.startStopDate) : '-') + '</td>';  //停牌起始日
+            suspensionHtml += '<td class="text-nowrap">' + (v.endStopDate != "" ? turnDateAddLine(v.endStopDate) : '-') + '</td>';  //停牌结束日
+            suspensionHtml += '<td class="text-nowrap">' + _this.stopTimeConversion(v.stopTime) + '</td>';  //停牌时间
+            if(v.type == 'LSTP' || v.stopReason == v.endStopReason){
+              suspensionHtml += '<td class="text-nowrap">' + (v.stopReason == "" ? '-' : v.stopReason) + '</td>';  //停(复)牌原因(stopReason、endStopReason)
+            } else {
+              suspensionHtml += '<td class="text-nowrap">' + v.stopReason + (v.stopReason != '' && v.endStopReason !='' ? '/' : '') + v.endStopReason + '</td>';  //停(复)牌原因(stopReason、endStopReason)
+            }
+          })
+          suspensionHtml += '</tbody>';
+          $(".js_suspension_stock .table").html(suspensionHtml);
+          //调用分页
+          Page.navigation(".js_suspension_stock .pagination-box", data.pageHelp.pageCount, data.pageHelp.total, data.pageHelp.pageNo, data.pageHelp.pageSize, "suspension_stock.getSuspensionList");
+        } else {
+          if( _this.suspensionParams.endStopDate == ''){
+            $(".js_date input").val(turnDateAddLine(_this.suspensionParams.startStopDate) + ' - ' + get_systemDate_global());
+          }
+          suspensionHtml += emptyTr;
+          suspensionHtml += '</tbody>';
+          $(".js_suspension_stock .table").html(suspensionHtml);
+          $(".js_suspension_stock .pagination-box").html("");
+        }
+      },
+      errCallback: function () {
+        if( _this.suspensionParams.endStopDate == ''){
+          $(".js_date input").val(turnDateAddLine(_this.suspensionParams.startStopDate) + ' - ' + get_systemDate_global());
+        }
+        suspensionHtml += emptyTr;
+        suspensionHtml += '</tbody>';
+        $(".js_suspension_stock .table").html(suspensionHtml);
+        $(".js_suspension_stock .pagination-box").html("");
+      }
+    })
+  }
+}
+if ($(".js_suspension_stock").length > 0) {
+  suspension_stock.init();
+}
+//停复牌信息-股票和可转债（新）end
+
+/**
+ * 停复牌信息-基金
+ */
+
+ var suspension_fund = {
+  suspensionUrl: sseQueryURL + 'sseQuery/commonSoaQuery.do',  //停复牌提示url
+  suspensionParams: { //停复牌参数
+    "isPagination": true,
+    "sqlId":'SSE_PL_JYTS_TFPXX_JJ',
+    "secCode":'',
+    "stopReason":'',
+    "order":'startStopDate|desc,secCode|asc',
+    "startDate": get_systemDate_global().replace(/-/g, ''),
+    "endDate":get_systemDate_global().replace(/-/g, ''),
+    "pageHelp.pageSize": 25,
+    "pageHelp.pageNo": 1,
+    "pageHelp.beginPage": 1,
+    "pageHelp.cacheSize": 1,
+    "pageHelp.endPage": 1
+  },
+  init: function () {
+    this.loadEvents();
+    $(".js_keyWords").append('<div class="errorMessage"></div>');
+    $(".js_keyWords input").attr("maxlength", "15");
+    //点击证券代码或简称搜索
+    var _this = this;
+    $(".search_btn").on("click", function (e) {
+      e.stopPropagation();
+      _this.setSuspensionParams();
+    });
+    //enter关键字
+    $(".js_keyWords input").on(bind_name, function (e) {
+      var keyCode = e.keyCode || e.which || e.charCode;
+      if (keyCode == 13) {
+        _this.setSuspensionParams();
+      }
+    });
+  },
+  loadEvents: function () {
+    var _this = this;
+    laydate({
+      elem: ".js_date input",
+      theme: '#b50005',
+      format: 'yyyy-MM-dd',
+      range: true,
+      min: '1990-12-19',
+      max: get_systemDate_global(),
+      trigger: 'click',
+      value: get_systemDate_global() + ' - ' + get_systemDate_global(),
+      btns: ['confirm'],
+      done: function (value, date, endDate) {
+        //选择时间触发查询
+        setTimeout(function () {
+          _this.setSuspensionParams();
+        }, 500);
+      },
+    });
+    _this.getSuspensionList(1);
+  },
+  //接口数据
+  setSuspensionParams: function () {
+    var _this = this;
+    var data = $(".js_date input").val();
+    var code = $("#inputCode").val();
+    if(code.length == 6 || !isNull(code)){
+      _this.suspensionParams.secCode = $("#inputCode").val();
+      _this.suspensionParams.startDate = data.substring(0,10).replace(/-/g, '');
+      _this.suspensionParams.endDate = data.substring(data.length - 10,data.length).replace(/-/g, '');
+    } else {
+      bootstrapModal({
+        text: "证券代码必须为6位数字"
+      });
+    }
+    var newKeywords = keywordFiltration($(".js_keyWords input").val());
+    if(newKeywords.length !=  $(".js_keyWords input").val().length){
+      $(".errorMessage").text("请勿输入非法字符！");
+      return;
+    } else {
+      $(".errorMessage").text("");
+      _this.suspensionParams.stopReason = newKeywords;
+    }
+    _this.getSuspensionList(1);
+  },
+  /**
+   * ETF紧急暂停申赎文件:C3业务类型转换
+   * @param {*} value 
+   * @returns 
+   */
+  dateSource1C3Conversion:function(value){
+    if(value == 'EEC'){
+      return '(场内)现金申购';
+    } else if(value == 'EER'){
+      return '(场内)现金赎回';
+    } else if(value == 'IEC'){
+      return '(场内)实物申购';
+    } else if(value == 'IER'){
+      return '(场内)实物赎回';
+    }else {
+      return '-';
+    }
+  },
+  /**
+   * 基金增量申赎信息文件:C4业务类型转换
+   * @param {*} value 
+   * @returns 
+   */
+   dateSource3C4Conversion:function(value){
+    if(value == 'ECTP' || value == 'ECFP'){
+      return '申购';
+    } else if(value == 'ERTP' || value == 'ERFP'){
+      return '赎回';
+    } else {
+      return '-';
+    }
+  },
+  /**
+     * 手工停复牌业务类型转换
+     * @param {*} value 
+     * @returns 
+     * “交易”：JY、“申购”：SG、“赎回”：：SH
+     */
+  dateSource4Conversion:function(value){
+    if(value == 'JY'){
+      return '交易';
+    } else if(value == 'SG'){
+      return '申购';
+    } else if(value == 'SH'){
+      return '赎回';
+    } else {
+      return '-';
+    }
+  },
+
+  /**
+   * 停牌时间转化
+   * @param {*} value 
+   * @returns 
+   */
+  stopTimeConversion:function(value){
+    if(value == 'WH'){
+      return '全天';
+    } else if(value == '9'){
+      return '上午';
+    }else if(value == '9h'){
+      return '9:30-10:30';
+    } else if(value == '13'){
+      return '下午';
+    } else if(value == '915') {
+      return '9:15-10:30';
+    } else{
+      return '-';
+    }
+  },
+
+  getSuspensionList: function (pageIndex) {
+    var _this = this;
+    if (!paginationChange(this.suspensionParams, pageIndex)) {  //触发分页改变分页参数
+      return;
+    }
+    var suspensionHtml = '<thead><tr>';
+    suspensionHtml += '<th>基金代码</th>';
+    suspensionHtml += '<th>基金扩位简称</th>';
+    suspensionHtml += '<th>停牌起始日</th>';
+    suspensionHtml += '<th>停牌结束日</th>';
+    suspensionHtml += '<th>停牌时间</th>';
+    suspensionHtml += '<th>停(复)牌原因</th>';
+    suspensionHtml += '</tr></thead><tbody>';
+    var emptyTr = '<tr><td colspan="5">暂无数据</tr>'
+    getJSONP({
+      type: 'post',
+      url: _this.suspensionUrl,
+      data: _this.suspensionParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          $.each(data.result, function (k, v) {
+            suspensionHtml += '<tr>';
+            suspensionHtml += '<td class="text-nowrap"><span>' + (v.secCode == "" ? '-' : v.secCode) + '</span></td>'; //基金代码
+            suspensionHtml += '<td class="text-nowrap">' + (v.expandAbbr == "" ? '-' : v.expandAbbr) + '</td>';  //基金扩位简称
+            suspensionHtml += '<td class="text-nowrap">' + (v.startStopDate == "" ? '-' : turnDateAddLine(v.startStopDate)) + '</td>';  //停牌起始日
+            suspensionHtml += '<td class="text-nowrap">' + (v.endStopDate == "" ? '-' : turnDateAddLine(v.endStopDate)) + '</td>';  //停牌结束日
+            if(v.dateSource == '1'){ // 来自于ETF紧急暂停申赎文件
+              suspensionHtml += '<td class="text-nowrap">' + '即时起至收市' + '</td>';  //停牌时间
+            } else if(v.dateSource == '2' || v.dateSource == '5'){ // 来自于基金增量停复牌信息 || REITs紧急停牌自动披露
+              if(v.startStopType == 'LSTP'){ //临时停牌
+                suspensionHtml += '<td class="text-nowrap">' + _this.stopTimeConversion(v.stopTime) + '</td>';  //停牌时间
+              } else { //连续停牌开始、连续停牌结束
+                suspensionHtml += '<td class="text-nowrap">' + '-' + '</td>';  //停牌时间
+              }
+            } else if(v.dateSource == '0' || v.dateSource == '4'){//历史数据、手工停复牌业务类型转换
+              suspensionHtml += '<td class="text-nowrap">' + _this.stopTimeConversion(v.stopTime) + '</td>';  //停牌时间
+            } else { //来自于基金增量申赎信息文件
+              suspensionHtml += '<td class="text-nowrap">' + '全天' + '</td>';  //停牌时间
+            }
+            if(isNull(v.startStopReason) && isNull(v.endStopReason)){
+              if(v.startStopReason == v.endStopReason){
+                suspensionHtml += '<td class="text-nowrap">' + v.endStopReason + '</td>';  //停(复)牌原因(startStopReason、endStopReason)
+              } else {
+                suspensionHtml += '<td class="text-nowrap">' + (v.startStopReason +  '/' + v.endStopReason) + '</td>';  //停(复)牌原因(startStopReason、endStopReason)
+              }
+            } else if(isNull(v.startStopReason) || isNull(v.endStopReason)){
+              suspensionHtml += '<td class="text-nowrap">' + (isNull(v.startStopReason) ? v.startStopReason : v.endStopReason) + '</td>';  //停(复)牌原因(startStopReason、endStopReason)
+            } else if(!isNull(v.startStopReason) && !isNull(v.endStopReason)){
+              suspensionHtml += '<td class="text-nowrap">' + '-' + '</td>';  //停(复)牌原因(startStopReason、endStopReason)
+            }
+          })
+          suspensionHtml += '</tbody>';
+          $(".js_suspension_fund .table").html(suspensionHtml);
+          //调用分页
+          Page.navigation(".js_suspension_fund .pagination-box", data.pageHelp.pageCount, data.pageHelp.total, data.pageHelp.pageNo, data.pageHelp.pageSize, "suspension_fund.getSuspensionList");
+        } else {
+          suspensionHtml += emptyTr;
+          suspensionHtml += '</tbody>';
+          $(".js_suspension_fund .table").html(suspensionHtml);
+          $(".js_suspension_fund .pagination-box").html("");
+        }
+      },
+      errCallback: function () {
+        suspensionHtml += emptyTr;
+        suspensionHtml += '</tbody>';
+        $(".js_suspension_fund .table").html(suspensionHtml);
+        $(".js_suspension_fund .pagination-box").html("");
+      }
+    })
+  }
+}
+if ($(".js_suspension_fund").length > 0) {
+  suspension_fund.init();
+}
+//停复牌信息-基金end
+
+/**
+* 盘中停牌信息
+*/
+let intradaySuspension = {
+  intradaySuspensionUrl: sseQueryURL + 'commonSoaQuery.do',
+  //主板参数
+  zbSuspensionParams: {
+    'isPagination': true,
+    "pageHelp.pageSize": 200,
+    "pageHelp.pageNo": 1,
+    "pageHelp.beginPage": 1,
+    "pageHelp.cacheSize": 1,
+    "pageHelp.endPage": 1,
+    "sqlId": "SSE_PZLSTP_ZW",
+    "tpType": "1,3",
+  },
+  //科创板参数
+  kcbSuspensionParams: {
+    'isPagination': true,
+    "pageHelp.pageSize": 200,
+    "pageHelp.pageNo": 1,
+    "pageHelp.beginPage": 1,
+    "pageHelp.cacheSize": 1,
+    "pageHelp.endPage": 1,
+    'sqlId': 'SSE_PZLSTP_ZW',
+    "tpType": "2",
+  },
+  init: function () {
+    this.getZBSuspensionList();
+    this.getKCBSuspensionList();
+  },
+  //主板
+  getZBSuspensionList: function () {
+    let _this = this;
+    let intradaySuspensionHtml = '<thead><tr>';
+    intradaySuspensionHtml += '<th>序号</th>';
+    intradaySuspensionHtml += '<th>内容</th>';
+    intradaySuspensionHtml += '</tr></thead><tbody>';
+    //主板盘中停牌信息
+    getJSONP({
+      url: _this.intradaySuspensionUrl,
+      data: _this.zbSuspensionParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          let num = 0;
+
+          $.each(data.result, function (k, v) {
+            num++;
+            let dataContent = v.content;
+            let _contentArr = dataContent
+              .split('\n')
+              .filter(item => !/^\s*$/.test(item)) // 去掉所有空行
+              .map(item => item.replace(/\r/g, '')); // 清除每行的 \r
+            let content = '<p class="text-center">' + v.title + '</p>';
+            if (v.tpType == 1) { // 主板盘中临时停牌文号
+              content += '<p class="text-center">' + v.issueNum + '</p>';
+            }
+            for (let j = 0; j < _contentArr.length; j++) {
+              if (v.tpType == 3 && j === 0) { // 债券盘中临时停牌文号第一行为文号
+                content += '<p class="text-center">' + _contentArr[j] + '</p>';
+              } else {
+                content += '<p style="text-indent:2em">' + _contentArr[j] + '</p>';
+              }
+            }
+            intradaySuspensionHtml += '<tr>';
+            intradaySuspensionHtml += '<td>' + num + '</td>';
+            intradaySuspensionHtml += '<td><p>' + content + '</p></td>';
+            intradaySuspensionHtml += '</tr>';
+          })
+          intradaySuspensionHtml += '</tbody>';
+          $(".js_zbSuspension .table").append(intradaySuspensionHtml);
+        } else {
+          intradaySuspensionHtml += '<tr><td>1</td><td>暂无数据</td></tr>';
+          intradaySuspensionHtml += '</tbody>';
+          $(".js_zbSuspension .table").html(intradaySuspensionHtml);
+        }
+      },
+      errCallback: function () {
+        intradaySuspensionHtml += '<tr><td>1</td><td>暂无数据</td></tr>';
+        intradaySuspensionHtml += '</tbody>';
+        $(".js_zbSuspension .table").html(intradaySuspensionHtml);
+      }
+    })
+
+  },
+  //科创板
+  getKCBSuspensionList: function () {
+    let _this = this;
+    let intradaySuspensionHtml = '<thead><tr>';
+    intradaySuspensionHtml += '<th>序号</th>';
+    intradaySuspensionHtml += '<th>内容</th>';
+    intradaySuspensionHtml += '</tr></thead><tbody>';
+    //科创版盘中停牌信息
+    getJSONP({
+      url: _this.intradaySuspensionUrl,
+      data: _this.kcbSuspensionParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          let num = 0;
+
+          $.each(data.result, function (k, v) {
+            num++;
+            let dataContent = v.content;
+            let _contentArr = dataContent
+              .split('\n')
+              .filter(item => !/^\s*$/.test(item)) // 去掉所有空行
+              .map(item => item.replace(/\r/g, '')); // 清除每行的 \r
+            let content = '<p class="text-center">' + v.title + '</p>'; // 标题
+            content += '<p class="text-center">' + v.issueNum + '</p>'; // 科创版文号
+            for (let j = 0; j < _contentArr.length; j++) {
+              content += '<p style="text-indent:2em">' + _contentArr[j] + '</p>';
+            }
+            intradaySuspensionHtml += '<tr>';
+            intradaySuspensionHtml += '<td>' + num + '</td>';
+            intradaySuspensionHtml += '<td><p>' + content + '</p></td>';
+            intradaySuspensionHtml += '</tr>';
+          })
+          intradaySuspensionHtml += '</tbody>';
+          $(".js_kcbSuspension .table").html(intradaySuspensionHtml);
+        } else {
+          intradaySuspensionHtml += '<tr><td>1</td><td>暂无数据</td></tr>';
+          intradaySuspensionHtml += '</tbody>';
+          $(".js_kcbSuspension .table").html(intradaySuspensionHtml);
+        }
+      },
+      errCallback: function () {
+        intradaySuspensionHtml += '<tr><td>1</td><td>暂无数据</td></tr>';
+        intradaySuspensionHtml += '</tbody>';
+        $(".js_kcbSuspension .table").html(intradaySuspensionHtml);
+      }
+    })
+
+  }
+}
+if ($(".js_zbSuspension").length > 0) {
+  intradaySuspension.init();
+}
+//盘中停牌信息end
+
+/**
+* 市场日历
+*/
+var calendar = {
+  calendarUrl: sseQueryURL + 'commonSoaQuery.do',
+  codeHref: "/assortment/stock/list/info/company/index.shtml?COMPANY_CODE=", //代码链接地址
+  calendarParams: {
+    isPagination: true, //是否分页
+    order: 'tradeBeginDate|desc,stockCode|desc',
+    tradeBeginDate: '', //开始时间
+    tradeEndDate: '', //结束时间
+    sqlId: 'PL_SCRL_SCRLB', //SQLID
+    'pageHelp.pageNo': 1,
+    'pageHelp.beginPage': 1,
+    'pageHelp.cacheSize': 1,
+    'pageHelp.endPage': 1,
+    'pageHelp.pageSize': 25
+  },
+  init: function () {
+    this.defaultDate();
+    this.loadEvents();
+    // this.getCalendarFH(1);
+    if($(".js_calendarFH").length){
+      $(".js_calendarFH").remove();
+    }
+    this.getCalendarIPO(1);
+    this.getCalendarGDDH();
+    this.getCalendarLYXX();
+    this.getCalendarEFTXX();
+  },
+  loadEvents: function () {
+    var _this = this;
+    $(".js_date input").attr("placeholder", "可选日期");
+    //日期范围渲染
+    laydate({
+      elem: ".js_date input",
+      theme: '#b50005',
+      format: 'yyyy-MM-dd',
+      min: '1990-12-19',
+      max: get_systemDate_global(),
+      trigger: 'click',
+      btns: ['confirm'],
+      done: function (value, date, endDate) {
+        //选择时间触发查询
+        setTimeout(function () {
+          _this.setCalendarParams();
+        }, 500);
+      },
+    });
+  },
+  //获取默认日期
+  defaultDate: function () {
+    var _this = this;
+    $(".title_lev3 .new_date").html(get_systemDate_global());
+    //获取系统当前日期为默认日期
+    _this.calendarParams.tradeBeginDate = get_systemDate_global().replace(/\-/g, '');
+    _this.calendarParams.tradeEndDate = get_systemDate_global().replace(/\-/g, '');
+    //获取url参数日期
+    var url_staDate = getWindowHref()._staDate;
+    if (url_staDate != undefined && url_staDate != null && url_staDate != "") {
+      if ($(".js_date input").val() == null || $(".js_date input").val() == "") {
+        //url参数日期不为空时默认日期改为url参数日期
+        _this.calendarParams.tradeBeginDate = url_staDate;
+        _this.calendarParams.tradeEndDate = url_staDate;
+        $(".js_date input").val(turnDateAddLine(url_staDate));
+        $(".title_lev3 .new_date").html(turnDateAddLine(url_staDate));
+      }
+    };
+  },
+  //修改日期
+  setCalendarParams: function () {
+    var _this = this;
+    //获取日期框value
+    _this.calendarParams.tradeBeginDate = $(".js_date input").val().replace(/\-/g, '');
+    _this.calendarParams.tradeEndDate = $(".js_date input").val().replace(/\-/g, '');
+    //所选日期不大于当前日期
+    if (_this.calendarParams.tradeBeginDate > get_systemDate_global().replace(/\-/g, '')) {
+      bootstrapModal({ text: "您选择的日期超出检索范围，请重输" });
+    } else {
+      $(".title_lev3 .new_date").html($(".js_date input").val());
+      // _this.getCalendarFH(1);
+      _this.getCalendarIPO(1);
+      _this.getCalendarGDDH();
+      _this.getCalendarLYXX();
+      _this.getCalendarEFTXX();
+    }
+  },
+  //分红送转/除权除息
+  getCalendarFH: function (pageIndex) {
+    var _this = this;
+    _this.calendarParams.bizType = 5;
+    if (!paginationChange(_this.calendarParams, pageIndex, '.js_calendarFH')) { //修改分页参数
+      return;
+    }
+
+    var emptyTr = '<tr><td colspan="4">暂无数据</tr>'
+    var calendarHtml = '<thead><tr>';
+    calendarHtml += '<th>证券代码</th>';
+    calendarHtml += '<th>证券简称</th>';
+    calendarHtml += '<th>分类</th>';
+    calendarHtml += '<th>事件</th>';
+    calendarHtml += '</tr></thead><tbody>';
+    var undata = 0;
+    getJSONP({
+      type: 'post',
+      url: _this.calendarUrl,
+      data: _this.calendarParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          $.each(data.result, function (k, v) {
+            if (v.bizType == '5' || v.bizType == '6') {
+              calendarHtml += '<tr>';
+              calendarHtml += '<td class="codeNameWidth"><span>' + v.stockCode + '</span></td>';
+              calendarHtml += '<td class="codeNameWidth"><span>' + v.stockAbbr + '</span></td>';
+              calendarHtml += '<td class="text-nowrap">' + v.bizTypeDesc + '</td>';
+              calendarHtml += '<td>' + v.title + '</td>';
+              calendarHtml += '</tr>';
+              undata = 1;
+            }
+          })
+          if (undata == 0) {
+            calendarHtml += emptyTr;
+          }
+          calendarHtml += '</tbody>';
+          $(".js_calendarFH .table").html(calendarHtml);
+          //调用分页
+          Page.navigation(".js_calendarFH .pagination-box", data.pageHelp.pageCount, data.pageHelp.total, data.pageHelp.pageNo, data.pageHelp.pageSize, "calendar.getCalendarFH");
+        } else {
+          calendarHtml += emptyTr;
+          calendarHtml += '</tbody>';
+          $(".js_calendarFH .table").html(calendarHtml);
+          $(".js_calendarFH .pagination-box").html("");
+        }
+      },
+      errCallback: function () {
+        calendarHtml += emptyTr;
+        calendarHtml += '</tbody>';
+        $(".js_calendarFH .table").html(calendarHtml);
+      }
+    })
+  },
+  //IPO信息
+  getCalendarIPO: function (pageIndex) {
+    var _this = this;
+    _this.calendarParams.bizType = 1;
+    if (!paginationChange(_this.calendarParams, pageIndex, '.js_calendarIPO')) {  //修改分页参数
+      return;
+    }
+
+    var emptyTr = '<tr><td colspan="3">暂无数据</tr>'
+    var calendarHtml = '<thead><tr>';
+    calendarHtml += '<th>证券代码</th>';
+    calendarHtml += '<th>证券简称</th>';
+    calendarHtml += '<th>IPO状态</th>';
+    calendarHtml += '</tr></thead><tbody>';
+    getJSONP({
+      type: 'post',
+      url: _this.calendarUrl,
+      data: _this.calendarParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          $.each(data.result, function (k, v) {
+            calendarHtml += '<tr>';
+            calendarHtml += '<td class="codeNameWidth"><span>' + v.stockCode + '</span></td>';
+            calendarHtml += '<td class="codeNameWidth"><span>' + v.stockAbbr + '</span></td>';
+            calendarHtml += '<td>' + v.subTypeDesc + '</td>';
+            calendarHtml += '</tr>';
+          })
+          calendarHtml += '</tbody>';
+          $(".js_calendarIPO .table").html(calendarHtml);
+          //调用分页
+          Page.navigation(".js_calendarIPO .pagination-box", data.pageHelp.pageCount, data.pageHelp.total, data.pageHelp.pageNo, data.pageHelp.pageSize, "calendar.getCalendarIPO");
+        } else {
+          calendarHtml += emptyTr;
+          calendarHtml += '</tbody>';
+          $(".js_calendarIPO .table").html(calendarHtml);
+          $(".js_calendarIPO .pagination-box").html("");
+        }
+      },
+      errCallback: function () {
+        calendarHtml += emptyTr;
+        calendarHtml += '</tbody>';
+        $(".js_calendarIPO .table").html(calendarHtml);
+      }
+    })
+  },
+  //股东会
+  getCalendarGDDH: function (pageIndex) {
+    var _this = this;
+    var emptyTr = '<tr><td colspan="18">暂无数据</td></tr>';
+    var calendarHtml = '<thead><tr><th>序号</th><th>证券代码</th><th>证券简称</th><th>网络投票起始日</th><th>股东会（现场）开会日</th><th>公司公告</th></tr></thead><tbody>';
+
+    getJSONP({
+      type: 'post',
+      url: sseQueryURL + "commonQuery.do",
+      data: {
+        "sqlId": "COMMON_SSE_SCFW_TZZFW_GDDHWLTPZL_L",
+        conveneDate:_this.calendarParams.tradeBeginDate
+      },
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          data.result = data.result.slice(0,500);
+          $.each(data.result, function (k, v) {
+            calendarHtml += '<tr>';
+            calendarHtml += '<td class="text-nowrap">' + (k + 1) + '</td>'; //序号
+            calendarHtml += '<td class="codeNameWidth"><a target="_blank" href="' + _this.codeHref + v.SEC_CODE + '">' + v.SEC_CODE + '</a></td>'; //证券代码
+            calendarHtml += '<td class="codeNameWidth"><span>' + v.SEC_NAME_CN + '</span></td>'; //证券简称
+            calendarHtml += '<td class="text-nowrap">' + (v.CONVENE_DATE && v.CONVENE_DATE != "-" ? turnDateAddLine(v.CONVENE_DATE) : '-') + '</td>'; //网络投票起始日
+            calendarHtml += '<td class="text-nowrap">' + (v.CONVENE_SITE_DATE && v.CONVENE_SITE_DATE != "-" ? turnDateAddLine(v.CONVENE_SITE_DATE) : '-') + '</td>'; //股东会（现场）开会日
+            calendarHtml += '<td class="text-nowrap"><a target="_blank" href="' + _this.codeHref + v.SEC_CODE + '&tabActive=1">点击查看</a></td>'; //股东会资料
+            calendarHtml += '</tr>';
+          })
+          $(".js_calendarGDDH .table").html(calendarHtml);
+        } else {
+          $(".js_calendarGDDH .table").html(emptyTr);
+        }
+      },
+      errCallback: function () {
+        $(".js_calendarGDDH .table").html(emptyTr);
+      }
+    })
+  },
+  //路演信息
+  getCalendarLYXX: function (pageIndex) {
+    var _this = this;
+    _this.calendarParams.bizType = 2;
+    _this.calendarParams["pageHelp.pageSize"] = 100;
+    var emptyTr = '<li class="list-group-item">暂无数据</li>'
+    var calendarHtml = '';
+
+    getJSONP({
+      type: 'post',
+      url: _this.calendarUrl,
+      data: _this.calendarParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          $.each(data.result, function (k, v) {
+            calendarHtml += '<li class="list-group-item">' + v.title + '</li>';
+          })
+          $(".js_calendarLYXX .list-group").html(calendarHtml);
+        } else {
+          $(".js_calendarLYXX .list-group").html(emptyTr);
+        }
+      },
+      errCallback: function () {
+        $(".js_calendarLYXX .list-group").html(emptyTr);
+      }
+    })
+  },
+  //e访谈信息
+  getCalendarEFTXX: function (pageIndex) {
+    var _this = this;
+    _this.calendarParams.bizType = 3;
+    _this.calendarParams["pageHelp.pageSize"] = 100;
+    var emptyTr = '<li class="list-group-item">暂无数据</li>'
+    var calendarHtml = '';
+
+    getJSONP({
+      type: 'post',
+      url: _this.calendarUrl,
+      data: _this.calendarParams,
+      dataType: 'jsonp',
+      successCallback: function (data) {
+        if (data && data.result && data.result.length > 0) {
+          $.each(data.result, function (k, v) {
+            calendarHtml += '<li class="list-group-item">' + v.title + '</li>';
+          })
+          $(".js_calendarEFTXX .list-group").html(calendarHtml);
+        } else {
+          $(".js_calendarEFTXX .list-group").html(emptyTr);
+        }
+      },
+      errCallback: function () {
+        $(".js_calendarEFTXX .list-group").html(emptyTr);
+      }
+    })
+  },
+}
+if ($(".js_marketCalendar").length > 0) {
+  calendar.init();
+}
+//市场日历end

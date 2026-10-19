@@ -1,0 +1,5 @@
+[
+  {"label":"sse-table-config","url":"https://www.sse.com.cn/xhtml/js/common/table_config.js?v=V3.8.1_20260819"},
+  {"label":"sse-common-table","url":"https://www.sse.com.cn/xhtml/js/common/common_table.js?v=V3.6.1_20250626"},
+  {"label":"szse-cdr-metadata","url":"https://www.szse.cn/api/report/ShowReport/data","params":{"SHOWTYPE":"JSON","CATALOGID":"1110","TABKEY":"tab3","PAGENO":"1"},"headers":{"Referer":"https://www.szse.cn/market/product/stock/list/index.html"}}
+]

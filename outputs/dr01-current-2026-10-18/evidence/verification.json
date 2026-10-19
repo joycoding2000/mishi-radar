@@ -1,0 +1,8 @@
+{
+  "identical_runs": 2,
+  "deterministic": true,
+  "sha256": "8c9b7ddda2c94b0a53fac1be0da86518d875037d210e4f6038e88ac32571e5b3",
+  "integrity_checks_passed": 89,
+  "network_requests": 0,
+  "consumer_gate": "BLOCKED"
+}

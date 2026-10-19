@@ -1,0 +1,5 @@
+[
+  {"label":"sse-resumption-600825-notice","url":"https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-16/600825_20261016_KZJP.pdf"},
+  {"label":"sse-risk-change-603838-notice","url":"https://static.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-10-17/603838_20261017_GXKU.pdf"},
+  {"label":"sse-601059-notices","url":"https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do","params":{"isPagination":"true","pageHelp.pageSize":"100","pageHelp.cacheSize":"1","pageHelp.pageNo":"1","pageHelp.beginPage":"1","pageHelp.endPage":"1","START_DATE":"2026-10-12","END_DATE":"2026-10-18","SECURITY_CODE":"601059","TITLE":"","BULLETIN_TYPE":""},"headers":{"Referer":"https://www.sse.com.cn/disclosure/listedinfo/announcement/"}}
+]

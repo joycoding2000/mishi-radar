@@ -1,0 +1,14 @@
+{
+  "frozen_before_network": "2026-10-17",
+  "symbols": ["sh600519", "sz000001", "sh600000", "sh600036", "sh601398", "sh601318", "sh600276", "sz000002", "sz000333", "sz002208", "sz300750", "sz300401", "sz300059", "sz301269", "sh688981", "sh688256", "sh688041", "sh688432", "sz000004", "sz000005"],
+  "reused": ["sh600519", "sz000001"],
+  "new_history": ["sz300750", "sh688981"],
+  "selection": "Purposive, not statistical: SH/SZ main boards, ChiNext, STAR, financial/non-financial and local stale-file boundary symbols 000004/000005. Boundary status is not assumed to be current ST/delisting/suspension truth. Never replace failures with successful samples.",
+  "planned_new_sina_endpoint_requests": 42,
+  "robots_request": 1,
+  "web_tool_inaccessible_robots_attempt_reserve": 1,
+  "source_interval_seconds_after_each_response": 2.5,
+  "max_total_new_sina_attempts_including_uncertain_web_attempt": 100,
+  "automatic_retries": 0,
+  "stop": "Stop on source 403/429, robots disallow, malformed robots status, network exception or budget. Do not bypass challenge, retry storm or expand symbols."
+}

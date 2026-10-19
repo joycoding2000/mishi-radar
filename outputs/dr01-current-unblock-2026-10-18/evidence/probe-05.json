@@ -1,0 +1,5 @@
+[
+  {"label":"sse-price-script","url":"https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_price_2021.js"},
+  {"label":"sse-quote-script","url":"https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_HQ_2021.js"},
+  {"label":"em-suspension-D","url":"https://datacenter-web.eastmoney.com/api/data/v1/get","params":{"sortColumns":"SUSPEND_START_DATE","sortTypes":"-1","pageSize":"500","pageNumber":"1","reportName":"RPT_CUSTOM_SUSPEND_DATA_INTERFACE","columns":"ALL","source":"WEB","client":"WEB","filter":"(MARKET=\"全部\")(DATETIME='2026-10-16')"},"headers":{"Referer":"https://data.eastmoney.com/tfpxx/"}}
+]

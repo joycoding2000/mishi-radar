@@ -1,0 +1,5 @@
+[
+  {"label":"szse-stock-D-metadata","url":"https://www.szse.cn/api/report/ShowReport/data","params":{"SHOWTYPE":"JSON","CATALOGID":"1815_stock_snapshot","TABKEY":"tab1","PAGENO":"1","txtBeginDate":"2026-10-16","txtEndDate":"2026-10-16"},"headers":{"Referer":"https://www.szse.cn/market/trend/index.html"}},
+  {"label":"szse-stock-D-export","url":"https://www.szse.cn/api/report/ShowReport","params":{"SHOWTYPE":"xlsx","CATALOGID":"1815_stock_snapshot","TABKEY":"tab1","txtBeginDate":"2026-10-16","txtEndDate":"2026-10-16"},"headers":{"Referer":"https://www.szse.cn/market/trend/index.html"}},
+  {"label":"sse-risk-definition-ui","url":"https://www.sse.com.cn/disclosure/listedinfo/riskplate/info/"}
+]

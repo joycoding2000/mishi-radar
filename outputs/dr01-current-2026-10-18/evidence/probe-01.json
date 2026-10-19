@@ -1,0 +1,5 @@
+[
+  {"label":"sse-list-ui","url":"https://www.sse.com.cn/assortment/stock/list/share/"},
+  {"label":"szse-list-ui","url":"https://www.szse.cn/market/product/stock/list/index.html"},
+  {"label":"szse-list-metadata","url":"https://www.szse.cn/api/report/ShowReport/data","params":{"SHOWTYPE":"JSON","CATALOGID":"1110","TABKEY":"tab1","PAGENO":"1"},"headers":{"Referer":"https://www.szse.cn/market/product/stock/list/index.html"}}
+]

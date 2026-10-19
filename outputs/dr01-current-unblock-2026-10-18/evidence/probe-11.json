@@ -1,0 +1,4 @@
+[
+  {"label":"szse-live-stock-metadata","url":"https://www.szse.cn/api/report/ShowReport/data","params":{"SHOWTYPE":"JSON","CATALOGID":"1815_stock","TABKEY":"tab1","PAGENO":"1"},"headers":{"Referer":"https://www.szse.cn/market/trend/quo/index.html"}},
+  {"label":"szse-trend-static-script","url":"https://res.szse.cn/modules/marketdata/trend/js/trend.js"}
+]

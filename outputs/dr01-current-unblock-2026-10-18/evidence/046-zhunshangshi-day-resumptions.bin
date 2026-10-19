@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日停复牌信息 (2026-10-16) - 准上市</title>
+    <meta name="keywords" content="停复牌,每日停牌股票,复牌股票,股票停牌查询,停牌天数,日内停牌,A股停牌">
+    <meta name="description" content="按交易日列出当天处于停牌状态与当天复牌的 A 股，含连续停牌交易日数、本次停牌起始日与日内停牌时间段，覆盖沪市、深市与北交所，可前后切换交易日。">
+    <link rel="canonical" href="https://www.zhunshangshi.com/tfp/?t=R">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="每日停复牌信息 (2026-10-16) - 准上市">
+    <meta property="og:description" content="按交易日列出当天处于停牌状态与当天复牌的 A 股，含连续停牌交易日数、本次停牌起始日与日内停牌时间段，覆盖沪市、深市与北交所，可前后切换交易日。">
+    <meta property="og:url" content="https://www.zhunshangshi.com/tfp/?t=R">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet" href="/css/content.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"每日停复牌信息","description":"按交易日列出当天处于停牌状态与当天复牌的 A 股，含连续停牌交易日数、本次停牌起始日与日内停牌时间段，覆盖沪市、深市与北交所，可前后切换交易日。","url":"https://www.zhunshangshi.com/tfp/?t=R","isPartOf":{"@type":"WebSite","name":"准上市","url":"https://www.zhunshangshi.com/"}}</script>
+</head>
+<body>
+    <div class="topbar"><div class="wrap"><div class="brand"><div class="brand-logo"><a href="/"><span class="brand-text">准上市</span></a></div><div><div class="brand-sub">IPO 新股数据 · 打新研究中心</div></div></div></div></div>
+    <nav class="navbar"><div class="wrap"><div class="nav-list">
+                <a href="/">首页</a>
+                <a href="/iposh/">注册IPO</a>
+                <a href="/xgsh/">新股上会</a>
+                <a href="/apply/">新股申购</a>
+                <a href="/stock/">A股</a>
+                <a href="/industry/">行业数据</a>
+                <a href="/org/">上市企业</a>
+                <a href="/etf/">ETF</a>
+                <a href="/bk/">概念板块</a>
+                <a href="/hm/">游资</a>
+                <a href="/a/">资讯信息</a>
+                <a href="/k/">新手入门</a>
+            </div></div></nav>
+    <div class="hero"><div class="wrap">
+        <div class="location-bar"><span class="loc-label">当前位置：</span><a href="/">首页</a> <span>/</span> <a href="/tfp/">每日停复牌</a> <span>/</span> 复牌的股票</div>
+        <h1 class="hero-title">每日停复牌信息</h1>
+        <div class="hero-sub">交易日 <strong>2026-10-16</strong> · 全天停牌 <strong>10</strong> 只 · 日内停牌 <strong>0</strong> 只 · 当日复牌 <strong>1</strong> 只 · 收盘后更新</div>
+    </div></div>
+
+<section class="block">
+    <div class="wrap">
+
+        <form class="filter-bar" method="get" action="/tfp/">
+            <label>交易日：</label>
+            <input type="date" name="d" value="2026-10-16" max="2026-10-16">
+            <input type="hidden" name="t" value="R">            <button class="btn" type="submit">查询</button>
+            <a class="btn-ghost" href="/tfp/?t=R">最近交易日</a>
+                            <a class="btn-ghost" href="/tfp/?d=20261015&amp;t=R">前一交易日</a>
+                                        <a class="btn-ghost" href="/tfp/?d=20261019&amp;t=R">后一交易日</a>
+                    </form>
+
+                <div class="stats">
+<div class="stat-card"><div class="num num-blue">10</div><div class="label">全天停牌（只）</div></div>
+<div class="stat-card"><div class="num num-amber">0</div><div class="label">日内停牌（只）</div></div>
+<div class="stat-card"><div class="num num-green">1</div><div class="label">当日复牌（只）</div></div>
+<div class="stat-card"><div class="num num-red">28</div><div class="label">停牌最久（交易日）：*ST萃华</div></div>
+<div class="stat-card"><div class="num num-blue"><span style="font-size:16px;">2026-10-16</span></div><div class="label">数据日期</div></div>
+</div>
+        
+        <div class="data-card">
+            <h2>复牌的股票<span class="dim">2026-10-16 · 1 条</span></h2>
+            <div class="tab-bar"><a class="tab" href="/tfp/?t=R">全部</a><a class="tab" href="/tfp/?t=S">停牌</a><a class="tab active" href="/tfp/?t=R">复牌</a></div>
+
+                        <div class="table-wrap">
+                <table class="data-table">
+                    <thead><tr>
+                        <th>名称/代码</th><th>状态</th><th>板块</th><th>连续停牌（交易日）</th><th>本次停牌起始</th><th>日内停牌时间段</th>
+                    </tr></thead>
+                    <tbody>
+                                            <tr>
+                            <td data-label="名称"><a class="ent-name" href="/stock/600825/">新华传媒</a> <a class="dim" href="/stock/600825/">600825.SH</a></td>
+                            <td data-label="状态"><span class="status s-pass">复牌</span></td>
+                            <td data-label="板块"><span class="mkt mkt-sh">沪主板</span></td>
+                            <td data-label="连续停牌">-</td>
+                            <td data-label="停牌起始" class="code">-</td>
+                            <td data-label="时间段">-</td>
+                        </tr>
+                                        </tbody>
+                </table>
+            </div>
+                    </div>
+
+        <div class="data-card">
+            <h2>说明<span class="dim">这页为什么这样算</span></h2>
+            <div class="md-body">
+                <ul>
+                    <li><strong>停牌期间每个交易日都会各出一条记录</strong>，不是只在开始停牌那天出现一次。所以某只股票连续停牌十天，这十天里每天都能在停牌列表看到它；「连续停牌（交易日）」就是往前数它连续处于停牌状态的天数，按交易日计，跳过周末与休市日。</li>
+                    <li><strong>全天停牌与日内停牌分开统计。</strong>日内停牌只在当天某几分钟暂停交易（时间段列写明，如 <code>9:49-9:59、10:02-10:12</code>），其余时间照常交易，因此不参与连续停牌天数与停牌起始日的计算。</li>
+                    <li><strong>复牌行</strong>是数据源在恢复交易当天给的状态记录，代表这只股票从这天起重新可以买卖，本身不统计停牌天数。</li>
+                    <li>本页最多往前回溯约 90 个自然日。<strong>带 <code>*</code> 号的</strong>表示这段停牌的真正起始日更早、已超出可查询范围，此时「连续停牌（交易日）」只数到窗口内第一天，是个下限。</li>
+                    <li><strong>数据源不披露停牌原因</strong>，所以本页不写原因；需要查重大事项请看公司公告与个股档案页。</li>
+                    <li>覆盖沪市、深市与北交所。极少数情况下同一只股票同一天既有停牌又有复牌记录，这类各占一行，不做合并。</li>
+                    <li>停复牌为交易所公开披露信息，本页只做整理与展示，不构成任何投资建议。</li>
+                </ul>
+            </div>
+        </div>
+
+            <div class="cal-tools">
+        <h3>行情与排行</h3>
+        <div class="chip-row">
+            <a class="chip" href="/hq/">A股行情快照</a>
+            <a class="chip" href="/zjlx/">资金流向排行</a>
+            <a class="chip" href="/guzhi/">估值排行</a>
+            <a class="chip" href="/rank/">股票排行榜</a>
+            <a class="chip" href="/caiwu/">个股财务查询</a>
+            <a class="chip" href="/stock-shock.html">异常波动股票</a>
+            <a class="chip" href="/st/">ST风险警示板</a>
+        </div>
+        <h3>个股与游资工具</h3>
+        <div class="chip-row">
+            <a class="chip" href="/tools/stock_detail.html">个股详情</a>
+            <a class="chip" href="/tools/stock.html">每日指标查询</a>
+            <a class="chip" href="/tools/lhb-stock.html">龙虎榜个股</a>
+            <a class="chip" href="/tools/yz-hub.html">游资工具集</a>
+            <a class="chip" href="/tools/zhuli-monitor.html">主力资金监控</a>
+            <a class="chip" href="/tools/rzrq-monitor.html">融资融券监控</a>
+            <a class="chip" href="/tools/qa.html">董秘回复</a>
+            <a class="chip" href="/niusan/">牛散持仓查询</a>
+        </div>
+        <h3>板块与题材</h3>
+        <div class="chip-row">
+            <a class="chip" href="/bk/">概念板块</a>
+            <a class="chip" href="/tools/concept-hub.html">概念题材工具集</a>
+            <a class="chip" href="/tools/lead-stock.html">龙头股追踪</a>
+            <a class="chip" href="/industry/">行业数据</a>
+            <a class="chip" href="/hm/">游资名录</a>
+        </div>
+        <h3>新股与打新</h3>
+        <div class="chip-row">
+            <a class="chip" href="/apply/">新股申购</a>
+            <a class="chip" href="/xgsh/">新股上会</a>
+            <a class="chip" href="/iposh/">注册IPO</a>
+            <a class="chip" href="/tools/calendar.html">打新日历</a>
+            <a class="chip" href="/tools/daxinshouyi.html">打新收益统计</a>
+            <a class="chip" href="/tools/zhongqian.html">中签率计算器</a>
+        </div>
+        <h3>交易计算器</h3>
+        <div class="chip-row">
+            <a class="chip" href="/jsq/">定投复利与年化收益</a>
+            <a class="chip" href="/tools/bucangpro.html">补仓计算器</a>
+            <a class="chip" href="/tools/yingkuipro.html">盈亏计算器</a>
+            <a class="chip" href="/tools/lianbanpro.html">连板计算器</a>
+            <a class="chip" href="/tools/zuotpro.html">做T计算器</a>
+            <a class="chip" href="/tools/jiage.html">股价计算器</a>
+            <a class="chip" href="/tools/shouyi.html">年化收益计算器</a>
+        </div>
+        <h3>资讯与其它</h3>
+        <div class="chip-row">
+            <a class="chip" href="/a/">资讯信息</a>
+            <a class="chip" href="/k/">新手入门</a>
+            <a class="chip" href="/eco/">全球财经日历</a>
+            <a class="chip" href="/sge/">上海金现货行情</a>
+            <a class="chip" href="/yongjin.html">券商佣金参考</a>
+            <a class="chip" href="/site/">证券导航</a>
+            <a class="chip" href="/tools.html">全部工具</a>
+        </div>
+    </div>
+
+    </div>
+</section>
+
+    <footer class="footer"><div class="wrap"><div class="footer-bottom">
+        <div>© 2023 准上市 版权所有 | <a href="/about.html">关于本站</a> | <a href="/privacy.html">隐私政策</a> | <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">鄂ICP备2023000073号-1</a></div>
+        <div class="beian">本站数据均来源于网络收集，仅供参考，不构成投资建议。</div>
+    </div></div></footer>
+<script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?365f4eb83a0b59f1db3a9549c235b2a7";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
+</body>
+</html>

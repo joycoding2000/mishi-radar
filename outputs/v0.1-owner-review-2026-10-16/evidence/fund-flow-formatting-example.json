@@ -1,0 +1,24 @@
+{
+  "mode": "OFFLINE_FIXTURE_NOT_MARKET_DATA",
+  "raw_fixture": {
+    "current": [
+      {
+        "main_net": 49.0,
+        "small_net": null
+      }
+    ],
+    "history": [
+      {
+        "date": "2026-10-15",
+        "main_net": 49.0
+      },
+      {
+        "date": "2026-10-14",
+        "main_net": null
+      }
+    ],
+    "methodology": "tdx_l1_reconstructed"
+  },
+  "public_rendered": "# Fund Flow for 600519 (A-stock)\n# Source: TDX\n# Methodology: tdx_l1_reconstructed\n# 注意：按通达信 L1 订单金额分层重算，非东财口径；不提供分钟级结论。\n# Retrieved: 2026-10-16 21:16:41\n\n## 当前交易日 L1 重算资金流\n# 该值对应该工具抓取时点（见上方 Retrieved），不是可回溯的历史日期值。\n主力净流入=0万 | 小单净流入=0万\n\n## 历史日频资金流（TDX）\n  2026-10-15 | 主力净额=0万\n  2026-10-14 | 主力净额=0万",
+  "consumer_implication": "public string rounds yuan/10000 to integer 万; missing main_net is rendered 0万. Not a lossless numeric input for S08."
+}

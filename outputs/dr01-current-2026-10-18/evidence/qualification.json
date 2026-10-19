@@ -1,0 +1,612 @@
+{
+  "SSE_aggregate_statistics": [
+    {
+      "AVG_PE_RATIO": "16.28",
+      "LIST_COM_NUM": "2323",
+      "NEGO_ISSUE_VOL": "48753.13",
+      "NEGO_VALUE": "583570.98",
+      "PRODUCT_NAME": "股票",
+      "SECURITY_NUM": "2361",
+      "TOTAL_ISSUE_VOL": "51863.78",
+      "TOTAL_TRADE_AMT": "7370.4",
+      "TOTAL_VALUE": "652062.8",
+      "TRADE_DATE": "20261016"
+    },
+    {
+      "AVG_PE_RATIO": "13.54",
+      "LIST_COM_NUM": "1705",
+      "NEGO_ISSUE_VOL": "46501.81",
+      "NEGO_VALUE": "490311.75",
+      "PRODUCT_NAME": "主板",
+      "SECURITY_NUM": "1743",
+      "TOTAL_ISSUE_VOL": "48612.77",
+      "TOTAL_TRADE_AMT": "5251.47",
+      "TOTAL_VALUE": "510289.68",
+      "TRADE_DATE": "20261016"
+    },
+    {
+      "AVG_PE_RATIO": "101.27",
+      "LIST_COM_NUM": "618",
+      "NEGO_ISSUE_VOL": "2251.32",
+      "NEGO_VALUE": "93259.23",
+      "PRODUCT_NAME": "科创板",
+      "SECURITY_NUM": "618",
+      "TOTAL_ISSUE_VOL": "3251.01",
+      "TOTAL_TRADE_AMT": "2118.93",
+      "TOTAL_VALUE": "141773.12",
+      "TRADE_DATE": "20261016"
+    }
+  ],
+  "SZSE_date": "2026-10-16",
+  "SZSE_recordcount": 2906,
+  "audit_kind": "SOURCE_QUALIFICATION_ONLY_NOT_CONSUMER_IMPLEMENTATION",
+  "baseline": [
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md",
+      "sha256": "9b98641d4602fcd2a35c28520f9160a3fbf935ce1c43e89d466a473419e5bd62"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_TO_CHSTOCKDATA_DR01_DR06_CONSUMER_REQUEST_2026-10-16.md",
+      "sha256": "35609c8cbf823dbb86a681ea15c27f7f598892b7ea73f46ecde5025e85ff8866"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\a_stock.py",
+      "sha256": "3eb18bfa41a76e8263d870fe849941ef1d5c71d4c21948274f53ac0f6f06d89a"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\delisting.py",
+      "sha256": "5401a82cf97c9c1455522cda2525ab777c222d4a9c196dc2c41b8052902ffc38"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\suspension.py",
+      "sha256": "5ddf9db08de91bc8dd187d8a8f0c9b711666e9930ca9ec726f5d77a2d9cec153"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\tradability.py",
+      "sha256": "db65b547414fff2c12a35c1dbb245c60c994455a6c242c0e0c1b047261de4564"
+    }
+  ],
+  "board_counts": {
+    "SH_MAIN": 1702,
+    "SH_STAR_with_CDR": 618,
+    "SZ": {
+      "主板": 1495,
+      "创业板": 1411
+    }
+  },
+  "check_counts": {
+    "True": 89
+  },
+  "checks": [
+    {
+      "check": "prior_manifest:official-SH-main.response.bin",
+      "passed": true
+    },
+    {
+      "check": "prior_manifest:official-SH-star.response.bin",
+      "passed": true
+    },
+    {
+      "check": "prior_manifest:official-SZ-A.response.bin",
+      "passed": true
+    },
+    {
+      "check": "prior_manifest:official-requests.json",
+      "passed": true
+    },
+    {
+      "check": "prior_manifest:offline-audit.json",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-list-ui",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-list-ui",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-list-ui",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-list-ui",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-list-metadata",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-list-metadata",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-table-config",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-table-config",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-common-table",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-common-table",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-cdr-metadata",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-cdr-metadata",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-stock-list-script",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-stock-list-script",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-header-nav",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-header-nav",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-risk-ui",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-risk-ui",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-delisting-period-ui",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-delisting-period-ui",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-689009-overview",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-689009-overview",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-common-definitions",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-common-definitions",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-stock-statistic-ui",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-stock-statistic-ui",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-risk-metadata",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-risk-metadata",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-risk-export",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-risk-export",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-risk-ui",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-risk-ui",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-stock-statistic-script",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-stock-statistic-script",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:szse-delisting-period-metadata",
+      "passed": true
+    },
+    {
+      "check": "http_200:szse-delisting-period-metadata",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-risk-script",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-risk-script",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-dated-statistic",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-dated-statistic",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-main-risk",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-main-risk",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-main-delisting-period",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-main-delisting-period",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-star-risk",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-star-risk",
+      "passed": true
+    },
+    {
+      "check": "new_response_hash:sse-star-delisting-period",
+      "passed": true
+    },
+    {
+      "check": "http_200:sse-star-delisting-period",
+      "passed": true
+    },
+    {
+      "check": "SSE_total_matches_rows:main",
+      "passed": true
+    },
+    {
+      "check": "SSE_raw_matches_prior_derived:main",
+      "passed": true
+    },
+    {
+      "check": "SSE_total_matches_rows:star",
+      "passed": true
+    },
+    {
+      "check": "SSE_raw_matches_prior_derived:star",
+      "passed": true
+    },
+    {
+      "check": "SZSE_raw_matches_prior_derived",
+      "passed": true
+    },
+    {
+      "check": "SH:valid_unique_complete_identity",
+      "passed": true
+    },
+    {
+      "check": "SZ:valid_unique_complete_identity",
+      "passed": true
+    },
+    {
+      "check": "SZSE_independent_total",
+      "passed": true
+    },
+    {
+      "check": "SZSE_explicit_date",
+      "passed": true
+    },
+    {
+      "check": "SZSE_risk_export_complete",
+      "passed": true
+    },
+    {
+      "check": "SZSE_period_complete",
+      "passed": true
+    },
+    {
+      "check": "SZSE_status_dates_align",
+      "passed": true
+    },
+    {
+      "check": "SZSE_risk_names_align",
+      "passed": true
+    },
+    {
+      "check": "SZSE_risk_markers_set_align",
+      "passed": true
+    },
+    {
+      "check": "SZSE_period_member_present",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_total:sse-main-risk",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_unique:sse-main-risk",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_total:sse-main-delisting-period",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_unique:sse-main-delisting-period",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_total:sse-star-risk",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_unique:sse-star-risk",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_total:sse-star-delisting-period",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_unique:sse-star-delisting-period",
+      "passed": true
+    },
+    {
+      "check": "SSE_status_set_matches_name_markers",
+      "passed": true
+    },
+    {
+      "check": "SSE_STATE_CODE7_matches_official_risk_list",
+      "passed": true
+    },
+    {
+      "check": "689009_official_type_CDR",
+      "passed": true
+    },
+    {
+      "check": "future_delist_dates_not_yet_effective",
+      "passed": true
+    },
+    {
+      "check": "no_future_listings_observed",
+      "passed": true
+    },
+    {
+      "check": "exchange_code_unique",
+      "passed": true
+    },
+    {
+      "check": "statistics_date_matches_SZ",
+      "passed": true
+    },
+    {
+      "check": "baseline_unchanged:MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md",
+      "passed": true
+    },
+    {
+      "check": "baseline_unchanged:MISHI_RADAR_TO_CHSTOCKDATA_DR01_DR06_CONSUMER_REQUEST_2026-10-16.md",
+      "passed": true
+    },
+    {
+      "check": "baseline_unchanged:a_stock.py",
+      "passed": true
+    },
+    {
+      "check": "baseline_unchanged:delisting.py",
+      "passed": true
+    },
+    {
+      "check": "baseline_unchanged:suspension.py",
+      "passed": true
+    },
+    {
+      "check": "baseline_unchanged:tradability.py",
+      "passed": true
+    }
+  ],
+  "confirmed_blockers": [
+    "SSE listed universe and risk/delisting-period responses lack a validated business effective date; cannot certify they describe the target completed session.",
+    "Existing suspension API explicitly rejects historical-date requests and its latest-event snapshot is not certified full-market suspension/resumption state for the target completed session."
+  ],
+  "future_delisting_applied_early": false,
+  "future_delisting_records_retained": [
+    {
+      "A_STOCK_CODE": "601059",
+      "DELIST_DATE": "20261019",
+      "SEC_NAME_CN": "信达证券"
+    },
+    {
+      "A_STOCK_CODE": "601198",
+      "DELIST_DATE": "20261019",
+      "SEC_NAME_CN": "东兴证券"
+    }
+  ],
+  "implementation": "NOT_STARTED_SOURCE_GATE_FAILED",
+  "minimum_solution": "Obtain a date-stamped full SH/SZ security qualification snapshot (listed/ST/*ST/delisting-period/suspend-resume), or documented effective-date semantics for the existing official sources, then reconcile it to the already captured official code sets; no full mootdx reconciliation gate is required.",
+  "observed_list_records": 5226,
+  "observed_stock_only_records_after_CDR_exclusion": 5225,
+  "owner_acceptance_candidate": false,
+  "qualified_current_scan_denominator": null,
+  "request_budget": {
+    "approval_failure_before_execution_not_a_source_request": true,
+    "conservative_HTTP_TCP_TLS_units": 78,
+    "limit": 100,
+    "new_public_HTTP_attempts": 24,
+    "preflight_count_evidence": "firecrawl-cli 1.18.5 dist/commands/status.js calls fetchQueueStatus and fetchCreditUsage once each via Promise.all; neither retries",
+    "preflight_status_CLI_invocations": 1,
+    "preflight_status_account_attempts": 2,
+    "prior_round_units_reused_without_new_network": 12,
+    "probe_redirects": 0,
+    "probe_retries": 0
+  },
+  "reused_evidence": [
+    {
+      "bytes": 1946711,
+      "file": "official-SH-main.response.bin",
+      "sha256": "743ba070a791d053d319c7ed30b889c23b51575373a73bf81f8aa2a995b8a201"
+    },
+    {
+      "bytes": 715300,
+      "file": "official-SH-star.response.bin",
+      "sha256": "672da3dad4b8443c690ce116361645a55e7a3e9e204de5ad60a0e8beb8281e72"
+    },
+    {
+      "bytes": 545403,
+      "file": "official-SZ-A.response.bin",
+      "sha256": "780b9f26515921b5f04c06bb6ffe5b25de57c283b1e87c993036c3ce0bc36332"
+    },
+    {
+      "bytes": 6080,
+      "file": "official-requests.json",
+      "sha256": "f9317e06e806096cd4a9858effc8c022fc32d5ba29288153178d8a3f2eaf878d"
+    },
+    {
+      "bytes": 124916,
+      "file": "offline-audit.json",
+      "sha256": "bfa6b7e2abc9f06b966c59139a900c440525b1e41153a13956a21f689e9aede7"
+    },
+    {
+      "bytes": 12065,
+      "file": "sha256-manifest.json",
+      "sha256": "65edc1df701a9c82e7b7726d6e36ac1b38cc9fda5d361bc5a0fbb20081629d2a"
+    }
+  ],
+  "risk_observations": {
+    "SH_A": 83,
+    "SH_sources": [
+      {
+        "A_members": 70,
+        "outside_A_codes": [
+          "900915"
+        ],
+        "queryDate": "",
+        "row_keys": [
+          "INSTRUMENT_SHORT",
+          "INSTRUMENT_ID"
+        ],
+        "rows": 71,
+        "source": "sse-main-risk",
+        "source_effective_date": null
+      },
+      {
+        "A_members": 0,
+        "outside_A_codes": [],
+        "queryDate": "",
+        "row_keys": [],
+        "rows": 0,
+        "source": "sse-main-delisting-period",
+        "source_effective_date": null
+      },
+      {
+        "A_members": 13,
+        "outside_A_codes": [],
+        "queryDate": "",
+        "row_keys": [
+          "secNameCn",
+          "secCode"
+        ],
+        "rows": 13,
+        "source": "sse-star-risk",
+        "source_effective_date": null
+      },
+      {
+        "A_members": 0,
+        "outside_A_codes": [],
+        "queryDate": "",
+        "row_keys": [],
+        "rows": 0,
+        "source": "sse-star-delisting-period",
+        "source_effective_date": null
+      }
+    ],
+    "SZ_A": 115,
+    "SZ_B_excluded": [
+      "200016",
+      "200056",
+      "200488"
+    ],
+    "SZ_delisting_period": [
+      {
+        "gsjc": "<a href='http://www.szse.cn/certificate/individual/index.html?code=301139' target='_blank'><u>元道退</u></a>",
+        "zqdm": "301139"
+      }
+    ]
+  },
+  "special_type": {
+    "identity": [
+      "SH",
+      "689009"
+    ],
+    "official_SEC_TYPE": "科创CDR",
+    "ordinary_A_scope": "EXCLUDED_CDR",
+    "source_list_STOCK_TYPE8_is_board_not_security_type": true
+  },
+  "target_latest_completed_date": "2026-10-16",
+  "time_semantics": {
+    "HTTP_Date_and_XLSX_creation_are_not_business_effective_time": true,
+    "SSE_aggregate_date_does_not_date_constituent_lists": true,
+    "SSE_list_business_date": null,
+    "SSE_status_business_date": null,
+    "current_only_suspension_API_does_not_certify_prior_completed_session": true
+  },
+  "universe_audits": {
+    "SH": {
+      "conflict_groups": {},
+      "duplicate_groups": {},
+      "invalid_codes": [],
+      "missing": {
+        "A_STOCK_CODE": 0,
+        "LIST_BOARD": 0,
+        "LIST_DATE": 0,
+        "SEC_NAME_CN": 0
+      },
+      "rows": 2320,
+      "unique_codes": 2320
+    },
+    "SZ": {
+      "conflict_groups": {},
+      "duplicate_groups": {},
+      "invalid_codes": [],
+      "missing": {
+        "A股上市日期": 0,
+        "A股代码": 0,
+        "A股简称": 0,
+        "板块": 0
+      },
+      "rows": 2906,
+      "unique_codes": 2906
+    }
+  },
+  "verdict": "BLOCKED"
+}

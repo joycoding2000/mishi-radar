@@ -1,0 +1,1004 @@
+{
+  "SH": {
+    "all_equities": 2361,
+    "end_date_semantics_observed": "Inclusive final suspension date; end reason must distinguish resumption from delisting",
+    "master_missing": [],
+    "normal_empty_suspension_query_is_not_error": true,
+    "ordinary_A_after_CDR_exclusion": 2319,
+    "query_date_semantics": "Overlapping suspension interval, including older continuing starts, not announcement publication day",
+    "risk_A_count": 83,
+    "snapshot_timestamp_CST": "2026-10-16T16:29:04+08:00",
+    "suspended_at_D": [
+      "600293",
+      "601059",
+      "601198",
+      "688496"
+    ],
+    "target_records_including_CDR": 2320,
+    "type_counts": {
+      "ASH": 1702,
+      "BSH": 41,
+      "KSH": 618
+    }
+  },
+  "SZ": {
+    "A_coverage": 2906,
+    "B_or_other_rows_outside_A_master": 39,
+    "all_equities": 2945,
+    "master_missing": [],
+    "phase_examples": {
+      "000001": {
+        "marketTime": "2026-10-16 15:30:00",
+        "tradingPhaseCode1": "00",
+        "tradingPhaseCode2": "00"
+      },
+      "000016": {
+        "marketTime": "2026-10-16 15:30:00",
+        "tradingPhaseCode1": "00",
+        "tradingPhaseCode2": "00"
+      }
+    },
+    "source_day": "2026-10-16",
+    "suspend_resume_status_qualification": "UNKNOWN_FULL_MARKET_STATE_NOT_CERTIFIED",
+    "zero_volume_candidates_not_promoted_to_status": [
+      "000016",
+      "002388",
+      "002717",
+      "002731",
+      "300773",
+      "301314"
+    ]
+  },
+  "baseline": [
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md",
+      "sha256": "9b98641d4602fcd2a35c28520f9160a3fbf935ce1c43e89d466a473419e5bd62"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_TO_CHSTOCKDATA_DR01_DR06_CONSUMER_REQUEST_2026-10-16.md",
+      "sha256": "35609c8cbf823dbb86a681ea15c27f7f598892b7ea73f46ecde5025e85ff8866"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\a_stock.py",
+      "sha256": "3eb18bfa41a76e8263d870fe849941ef1d5c71d4c21948274f53ac0f6f06d89a"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\delisting.py",
+      "sha256": "5401a82cf97c9c1455522cda2525ab777c222d4a9c196dc2c41b8052902ffc38"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\suspension.py",
+      "sha256": "5ddf9db08de91bc8dd187d8a8f0c9b711666e9930ca9ec726f5d77a2d9cec153"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\tradability.py",
+      "sha256": "db65b547414fff2c12a35c1dbb245c60c994455a6c242c0e0c1b047261de4564"
+    }
+  ],
+  "bulletins": {
+    "complete_groups": 921,
+    "complete_pages": 10,
+    "individual_files_listed": 1277,
+    "publication_date_was_not_used_as_effective_date": true,
+    "rejected_bodies": [
+      {
+        "label": "sse-resumption-600825-notice",
+        "reason": "HTTP_200_JS_CHALLENGE_NOT_PDF_NOT_BYPASSED"
+      },
+      {
+        "label": "sse-risk-change-603838-notice",
+        "reason": "HTTP_200_JS_CHALLENGE_NOT_PDF_NOT_BYPASSED"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "raw_hash:sse-suspension-ui",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-trade-tip-script",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-suspension-ui",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-suspension-D-new-p1",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-suspension-D-legacy",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-trade-day",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-suspension-D15",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-suspension-D19",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-equity-quote-ui",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-price-script",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-quote-script",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:em-suspension-D",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-market-quote-ui",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-equity-snapshot-p1",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p1",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-equity-snapshot-p2",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-equity-snapshot-p3",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-stock-snapshot-metadata",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-stock-D-metadata",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-stock-D-export",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-risk-definition-ui",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p2",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p3",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p4",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p5",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p6",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p7",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p8",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p9",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-bulletins-D-weekend-p10",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-live-quote-ui",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-trend-script",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-suspension-source-search",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-live-stock-metadata",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-trend-static-script",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-resumption-600825-notice",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-risk-change-603838-notice",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:sse-601059-notices",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-static-version-loader",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-trend-mapped-script",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-phase-normal",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-phase-suspended",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:szse-phase-multicode-capability",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:D-published-summary-locator",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:zhunshangshi-full-day-suspensions",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:zhunshangshi-day-resumptions",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:zhunshangshi-summary",
+      "passed": true
+    },
+    {
+      "name": "raw_hash:zhunshangshi-about-source-lineage",
+      "passed": true
+    },
+    {
+      "name": "request_budget",
+      "passed": true
+    },
+    {
+      "name": "sequential_unique_attempts",
+      "passed": true
+    },
+    {
+      "name": "no_implicit_retries_or_redirects",
+      "passed": true
+    },
+    {
+      "name": "reused_master_hash:official-SH-main.response.bin",
+      "passed": true
+    },
+    {
+      "name": "reused_master_hash:official-SH-star.response.bin",
+      "passed": true
+    },
+    {
+      "name": "reused_master_hash:official-SZ-A.response.bin",
+      "passed": true
+    },
+    {
+      "name": "reused_5226_records",
+      "passed": true
+    },
+    {
+      "name": "SH_dates_are_D",
+      "passed": true
+    },
+    {
+      "name": "SH_same_source_timestamp",
+      "passed": true
+    },
+    {
+      "name": "SH_complete_total",
+      "passed": true
+    },
+    {
+      "name": "SH_stable_total",
+      "passed": true
+    },
+    {
+      "name": "SH_contiguous_pages",
+      "passed": true
+    },
+    {
+      "name": "SH_complete_row_width",
+      "passed": true
+    },
+    {
+      "name": "SH_source_security_types",
+      "passed": true
+    },
+    {
+      "name": "SH_master_exact_code_set",
+      "passed": true
+    },
+    {
+      "name": "SH_master_exact_names",
+      "passed": true
+    },
+    {
+      "name": "SH_master_product_status_at_D",
+      "passed": true
+    },
+    {
+      "name": "SH_dated_risk_names_match_official_risk_set",
+      "passed": true
+    },
+    {
+      "name": "CDR_689009_still_explicitly_excluded",
+      "passed": true
+    },
+    {
+      "name": "future_delisting_not_applied",
+      "passed": true
+    },
+    {
+      "name": "SH_suspension_complete:2026-10-15",
+      "passed": true
+    },
+    {
+      "name": "SH_suspension_intervals_overlap_query:2026-10-15",
+      "passed": true
+    },
+    {
+      "name": "SH_suspension_complete:2026-10-16",
+      "passed": true
+    },
+    {
+      "name": "SH_suspension_intervals_overlap_query:2026-10-16",
+      "passed": true
+    },
+    {
+      "name": "SH_suspension_complete:2026-10-19",
+      "passed": true
+    },
+    {
+      "name": "SH_suspension_intervals_overlap_query:2026-10-19",
+      "passed": true
+    },
+    {
+      "name": "SH_four_suspended_from_independent_official_paths",
+      "passed": true
+    },
+    {
+      "name": "SH_includes_cross_day_continuous_suspensions",
+      "passed": true
+    },
+    {
+      "name": "SH_resumption_example_600825",
+      "passed": true
+    },
+    {
+      "name": "SH_end_date_inclusive_example",
+      "passed": true
+    },
+    {
+      "name": "SZ_complete_export",
+      "passed": true
+    },
+    {
+      "name": "SZ_all_rows_dated_D",
+      "passed": true
+    },
+    {
+      "name": "SZ_master_all_2906_present",
+      "passed": true
+    },
+    {
+      "name": "SZ_names_match_after_width_space_normalization",
+      "passed": true
+    },
+    {
+      "name": "SZ_zero_volume_candidates_six",
+      "passed": true
+    },
+    {
+      "name": "SZ_daily_report_has_no_suspension_fact_field",
+      "passed": true
+    },
+    {
+      "name": "SZ_phase_examples_both_D",
+      "passed": true
+    },
+    {
+      "name": "SZ_closed_phase_does_not_distinguish_examples",
+      "passed": true
+    },
+    {
+      "name": "SZ_multicode_not_supported_by_probe",
+      "passed": true
+    },
+    {
+      "name": "EM_transport_response_complete_not_state_certification",
+      "passed": true
+    },
+    {
+      "name": "EM_D_query_contains_three_future_events",
+      "passed": true
+    },
+    {
+      "name": "EM_D_query_contains_two_already_ended_events",
+      "passed": true
+    },
+    {
+      "name": "EM_interval_candidates_agree_with_SZ_zero_rows",
+      "passed": true
+    },
+    {
+      "name": "predicted_resume_is_not_proven_listing_or_tradability",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:*ST萃华 002731.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:*ST萃华 002731.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:*ST康佳A 000016.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:*ST康佳A 000016.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:*ST清越 688496.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:*ST清越 688496.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:信达证券 601059.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:信达证券 601059.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:东兴证券 601198.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:东兴证券 601198.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:三峡新材 600293.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:三峡新材 600293.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:新亚制程 002388.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:新亚制程 002388.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:拉卡拉 300773.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:拉卡拉 300773.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:*ST岭南 002717.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:*ST岭南 002717.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:S:科瑞思 301314.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:S:科瑞思 301314.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_target_day:S",
+      "passed": true
+    },
+    {
+      "name": "ZSS_declared_count_matches_rows:S",
+      "passed": true
+    },
+    {
+      "name": "ZSS_unique_identity:S",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:R:新华传媒 600825.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:R:新华传媒 600825.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_target_day:R",
+      "passed": true
+    },
+    {
+      "name": "ZSS_declared_count_matches_rows:R",
+      "passed": true
+    },
+    {
+      "name": "ZSS_unique_identity:R",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:*ST萃华 002731.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:*ST萃华 002731.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:*ST康佳A 000016.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:*ST康佳A 000016.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:*ST清越 688496.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:*ST清越 688496.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:信达证券 601059.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:信达证券 601059.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:东兴证券 601198.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:东兴证券 601198.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:三峡新材 600293.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:三峡新材 600293.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:新亚制程 002388.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:新亚制程 002388.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:拉卡拉 300773.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:拉卡拉 300773.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:*ST岭南 002717.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:*ST岭南 002717.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:科瑞思 301314.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:科瑞思 301314.SZ",
+      "passed": true
+    },
+    {
+      "name": "ZSS_six_columns:all:新华传媒 600825.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_exchange_code:all:新华传媒 600825.SH",
+      "passed": true
+    },
+    {
+      "name": "ZSS_explicit_target_day:all",
+      "passed": true
+    },
+    {
+      "name": "ZSS_declared_count_matches_rows:all",
+      "passed": true
+    },
+    {
+      "name": "ZSS_unique_identity:all",
+      "passed": true
+    },
+    {
+      "name": "ZSS_10_suspended_and_1_resumed",
+      "passed": true
+    },
+    {
+      "name": "ZSS_summary_equals_both_tabs",
+      "passed": true
+    },
+    {
+      "name": "ZSS_SH_exactly_matches_official_D_suspensions",
+      "passed": true
+    },
+    {
+      "name": "ZSS_SZ_matches_EM_intervals_and_official_zero_candidates",
+      "passed": true
+    },
+    {
+      "name": "ZSS_suspensions_are_continuous_not_new_D_events",
+      "passed": true
+    },
+    {
+      "name": "ZSS_resumption_matches_official_SH_example",
+      "passed": true
+    },
+    {
+      "name": "ZSS_describes_daily_continuing_state",
+      "passed": true
+    },
+    {
+      "name": "ZSS_about_names_multiple_possible_third_party_providers",
+      "passed": true
+    },
+    {
+      "name": "ZSS_examined_pages_have_no_upstream_data_link",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p1",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p2",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p3",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p4",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p5",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p6",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p7",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p8",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p9",
+      "passed": true
+    },
+    {
+      "name": "bulletin_total_stable:sse-bulletins-D-weekend-p10",
+      "passed": true
+    },
+    {
+      "name": "bulletin_all_ten_pages",
+      "passed": true
+    },
+    {
+      "name": "bulletin_all_921_groups",
+      "passed": true
+    },
+    {
+      "name": "bulletin_group_ids_unique",
+      "passed": true
+    },
+    {
+      "name": "publication_date_not_current_state",
+      "passed": true
+    },
+    {
+      "name": "reject_HTTP200_HTML_instead_of_PDF:sse-resumption-600825-notice",
+      "passed": true
+    },
+    {
+      "name": "reject_HTTP200_HTML_instead_of_PDF:sse-risk-change-603838-notice",
+      "passed": true
+    },
+    {
+      "name": "frozen_or_supplier_source_unchanged:MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md",
+      "passed": true
+    },
+    {
+      "name": "frozen_or_supplier_source_unchanged:MISHI_RADAR_TO_CHSTOCKDATA_DR01_DR06_CONSUMER_REQUEST_2026-10-16.md",
+      "passed": true
+    },
+    {
+      "name": "frozen_or_supplier_source_unchanged:a_stock.py",
+      "passed": true
+    },
+    {
+      "name": "frozen_or_supplier_source_unchanged:delisting.py",
+      "passed": true
+    },
+    {
+      "name": "frozen_or_supplier_source_unchanged:suspension.py",
+      "passed": true
+    },
+    {
+      "name": "frozen_or_supplier_source_unchanged:tradability.py",
+      "passed": true
+    }
+  ],
+  "checks_passed": 176,
+  "consumer_fault_injection_and_regression": "NOT_RUN_NO_IMPLEMENTATION_CANDIDATE",
+  "contract_responsibility": {
+    "DR01_CURRENT": "Full current identity and listing/risk/suspend-resume facts with date, unknown counts and denominator",
+    "DR06_NOT_REIMPLEMENTED": "Historical eligibility, rules and execution feasibility; not a new Gate for DR01"
+  },
+  "mode": "QUALIFICATION_DELTA_ONLY_NO_CONSUMER_IMPLEMENTATION",
+  "next_feasible_decision": "Obtain a verifiable Shenzhen D full suspend/resume state file, or table-specific upstream and full-fetch completion evidence from the published summary provider. Owner must decide the supplier or availability if this evidence is unavailable. Replacing facts with zero-volume or positive-trading proxies, or relaxing source qualification, requires a consumer qualification Change Request; no such change was approved. No further repeated source searches are proposed.",
+  "owner_acceptance_candidate": false,
+  "production_implementation": "NOT_STARTED_SOURCE_GATE_FAILED",
+  "published_summary_reference": {
+    "all_three_pages_received_and_audited": true,
+    "general_source_about_page_received_and_audited": true,
+    "original_URL_supplied_by_Owner": true
+  },
+  "request_budget": {
+    "HTTP_status_counts": {
+      "200": 45,
+      "403": 1,
+      "404": 2
+    },
+    "actual_HTTP_attempts": 48,
+    "concurrent_source_requests": 0,
+    "implicit_retries": 0,
+    "limit": 120,
+    "redirects": 0,
+    "stopped_because_budget_exhausted": false
+  },
+  "resolved_previous_blockers": [
+    "SSE master and risk-state effective-date bridge via full official dated product snapshot",
+    "SSE target-day continuous suspension coverage via official overlap-date query"
+  ],
+  "reused_evidence": [
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\outputs\\dr01-current-2026-10-18\\evidence\\reused\\official-SH-main.response.bin",
+      "sha256": "743ba070a791d053d319c7ed30b889c23b51575373a73bf81f8aa2a995b8a201"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\outputs\\dr01-current-2026-10-18\\evidence\\reused\\official-SH-star.response.bin",
+      "sha256": "672da3dad4b8443c690ce116361645a55e7a3e9e204de5ad60a0e8beb8281e72"
+    },
+    {
+      "path": "D:\\Dev\\Projects\\mishi-radar\\outputs\\dr01-current-2026-10-18\\evidence\\reused\\official-SZ-A.response.bin",
+      "sha256": "780b9f26515921b5f04c06bb6ffe5b25de57c283b1e87c993036c3ce0bc36332"
+    }
+  ],
+  "scope": "No DR04-P, DR02, DR04-M, DR06, Mishi product code, database, platform or framework changes; no commit/push/release",
+  "sole_remaining_root_cause": "No qualified complete Shenzhen suspend/resume state for D. The Owner-supplied Zhunshangshi pages confirm a dated list of six Shenzhen suspensions, but table-specific upstream lineage and full-market completion are not established. Agreement with Eastmoney cannot establish independent completeness. Official price/volume and closed phase cannot supply the missing state fact.",
+  "target_completed_day": "2026-10-16",
+  "third_party": {
+    "SZ_interval_candidates": [
+      "000016",
+      "002388",
+      "002717",
+      "002731",
+      "300773",
+      "301314"
+    ],
+    "already_ended_events_in_D_query": [
+      "600825.SH",
+      "200706.SZ"
+    ],
+    "future_events_in_D_query": [
+      "603517.SH",
+      "301468.SZ",
+      "603838.SH"
+    ],
+    "lineage_and_target_day_state_completeness": "UNVERIFIED",
+    "returned_count": 16,
+    "source": "Eastmoney latest suspension-event report",
+    "upgraded_to_authority": false
+  },
+  "universe": {
+    "qualified_current_scan_denominator": null,
+    "reused_records": 5226,
+    "stock_only_observed": 5225,
+    "target_D_code_sets_both_markets_reconciled": true
+  },
+  "verdict": "BLOCKED",
+  "zhunshangshi": {
+    "SH_confirmed_by_official_dated_query_and_snapshot": true,
+    "SZ_agrees_with_other_event_source_and_zero_volume_candidates": true,
+    "SZ_full_universe_state_completeness_established": false,
+    "URLs": [
+      "https://www.zhunshangshi.com/tfp/?t=S",
+      "https://www.zhunshangshi.com/tfp/?t=R",
+      "https://www.zhunshangshi.com/tfp/",
+      "https://www.zhunshangshi.com/about.html"
+    ],
+    "displayed_rows_equal_displayed_count": true,
+    "explicit_source_day": "2026-10-16",
+    "independence_from_Eastmoney_established": false,
+    "lineage": "About page lists exchanges, Eastmoney and Tushare among general sources; examined pages do not identify the specific upstream, request scope, or completeness receipt for this table.",
+    "page_describes_daily_continuous_suspension_not_only_new_events": true,
+    "resumptions": [
+      {
+        "board": "沪主板",
+        "code": "600825",
+        "continuous_trading_days": "-",
+        "exchange": "SH",
+        "intraday_interval": "-",
+        "status": "复牌",
+        "suspension_start": "-"
+      }
+    ],
+    "suspensions": [
+      {
+        "board": "深主板",
+        "code": "002731",
+        "continuous_trading_days": "28 天",
+        "exchange": "SZ",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-09-01"
+      },
+      {
+        "board": "深主板",
+        "code": "000016",
+        "continuous_trading_days": "25 天",
+        "exchange": "SZ",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-09-04"
+      },
+      {
+        "board": "科创板",
+        "code": "688496",
+        "continuous_trading_days": "20 天",
+        "exchange": "SH",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-09-11"
+      },
+      {
+        "board": "沪主板",
+        "code": "601059",
+        "continuous_trading_days": "18 天",
+        "exchange": "SH",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-09-15"
+      },
+      {
+        "board": "沪主板",
+        "code": "601198",
+        "continuous_trading_days": "18 天",
+        "exchange": "SH",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-09-15"
+      },
+      {
+        "board": "沪主板",
+        "code": "600293",
+        "continuous_trading_days": "9 天",
+        "exchange": "SH",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-09-29"
+      },
+      {
+        "board": "深主板",
+        "code": "002388",
+        "continuous_trading_days": "7 天",
+        "exchange": "SZ",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-10-08"
+      },
+      {
+        "board": "创业板",
+        "code": "300773",
+        "continuous_trading_days": "7 天",
+        "exchange": "SZ",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-10-08"
+      },
+      {
+        "board": "深主板",
+        "code": "002717",
+        "continuous_trading_days": "4 天",
+        "exchange": "SZ",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-10-13"
+      },
+      {
+        "board": "创业板",
+        "code": "301314",
+        "continuous_trading_days": "4 天",
+        "exchange": "SZ",
+        "intraday_interval": "-",
+        "status": "停牌",
+        "suspension_start": "2026-10-13"
+      }
+    ],
+    "tab_counts": {
+      "R": 1,
+      "S": 10,
+      "all": 11
+    },
+    "upgraded_to_authority": false
+  }
+}

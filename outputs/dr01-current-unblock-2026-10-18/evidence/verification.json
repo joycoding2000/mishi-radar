@@ -1,0 +1,9 @@
+{
+  "deterministic_runs": 2,
+  "identical_bytes": true,
+  "sha256": "b64f513d792e505f93e8dc15895b714abca0211385228af2dd3943a37089890e",
+  "evidence_checks_passed": 176,
+  "audit_network_requests": 0,
+  "verdict": "BLOCKED",
+  "consumer_tests": "NOT_RUN_GATE_FAILED"
+}

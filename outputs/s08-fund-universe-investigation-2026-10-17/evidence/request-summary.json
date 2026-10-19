@@ -1,0 +1,37 @@
+{
+  "new_local_sina_attempts": 43,
+  "new_fund_attempts": 42,
+  "robots_requests": 1,
+  "unobservable_web_robots_attempt_reserve": 1,
+  "conservative_sina_budget_used": 44,
+  "limit": 100,
+  "fund_http_statuses": {
+    "200": 42
+  },
+  "source_failures": 0,
+  "network_exception_count": 0,
+  "retry_count": 0,
+  "http200_nonarray_count": 0,
+  "empty_array_count": 0,
+  "elapsed_wall_seconds_including_pacing": 108.777873,
+  "fund_network_elapsed_sum": 3.329289,
+  "fund_network_min": 0.045992,
+  "fund_network_median": 0.0814445,
+  "fund_network_mean": 0.07926878571428571,
+  "fund_network_max": 0.137019,
+  "observed_mean_cycle_seconds_assumption": 2.5792687857142855,
+  "recent_slot_states": {
+    "VALID_NONZERO": 90,
+    "MISSING_DATE": 10
+  },
+  "recent_complete_symbols": 18,
+  "recent_expected_symbols": 20,
+  "freshness_counts": {
+    "CURRENT_DATE_PRESENT": 18,
+    "STALE": 2
+  },
+  "all_new_fund_returned_value_states": {
+    "VALID_NONZERO": 799,
+    "VALID_ZERO": 41
+  }
+}

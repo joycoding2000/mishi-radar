@@ -1,0 +1,5 @@
+[
+  {"label":"sse-equity-snapshot-p2","url":"https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity","params":{"select":"code,name,open,high,low,last,prev_close,chg_rate,volume,amount,tradephase,change,amp_rate,cpxxsubtype,cpxxprodusta","order":"code,ase","begin":"1000","end":"2000"},"headers":{"Referer":"https://www.sse.com.cn/market/price/trends/"}},
+  {"label":"sse-equity-snapshot-p3","url":"https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity","params":{"select":"code,name,open,high,low,last,prev_close,chg_rate,volume,amount,tradephase,change,amp_rate,cpxxsubtype,cpxxprodusta","order":"code,ase","begin":"2000","end":"3000"},"headers":{"Referer":"https://www.sse.com.cn/market/price/trends/"}},
+  {"label":"szse-stock-snapshot-metadata","url":"https://www.szse.cn/api/report/ShowReport/data","params":{"SHOWTYPE":"JSON","CATALOGID":"1815_stock_snapshot","TABKEY":"tab1","PAGENO":"1"},"headers":{"Referer":"https://www.szse.cn/market/trend/index.html"}}
+]

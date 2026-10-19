@@ -1,0 +1,182 @@
+[
+  {
+    "label": "sse-bulletins-D-weekend-p2",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "2",
+      "pageHelp.beginPage": "2",
+      "pageHelp.endPage": "2",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  },
+  {
+    "label": "sse-bulletins-D-weekend-p3",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "3",
+      "pageHelp.beginPage": "3",
+      "pageHelp.endPage": "3",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  },
+  {
+    "label": "sse-bulletins-D-weekend-p4",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "4",
+      "pageHelp.beginPage": "4",
+      "pageHelp.endPage": "4",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  },
+  {
+    "label": "sse-bulletins-D-weekend-p5",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "5",
+      "pageHelp.beginPage": "5",
+      "pageHelp.endPage": "5",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  },
+  {
+    "label": "sse-bulletins-D-weekend-p6",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "6",
+      "pageHelp.beginPage": "6",
+      "pageHelp.endPage": "6",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  },
+  {
+    "label": "sse-bulletins-D-weekend-p7",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "7",
+      "pageHelp.beginPage": "7",
+      "pageHelp.endPage": "7",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  },
+  {
+    "label": "sse-bulletins-D-weekend-p8",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "8",
+      "pageHelp.beginPage": "8",
+      "pageHelp.endPage": "8",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  },
+  {
+    "label": "sse-bulletins-D-weekend-p9",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "9",
+      "pageHelp.beginPage": "9",
+      "pageHelp.endPage": "9",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  },
+  {
+    "label": "sse-bulletins-D-weekend-p10",
+    "url": "https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do",
+    "params": {
+      "isPagination": "true",
+      "pageHelp.pageSize": "100",
+      "pageHelp.cacheSize": "1",
+      "pageHelp.pageNo": "10",
+      "pageHelp.beginPage": "10",
+      "pageHelp.endPage": "10",
+      "START_DATE": "2026-10-16",
+      "END_DATE": "2026-10-18",
+      "SECURITY_CODE": "",
+      "TITLE": "",
+      "BULLETIN_TYPE": ""
+    },
+    "headers": {
+      "Referer": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
+    }
+  }
+]

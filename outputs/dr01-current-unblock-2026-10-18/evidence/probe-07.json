@@ -1,0 +1,4 @@
+[
+  {"label":"sse-equity-snapshot-p1","url":"https://yunhq.sse.com.cn:32042/v1/sh1/list/exchange/equity","params":{"select":"code,name,open,high,low,last,prev_close,chg_rate,volume,amount,tradephase,change,amp_rate,cpxxsubtype,cpxxprodusta","order":"code,ase","begin":"0","end":"1000"},"headers":{"Referer":"https://www.sse.com.cn/market/price/trends/"}},
+  {"label":"sse-bulletins-D-weekend-p1","url":"https://query.sse.com.cn/security/stock/queryCompanyBulletinNew.do","params":{"isPagination":"true","pageHelp.pageSize":"100","pageHelp.cacheSize":"1","pageHelp.pageNo":"1","pageHelp.beginPage":"1","pageHelp.endPage":"1","START_DATE":"2026-10-16","END_DATE":"2026-10-18","SECURITY_CODE":"","TITLE":"","BULLETIN_TYPE":""},"headers":{"Referer":"https://www.sse.com.cn/disclosure/listedinfo/announcement/"}}
+]

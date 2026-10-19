@@ -1,0 +1,5 @@
+[
+  {"label":"szse-live-quote-ui","url":"https://www.szse.cn/market/trend/quo/index.html"},
+  {"label":"szse-trend-script","url":"https://www.szse.cn/modules/marketdata/trend/js/trend.js"},
+  {"label":"szse-suspension-source-search","url":"https://cn.bing.com/search","params":{"q":"site:szse.cn 停复牌信息 查询 api report 持续停牌"}}
+]

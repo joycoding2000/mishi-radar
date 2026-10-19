@@ -1,0 +1,5 @@
+# Preserve the exact bytes of hash-identified contracts and research evidence.
+/outputs/** -text
+/docs/MISHI_RADAR_*.md -text
+/docs/2026-10-15-LAUNCH_STRATEGIES.md -text
+/docs/2026-10-15-BACKTEST_CAPABILITIES.md -text

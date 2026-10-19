@@ -1,0 +1,4 @@
+[
+  {"label":"sse-risk-script","url":"https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_listedCompanyInfo_2021.js"},
+  {"label":"sse-dated-statistic","url":"https://query.sse.com.cn/commonQuery.do","params":{"sqlId":"COMMON_SSE_SJ_GPSJ_GPSJZM_TJSJ_L","PRODUCT_NAME":"股票,主板,科创板","type":"inParams","TRADE_DATE":""},"headers":{"Referer":"https://www.sse.com.cn/market/stockdata/statistic/"}}
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "symbol": "sh600519",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "prior-reuse.json",
+    "reused": true
+  },
+  {
+    "symbol": "sz000001",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "prior-reuse.json",
+    "reused": true
+  },
+  {
+    "symbol": "sh600000",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/002-sh600000-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sh600036",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/003-sh600036-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sh601398",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/004-sh601398-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sh601318",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/005-sh601318-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sh600276",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/006-sh600276-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz000002",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/007-sz000002-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz000333",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/008-sz000333-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz002208",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/009-sz002208-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz300750",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/010-sz300750-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz300401",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/011-sz300401-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz300059",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/012-sz300059-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz301269",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/013-sz301269-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sh688981",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/014-sh688981-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sh688256",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/015-sh688256-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sh688041",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/016-sh688041-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sh688432",
+    "latest": "2026-10-16",
+    "states": {
+      "VALID_NONZERO": 5
+    },
+    "evidence": "raw/017-sh688432-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz000004",
+    "latest": "2026-07-20",
+    "states": {
+      "MISSING_DATE": 5
+    },
+    "evidence": "raw/018-sz000004-p1.bin",
+    "reused": false
+  },
+  {
+    "symbol": "sz000005",
+    "latest": "2025-02-05",
+    "states": {
+      "MISSING_DATE": 5
+    },
+    "evidence": "raw/019-sz000005-p1.bin",
+    "reused": false
+  }
+]

@@ -1,0 +1,5 @@
+[
+  {"label":"sse-689009-overview","url":"https://query.sse.com.cn/commonQuery.do","params":{"isPagination":"false","sqlId":"COMMON_SSE_CP_GPJCTPZ_GPLB_GPGK_GSGK_C","COMPANY_CODE":"689009"},"headers":{"Referer":"https://www.sse.com.cn/assortment/stock/list/info/company/index.shtml?COMPANY_CODE=689009"}},
+  {"label":"sse-common-definitions","url":"https://www.sse.com.cn/xhtml/js/sse_full.js?v=3.8.1_20260901"},
+  {"label":"sse-stock-statistic-ui","url":"https://www.sse.com.cn/market/stockdata/statistic/"}
+]

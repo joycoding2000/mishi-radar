@@ -1,0 +1,4635 @@
+{
+  "performed_at": "2026-10-18T10:45:41.871308+00:00",
+  "network_requests": 0,
+  "full_market_verdict": "UNKNOWN",
+  "official_counts_are_observed_rows_not_approved_denominator": true,
+  "official_SH": {
+    "rows": 2320,
+    "unique_codes": 2320,
+    "blank_codes": 0,
+    "invalid_code_rows": [],
+    "blank_names": 0,
+    "missing_by_field": {
+      "A_STOCK_CODE": 0,
+      "SEC_NAME_CN": 0,
+      "STOCK_TYPE": 0,
+      "LIST_BOARD": 0,
+      "LIST_DATE": 0,
+      "STATE_CODE": 0,
+      "STATE_CODE_STOCK": 0,
+      "PRODUCT_STATUS": 0,
+      "DELIST_DATE": 2318
+    },
+    "duplicate_code_groups": {},
+    "conflicting_code_groups": {},
+    "STOCK_TYPE_counts": {
+      "1": 1702,
+      "8": 618
+    },
+    "LIST_BOARD_counts": {
+      "1": 1702,
+      "2": 618
+    },
+    "STATE_CODE_counts": {
+      "2": 2237,
+      "7": 83
+    },
+    "STATE_CODE_STOCK_counts": {
+      "4": 2237,
+      "8": 83
+    },
+    "PRODUCT_STATUS_counts": {
+      "   D  F  N          ": 1539,
+      "  RD  F  N          ": 19,
+      "   S  F  N          ": 70,
+      "   D  F  NY         ": 639,
+      "  RD  F  NY         ": 7,
+      "   D  FU NY         ": 34,
+      "   D  F WNY         ": 7,
+      " D D  F  NY         ": 1,
+      "   D  FUWNY         ": 3,
+      "   DY F WNY         ": 1
+    },
+    "nonempty_delist_records": [
+      {
+        "COMPANY_ABBR_EN": "CINDA SECURITIES",
+        "STOCK_TYPE": "1",
+        "LIST_BOARD": "1",
+        "COMPANY_ABBR": "信达证券",
+        "A_STOCK_CODE": "601059",
+        "AREA_NAME": "110000",
+        "DELIST_DATE": "20261019",
+        "NUM": "771",
+        "SEC_NAME_CN": "信达证券",
+        "AREA_NAME_DESC": "北京市",
+        "FULL_NAME_IN_ENGLISH": "CINDA SECURITIES CO., LTD.",
+        "SEC_NAME_FULL": "信达证券",
+        "STATE_CODE": "2",
+        "B_STOCK_CODE": "-",
+        "STATE_CODE_STOCK": "4",
+        "LIST_DATE": "20230201",
+        "CSRC_CODE": "J",
+        "PRODUCT_STATUS": "   D  F  N          ",
+        "CSRC_CODE_DESC": "金融业",
+        "COMPANY_CODE": "601059",
+        "FULL_NAME": "信达证券股份有限公司"
+      },
+      {
+        "COMPANY_ABBR_EN": "DONGXING SECURITIES CO., LTD.",
+        "STOCK_TYPE": "1",
+        "LIST_BOARD": "1",
+        "COMPANY_ABBR": "东兴证券",
+        "A_STOCK_CODE": "601198",
+        "AREA_NAME": "110000",
+        "DELIST_DATE": "20261019",
+        "NUM": "820",
+        "SEC_NAME_CN": "东兴证券",
+        "AREA_NAME_DESC": "北京市",
+        "FULL_NAME_IN_ENGLISH": "Dongxing Securities Corporation Limited",
+        "SEC_NAME_FULL": "东兴证券",
+        "STATE_CODE": "2",
+        "B_STOCK_CODE": "-",
+        "STATE_CODE_STOCK": "4",
+        "LIST_DATE": "20150226",
+        "CSRC_CODE": "J",
+        "PRODUCT_STATUS": "   D  F  N          ",
+        "CSRC_CODE_DESC": "金融业",
+        "COMPANY_CODE": "601198",
+        "FULL_NAME": "东兴证券股份有限公司"
+      }
+    ],
+    "special_code_rows": [
+      {
+        "COMPANY_ABBR_EN": "NINEBOT",
+        "STOCK_TYPE": "8",
+        "LIST_BOARD": "2",
+        "COMPANY_ABBR": "九号公司",
+        "A_STOCK_CODE": "689009",
+        "AREA_NAME": "980000",
+        "DELIST_DATE": "-",
+        "NUM": "618",
+        "SEC_NAME_CN": "九号公司",
+        "AREA_NAME_DESC": "境外",
+        "FULL_NAME_IN_ENGLISH": "Ninebot Limited",
+        "SEC_NAME_FULL": "九号公司",
+        "STATE_CODE": "2",
+        "B_STOCK_CODE": "-",
+        "STATE_CODE_STOCK": "4",
+        "LIST_DATE": "20201029",
+        "CSRC_CODE": "C",
+        "PRODUCT_STATUS": "   DY F WNY         ",
+        "CSRC_CODE_DESC": "制造业",
+        "COMPANY_CODE": "689009",
+        "FULL_NAME": "九号有限公司"
+      }
+    ],
+    "future_listing_rows": []
+  },
+  "official_SZ": {
+    "rows": 2906,
+    "unique_codes": 2906,
+    "blank_codes": 0,
+    "invalid_code_rows": [],
+    "blank_names": 0,
+    "missing_by_field": {
+      "A股代码": 0,
+      "A股简称": 0,
+      "板块": 0,
+      "A股上市日期": 0
+    },
+    "duplicate_code_groups": {},
+    "conflicting_code_groups": {},
+    "board_counts": {
+      "主板": 1495,
+      "创业板": 1411
+    },
+    "row_keys": [
+      "板块",
+      "公司全称",
+      "英文名称",
+      "注册地址",
+      "A股代码",
+      "A股简称",
+      "A股上市日期",
+      "A股总股本",
+      "A股流通股本",
+      "B股代码",
+      "B股 简 称",
+      "B股上市日期",
+      "B股总股本",
+      "B股流通股本",
+      "地      区",
+      "省    份",
+      "城     市",
+      "所属行业",
+      "公司网址",
+      "目前尚未盈利",
+      "具有表决权差异安排",
+      "具有协议控制架构"
+    ],
+    "future_listing_rows": []
+  },
+  "tdx_samples": {
+    "SH": {
+      "sample_audit": {
+        "rows": 1000,
+        "unique_codes": 1000,
+        "blank_codes": 0,
+        "invalid_code_rows": [],
+        "blank_names": 0,
+        "missing_by_field": {
+          "code": 0,
+          "name": 0
+        },
+        "duplicate_code_groups": {},
+        "conflicting_code_groups": {}
+      },
+      "sample_only": true,
+      "full_market_missing_codes": "UNKNOWN_NOT_REQUESTED",
+      "legacy_regex_accepted": 200,
+      "legacy_regex_accepted_absent_official_reference": [
+        {
+          "code": "000001",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证指数",
+          "pre_close": 3707.47607421875
+        },
+        {
+          "code": "000002",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "Ａ股指数",
+          "pre_close": 3887.013916015625
+        },
+        {
+          "code": "000003",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "Ｂ股指数",
+          "pre_close": 294.9879150390625
+        },
+        {
+          "code": "000004",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "工业指数",
+          "pre_close": 3345.063232421875
+        },
+        {
+          "code": "000005",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "商业指数",
+          "pre_close": 2584.229736328125
+        },
+        {
+          "code": "000006",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "地产指数",
+          "pre_close": 3854.334716796875
+        },
+        {
+          "code": "000007",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "公用指数",
+          "pre_close": 4306.4794921875
+        },
+        {
+          "code": "000008",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "综合指数",
+          "pre_close": 3505.275390625
+        },
+        {
+          "code": "000009",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证380\u0000",
+          "pre_close": 6160.32666015625
+        },
+        {
+          "code": "000010",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证180\u0000",
+          "pre_close": 9133.8134765625
+        },
+        {
+          "code": "000011",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "基金指数",
+          "pre_close": 6664.98388671875
+        },
+        {
+          "code": "000012",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国债指数",
+          "pre_close": 231.49949645996094
+        },
+        {
+          "code": "000015",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "红利指数",
+          "pre_close": 3315.997314453125
+        },
+        {
+          "code": "000016",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证50\u0000\u0000",
+          "pre_close": 2765.225341796875
+        },
+        {
+          "code": "000017",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "新综指\u0000\u0000",
+          "pre_close": 3133.12939453125
+        },
+        {
+          "code": "000018",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180金融\u0000",
+          "pre_close": 5463.5224609375
+        },
+        {
+          "code": "000019",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "治理指数",
+          "pre_close": 1165.23095703125
+        },
+        {
+          "code": "000020",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中型综指",
+          "pre_close": 1638.815185546875
+        },
+        {
+          "code": "000021",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180治理\u0000",
+          "pre_close": 1015.3156127929688
+        },
+        {
+          "code": "000022",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪公司债",
+          "pre_close": 259.7235107421875
+        },
+        {
+          "code": "000025",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180基建\u0000",
+          "pre_close": 1693.6097412109375
+        },
+        {
+          "code": "000026",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180资源\u0000",
+          "pre_close": 5181.9375
+        },
+        {
+          "code": "000027",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180运输\u0000",
+          "pre_close": 769.168212890625
+        },
+        {
+          "code": "000028",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180成长\u0000",
+          "pre_close": 3454.561279296875
+        },
+        {
+          "code": "000029",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180价值\u0000",
+          "pre_close": 4244.38427734375
+        },
+        {
+          "code": "000030",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180R成长",
+          "pre_close": 2300.410400390625
+        },
+        {
+          "code": "000031",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180R价值",
+          "pre_close": 3084.7294921875
+        },
+        {
+          "code": "000032",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证能源",
+          "pre_close": 2314.0595703125
+        },
+        {
+          "code": "000033",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证材料",
+          "pre_close": 3093.9443359375
+        },
+        {
+          "code": "000034",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证工业",
+          "pre_close": 1902.822021484375
+        },
+        {
+          "code": "000035",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证可选",
+          "pre_close": 2014.0482177734375
+        },
+        {
+          "code": "000036",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证消费",
+          "pre_close": 9204.1279296875
+        },
+        {
+          "code": "000037",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证医药",
+          "pre_close": 6161.96728515625
+        },
+        {
+          "code": "000038",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证金融",
+          "pre_close": 5442.546875
+        },
+        {
+          "code": "000039",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证信息",
+          "pre_close": 5672.7236328125
+        },
+        {
+          "code": "000040",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证电信",
+          "pre_close": 4109.17333984375
+        },
+        {
+          "code": "000041",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证公用",
+          "pre_close": 2557.950439453125
+        },
+        {
+          "code": "000042",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证央企",
+          "pre_close": 1752.142822265625
+        },
+        {
+          "code": "000043",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "超大盘\u0000\u0000",
+          "pre_close": 2439.902587890625
+        },
+        {
+          "code": "000044",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证中盘",
+          "pre_close": 4232.14306640625
+        },
+        {
+          "code": "000045",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证小盘",
+          "pre_close": 5266.349609375
+        },
+        {
+          "code": "000046",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证中小",
+          "pre_close": 4724.67236328125
+        },
+        {
+          "code": "000047",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证全指",
+          "pre_close": 3617.388427734375
+        },
+        {
+          "code": "000048",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "责任指数",
+          "pre_close": 1297.416748046875
+        },
+        {
+          "code": "000049",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证民企",
+          "pre_close": 1689.6766357421875
+        },
+        {
+          "code": "000050",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "50等权\u0000\u0000",
+          "pre_close": 2175.484619140625
+        },
+        {
+          "code": "000051",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180等权\u0000",
+          "pre_close": 8604.501953125
+        },
+        {
+          "code": "000052",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "50基本\u0000\u0000",
+          "pre_close": 2795.46484375
+        },
+        {
+          "code": "000053",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180基本\u0000",
+          "pre_close": 11664.130859375
+        },
+        {
+          "code": "000054",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证海外",
+          "pre_close": 1436.93896484375
+        },
+        {
+          "code": "000055",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证地企",
+          "pre_close": 1439.9853515625
+        },
+        {
+          "code": "000056",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证国企",
+          "pre_close": 1223.7476806640625
+        },
+        {
+          "code": "000057",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全指成长",
+          "pre_close": 3433.042724609375
+        },
+        {
+          "code": "000058",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全指价值",
+          "pre_close": 4465.169921875
+        },
+        {
+          "code": "000059",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全R成长\u0000",
+          "pre_close": 3008.64697265625
+        },
+        {
+          "code": "000060",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全R价值\u0000",
+          "pre_close": 4181.669921875
+        },
+        {
+          "code": "000061",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪企债30",
+          "pre_close": 185.90130615234375
+        },
+        {
+          "code": "000062",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证沪企",
+          "pre_close": 1976.162841796875
+        },
+        {
+          "code": "000063",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证周期",
+          "pre_close": 3673.276611328125
+        },
+        {
+          "code": "000064",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "非周期\u0000\u0000",
+          "pre_close": 3271.292236328125
+        },
+        {
+          "code": "000065",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证龙头",
+          "pre_close": 3373.15576171875
+        },
+        {
+          "code": "000066",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证商品",
+          "pre_close": 3424.2783203125
+        },
+        {
+          "code": "000067",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证新兴",
+          "pre_close": 8027.7578125
+        },
+        {
+          "code": "000068",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证资源",
+          "pre_close": 3871.7548828125
+        },
+        {
+          "code": "000069",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "消费80\u0000\u0000",
+          "pre_close": 4162.05029296875
+        },
+        {
+          "code": "000070",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "能源等权",
+          "pre_close": 3187.180419921875
+        },
+        {
+          "code": "000071",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "材料等权",
+          "pre_close": 4342.00048828125
+        },
+        {
+          "code": "000072",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "工业等权",
+          "pre_close": 2620.51953125
+        },
+        {
+          "code": "000073",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "可选等权",
+          "pre_close": 2460.786865234375
+        },
+        {
+          "code": "000074",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "消费等权",
+          "pre_close": 6069.78564453125
+        },
+        {
+          "code": "000075",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "医药等权",
+          "pre_close": 6254.6015625
+        },
+        {
+          "code": "000076",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "金融等权",
+          "pre_close": 5364.568359375
+        },
+        {
+          "code": "000077",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "信息等权",
+          "pre_close": 6613.8466796875
+        },
+        {
+          "code": "000078",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "电信等权",
+          "pre_close": 3491.313232421875
+        },
+        {
+          "code": "000079",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "公用等权",
+          "pre_close": 2526.9453125
+        },
+        {
+          "code": "000090",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证流通",
+          "pre_close": 1325.896240234375
+        },
+        {
+          "code": "000091",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪财中小",
+          "pre_close": 14419.2607421875
+        },
+        {
+          "code": "000092",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "资源50\u0000\u0000",
+          "pre_close": 4521.57763671875
+        },
+        {
+          "code": "000093",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180分层\u0000",
+          "pre_close": 11232.810546875
+        },
+        {
+          "code": "000094",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证上游",
+          "pre_close": 4274.23681640625
+        },
+        {
+          "code": "000095",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证中游",
+          "pre_close": 3666.52783203125
+        },
+        {
+          "code": "000096",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证下游",
+          "pre_close": 3670.522216796875
+        },
+        {
+          "code": "000097",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "高端装备",
+          "pre_close": 11072.8828125
+        },
+        {
+          "code": "000098",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证F200",
+          "pre_close": 5139.3662109375
+        },
+        {
+          "code": "000099",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证F300",
+          "pre_close": 8413.0986328125
+        },
+        {
+          "code": "000100",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证F500",
+          "pre_close": 5794.93701171875
+        },
+        {
+          "code": "000101",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "5年信用\u0000",
+          "pre_close": 257.93359375
+        },
+        {
+          "code": "000102",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪投资品",
+          "pre_close": 6604.74951171875
+        },
+        {
+          "code": "000103",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪消费品",
+          "pre_close": 6819.12939453125
+        },
+        {
+          "code": "000104",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380能源\u0000",
+          "pre_close": 1432.2149658203125
+        },
+        {
+          "code": "000105",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380材料\u0000",
+          "pre_close": 4805.8408203125
+        },
+        {
+          "code": "000106",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380工业\u0000",
+          "pre_close": 5012.3291015625
+        },
+        {
+          "code": "000107",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380可选\u0000",
+          "pre_close": 4114.341796875
+        },
+        {
+          "code": "000108",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380消费\u0000",
+          "pre_close": 10878.8759765625
+        },
+        {
+          "code": "000109",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380医药\u0000",
+          "pre_close": 9011.158203125
+        },
+        {
+          "code": "000110",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380金融\u0000",
+          "pre_close": 3844.615966796875
+        },
+        {
+          "code": "000111",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380信息\u0000",
+          "pre_close": 10879.1064453125
+        },
+        {
+          "code": "000112",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380电信\u0000",
+          "pre_close": 8107.39892578125
+        },
+        {
+          "code": "000113",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380公用\u0000",
+          "pre_close": 2836.603271484375
+        },
+        {
+          "code": "000114",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "持续产业",
+          "pre_close": 1120.51611328125
+        },
+        {
+          "code": "000115",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380等权\u0000",
+          "pre_close": 8093.3837890625
+        },
+        {
+          "code": "000116",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "信用100\u0000",
+          "pre_close": 206.62350463867188
+        },
+        {
+          "code": "000117",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380成长\u0000",
+          "pre_close": 3905.212646484375
+        },
+        {
+          "code": "000118",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380价值\u0000",
+          "pre_close": 9633.5224609375
+        },
+        {
+          "code": "000119",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380R成长",
+          "pre_close": 4113.03369140625
+        },
+        {
+          "code": "000120",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380R价值",
+          "pre_close": 9047.880859375
+        },
+        {
+          "code": "000121",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "医药主题",
+          "pre_close": 7154.57763671875
+        },
+        {
+          "code": "000122",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "农业主题",
+          "pre_close": 1398.4530029296875
+        },
+        {
+          "code": "000123",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180动态\u0000",
+          "pre_close": 6024.220703125
+        },
+        {
+          "code": "000125",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180稳定\u0000",
+          "pre_close": 11946.8095703125
+        },
+        {
+          "code": "000126",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "消费50\u0000\u0000",
+          "pre_close": 6126.30126953125
+        },
+        {
+          "code": "000128",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380基本\u0000",
+          "pre_close": 8486.791015625
+        },
+        {
+          "code": "000129",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180波动\u0000",
+          "pre_close": 14525.7666015625
+        },
+        {
+          "code": "000130",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380波动\u0000",
+          "pre_close": 12679.7431640625
+        },
+        {
+          "code": "000131",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证高新",
+          "pre_close": 3202.474853515625
+        },
+        {
+          "code": "000132",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证100\u0000",
+          "pre_close": 5377.0400390625
+        },
+        {
+          "code": "000133",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证150\u0000",
+          "pre_close": 6272.36376953125
+        },
+        {
+          "code": "000134",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证银行",
+          "pre_close": 1048.17236328125
+        },
+        {
+          "code": "000135",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180高贝\u0000",
+          "pre_close": 5777.56103515625
+        },
+        {
+          "code": "000136",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180低贝\u0000",
+          "pre_close": 13051.94921875
+        },
+        {
+          "code": "000137",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380高贝\u0000",
+          "pre_close": 5564.787109375
+        },
+        {
+          "code": "000138",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380低贝\u0000",
+          "pre_close": 8311.4052734375
+        },
+        {
+          "code": "000139",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证转债",
+          "pre_close": 387.1141052246094
+        },
+        {
+          "code": "000141",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380动态\u0000",
+          "pre_close": 3550.027587890625
+        },
+        {
+          "code": "000142",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380稳定\u0000",
+          "pre_close": 9208.8984375
+        },
+        {
+          "code": "000145",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "优势资源",
+          "pre_close": 7810.2138671875
+        },
+        {
+          "code": "000146",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "优势制造",
+          "pre_close": 6045.203125
+        },
+        {
+          "code": "000147",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "优势消费",
+          "pre_close": 5523.92626953125
+        },
+        {
+          "code": "000148",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "消费领先",
+          "pre_close": 8628.2705078125
+        },
+        {
+          "code": "000149",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "180红利\u0000",
+          "pre_close": 4350.099609375
+        },
+        {
+          "code": "000150",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "380红利\u0000",
+          "pre_close": 11919.076171875
+        },
+        {
+          "code": "000151",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上国红利",
+          "pre_close": 1651.1280517578125
+        },
+        {
+          "code": "000152",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上央红利",
+          "pre_close": 2982.918701171875
+        },
+        {
+          "code": "000153",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上民红利",
+          "pre_close": 3041.8876953125
+        },
+        {
+          "code": "000155",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "市值百强",
+          "pre_close": 2976.7021484375
+        },
+        {
+          "code": "000158",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证环保",
+          "pre_close": 1014.3795166015625
+        },
+        {
+          "code": "000159",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪股通\u0000\u0000",
+          "pre_close": 3347.7939453125
+        },
+        {
+          "code": "000160",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪新丝路",
+          "pre_close": 2062.889892578125
+        },
+        {
+          "code": "000161",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪中国造",
+          "pre_close": 1443.53125
+        },
+        {
+          "code": "000162",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪互联+\u0000",
+          "pre_close": 3104.339599609375
+        },
+        {
+          "code": "000170",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "50AH优选",
+          "pre_close": 5576.80517578125
+        },
+        {
+          "code": "000300",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪深300\u0000",
+          "pre_close": 4166.01220703125
+        },
+        {
+          "code": "000510",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证A500",
+          "pre_close": 5057.07666015625
+        },
+        {
+          "code": "000680",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创综指",
+          "pre_close": 1586.878173828125
+        },
+        {
+          "code": "000681",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创价格",
+          "pre_close": 1527.384521484375
+        },
+        {
+          "code": "000682",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创信息",
+          "pre_close": 2164.34716796875
+        },
+        {
+          "code": "000683",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创生物",
+          "pre_close": 902.4052734375
+        },
+        {
+          "code": "000685",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创芯片",
+          "pre_close": 3155.782958984375
+        },
+        {
+          "code": "000687",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创高装",
+          "pre_close": 1221.251220703125
+        },
+        {
+          "code": "000688",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创50\u0000\u0000",
+          "pre_close": 1359.5213623046875
+        },
+        {
+          "code": "000689",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创材料",
+          "pre_close": 1177.0318603515625
+        },
+        {
+          "code": "000690",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创成长",
+          "pre_close": 1892.9097900390625
+        },
+        {
+          "code": "000691",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创ESG\u0000",
+          "pre_close": 1333.7923583984375
+        },
+        {
+          "code": "000692",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创新能",
+          "pre_close": 797.1799926757812
+        },
+        {
+          "code": "000693",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创机械",
+          "pre_close": 1463.415771484375
+        },
+        {
+          "code": "000695",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科长三角",
+          "pre_close": 1012.298828125
+        },
+        {
+          "code": "000697",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科大湾区",
+          "pre_close": 1355.33984375
+        },
+        {
+          "code": "000698",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创100\u0000",
+          "pre_close": 1511.673828125
+        },
+        {
+          "code": "000699",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科创200\u0000",
+          "pre_close": 1296.771484375
+        },
+        {
+          "code": "000802",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "500沪市\u0000",
+          "pre_close": 7058.767578125
+        },
+        {
+          "code": "000814",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "细分医药",
+          "pre_close": 8129.21142578125
+        },
+        {
+          "code": "000819",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "有色金属",
+          "pre_close": 7593.11376953125
+        },
+        {
+          "code": "000823",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "800有色\u0000",
+          "pre_close": 8782.9306640625
+        },
+        {
+          "code": "000827",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证环保",
+          "pre_close": 1475.1578369140625
+        },
+        {
+          "code": "000847",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "腾讯济安",
+          "pre_close": 3267.984130859375
+        },
+        {
+          "code": "000849",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "300非银\u0000",
+          "pre_close": 8940.6982421875
+        },
+        {
+          "code": "000851",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "百发100\u0000",
+          "pre_close": 18715.9921875
+        },
+        {
+          "code": "000852",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证1000",
+          "pre_close": 6678.6484375
+        },
+        {
+          "code": "000853",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "CSSW丝路",
+          "pre_close": 1499.1153564453125
+        },
+        {
+          "code": "000854",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "500原料\u0000",
+          "pre_close": 5024.8740234375
+        },
+        {
+          "code": "000855",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视500\u0000",
+          "pre_close": 1490.2330322265625
+        },
+        {
+          "code": "000856",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "500工业\u0000",
+          "pre_close": 6056.037109375
+        },
+        {
+          "code": "000857",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "500医药\u0000",
+          "pre_close": 9604.083984375
+        },
+        {
+          "code": "000858",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "500信息\u0000",
+          "pre_close": 10959.0576171875
+        },
+        {
+          "code": "000860",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "结构调整",
+          "pre_close": 1175.7342529296875
+        },
+        {
+          "code": "000863",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "CS精准医",
+          "pre_close": 2769.9814453125
+        },
+        {
+          "code": "000865",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上海国企",
+          "pre_close": 1294.0357666015625
+        },
+        {
+          "code": "000867",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "港中小企",
+          "pre_close": 2105.777099609375
+        },
+        {
+          "code": "000869",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "HK银行\u0000\u0000",
+          "pre_close": 5346.11669921875
+        },
+        {
+          "code": "000888",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "上证收益",
+          "pre_close": 4324.6982421875
+        },
+        {
+          "code": "000891",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "新兴综指",
+          "pre_close": 1710.2259521484375
+        },
+        {
+          "code": "000901",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "小康指数",
+          "pre_close": 5843.55908203125
+        },
+        {
+          "code": "000903",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证A100",
+          "pre_close": 3997.856201171875
+        },
+        {
+          "code": "000905",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证500\u0000",
+          "pre_close": 6769.2509765625
+        },
+        {
+          "code": "000906",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证800\u0000",
+          "pre_close": 4608.533203125
+        },
+        {
+          "code": "000913",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "300医药\u0000",
+          "pre_close": 8081.97314453125
+        },
+        {
+          "code": "000914",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "300金融\u0000",
+          "pre_close": 6126.83935546875
+        },
+        {
+          "code": "000928",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证能源",
+          "pre_close": 3452.43798828125
+        },
+        {
+          "code": "000932",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证消费",
+          "pre_close": 12310.31640625
+        },
+        {
+          "code": "000933",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证医药",
+          "pre_close": 7640.5068359375
+        },
+        {
+          "code": "000934",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证金融",
+          "pre_close": 5711.22509765625
+        },
+        {
+          "code": "000935",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证信息",
+          "pre_close": 6457.5576171875
+        },
+        {
+          "code": "000974",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "800金融\u0000",
+          "pre_close": 6440.87158203125
+        },
+        {
+          "code": "000982",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "500等权\u0000",
+          "pre_close": 8277.2041015625
+        },
+        {
+          "code": "000986",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全指能源",
+          "pre_close": 2701.909912109375
+        },
+        {
+          "code": "000987",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全指材料",
+          "pre_close": 4195.3671875
+        },
+        {
+          "code": "000989",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全指可选",
+          "pre_close": 4253.14990234375
+        },
+        {
+          "code": "000991",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全指医药",
+          "pre_close": 8280.5595703125
+        },
+        {
+          "code": "000992",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全指金融",
+          "pre_close": 5439.69580078125
+        },
+        {
+          "code": "000993",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "全指信息",
+          "pre_close": 8523.4111328125
+        }
+      ],
+      "sample_reference_overlap_count": 0,
+      "official_codes_not_seen_in_sample_count": 2320,
+      "official_codes_not_seen_in_sample_are_not_proven_provider_omissions": true,
+      "raw_name_difference_rows": []
+    },
+    "SZ": {
+      "sample_audit": {
+        "rows": 1000,
+        "unique_codes": 1000,
+        "blank_codes": 0,
+        "invalid_code_rows": [],
+        "blank_names": 0,
+        "missing_by_field": {
+          "code": 0,
+          "name": 0
+        },
+        "duplicate_code_groups": {},
+        "conflicting_code_groups": {}
+      },
+      "sample_only": true,
+      "full_market_missing_codes": "UNKNOWN_NOT_REQUESTED",
+      "legacy_regex_accepted": 1000,
+      "legacy_regex_accepted_absent_official_reference": [
+        {
+          "code": "395001",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "主板Ａ股",
+          "pre_close": 1495.0
+        },
+        {
+          "code": "395002",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "主板Ｂ股",
+          "pre_close": 112.0
+        },
+        {
+          "code": "395004",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业板\u0000\u0000",
+          "pre_close": 1411.0
+        },
+        {
+          "code": "395005",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "主板DR\u0000\u0000",
+          "pre_close": 5.877471754111438e-39
+        },
+        {
+          "code": "395006",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业板DR",
+          "pre_close": 5.877471754111438e-39
+        },
+        {
+          "code": "395011",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "封闭基金",
+          "pre_close": 5.877471754111438e-39
+        },
+        {
+          "code": "395012",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "ＬＯＦｓ",
+          "pre_close": 285.0
+        },
+        {
+          "code": "395013",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "ＥＴＦｓ",
+          "pre_close": 758.0
+        },
+        {
+          "code": "395015",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "REITS\u0000\u0000\u0000",
+          "pre_close": 28.0
+        },
+        {
+          "code": "395032",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "债券回购",
+          "pre_close": 264.0
+        },
+        {
+          "code": "395033",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "债券现货",
+          "pre_close": 18366.0
+        },
+        {
+          "code": "395034",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "ABS\u0000\u0000\u0000\u0000\u0000",
+          "pre_close": 1584.0
+        },
+        {
+          "code": "395041",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "股票权证",
+          "pre_close": 5.877471754111438e-39
+        },
+        {
+          "code": "395099",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "总 成 交",
+          "pre_close": 2943.0
+        },
+        {
+          "code": "399001",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证成指",
+          "pre_close": 11816.7880859375
+        },
+        {
+          "code": "399002",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成指R\u0000",
+          "pre_close": 16053.4873046875
+        },
+        {
+          "code": "399003",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "成份Ｂ指",
+          "pre_close": 7620.8056640625
+        },
+        {
+          "code": "399004",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证100R",
+          "pre_close": 7324.22119140625
+        },
+        {
+          "code": "399005",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小100\u0000",
+          "pre_close": 7376.53955078125
+        },
+        {
+          "code": "399006",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业板指",
+          "pre_close": 2783.1748046875
+        },
+        {
+          "code": "399007",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证300\u0000",
+          "pre_close": 4959.7080078125
+        },
+        {
+          "code": "399008",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小300\u0000",
+          "pre_close": 1444.4296875
+        },
+        {
+          "code": "399009",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证200\u0000",
+          "pre_close": 4606.03271484375
+        },
+        {
+          "code": "399010",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证700\u0000",
+          "pre_close": 7651.82568359375
+        },
+        {
+          "code": "399011",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证1000",
+          "pre_close": 5691.0634765625
+        },
+        {
+          "code": "399012",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业300\u0000",
+          "pre_close": 3916.49609375
+        },
+        {
+          "code": "399013",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深市精选",
+          "pre_close": 4854.6142578125
+        },
+        {
+          "code": "399015",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小创新",
+          "pre_close": 2500.500244140625
+        },
+        {
+          "code": "399016",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证创新",
+          "pre_close": 5555.94140625
+        },
+        {
+          "code": "399017",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "SME创新\u0000",
+          "pre_close": 4539.47900390625
+        },
+        {
+          "code": "399018",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业创新",
+          "pre_close": 5558.2255859375
+        },
+        {
+          "code": "399019",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业200\u0000",
+          "pre_close": 3917.104248046875
+        },
+        {
+          "code": "399020",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业500\u0000",
+          "pre_close": 1534.5692138671875
+        },
+        {
+          "code": "399030",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "碳科技30",
+          "pre_close": 3167.37158203125
+        },
+        {
+          "code": "399050",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创新引擎",
+          "pre_close": 2524.810546875
+        },
+        {
+          "code": "399060",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "碳科技60",
+          "pre_close": 2781.65771484375
+        },
+        {
+          "code": "399088",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深创100\u0000",
+          "pre_close": 4377.630859375
+        },
+        {
+          "code": "399100",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "新指数\u0000\u0000",
+          "pre_close": 10565.037109375
+        },
+        {
+          "code": "399101",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小综指",
+          "pre_close": 12912.2666015625
+        },
+        {
+          "code": "399102",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业板综",
+          "pre_close": 3460.951171875
+        },
+        {
+          "code": "399103",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "乐富指数",
+          "pre_close": 8237.513671875
+        },
+        {
+          "code": "399106",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证综指",
+          "pre_close": 2226.482666015625
+        },
+        {
+          "code": "399107",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证Ａ指",
+          "pre_close": 2329.52880859375
+        },
+        {
+          "code": "399108",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证Ｂ指",
+          "pre_close": 1145.7833251953125
+        },
+        {
+          "code": "399231",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "农林指数",
+          "pre_close": 1178.9222412109375
+        },
+        {
+          "code": "399232",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "采矿指数",
+          "pre_close": 3619.377685546875
+        },
+        {
+          "code": "399233",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "制造指数",
+          "pre_close": 3110.435791015625
+        },
+        {
+          "code": "399234",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "水电指数",
+          "pre_close": 923.7515258789062
+        },
+        {
+          "code": "399235",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "建筑指数",
+          "pre_close": 888.1439819335938
+        },
+        {
+          "code": "399236",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "批零指数",
+          "pre_close": 1278.110107421875
+        },
+        {
+          "code": "399237",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "运输指数",
+          "pre_close": 947.1749877929688
+        },
+        {
+          "code": "399239",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "IT指数\u0000\u0000",
+          "pre_close": 1573.80615234375
+        },
+        {
+          "code": "399240",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "金融指数",
+          "pre_close": 1420.3514404296875
+        },
+        {
+          "code": "399241",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "地产指数",
+          "pre_close": 980.8944091796875
+        },
+        {
+          "code": "399242",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "商务指数",
+          "pre_close": 1156.5968017578125
+        },
+        {
+          "code": "399243",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科研指数",
+          "pre_close": 1456.584716796875
+        },
+        {
+          "code": "399244",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "公共指数",
+          "pre_close": 517.6427001953125
+        },
+        {
+          "code": "399248",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "文化指数",
+          "pre_close": 793.0062866210938
+        },
+        {
+          "code": "399258",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "绿色低碳",
+          "pre_close": 3310.0185546875
+        },
+        {
+          "code": "399259",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业低碳",
+          "pre_close": 3442.376953125
+        },
+        {
+          "code": "399260",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "先进制造",
+          "pre_close": 3432.8818359375
+        },
+        {
+          "code": "399261",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业制造",
+          "pre_close": 5532.98046875
+        },
+        {
+          "code": "399262",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "数字经济",
+          "pre_close": 2945.7998046875
+        },
+        {
+          "code": "399263",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业数字",
+          "pre_close": 3485.0830078125
+        },
+        {
+          "code": "399264",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业软件",
+          "pre_close": 1095.947021484375
+        },
+        {
+          "code": "399265",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创新药械",
+          "pre_close": 896.736083984375
+        },
+        {
+          "code": "399266",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创新能源",
+          "pre_close": 2602.34619140625
+        },
+        {
+          "code": "399267",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "专精特新",
+          "pre_close": 2244.54638671875
+        },
+        {
+          "code": "399268",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深小巨人",
+          "pre_close": 2156.5380859375
+        },
+        {
+          "code": "399269",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创质量\u0000\u0000",
+          "pre_close": 7559.41650390625
+        },
+        {
+          "code": "399274",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深新基建",
+          "pre_close": 6300.52490234375
+        },
+        {
+          "code": "399275",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创医药\u0000\u0000",
+          "pre_close": 2203.316650390625
+        },
+        {
+          "code": "399276",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创科技\u0000\u0000",
+          "pre_close": 7269.04345703125
+        },
+        {
+          "code": "399277",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "公共健康",
+          "pre_close": 2280.84765625
+        },
+        {
+          "code": "399278",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "长江100\u0000",
+          "pre_close": 1851.62353515625
+        },
+        {
+          "code": "399279",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "云科技50",
+          "pre_close": 4772.10302734375
+        },
+        {
+          "code": "399280",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "生物50\u0000\u0000",
+          "pre_close": 1769.542724609375
+        },
+        {
+          "code": "399281",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "电子50\u0000\u0000",
+          "pre_close": 4509.62109375
+        },
+        {
+          "code": "399282",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "大数据50",
+          "pre_close": 3925.040771484375
+        },
+        {
+          "code": "399283",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "机器人50",
+          "pre_close": 3588.797119140625
+        },
+        {
+          "code": "399284",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "AI 50\u0000\u0000\u0000",
+          "pre_close": 3165.49853515625
+        },
+        {
+          "code": "399285",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "物联网50",
+          "pre_close": 6324.94482421875
+        },
+        {
+          "code": "399286",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "区块链50",
+          "pre_close": 3127.358154296875
+        },
+        {
+          "code": "399289",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "碳中和债",
+          "pre_close": 124.0780029296875
+        },
+        {
+          "code": "399290",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深转交债",
+          "pre_close": 169.85389709472656
+        },
+        {
+          "code": "399291",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创精选88",
+          "pre_close": 4403.09326171875
+        },
+        {
+          "code": "399292",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "民企发展",
+          "pre_close": 1272.8675537109375
+        },
+        {
+          "code": "399293",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业大盘",
+          "pre_close": 5565.328125
+        },
+        {
+          "code": "399294",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小创Q\u0000",
+          "pre_close": 3045.294921875
+        },
+        {
+          "code": "399295",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创价值\u0000\u0000",
+          "pre_close": 4148.79052734375
+        },
+        {
+          "code": "399296",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创成长\u0000\u0000",
+          "pre_close": 6010.8779296875
+        },
+        {
+          "code": "399297",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "新浪100\u0000",
+          "pre_close": 5604.51171875
+        },
+        {
+          "code": "399298",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深信中高",
+          "pre_close": 219.93069458007812
+        },
+        {
+          "code": "399299",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深信中低",
+          "pre_close": 252.61700439453125
+        },
+        {
+          "code": "399300",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "沪深300\u0000",
+          "pre_close": 4166.01220703125
+        },
+        {
+          "code": "399301",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深信用债",
+          "pre_close": 223.89979553222656
+        },
+        {
+          "code": "399302",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深公司债",
+          "pre_close": 226.81809997558594
+        },
+        {
+          "code": "399303",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证2000",
+          "pre_close": 8870.2646484375
+        },
+        {
+          "code": "399306",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证ETF\u0000",
+          "pre_close": 1655.4439697265625
+        },
+        {
+          "code": "399307",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证转债",
+          "pre_close": 324.2593994140625
+        },
+        {
+          "code": "399310",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证A50\u0000",
+          "pre_close": 7110.19580078125
+        },
+        {
+          "code": "399311",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证1000",
+          "pre_close": 4441.21337890625
+        },
+        {
+          "code": "399312",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证300\u0000",
+          "pre_close": 4918.24169921875
+        },
+        {
+          "code": "399313",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "巨潮100\u0000",
+          "pre_close": 4799.78173828125
+        },
+        {
+          "code": "399314",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "巨潮大盘",
+          "pre_close": 4558.99365234375
+        },
+        {
+          "code": "399315",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "巨潮中盘",
+          "pre_close": 4275.17236328125
+        },
+        {
+          "code": "399316",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "巨潮小盘",
+          "pre_close": 5446.0908203125
+        },
+        {
+          "code": "399317",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证Ａ指",
+          "pre_close": 6198.20849609375
+        },
+        {
+          "code": "399318",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证Ｂ指",
+          "pre_close": 5465.05224609375
+        },
+        {
+          "code": "399319",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "资源优势",
+          "pre_close": 3046.1083984375
+        },
+        {
+          "code": "399320",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证服务",
+          "pre_close": 2109.548095703125
+        },
+        {
+          "code": "399321",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证红利",
+          "pre_close": 7324.9189453125
+        },
+        {
+          "code": "399322",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证治理",
+          "pre_close": 9535.8544921875
+        },
+        {
+          "code": "399324",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证红利",
+          "pre_close": 7502.0537109375
+        },
+        {
+          "code": "399326",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "成长40\u0000\u0000",
+          "pre_close": 5795.49951171875
+        },
+        {
+          "code": "399328",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证治理",
+          "pre_close": 9153.662109375
+        },
+        {
+          "code": "399330",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证100\u0000",
+          "pre_close": 5078.35302734375
+        },
+        {
+          "code": "399333",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小100R",
+          "pre_close": 9095.04296875
+        },
+        {
+          "code": "399335",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证央企",
+          "pre_close": 3983.126708984375
+        },
+        {
+          "code": "399337",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证民营",
+          "pre_close": 5642.83984375
+        },
+        {
+          "code": "399339",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证科技",
+          "pre_close": 7961.5302734375
+        },
+        {
+          "code": "399341",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证责任",
+          "pre_close": 1393.4013671875
+        },
+        {
+          "code": "399344",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证300R",
+          "pre_close": 6629.5390625
+        },
+        {
+          "code": "399346",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证成长",
+          "pre_close": 3841.376708984375
+        },
+        {
+          "code": "399348",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证价值",
+          "pre_close": 5907.6396484375
+        },
+        {
+          "code": "399350",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "皖江30\u0000\u0000",
+          "pre_close": 2190.655517578125
+        },
+        {
+          "code": "399351",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创新示范",
+          "pre_close": 9041.193359375
+        },
+        {
+          "code": "399352",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深企综指",
+          "pre_close": 9591.7255859375
+        },
+        {
+          "code": "399353",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证物流",
+          "pre_close": 1990.870361328125
+        },
+        {
+          "code": "399354",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "分析师指",
+          "pre_close": 7433.95654296875
+        },
+        {
+          "code": "399355",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "长三角\u0000\u0000",
+          "pre_close": 3445.615966796875
+        },
+        {
+          "code": "399356",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "珠三角\u0000\u0000",
+          "pre_close": 8711.09375
+        },
+        {
+          "code": "399357",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "环渤海\u0000\u0000",
+          "pre_close": 3563.1591796875
+        },
+        {
+          "code": "399358",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证环保",
+          "pre_close": 4246.314453125
+        },
+        {
+          "code": "399359",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证基建",
+          "pre_close": 2578.953857421875
+        },
+        {
+          "code": "399360",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "新硬件\u0000\u0000",
+          "pre_close": 6640.20263671875
+        },
+        {
+          "code": "399361",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "在线消费",
+          "pre_close": 2977.918212890625
+        },
+        {
+          "code": "399362",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "民企100\u0000",
+          "pre_close": 7119.3076171875
+        },
+        {
+          "code": "399363",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证算力",
+          "pre_close": 9576.201171875
+        },
+        {
+          "code": "399364",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "消费100\u0000",
+          "pre_close": 10060.041015625
+        },
+        {
+          "code": "399365",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证粮食",
+          "pre_close": 11061.9208984375
+        },
+        {
+          "code": "399366",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "能源金属",
+          "pre_close": 2098.742919921875
+        },
+        {
+          "code": "399367",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000地产",
+          "pre_close": 2016.1650390625
+        },
+        {
+          "code": "399368",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证军工",
+          "pre_close": 6462.89013671875
+        },
+        {
+          "code": "399369",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证责任",
+          "pre_close": 1364.1319580078125
+        },
+        {
+          "code": "399370",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证成长",
+          "pre_close": 4489.68994140625
+        },
+        {
+          "code": "399371",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证价值",
+          "pre_close": 6822.31396484375
+        },
+        {
+          "code": "399372",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "大盘成长",
+          "pre_close": 4522.9677734375
+        },
+        {
+          "code": "399373",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "大盘价值",
+          "pre_close": 8202.431640625
+        },
+        {
+          "code": "399374",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中盘成长",
+          "pre_close": 4413.67529296875
+        },
+        {
+          "code": "399375",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中盘价值",
+          "pre_close": 5599.21044921875
+        },
+        {
+          "code": "399376",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "小盘成长",
+          "pre_close": 5654.65966796875
+        },
+        {
+          "code": "399377",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "小盘价值",
+          "pre_close": 7036.27392578125
+        },
+        {
+          "code": "399378",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "ESG 300\u0000",
+          "pre_close": 2561.26611328125
+        },
+        {
+          "code": "399379",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证基金",
+          "pre_close": 8547.5849609375
+        },
+        {
+          "code": "399380",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证ETF\u0000",
+          "pre_close": 1691.624755859375
+        },
+        {
+          "code": "399381",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000能源",
+          "pre_close": 3610.48486328125
+        },
+        {
+          "code": "399382",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000材料",
+          "pre_close": 3180.11474609375
+        },
+        {
+          "code": "399383",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000工业",
+          "pre_close": 2332.75732421875
+        },
+        {
+          "code": "399384",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000可选",
+          "pre_close": 3260.69970703125
+        },
+        {
+          "code": "399385",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000消费",
+          "pre_close": 7631.6298828125
+        },
+        {
+          "code": "399386",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000医药",
+          "pre_close": 5356.92626953125
+        },
+        {
+          "code": "399387",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000金融",
+          "pre_close": 5163.00927734375
+        },
+        {
+          "code": "399388",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000信息",
+          "pre_close": 6413.71484375
+        },
+        {
+          "code": "399389",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证通信",
+          "pre_close": 8594.5078125
+        },
+        {
+          "code": "399390",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000公用",
+          "pre_close": 2639.070068359375
+        },
+        {
+          "code": "399391",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "投资时钟",
+          "pre_close": 2999.59228515625
+        },
+        {
+          "code": "399392",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证新兴",
+          "pre_close": 2669.344970703125
+        },
+        {
+          "code": "399393",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证地产",
+          "pre_close": 2515.830078125
+        },
+        {
+          "code": "399394",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证医药",
+          "pre_close": 8032.55615234375
+        },
+        {
+          "code": "399395",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证有色",
+          "pre_close": 7960.35986328125
+        },
+        {
+          "code": "399396",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证食品",
+          "pre_close": 14336.1884765625
+        },
+        {
+          "code": "399397",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证文化",
+          "pre_close": 1811.48583984375
+        },
+        {
+          "code": "399398",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "绩效指数",
+          "pre_close": 9645.6953125
+        },
+        {
+          "code": "399399",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中经GDP\u0000",
+          "pre_close": 6986.953125
+        },
+        {
+          "code": "399400",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "大中盘\u0000\u0000",
+          "pre_close": 3742.859375
+        },
+        {
+          "code": "399401",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小盘\u0000\u0000",
+          "pre_close": 4338.517578125
+        },
+        {
+          "code": "399402",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "周期100\u0000",
+          "pre_close": 3199.36767578125
+        },
+        {
+          "code": "399403",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "防御100\u0000",
+          "pre_close": 8144.33642578125
+        },
+        {
+          "code": "399405",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "大盘高贝",
+          "pre_close": 2830.220703125
+        },
+        {
+          "code": "399406",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中盘低波",
+          "pre_close": 12749.11328125
+        },
+        {
+          "code": "399407",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中盘高贝",
+          "pre_close": 2860.7314453125
+        },
+        {
+          "code": "399408",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "小盘低波",
+          "pre_close": 14137.50390625
+        },
+        {
+          "code": "399409",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "小盘高贝",
+          "pre_close": 5925.27392578125
+        },
+        {
+          "code": "399410",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "苏州率先",
+          "pre_close": 3580.385498046875
+        },
+        {
+          "code": "399411",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "红利100\u0000",
+          "pre_close": 3471.282958984375
+        },
+        {
+          "code": "399412",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证新能",
+          "pre_close": 2160.38134765625
+        },
+        {
+          "code": "399413",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证转债",
+          "pre_close": 164.65109252929688
+        },
+        {
+          "code": "399415",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "I100\u0000\u0000\u0000\u0000",
+          "pre_close": 6272.9677734375
+        },
+        {
+          "code": "399416",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "I300\u0000\u0000\u0000\u0000",
+          "pre_close": 4887.439453125
+        },
+        {
+          "code": "399417",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "新能源车",
+          "pre_close": 2783.542724609375
+        },
+        {
+          "code": "399418",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "数据要素",
+          "pre_close": 3397.649169921875
+        },
+        {
+          "code": "399419",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证高铁",
+          "pre_close": 1796.1998291015625
+        },
+        {
+          "code": "399420",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证保证",
+          "pre_close": 1283.5931396484375
+        },
+        {
+          "code": "399422",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中关村A\u0000",
+          "pre_close": 3182.28515625
+        },
+        {
+          "code": "399423",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中关村50",
+          "pre_close": 2940.408203125
+        },
+        {
+          "code": "399428",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证定增",
+          "pre_close": 4501.21875
+        },
+        {
+          "code": "399429",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "新丝路\u0000\u0000",
+          "pre_close": 1617.5419921875
+        },
+        {
+          "code": "399431",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证银行",
+          "pre_close": 8107.52001953125
+        },
+        {
+          "code": "399432",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "智能汽车",
+          "pre_close": 4643.2109375
+        },
+        {
+          "code": "399433",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证交运",
+          "pre_close": 1562.646728515625
+        },
+        {
+          "code": "399434",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "数字传媒",
+          "pre_close": 1883.156982421875
+        },
+        {
+          "code": "399435",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证农牧",
+          "pre_close": 3298.65234375
+        },
+        {
+          "code": "399436",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "绿色煤炭",
+          "pre_close": 4493.16796875
+        },
+        {
+          "code": "399437",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "证券龙头",
+          "pre_close": 5706.71337890625
+        },
+        {
+          "code": "399438",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "绿色电力",
+          "pre_close": 2023.7425537109375
+        },
+        {
+          "code": "399439",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证油气",
+          "pre_close": 2079.305908203125
+        },
+        {
+          "code": "399440",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国证钢铁",
+          "pre_close": 1117.664306640625
+        },
+        {
+          "code": "399441",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "生物医药",
+          "pre_close": 2070.635498046875
+        },
+        {
+          "code": "399481",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "企债指数",
+          "pre_close": 128.18600463867188
+        },
+        {
+          "code": "399550",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视50\u0000\u0000",
+          "pre_close": 7616.4697265625
+        },
+        {
+          "code": "399551",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视创新",
+          "pre_close": 10738.8203125
+        },
+        {
+          "code": "399552",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视成长",
+          "pre_close": 7602.49755859375
+        },
+        {
+          "code": "399553",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视回报",
+          "pre_close": 6718.451171875
+        },
+        {
+          "code": "399554",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视治理",
+          "pre_close": 7518.9765625
+        },
+        {
+          "code": "399555",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视责任",
+          "pre_close": 4826.04248046875
+        },
+        {
+          "code": "399556",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视生态",
+          "pre_close": 2171.607177734375
+        },
+        {
+          "code": "399557",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "央视文化",
+          "pre_close": 1507.189453125
+        },
+        {
+          "code": "399602",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小成长",
+          "pre_close": 1124.0899658203125
+        },
+        {
+          "code": "399604",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小价值",
+          "pre_close": 1857.2314453125
+        },
+        {
+          "code": "399606",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业板R\u0000",
+          "pre_close": 3110.187744140625
+        },
+        {
+          "code": "399608",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "科技100\u0000",
+          "pre_close": 3702.09716796875
+        },
+        {
+          "code": "399610",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "TMT50\u0000\u0000\u0000",
+          "pre_close": 9652.5927734375
+        },
+        {
+          "code": "399611",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创100R",
+          "pre_close": 2868.91552734375
+        },
+        {
+          "code": "399612",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创100\u0000",
+          "pre_close": 2406.75830078125
+        },
+        {
+          "code": "399613",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证能源",
+          "pre_close": 3334.423095703125
+        },
+        {
+          "code": "399614",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证材料",
+          "pre_close": 3168.8173828125
+        },
+        {
+          "code": "399615",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证工业",
+          "pre_close": 3150.39501953125
+        },
+        {
+          "code": "399616",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证可选",
+          "pre_close": 5438.34912109375
+        },
+        {
+          "code": "399617",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证消费",
+          "pre_close": 7090.29345703125
+        },
+        {
+          "code": "399618",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证医药",
+          "pre_close": 6871.67822265625
+        },
+        {
+          "code": "399619",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证金融",
+          "pre_close": 6577.70849609375
+        },
+        {
+          "code": "399620",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证信息",
+          "pre_close": 5421.77734375
+        },
+        {
+          "code": "399621",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证电信",
+          "pre_close": 13441.0966796875
+        },
+        {
+          "code": "399622",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证公用",
+          "pre_close": 1652.2532958984375
+        },
+        {
+          "code": "399623",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小基础",
+          "pre_close": 7854.0517578125
+        },
+        {
+          "code": "399624",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创400\u0000",
+          "pre_close": 2274.299560546875
+        },
+        {
+          "code": "399625",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创500\u0000",
+          "pre_close": 2145.874755859375
+        },
+        {
+          "code": "399626",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创成长",
+          "pre_close": 1880.628173828125
+        },
+        {
+          "code": "399627",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创价值",
+          "pre_close": 2157.53369140625
+        },
+        {
+          "code": "399628",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "700成长\u0000",
+          "pre_close": 2159.783935546875
+        },
+        {
+          "code": "399629",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "700价值\u0000",
+          "pre_close": 2603.199462890625
+        },
+        {
+          "code": "399630",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000成长",
+          "pre_close": 1565.1820068359375
+        },
+        {
+          "code": "399631",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "1000价值",
+          "pre_close": 1909.65478515625
+        },
+        {
+          "code": "399632",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深100EW\u0000",
+          "pre_close": 4648.32275390625
+        },
+        {
+          "code": "399633",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深300EW\u0000",
+          "pre_close": 5570.5703125
+        },
+        {
+          "code": "399634",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小等权",
+          "pre_close": 3915.545166015625
+        },
+        {
+          "code": "399635",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业板EW",
+          "pre_close": 2063.219482421875
+        },
+        {
+          "code": "399636",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证装备",
+          "pre_close": 7036.9375
+        },
+        {
+          "code": "399637",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证地产",
+          "pre_close": 1451.99365234375
+        },
+        {
+          "code": "399638",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证环保",
+          "pre_close": 5335.1015625
+        },
+        {
+          "code": "399639",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证大宗",
+          "pre_close": 1898.85693359375
+        },
+        {
+          "code": "399640",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业基础",
+          "pre_close": 2540.701416015625
+        },
+        {
+          "code": "399641",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证新兴",
+          "pre_close": 2513.698974609375
+        },
+        {
+          "code": "399642",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小新兴",
+          "pre_close": 2088.027587890625
+        },
+        {
+          "code": "399643",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业新兴",
+          "pre_close": 3445.54541015625
+        },
+        {
+          "code": "399644",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证时钟",
+          "pre_close": 2964.520263671875
+        },
+        {
+          "code": "399645",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "100低波\u0000",
+          "pre_close": 8393.72265625
+        },
+        {
+          "code": "399646",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深消费50",
+          "pre_close": 6407.37451171875
+        },
+        {
+          "code": "399647",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深医药50",
+          "pre_close": 6782.90576171875
+        },
+        {
+          "code": "399648",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证GDP\u0000",
+          "pre_close": 10891.181640625
+        },
+        {
+          "code": "399649",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小红利",
+          "pre_close": 2894.2646484375
+        },
+        {
+          "code": "399650",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小治理",
+          "pre_close": 2540.358642578125
+        },
+        {
+          "code": "399651",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小责任",
+          "pre_close": 1556.98388671875
+        },
+        {
+          "code": "399652",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创高新",
+          "pre_close": 3434.789306640625
+        },
+        {
+          "code": "399653",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证龙头",
+          "pre_close": 2431.1240234375
+        },
+        {
+          "code": "399654",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证文化",
+          "pre_close": 2346.124755859375
+        },
+        {
+          "code": "399655",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证绩效",
+          "pre_close": 9586.404296875
+        },
+        {
+          "code": "399656",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "100绩效\u0000",
+          "pre_close": 5630.93408203125
+        },
+        {
+          "code": "399657",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "300绩效\u0000",
+          "pre_close": 6466.28076171875
+        },
+        {
+          "code": "399658",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小绩效",
+          "pre_close": 4450.125
+        },
+        {
+          "code": "399659",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成指EW",
+          "pre_close": 4238.4697265625
+        },
+        {
+          "code": "399660",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创EW\u0000\u0000",
+          "pre_close": 2482.367431640625
+        },
+        {
+          "code": "399661",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证低波",
+          "pre_close": 5418.53173828125
+        },
+        {
+          "code": "399662",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证高贝",
+          "pre_close": 2232.180908203125
+        },
+        {
+          "code": "399663",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小低波",
+          "pre_close": 1818.6759033203125
+        },
+        {
+          "code": "399664",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中小高贝",
+          "pre_close": 1287.257080078125
+        },
+        {
+          "code": "399665",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创低波",
+          "pre_close": 2151.637939453125
+        },
+        {
+          "code": "399666",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中创高贝",
+          "pre_close": 1938.2281494140625
+        },
+        {
+          "code": "399667",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业成长",
+          "pre_close": 5115.345703125
+        },
+        {
+          "code": "399668",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业板V\u0000",
+          "pre_close": 3915.113525390625
+        },
+        {
+          "code": "399669",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证农业",
+          "pre_close": 6520.26953125
+        },
+        {
+          "code": "399670",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深周期50",
+          "pre_close": 3621.533447265625
+        },
+        {
+          "code": "399671",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深防御50",
+          "pre_close": 9148.166015625
+        },
+        {
+          "code": "399672",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深红利50",
+          "pre_close": 3645.041748046875
+        },
+        {
+          "code": "399673",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业板50",
+          "pre_close": 2866.696044921875
+        },
+        {
+          "code": "399674",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深A医药\u0000",
+          "pre_close": 1691.6396484375
+        },
+        {
+          "code": "399675",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深互联网",
+          "pre_close": 2608.579833984375
+        },
+        {
+          "code": "399676",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深医药EW",
+          "pre_close": 3499.516357421875
+        },
+        {
+          "code": "399677",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深互联EW",
+          "pre_close": 4592.31982421875
+        },
+        {
+          "code": "399678",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深次新股",
+          "pre_close": 538.7877807617188
+        },
+        {
+          "code": "399679",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证200R",
+          "pre_close": 5623.9775390625
+        },
+        {
+          "code": "399680",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成能源",
+          "pre_close": 770.5975952148438
+        },
+        {
+          "code": "399681",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成材料",
+          "pre_close": 1093.6435546875
+        },
+        {
+          "code": "399682",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成工业",
+          "pre_close": 1423.7166748046875
+        },
+        {
+          "code": "399683",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成可选",
+          "pre_close": 1658.616455078125
+        },
+        {
+          "code": "399684",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成消费",
+          "pre_close": 1365.4423828125
+        },
+        {
+          "code": "399685",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成医药",
+          "pre_close": 1403.2481689453125
+        },
+        {
+          "code": "399686",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成金融",
+          "pre_close": 1918.6982421875
+        },
+        {
+          "code": "399687",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成信息",
+          "pre_close": 3712.107421875
+        },
+        {
+          "code": "399688",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成电信",
+          "pre_close": 7076.66015625
+        },
+        {
+          "code": "399689",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深成公用",
+          "pre_close": 830.3170166015625
+        },
+        {
+          "code": "399692",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业低波",
+          "pre_close": 3514.821533203125
+        },
+        {
+          "code": "399693",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "安防产业",
+          "pre_close": 3842.01708984375
+        },
+        {
+          "code": "399694",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "创业高贝",
+          "pre_close": 3931.8203125
+        },
+        {
+          "code": "399695",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证节能",
+          "pre_close": 2642.392822265625
+        },
+        {
+          "code": "399696",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证创投",
+          "pre_close": 4233.99951171875
+        },
+        {
+          "code": "399697",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中关村60",
+          "pre_close": 2977.43017578125
+        },
+        {
+          "code": "399698",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "优势成长",
+          "pre_close": 48667.56640625
+        },
+        {
+          "code": "399699",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "金融科技",
+          "pre_close": 3225.406982421875
+        },
+        {
+          "code": "399701",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证F60\u0000",
+          "pre_close": 7150.77587890625
+        },
+        {
+          "code": "399702",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证F120",
+          "pre_close": 6760.748046875
+        },
+        {
+          "code": "399703",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证F200",
+          "pre_close": 6944.9716796875
+        },
+        {
+          "code": "399704",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证上游",
+          "pre_close": 5873.123046875
+        },
+        {
+          "code": "399705",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证中游",
+          "pre_close": 3925.0361328125
+        },
+        {
+          "code": "399706",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证下游",
+          "pre_close": 4702.58837890625
+        },
+        {
+          "code": "399707",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "CSSW证券",
+          "pre_close": 5537.5625
+        },
+        {
+          "code": "399750",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深主板50",
+          "pre_close": 8054.58154296875
+        },
+        {
+          "code": "399802",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "500深市\u0000",
+          "pre_close": 6147.419921875
+        },
+        {
+          "code": "399803",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "工业4.0\u0000",
+          "pre_close": 4929.9873046875
+        },
+        {
+          "code": "399804",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证体育",
+          "pre_close": 1601.3736572265625
+        },
+        {
+          "code": "399805",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "互联金融",
+          "pre_close": 2716.914794921875
+        },
+        {
+          "code": "399806",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "环境治理",
+          "pre_close": 1181.9737548828125
+        },
+        {
+          "code": "399807",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "高铁产业",
+          "pre_close": 1116.0328369140625
+        },
+        {
+          "code": "399808",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证新能",
+          "pre_close": 2007.76123046875
+        },
+        {
+          "code": "399809",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "保险主题",
+          "pre_close": 2122.435302734375
+        },
+        {
+          "code": "399810",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "CSSW传媒",
+          "pre_close": 2565.776611328125
+        },
+        {
+          "code": "399811",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "CSSW电子",
+          "pre_close": 5967.32568359375
+        },
+        {
+          "code": "399812",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "养老产业",
+          "pre_close": 5187.728515625
+        },
+        {
+          "code": "399813",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证国安",
+          "pre_close": 6141.2587890625
+        },
+        {
+          "code": "399814",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "大农业\u0000\u0000",
+          "pre_close": 1002.702392578125
+        },
+        {
+          "code": "399850",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "深证50\u0000\u0000",
+          "pre_close": 8033.06982421875
+        },
+        {
+          "code": "399852",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证1000",
+          "pre_close": 6678.6484375
+        },
+        {
+          "code": "399901",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "小康指数",
+          "pre_close": 5843.55908203125
+        },
+        {
+          "code": "399903",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证100\u0000",
+          "pre_close": 3997.856201171875
+        },
+        {
+          "code": "399905",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证 500",
+          "pre_close": 6769.2509765625
+        },
+        {
+          "code": "399913",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "300 医药",
+          "pre_close": 8081.97314453125
+        },
+        {
+          "code": "399914",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "300 金融",
+          "pre_close": 6126.83935546875
+        },
+        {
+          "code": "399928",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证能源",
+          "pre_close": 3452.43798828125
+        },
+        {
+          "code": "399932",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证消费",
+          "pre_close": 12310.31640625
+        },
+        {
+          "code": "399933",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证医药",
+          "pre_close": 7640.5068359375
+        },
+        {
+          "code": "399934",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证金融",
+          "pre_close": 5711.22509765625
+        },
+        {
+          "code": "399935",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证信息",
+          "pre_close": 6457.5576171875
+        },
+        {
+          "code": "399959",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "军工指数",
+          "pre_close": 1493.223876953125
+        },
+        {
+          "code": "399965",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "800地产\u0000",
+          "pre_close": 2095.356201171875
+        },
+        {
+          "code": "399966",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "800非银\u0000",
+          "pre_close": 5417.12109375
+        },
+        {
+          "code": "399967",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证军工",
+          "pre_close": 10429.96484375
+        },
+        {
+          "code": "399970",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "移动互联",
+          "pre_close": 4268.509765625
+        },
+        {
+          "code": "399971",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证传媒",
+          "pre_close": 1187.520751953125
+        },
+        {
+          "code": "399972",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "300深市\u0000",
+          "pre_close": 4943.68408203125
+        },
+        {
+          "code": "399973",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证国防",
+          "pre_close": 1458.397705078125
+        },
+        {
+          "code": "399974",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "国企改革",
+          "pre_close": 1814.52685546875
+        },
+        {
+          "code": "399975",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "证券公司",
+          "pre_close": 721.5324096679688
+        },
+        {
+          "code": "399976",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "CS新能车",
+          "pre_close": 3171.404052734375
+        },
+        {
+          "code": "399982",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "500等权\u0000",
+          "pre_close": 8277.2041015625
+        },
+        {
+          "code": "399983",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "地产等权",
+          "pre_close": 1557.8865966796875
+        },
+        {
+          "code": "399986",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证银行",
+          "pre_close": 7703.92333984375
+        },
+        {
+          "code": "399987",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证酒\u0000\u0000",
+          "pre_close": 3757.20068359375
+        },
+        {
+          "code": "399989",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证医疗",
+          "pre_close": 6509.75439453125
+        },
+        {
+          "code": "399990",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "煤炭等权",
+          "pre_close": 3436.58349609375
+        },
+        {
+          "code": "399991",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "一带一路",
+          "pre_close": 2918.59912109375
+        },
+        {
+          "code": "399992",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "CSWD并购",
+          "pre_close": 1764.2501220703125
+        },
+        {
+          "code": "399993",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "CSWD生科",
+          "pre_close": 2525.50048828125
+        },
+        {
+          "code": "399994",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "信息安全",
+          "pre_close": 1456.7379150390625
+        },
+        {
+          "code": "399995",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "基建工程",
+          "pre_close": 3336.462646484375
+        },
+        {
+          "code": "399996",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "智能家居",
+          "pre_close": 4227.70654296875
+        },
+        {
+          "code": "399997",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证白酒",
+          "pre_close": 6264.521484375
+        },
+        {
+          "code": "399998",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "中证煤炭",
+          "pre_close": 2370.287841796875
+        },
+        {
+          "code": "395000",
+          "volunit": 100,
+          "decimal_point": 2,
+          "name": "辅助代码",
+          "pre_close": 5.877471754111438e-39
+        }
+      ],
+      "sample_reference_overlap_count": 631,
+      "official_codes_not_seen_in_sample_count": 2275,
+      "official_codes_not_seen_in_sample_are_not_proven_provider_omissions": true,
+      "raw_name_difference_rows": [
+        {
+          "code": "000002",
+          "tdx_name": "万 科Ａ\u0000",
+          "official_name": "万  科Ａ"
+        },
+        {
+          "code": "000007",
+          "tdx_name": "全新好\u0000\u0000",
+          "official_name": "全新好"
+        },
+        {
+          "code": "000010",
+          "tdx_name": "*ST美丽\u0000",
+          "official_name": "*ST美丽"
+        },
+        {
+          "code": "000011",
+          "tdx_name": "深物业A\u0000",
+          "official_name": "深物业A"
+        },
+        {
+          "code": "000012",
+          "tdx_name": "南 玻Ａ\u0000",
+          "official_name": "南  玻Ａ"
+        },
+        {
+          "code": "000017",
+          "tdx_name": "深中华A\u0000",
+          "official_name": "深中华A"
+        },
+        {
+          "code": "000021",
+          "tdx_name": "深科技\u0000\u0000",
+          "official_name": "深科技"
+        },
+        {
+          "code": "000025",
+          "tdx_name": "特 力Ａ\u0000",
+          "official_name": "特  力Ａ"
+        },
+        {
+          "code": "000026",
+          "tdx_name": "飞亚达\u0000\u0000",
+          "official_name": "飞亚达"
+        },
+        {
+          "code": "000031",
+          "tdx_name": "大悦城\u0000\u0000",
+          "official_name": "大悦城"
+        },
+        {
+          "code": "000037",
+          "tdx_name": "深南电A\u0000",
+          "official_name": "深南电A"
+        },
+        {
+          "code": "000056",
+          "tdx_name": "*ST皇庭\u0000",
+          "official_name": "*ST皇庭"
+        },
+        {
+          "code": "000078",
+          "tdx_name": "ST海王\u0000\u0000",
+          "official_name": "ST海王"
+        },
+        {
+          "code": "000100",
+          "tdx_name": "TCL科技\u0000",
+          "official_name": "TCL科技"
+        },
+        {
+          "code": "000430",
+          "tdx_name": "张家界\u0000\u0000",
+          "official_name": "张家界"
+        },
+        {
+          "code": "000488",
+          "tdx_name": "ST晨鸣\u0000\u0000",
+          "official_name": "ST晨鸣"
+        },
+        {
+          "code": "000507",
+          "tdx_name": "珠海港\u0000\u0000",
+          "official_name": "珠海港"
+        },
+        {
+          "code": "000510",
+          "tdx_name": "新金路\u0000\u0000",
+          "official_name": "新金路"
+        },
+        {
+          "code": "000525",
+          "tdx_name": "红太阳\u0000\u0000",
+          "official_name": "红太阳"
+        },
+        {
+          "code": "000528",
+          "tdx_name": "柳 工\u0000\u0000\u0000",
+          "official_name": "柳    工"
+        },
+        {
+          "code": "000553",
+          "tdx_name": "安道麦A\u0000",
+          "official_name": "安道麦A"
+        },
+        {
+          "code": "000571",
+          "tdx_name": "新大洲A\u0000",
+          "official_name": "新大洲A"
+        },
+        {
+          "code": "000591",
+          "tdx_name": "太阳能\u0000\u0000",
+          "official_name": "太阳能"
+        },
+        {
+          "code": "000609",
+          "tdx_name": "*ST中迪\u0000",
+          "official_name": "*ST中迪"
+        },
+        {
+          "code": "000610",
+          "tdx_name": "*ST西旅\u0000",
+          "official_name": "*ST西旅"
+        },
+        {
+          "code": "000615",
+          "tdx_name": "*ST美谷\u0000",
+          "official_name": "*ST美谷"
+        },
+        {
+          "code": "000632",
+          "tdx_name": "ST三木\u0000\u0000",
+          "official_name": "ST三木"
+        },
+        {
+          "code": "000639",
+          "tdx_name": "ST西王\u0000\u0000",
+          "official_name": "ST西王"
+        },
+        {
+          "code": "000669",
+          "tdx_name": "ST金鸿\u0000\u0000",
+          "official_name": "ST金鸿"
+        },
+        {
+          "code": "000670",
+          "tdx_name": "盈方微\u0000\u0000",
+          "official_name": "盈方微"
+        },
+        {
+          "code": "000677",
+          "tdx_name": "ST海龙\u0000\u0000",
+          "official_name": "ST海龙"
+        },
+        {
+          "code": "000698",
+          "tdx_name": "ST沈化\u0000\u0000",
+          "official_name": "ST沈化"
+        },
+        {
+          "code": "000716",
+          "tdx_name": "黑芝麻\u0000\u0000",
+          "official_name": "黑芝麻"
+        },
+        {
+          "code": "000726",
+          "tdx_name": "鲁 泰Ａ\u0000",
+          "official_name": "鲁  泰Ａ"
+        },
+        {
+          "code": "000752",
+          "tdx_name": "*ST西发\u0000",
+          "official_name": "*ST西发"
+        },
+        {
+          "code": "000779",
+          "tdx_name": "甘咨询\u0000\u0000",
+          "official_name": "甘咨询"
+        },
+        {
+          "code": "000789",
+          "tdx_name": "万年青\u0000\u0000",
+          "official_name": "万年青"
+        },
+        {
+          "code": "000793",
+          "tdx_name": "ST华闻\u0000\u0000",
+          "official_name": "ST华闻"
+        },
+        {
+          "code": "000795",
+          "tdx_name": "英洛华\u0000\u0000",
+          "official_name": "英洛华"
+        },
+        {
+          "code": "000799",
+          "tdx_name": "酒鬼酒\u0000\u0000",
+          "official_name": "酒鬼酒"
+        },
+        {
+          "code": "000815",
+          "tdx_name": "美利云\u0000\u0000",
+          "official_name": "美利云"
+        },
+        {
+          "code": "000821",
+          "tdx_name": "ST京机\u0000\u0000",
+          "official_name": "ST京机"
+        },
+        {
+          "code": "000826",
+          "tdx_name": "*ST启环\u0000",
+          "official_name": "*ST启环"
+        },
+        {
+          "code": "000838",
+          "tdx_name": "*ST发展\u0000",
+          "official_name": "*ST发展"
+        },
+        {
+          "code": "000869",
+          "tdx_name": "张 裕Ａ\u0000",
+          "official_name": "张  裕Ａ"
+        },
+        {
+          "code": "000890",
+          "tdx_name": "法尔胜\u0000\u0000",
+          "official_name": "法尔胜"
+        },
+        {
+          "code": "000902",
+          "tdx_name": "新洋丰\u0000\u0000",
+          "official_name": "新洋丰"
+        },
+        {
+          "code": "000903",
+          "tdx_name": "ST云动\u0000\u0000",
+          "official_name": "ST云动"
+        },
+        {
+          "code": "000909",
+          "tdx_name": "*ST数源\u0000",
+          "official_name": "*ST数源"
+        },
+        {
+          "code": "000911",
+          "tdx_name": "*ST广糖\u0000",
+          "official_name": "*ST广糖"
+        },
+        {
+          "code": "000912",
+          "tdx_name": "泸天化\u0000\u0000",
+          "official_name": "泸天化"
+        },
+        {
+          "code": "000989",
+          "tdx_name": "九芝堂\u0000\u0000",
+          "official_name": "九芝堂"
+        },
+        {
+          "code": "001217",
+          "tdx_name": "华尔泰\u0000\u0000",
+          "official_name": "华尔泰"
+        },
+        {
+          "code": "001228",
+          "tdx_name": "永泰运\u0000\u0000",
+          "official_name": "永泰运"
+        },
+        {
+          "code": "001232",
+          "tdx_name": "嘉立创\u0000\u0000",
+          "official_name": "嘉立创"
+        },
+        {
+          "code": "001234",
+          "tdx_name": "泰慕士\u0000\u0000",
+          "official_name": "泰慕士"
+        },
+        {
+          "code": "001248",
+          "tdx_name": "华润新能",
+          "official_name": "华润新能源"
+        },
+        {
+          "code": "001287",
+          "tdx_name": "中电港\u0000\u0000",
+          "official_name": "中电港"
+        },
+        {
+          "code": "001298",
+          "tdx_name": "好上好\u0000\u0000",
+          "official_name": "好上好"
+        },
+        {
+          "code": "001300",
+          "tdx_name": "三柏硕\u0000\u0000",
+          "official_name": "三柏硕"
+        },
+        {
+          "code": "001309",
+          "tdx_name": "德明利\u0000\u0000",
+          "official_name": "德明利"
+        },
+        {
+          "code": "001317",
+          "tdx_name": "三羊马\u0000\u0000",
+          "official_name": "三羊马"
+        },
+        {
+          "code": "001338",
+          "tdx_name": "永顺泰\u0000\u0000",
+          "official_name": "永顺泰"
+        },
+        {
+          "code": "001391",
+          "tdx_name": "国货航\u0000\u0000",
+          "official_name": "国货航"
+        },
+        {
+          "code": "001393",
+          "tdx_name": "维通利\u0000\u0000",
+          "official_name": "维通利"
+        },
+        {
+          "code": "002024",
+          "tdx_name": "ST易购\u0000\u0000",
+          "official_name": "ST易购"
+        },
+        {
+          "code": "002055",
+          "tdx_name": "ST得润\u0000\u0000",
+          "official_name": "ST得润"
+        },
+        {
+          "code": "002069",
+          "tdx_name": "獐子岛\u0000\u0000",
+          "official_name": "獐子岛"
+        },
+        {
+          "code": "002072",
+          "tdx_name": "凯瑞德\u0000\u0000",
+          "official_name": "凯瑞德"
+        },
+        {
+          "code": "002082",
+          "tdx_name": "ST万邦\u0000\u0000",
+          "official_name": "ST万邦"
+        },
+        {
+          "code": "002096",
+          "tdx_name": "易普力\u0000\u0000",
+          "official_name": "易普力"
+        },
+        {
+          "code": "002102",
+          "tdx_name": "ST能特\u0000\u0000",
+          "official_name": "ST能特"
+        }
+      ]
+    }
+  },
+  "bare_code_collision_count_in_samples": 90,
+  "bare_code_collision_examples": [
+    {
+      "code": "000001",
+      "SH": "上证指数",
+      "SZ": "平安银行"
+    },
+    {
+      "code": "000002",
+      "SH": "Ａ股指数",
+      "SZ": "万 科Ａ\u0000"
+    },
+    {
+      "code": "000006",
+      "SH": "地产指数",
+      "SZ": "深振业Ａ"
+    },
+    {
+      "code": "000007",
+      "SH": "公用指数",
+      "SZ": "全新好\u0000\u0000"
+    },
+    {
+      "code": "000008",
+      "SH": "综合指数",
+      "SZ": "神州高铁"
+    }
+  ],
+  "independent_reconciliation": {
+    "reference": "official SSE/SZSE current export",
+    "official_total_observed": 5226,
+    "full_TDX_total_target_stocks": "UNKNOWN",
+    "full_set_diff": "UNKNOWN",
+    "status": "PARTIAL_SAMPLE_ONLY_NO_FULL_MARKET_PASS"
+  },
+  "date_semantics": {
+    "business_effective_date": "UNKNOWN",
+    "source_update_time": "UNKNOWN",
+    "SZ_export_document_created": "2026-10-18T10:42:51Z",
+    "SZ_export_creation_is_not_source_update_or_business_effective_date": true,
+    "HTTP_Date_is_server_response_time_not_business_date": true,
+    "prior_trade_date_snapshot_claim": false,
+    "fetched_at_UTC": {
+      "TDX": "2026-10-18T10:42:14.467770+00:00",
+      "official-SH-main": "2026-10-18T10:43:12.786767+00:00",
+      "official-SH-star": "2026-10-18T10:43:13.020417+00:00",
+      "official-SZ-A": "2026-10-18T10:43:17.930103+00:00"
+    },
+    "timezone": "Asia/Shanghai (+08:00)"
+  },
+  "request_budget": {
+    "candidate_list_sources": 2,
+    "application_requests": 10,
+    "TDX_connection_attempts": 1,
+    "sandbox_denied_before_network": 1,
+    "conservative_budget_units": 12,
+    "limit": 20,
+    "implicit_retries": 0,
+    "redirects_followed": 0,
+    "automatic_failover": false,
+    "network_stopped": true
+  },
+  "stop_reasons": [
+    "full-market independent reconciliation unavailable within request budget",
+    "SZ current-list export lacks explicit ST/delisting-period qualification fields",
+    "SSE status codes/PRODUCT_STATUS have no validated semantic mapping in this evidence"
+  ],
+  "DR01_HISTORICAL": "UNSUPPORTED",
+  "NEXT_PHASE_AUTHORIZED": "NO_OWNER_REVIEW_ONLY"
+}

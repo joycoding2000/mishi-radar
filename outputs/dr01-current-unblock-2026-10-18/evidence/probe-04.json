@@ -1,0 +1,5 @@
+[
+  {"label":"sse-suspension-D15","url":"https://query.sse.com.cn/commonSoaQuery.do","params":{"sqlId":"GW_PL_JYTS_TFPXX","isPagination":"true","pageHelp.pageSize":"100","pageHelp.pageNo":"1","productCode":"","keyWords":"","startStopDate":"20261015","endStopDate":"20261015"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/"}},
+  {"label":"sse-suspension-D19","url":"https://query.sse.com.cn/commonSoaQuery.do","params":{"sqlId":"GW_PL_JYTS_TFPXX","isPagination":"true","pageHelp.pageSize":"100","pageHelp.pageNo":"1","productCode":"","keyWords":"","startStopDate":"20261019","endStopDate":"20261019"},"headers":{"Referer":"https://www.sse.com.cn/disclosure/dealinstruc/suspension/stock/"}},
+  {"label":"sse-equity-quote-ui","url":"https://www.sse.com.cn/market/price/trends/"}
+]

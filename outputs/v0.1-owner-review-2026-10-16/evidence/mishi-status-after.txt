@@ -1,0 +1,8 @@
+ M README.md
+ M docs/2026-10-14-PRODUCT_DISCUSSION.md
+ M docs/2026-10-15-PRODUCT_NAMING.md
+ M docs/CURRENT_STATE.md
+?? docs/MISHI_RADAR_FUND_FLOW_ADDENDUM_2026-10-16.md
+?? docs/MISHI_RADAR_V0_1_SPEC_OWNER_REVIEW_R2.md
+?? docs/joinquant-full-review.zip
+?? outputs/

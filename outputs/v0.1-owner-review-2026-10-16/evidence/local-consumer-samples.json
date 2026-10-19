@@ -1,0 +1,95 @@
+{
+  "recorded_at": "2026-10-16T21:16:41.156911+08:00",
+  "mode": "OFFLINE_EXISTING_LOCAL_FILES; EXPORTED_load_vipdoc_daily; NO_NETWORK",
+  "note": "Four existing local files read through load_vipdoc_daily(root=...). They end on 2026-09-22 and do not certify current freshness or whole-market coverage. Earlier injected-adapter output has been excluded because it bypassed the standard vipdoc adapter; the standard adapter drops Amount as documented in daily_bars.py:294.",
+  "samples": [
+    {
+      "code": "600519",
+      "status": "local_file_read",
+      "file_rows": 6010,
+      "first_date": "2001-08-27",
+      "last_date": "2026-09-22",
+      "raw_columns": [
+        "Date",
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "pre_close",
+        "Volume",
+        "Amount"
+      ],
+      "last_raw": {
+        "Close": 1253.8,
+        "Volume": 2457294,
+        "Amount": 3088526080.0
+      }
+    },
+    {
+      "code": "300401",
+      "status": "local_file_read",
+      "file_rows": 2893,
+      "first_date": "2014-10-09",
+      "last_date": "2026-09-22",
+      "raw_columns": [
+        "Date",
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "pre_close",
+        "Volume",
+        "Amount"
+      ],
+      "last_raw": {
+        "Close": 16.39,
+        "Volume": 25544046,
+        "Amount": 422833184.0
+      }
+    },
+    {
+      "code": "002208",
+      "status": "local_file_read",
+      "file_rows": 4457,
+      "first_date": "2008-01-28",
+      "last_date": "2026-09-22",
+      "raw_columns": [
+        "Date",
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "pre_close",
+        "Volume",
+        "Amount"
+      ],
+      "last_raw": {
+        "Close": 10.42,
+        "Volume": 30573147,
+        "Amount": 318107520.0
+      }
+    },
+    {
+      "code": "000002",
+      "status": "local_file_read",
+      "file_rows": 8485,
+      "first_date": "1991-01-29",
+      "last_date": "2026-09-22",
+      "raw_columns": [
+        "Date",
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "pre_close",
+        "Volume",
+        "Amount"
+      ],
+      "last_raw": {
+        "Close": 3.81,
+        "Volume": 819832133,
+        "Amount": 3037863680.0
+      }
+    }
+  ]
+}

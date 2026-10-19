@@ -1,0 +1,36 @@
+{
+  "measured_at": "2026-10-17T20:29:55.153930+08:00",
+  "snapshot": "2026-09-22",
+  "stock_files": 5556,
+  "tail_records_max_per_file": 120,
+  "bytes_read": 21245184,
+  "elapsed_seconds": 0.7945031000126619,
+  "scope": "Local tail read + MA20/Amount recomputation; includes independent verification using prior completeness flags. Excludes network, security master update, eight-strategy execution, persistence and scheduling.",
+  "ma_pass": 2890,
+  "ma_fail": 2289,
+  "ma_unknown": 377,
+  "liquidity_fail": 400,
+  "examples": [
+    {
+      "symbol": "sh600000",
+      "close_cny": 9.04,
+      "ma20_cny": 9.199,
+      "amount20_mean_cny": 664018936.0,
+      "close_gt_ma20": false
+    },
+    {
+      "symbol": "sh600519",
+      "close_cny": 1253.8,
+      "ma20_cny": 1286.681,
+      "amount20_mean_cny": 3088090796.8,
+      "close_gt_ma20": false
+    },
+    {
+      "symbol": "sz000001",
+      "close_cny": 11.71,
+      "ma20_cny": 11.759,
+      "amount20_mean_cny": 1052536064.0,
+      "close_gt_ma20": false
+    }
+  ]
+}

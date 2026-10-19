@@ -1,0 +1,222 @@
+[
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-SH-main.decoded.json",
+    "bytes": 2709391,
+    "sha256": "986e5a2ba882f972bd120e60afa5b74ab4553dd1ebf4c116c6b1547f630cee39"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-SH-main.response.bin",
+    "bytes": 1946711,
+    "sha256": "743ba070a791d053d319c7ed30b889c23b51575373a73bf81f8aa2a995b8a201"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-SH-main.rows.json",
+    "bytes": 1236910,
+    "sha256": "e30682257c86be5286ad1fb499f1ac262b831c9ca8275937f9573cb186fb99cb"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-SH-star.decoded.json",
+    "bytes": 992356,
+    "sha256": "00ceef6c63995a5ae03ef13d3bdbc416f541e7ae8cd7abba04be21a01e395801"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-SH-star.response.bin",
+    "bytes": 715300,
+    "sha256": "672da3dad4b8443c690ce116361645a55e7a3e9e204de5ad60a0e8beb8281e72"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-SH-star.rows.json",
+    "bytes": 453189,
+    "sha256": "b7cb31b76b9cfae843a5863a3e87f20113664f0d37f9063cb91f87215d037dd7"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-SZ-A.response.bin",
+    "bytes": 545403,
+    "sha256": "780b9f26515921b5f04c06bb6ffe5b25de57c283b1e87c993036c3ce0bc36332"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-SZ-A.rows.json",
+    "bytes": 2452104,
+    "sha256": "94108283a6fa7de05d0619321ab600c27e34ef6fa61650c6b065afdf1d0aec62"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-probe.py",
+    "bytes": 3737,
+    "sha256": "ad367c153c26d414dc5c22f01967934b0ec1870501d85e83a9713fc77e4f8186"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\official-requests.json",
+    "bytes": 6080,
+    "sha256": "f9317e06e806096cd4a9858effc8c022fc32d5ba29288153178d8a3f2eaf878d"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\offline-audit.json",
+    "bytes": 124916,
+    "sha256": "bfa6b7e2abc9f06b966c59139a900c440525b1e41153a13956a21f689e9aede7"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\offline-audit.py",
+    "bytes": 8607,
+    "sha256": "34c4cc1cec0c2498dda430f1ca51cd839b4d9d0bc0483d517d6c363ca3983f85"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\prior-joint-report.md",
+    "bytes": 9325,
+    "sha256": "f426b31a1689c09ff0f3a1ef56e6a95d5f263ac6d8bcdd75e62b3f8f9707c52a"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-02.request.bin",
+    "bytes": 13,
+    "sha256": "2cb6ebe95141a11eb0012af585f6abc51067b8ce73444223fc478981c2b924cb"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-02.response.bin",
+    "bytes": 115,
+    "sha256": "8863fd97f1e92398783b5404283ea8ad04a40ccdf4cd116f02f0a0938058f3bd"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-03.request.bin",
+    "bytes": 13,
+    "sha256": "9578c9232d9bb9c0997329332f86dafb549694a49d88b5fb22caa02888e44615"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-03.response.bin",
+    "bytes": 115,
+    "sha256": "60fd76c1fbe9d0f65f528d68c72bd5aed9b3f69ba470ed5373acd131469e20f1"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-04.request.bin",
+    "bytes": 42,
+    "sha256": "2ecdfbc2ec2ce61d31133b5b1b6c26501c72ca31ca0acf2e605f660ee0c7c626"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-04.response.bin",
+    "bytes": 470,
+    "sha256": "b5270459cb4d4cbacd3db0604325b49854c69e7469571da49b3dc99e16fead5e"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-05.request.bin",
+    "bytes": 18,
+    "sha256": "f874a83310e8db735f982d72eacad08b578f98d422d833c37b919af15d0f0433"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-05.response.bin",
+    "bytes": 18,
+    "sha256": "7373c9c2f6a2387db4d3b143542a5290c0d9cec36750f31794f5a3ebd4be432b"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-06.request.bin",
+    "bytes": 18,
+    "sha256": "781ff700fd2493e8e38da108f88019562542047478beb526c28034b870e5ab66"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-06.response.bin",
+    "bytes": 18,
+    "sha256": "c77309f9f420a235107cc53d18215e36fdc8414d3afbe2d2c6162568897c781f"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-07.request.bin",
+    "bytes": 16,
+    "sha256": "7dde73d2c00f1b0a72011398fb0152f99c8a82728e9efb2d31f0b6cd8701ebdc"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-07.response.bin",
+    "bytes": 16256,
+    "sha256": "caabff106a38290b07ab1ae91498639ffd93ed6e06360a9333b889a37957f2d8"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-08.request.bin",
+    "bytes": 16,
+    "sha256": "f69de8160dc23bb71e94645674dcc4c9b9f540f18efd838a9b1ad2e4efa19ecd"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-08.response.bin",
+    "bytes": 15159,
+    "sha256": "72061a70f128ee63c1d951b0b7412565f90c648fa5340a41cb9001511837715d"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-SH-page0.parsed.json",
+    "bytes": 147372,
+    "sha256": "ef3e493f903fc077505f7271033622a095f1c06b69092d5206907730814b3b9c"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-SZ-page0.parsed.json",
+    "bytes": 145146,
+    "sha256": "2fa1bac7fe677dbf7de86b7884850e98851f268ac84b0fbf263942a8167585b3"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-requests.json",
+    "bytes": 2985,
+    "sha256": "2341f5af41682ee5f89e4d4b368e4b8c75ff88ffa5f109e1944977ebad8f4cbf"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-network-permitted\\tdx-summary.json",
+    "bytes": 960,
+    "sha256": "e3b58dca78e02a2e8aaf8f883d2a5e28cd83f2c53092c2fe4aaf9bf7ba19ab07"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-probe.py",
+    "bytes": 4647,
+    "sha256": "e1527603eaff5fda85bde66d252e72790b5ee406d901d3c9a0aad8d17ffd407b"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-requests.json",
+    "bytes": 338,
+    "sha256": "7445d74bc7c49ea8285f9c339a3327116fbd67f9e058abcb3d701d801beef1dc"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\.codex\\visualizations\\2026\\10\\18\\01a14e94-6c4b-7103-9180-acf05cdfa24e\\dr01-qualification-temp\\tdx-summary.json",
+    "bytes": 474,
+    "sha256": "671f155823bce6c82796447fa4e046aee5de20545a1ee4207f06d5965c094616"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\akshare\\stock\\stock_info.py",
+    "bytes": 16398,
+    "sha256": "d3288903d1e8ce7796e051bfbe651cb15aad0b29d4043277b04984f3cec72892"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\mootdx\\quotes.py",
+    "bytes": 23614,
+    "sha256": "14d0024555a2d2c7ce5fc30312630d8e460d53238670ff06b29a8ee062d6b7ac"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\tdxpy\\parser\\std\\get_security_list.py",
+    "bytes": 1444,
+    "sha256": "8170b39a7e501844d2125f6a1e2220f6899638a95a8fac9a55a44d2f434f9e54"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\chstockdata\\docs\\audits\\2026-10-18-dr04-p-owner-acceptance.md",
+    "bytes": 4765,
+    "sha256": "59fcad0ade71f1e5d9caeb9c9886d949de29f59db60140a46e553c186ab8e885"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\a_stock.py",
+    "bytes": 345142,
+    "sha256": "3eb18bfa41a76e8263d870fe849941ef1d5c71d4c21948274f53ac0f6f06d89a"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\delisting.py",
+    "bytes": 15735,
+    "sha256": "5401a82cf97c9c1455522cda2525ab777c222d4a9c196dc2c41b8052902ffc38"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\suspension.py",
+    "bytes": 11741,
+    "sha256": "5ddf9db08de91bc8dd187d8a8f0c9b711666e9930ca9ec726f5d77a2d9cec153"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\tradability.py",
+    "bytes": 10149,
+    "sha256": "db65b547414fff2c12a35c1dbb245c60c994455a6c242c0e0c1b047261de4564"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_TO_CHSTOCKDATA_DR01_DR06_CONSUMER_REQUEST_2026-10-16.md",
+    "bytes": 7000,
+    "sha256": "35609c8cbf823dbb86a681ea15c27f7f598892b7ea73f46ecde5025e85ff8866"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md",
+    "bytes": 20372,
+    "sha256": "9b98641d4602fcd2a35c28520f9160a3fbf935ce1c43e89d466a473419e5bd62"
+  }
+]

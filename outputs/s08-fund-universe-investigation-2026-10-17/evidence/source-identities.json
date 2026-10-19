@@ -1,0 +1,47 @@
+[
+  {
+    "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\2026-10-15-LAUNCH_STRATEGIES.md",
+    "bytes": 8464,
+    "sha256": "a29fa68daac1061d6d9b9bd944e290703c03993e75c27a5a97ca83f2d8a0b378"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md",
+    "bytes": 20372,
+    "sha256": "9b98641d4602fcd2a35c28520f9160a3fbf935ce1c43e89d466a473419e5bd62"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\mishi-radar\\docs\\MISHI_RADAR_TO_CHSTOCKDATA_DR01_DR06_CONSUMER_REQUEST_2026-10-16.md",
+    "bytes": 7000,
+    "sha256": "35609c8cbf823dbb86a681ea15c27f7f598892b7ea73f46ecde5025e85ff8866"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\mishi-radar\\outputs\\v0.1-owner-review-2026-10-16\\competitive-feature-gap.md",
+    "bytes": 14815,
+    "sha256": "337acafb6f0624baae22dc642978ca2ba80712b6f4b192ce849367d71b773e59"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\chstockdata\\AGENTS.md",
+    "bytes": 1922,
+    "sha256": "cd29b01d7fe742c9571db2bbfcb7b59bddd3b84d4bc81bbfbc0af1488c4c7586"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\a_stock.py",
+    "bytes": 345142,
+    "sha256": "3eb18bfa41a76e8263d870fe849941ef1d5c71d4c21948274f53ac0f6f06d89a"
+  },
+  {
+    "path": "D:\\Dev\\Projects\\chstockdata\\src\\chstockdata\\vipdoc_history.py",
+    "bytes": 13027,
+    "sha256": "1b005366c1a3045310b6a9f71fecf47ed0bc5639dae5748c53f6e4df058e9874"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\Documents\\Codex\\2026-10-13\\3-a-http-124-221-98\\outputs\\04-scan-result.txt",
+    "bytes": 15839,
+    "sha256": "8ea92ec6977be9dcb3b26896aca86b0f00053cb1b36afab339cb38252041b5b8"
+  },
+  {
+    "path": "C:\\Users\\Administrator\\Documents\\Codex\\2026-10-13\\3-a-http-124-221-98\\outputs\\longitudinal\\evidence\\2026-10-14-r01\\scan-rows.txt",
+    "bytes": 2594,
+    "sha256": "131f8d051979764d8a4e4e74e8255fc3717393e1683046d3a15730edbc41e39b"
+  }
+]

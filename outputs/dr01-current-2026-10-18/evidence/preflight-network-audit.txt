@@ -1,0 +1,57 @@
+Installed firecrawl-cli 1.18.5; read-only local source inspection.
+Two account fetch attempts from one status invocation. No keys or credentials included.
+
+async function fetchQueueStatus(apiKey, apiUrl) {
+    const url = `${apiUrl.replace(/\/$/, '')}/v2/team/queue-status`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+    return response.json();
+}
+
+async function fetchCreditUsage(apiKey, apiUrl) {
+    const url = `${apiUrl.replace(/\/$/, '')}/v2/team/credit-usage`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+    return response.json();
+}
+
+Promise.all([
+            fetchQueueStatus(apiKey, apiUrl),
+            fetchCreditUsage(apiKey, apiUrl),
+        ]);
+        if (queueStatus.success && queueStatus.maxConcurrency !== undefined) {
+            result.concurrency = {
+                active: queueStatus.activeJobsInQueue || 0,
+                max: queueStatus.maxConcurrency,
+            };
+        }
+        if (creditUsage.success && creditUsage.data) {
+            result.credits = {
+                remaining: creditUsage.data.remainingCredits,
+                plan: creditUsage.data.planCredits,
+            };
+        }
+    }
+    catch (error) {
+        result.error = error?.message || 'Failed to fetch status';
+    }
+    return result;
+}

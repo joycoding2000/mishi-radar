@@ -1,0 +1,560 @@
+[
+  {
+    "id": 1,
+    "label": "sse-list-ui",
+    "url": "https://www.sse.com.cn/assortment/stock/list/share/",
+    "params": {},
+    "started_at": "2026-10-18T12:07:10.190673+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "001-sse-list-ui.bin",
+    "bytes": 26264,
+    "sha256": "e6224b8711201094e18f78fad8e18f1d6e284f6731ac774663aaa87b30f6302b",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:07:10 GMT",
+      "Content-Type": "text/html"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:07:10.904337+00:00"
+  },
+  {
+    "id": 2,
+    "label": "szse-list-ui",
+    "url": "https://www.szse.cn/market/product/stock/list/index.html",
+    "params": {},
+    "started_at": "2026-10-18T12:07:11.405228+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "002-szse-list-ui.bin",
+    "bytes": 27632,
+    "sha256": "ce51450c3072976fb40683cc66f48eb7bb62da260b056383f2114065502579fd",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:07:11 GMT",
+      "Last-Modified": "Sat, 17 Oct 2026 00:57:36 GMT",
+      "Content-Type": "text/html",
+      "Content-Length": "4719"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:07:11.881944+00:00"
+  },
+  {
+    "id": 3,
+    "label": "szse-list-metadata",
+    "url": "https://www.szse.cn/api/report/ShowReport/data",
+    "params": {
+      "SHOWTYPE": "JSON",
+      "CATALOGID": "1110",
+      "TABKEY": "tab1",
+      "PAGENO": "1"
+    },
+    "started_at": "2026-10-18T12:07:12.382831+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "003-szse-list-metadata.bin",
+    "bytes": 21476,
+    "sha256": "72952ebe137b909f594afb1017ffa4b888c9013640c67ea8dc6c6df0fde9a5a7",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:07:12 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "21476"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:07:12.481796+00:00"
+  },
+  {
+    "id": 4,
+    "label": "sse-table-config",
+    "url": "https://www.sse.com.cn/xhtml/js/common/table_config.js?v=V3.8.1_20260819",
+    "params": {},
+    "started_at": "2026-10-18T12:08:24.645247+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "004-sse-table-config.bin",
+    "bytes": 117837,
+    "sha256": "323ac9f0d5dab6a98d016ce9da5f7146a98de97b28b82c3c2718d7910d6fd5c5",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:08:24 GMT",
+      "Last-Modified": "Tue, 13 Oct 2026 10:30:54 GMT",
+      "Content-Type": "application/javascript",
+      "Content-Length": "117837"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:08:25.259122+00:00"
+  },
+  {
+    "id": 5,
+    "label": "sse-common-table",
+    "url": "https://www.sse.com.cn/xhtml/js/common/common_table.js?v=V3.6.1_20250626",
+    "params": {},
+    "started_at": "2026-10-18T12:08:25.760047+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "005-sse-common-table.bin",
+    "bytes": 8324,
+    "sha256": "0990c231aee829ef5260801a3585d23fcd1221dd1954d1252df868f356a2a3bd",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:08:25 GMT",
+      "Last-Modified": "Fri, 27 Jun 2025 06:25:18 GMT",
+      "Content-Type": "application/javascript",
+      "Content-Length": "8324"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:08:25.817828+00:00"
+  },
+  {
+    "id": 6,
+    "label": "szse-cdr-metadata",
+    "url": "https://www.szse.cn/api/report/ShowReport/data",
+    "params": {
+      "SHOWTYPE": "JSON",
+      "CATALOGID": "1110",
+      "TABKEY": "tab3",
+      "PAGENO": "1"
+    },
+    "started_at": "2026-10-18T12:08:26.318474+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "006-szse-cdr-metadata.bin",
+    "bytes": 15965,
+    "sha256": "4eb6012b6121bbe0591ae2681d4dd5269e5d60bfa92709fca0ee9764d137e26f",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:08:26 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "15965"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:08:26.802720+00:00"
+  },
+  {
+    "id": 7,
+    "label": "sse-stock-list-script",
+    "url": "https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_stocksDepositoryReceipts_2021.js",
+    "params": {},
+    "started_at": "2026-10-18T12:09:22.690197+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "007-sse-stock-list-script.bin",
+    "bytes": 277193,
+    "sha256": "478fb2a72fc5a3725088adb208756e88171f79628956a9f5ca67c900d37def2f",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:09:22 GMT",
+      "Last-Modified": "Fri, 03 Jul 2026 08:28:25 GMT",
+      "Content-Type": "application/javascript",
+      "Content-Length": "277193"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:09:23.328156+00:00"
+  },
+  {
+    "id": 8,
+    "label": "szse-header-nav",
+    "url": "https://www.szse.cn/application/publicindex/header/index.html",
+    "params": {},
+    "started_at": "2026-10-18T12:09:23.828877+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "008-szse-header-nav.bin",
+    "bytes": 108024,
+    "sha256": "31f55ca56465e609b13fe06de1b2e040e62e9d9bed9e126782edfc56f07dbcde",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:09:24 GMT",
+      "Last-Modified": "Sat, 17 Oct 2026 00:57:44 GMT",
+      "Content-Type": "text/html",
+      "Content-Length": "13459"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:09:24.309975+00:00"
+  },
+  {
+    "id": 9,
+    "label": "szse-risk-ui",
+    "url": "https://www.szse.cn/disclosure/listed/warn/index.html",
+    "params": {},
+    "started_at": "2026-10-18T12:09:48.851179+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "009-szse-risk-ui.bin",
+    "bytes": 32744,
+    "sha256": "f23d5460534a30c404428a3580d7f962d862ad5a8cf55eccee089569f9de79c3",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:09:49 GMT",
+      "Last-Modified": "Sat, 17 Oct 2026 00:57:35 GMT",
+      "Content-Type": "text/html",
+      "Content-Length": "6199"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:09:49.321220+00:00"
+  },
+  {
+    "id": 10,
+    "label": "szse-delisting-period-ui",
+    "url": "https://www.szse.cn/marketServices/message/period/index.html",
+    "params": {},
+    "started_at": "2026-10-18T12:09:49.821965+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "010-szse-delisting-period-ui.bin",
+    "bytes": 30735,
+    "sha256": "057af04992d3a807a7f885ed26bb5bbdf698cdd3783f43d524fad48c910208c1",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:09:49 GMT",
+      "Last-Modified": "Sat, 17 Oct 2026 00:57:39 GMT",
+      "Content-Type": "text/html",
+      "Content-Length": "5421"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:09:49.870642+00:00"
+  },
+  {
+    "id": 11,
+    "label": "sse-689009-overview",
+    "url": "https://query.sse.com.cn/commonQuery.do",
+    "params": {
+      "isPagination": "false",
+      "sqlId": "COMMON_SSE_CP_GPJCTPZ_GPLB_GPGK_GSGK_C",
+      "COMPANY_CODE": "689009"
+    },
+    "started_at": "2026-10-18T12:10:37.310570+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "011-sse-689009-overview.bin",
+    "bytes": 1820,
+    "sha256": "94a23dadf6b0a6353a38abbd8cb58a851aea0fdceacfd18c261b7199639093d7",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:10:37 GMT",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Content-Length": "1820"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:10:37.787501+00:00"
+  },
+  {
+    "id": 12,
+    "label": "sse-common-definitions",
+    "url": "https://www.sse.com.cn/xhtml/js/sse_full.js?v=3.8.1_20260901",
+    "params": {},
+    "started_at": "2026-10-18T12:10:38.288417+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "012-sse-common-definitions.bin",
+    "bytes": 377125,
+    "sha256": "7a8a29c5c6a1074c60302109db9fb3a92eb3a67171b8beadd3e1ec87514c781c",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:10:38 GMT",
+      "Last-Modified": "Tue, 08 Sep 2026 07:55:36 GMT",
+      "Content-Type": "application/javascript",
+      "Content-Length": "377125"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:10:38.931201+00:00"
+  },
+  {
+    "id": 13,
+    "label": "sse-stock-statistic-ui",
+    "url": "https://www.sse.com.cn/market/stockdata/statistic/",
+    "params": {},
+    "started_at": "2026-10-18T12:10:39.431922+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "013-sse-stock-statistic-ui.bin",
+    "bytes": 25890,
+    "sha256": "e01a59175a72da9b15f1f16da1cdd78d972035da6820a619fce6fce52c2eb69f",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 12:10:39 GMT",
+      "Content-Type": "text/html"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T12:10:39.547153+00:00"
+  },
+  {
+    "id": 14,
+    "label": "szse-risk-metadata",
+    "url": "https://www.szse.cn/api/report/ShowReport/data",
+    "params": {
+      "SHOWTYPE": "JSON",
+      "CATALOGID": "fxjsb",
+      "TABKEY": "tab1",
+      "PAGENO": "1"
+    },
+    "started_at": "2026-10-18T13:33:06.542626+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "014-szse-risk-metadata.bin",
+    "bytes": 3916,
+    "sha256": "26a27ea10feba567a43655d6b1b6b27da2a7d2f524bddabc23e1de33423957d3",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:33:06 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "3916"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:33:07.017470+00:00"
+  },
+  {
+    "id": 15,
+    "label": "szse-risk-export",
+    "url": "https://www.szse.cn/api/report/ShowReport",
+    "params": {
+      "SHOWTYPE": "xlsx",
+      "CATALOGID": "fxjsb",
+      "TABKEY": "tab1"
+    },
+    "started_at": "2026-10-18T13:33:07.518350+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "015-szse-risk-export.bin",
+    "bytes": 5860,
+    "sha256": "9ede495f065289c5832858ab6ae38c57a2a19721f9037aa1f57f9136d6346ced",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:33:07 GMT",
+      "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK",
+      "Content-Length": "5860"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:33:07.565539+00:00"
+  },
+  {
+    "id": 16,
+    "label": "sse-risk-ui",
+    "url": "https://www.sse.com.cn/disclosure/listedinfo/riskplate/",
+    "params": {},
+    "started_at": "2026-10-18T13:34:27.703743+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "016-sse-risk-ui.bin",
+    "bytes": 28040,
+    "sha256": "00ae29a0fecb3262f6090de6ef118c13ab6f7afebbeea5d7494c591a07350203",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:34:27 GMT",
+      "Content-Type": "text/html"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:34:28.231902+00:00"
+  },
+  {
+    "id": 17,
+    "label": "sse-stock-statistic-script",
+    "url": "https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_stockData_2021.js",
+    "params": {},
+    "started_at": "2026-10-18T13:34:28.732583+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "017-sse-stock-statistic-script.bin",
+    "bytes": 189208,
+    "sha256": "3673d3f8b1cd3d98227af6adbbd0add4b37fb652bdeaeb362325a46d803c5eb8",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:34:28 GMT",
+      "Last-Modified": "Fri, 27 Jun 2025 06:22:46 GMT",
+      "Content-Type": "application/javascript",
+      "Content-Length": "189208"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:34:28.903047+00:00"
+  },
+  {
+    "id": 18,
+    "label": "szse-delisting-period-metadata",
+    "url": "https://www.szse.cn/api/report/ShowReport/data",
+    "params": {
+      "SHOWTYPE": "JSON",
+      "CATALOGID": "fxjsb",
+      "TABKEY": "tab2",
+      "PAGENO": "1"
+    },
+    "started_at": "2026-10-18T13:35:25.507075+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "018-szse-delisting-period-metadata.bin",
+    "bytes": 1282,
+    "sha256": "1344d0a32884f584680ee373c3a18a882ab8685094e2ae39d98f1516884c19c7",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:35:25 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "1282"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:35:25.983707+00:00"
+  },
+  {
+    "id": 19,
+    "label": "sse-risk-script",
+    "url": "https://www.sse.com.cn/xhtml/home/2021public/querySearch/search_listedCompanyInfo_2021.js",
+    "params": {},
+    "started_at": "2026-10-18T13:35:46.195281+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "019-sse-risk-script.bin",
+    "bytes": 107160,
+    "sha256": "e2685c1e237664ca9b4e792d2c5d95c59e2914deb51e0acd9c1c8b54c94e4227",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:35:46 GMT",
+      "Last-Modified": "Fri, 26 Dec 2025 11:45:51 GMT",
+      "Content-Type": "application/javascript",
+      "Content-Length": "107160"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:35:46.815856+00:00"
+  },
+  {
+    "id": 20,
+    "label": "sse-dated-statistic",
+    "url": "https://query.sse.com.cn/commonQuery.do",
+    "params": {
+      "sqlId": "COMMON_SSE_SJ_GPSJ_GPSJZM_TJSJ_L",
+      "PRODUCT_NAME": "股票,主板,科创板",
+      "type": "inParams",
+      "TRADE_DATE": ""
+    },
+    "started_at": "2026-10-18T13:35:47.316946+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "020-sse-dated-statistic.bin",
+    "bytes": 1266,
+    "sha256": "322259bca4f86fe4ab8b9706be43e69518f372a38928b1497aa42531ba13acc2",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:35:47 GMT",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Content-Length": "1266"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:35:47.789217+00:00"
+  },
+  {
+    "id": 21,
+    "label": "sse-main-risk",
+    "url": "https://query.sse.com.cn/commonSoaQuery.do",
+    "params": {
+      "sqlId": "PL_SSGSXX_FXJSBGPLB",
+      "domesticIndicator": "S",
+      "productType": "0"
+    },
+    "started_at": "2026-10-18T13:36:44.953853+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "021-sse-main-risk.bin",
+    "bytes": 8678,
+    "sha256": "b7d4b552e8243d5bf6e5d7121c990921443e39c1e33e28edf1d865aaceb10efe",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:36:45 GMT",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Content-Length": "8678"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:36:45.553206+00:00"
+  },
+  {
+    "id": 22,
+    "label": "sse-main-delisting-period",
+    "url": "https://query.sse.com.cn/commonSoaQuery.do",
+    "params": {
+      "sqlId": "PL_SSGSXX_FXJSBGPLB",
+      "domesticIndicator": "P",
+      "productType": "0"
+    },
+    "started_at": "2026-10-18T13:36:46.054348+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "022-sse-main-delisting-period.bin",
+    "bytes": 483,
+    "sha256": "5e4046df7fe5f89547a04eb4ac225e70264590a58bdaa72d1b6f59e28fba7ba0",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:36:45 GMT",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Content-Length": "483"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:36:46.158944+00:00"
+  },
+  {
+    "id": 23,
+    "label": "sse-star-risk",
+    "url": "https://query.sse.com.cn/commonSoaQuery.do",
+    "params": {
+      "sqlId": "SSE_PL_SSGSXX_KCBFXTS_L",
+      "type": "0"
+    },
+    "started_at": "2026-10-18T13:36:46.659491+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "023-sse-star-risk.bin",
+    "bytes": 1655,
+    "sha256": "410c0a34982a746af759fc0b1011c55435204efe5826583e815cf10caecec426",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:36:46 GMT",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Content-Length": "1655"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:36:46.713014+00:00"
+  },
+  {
+    "id": 24,
+    "label": "sse-star-delisting-period",
+    "url": "https://query.sse.com.cn/commonSoaQuery.do",
+    "params": {
+      "sqlId": "SSE_PL_SSGSXX_KCBFXTS_L",
+      "type": "1"
+    },
+    "started_at": "2026-10-18T13:36:47.214005+00:00",
+    "reserved_budget_units": 3,
+    "retries": 0,
+    "redirects_followed": 0,
+    "status_code": 200,
+    "raw_file": "024-sse-star-delisting-period.bin",
+    "bytes": 488,
+    "sha256": "fa8772832016c440a4a29d80c76912a57cb05f1e3b40187e50366910b22818e6",
+    "headers": {
+      "Date": "Sun, 18 Oct 2026 13:36:46 GMT",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Content-Length": "488"
+    },
+    "status": "RECEIVED",
+    "completed_at": "2026-10-18T13:36:47.272675+00:00"
+  }
+]
