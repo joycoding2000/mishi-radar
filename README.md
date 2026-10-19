@@ -1,16 +1,18 @@
-# A股机会雷达项目
+# mishi-radar · A股机会雷达
 
 面向有投资经验、不会编程的A股个人投资者，帮助用户随时发现候选股票、理解入选依据、持续跟踪并检验历史表现。首发渠道为闲鱼，聚宽社区其次。
 
-**当前阶段：产品研究与范围讨论。** Owner已确认“每日机会雷达”方向及全天可用；策略、回测、交付方式与价格仍为讨论项，未授权产品开发。`astock-commercial-mvp`是现有工作目录名；助手推荐交付名称“觅势 · A股机会雷达”，见[命名提案](docs/2026-10-15-PRODUCT_NAMING.md)，尚未由Owner定名。
+**当前阶段：R3.2 已批准范围与规则基线已记录，完整设计和数据资格尚未冻结。** Owner已批准八策略、六维诊断、H1、PC/手机响应式 Web 和当前扫描/历史回测两项底线；OD-1/OD-2 已批准，OD-3 仅原则接受，运行和权益数值仍为 UNKNOWN。本轮只清理历史遗留并本地提交；此前已授权的 A/B 工作包在本轮结束后另行启动，不据此宣称完整 Design Freeze、真实数据验收或发布批准。工程与本地目录名为`mishi-radar`；中文交付名称仍为提案，见[命名记录](docs/2026-10-15-PRODUCT_NAMING.md)。
+
+本地工作区：`D:\Dev\Projects\mishi-radar`。GitHub仓库：[joycoding2000/mishi-radar](https://github.com/joycoding2000/mishi-radar)，SSH远端为`git@github.com:joycoding2000/mishi-radar.git`，`main`跟踪`origin/main`。
 
 ## 恢复上下文的阅读顺序
 
-1. [当前状态与决策](docs/CURRENT_STATE.md)：已确认事项、助手提案、撤回判断、证据缺口与授权边界。
-2. [可售范围讨论](docs/2026-10-15-V0_1_SCOPE_DISCUSSION.md)：完整使用路径及八项范围建议。
-3. [首发策略逐项清单](docs/2026-10-15-LAUNCH_STRATEGIES.md)：六项主体候选、两项有条件首发及参数提案。
-4. [回测能力清单](docs/2026-10-15-BACKTEST_CAPABILITIES.md)：单股、组合、推荐跟踪、结果与对比、样本外和WF的具体边界。
-5. [竞品策略与回测对照](docs/2026-10-15-COMPETITOR_STRATEGY_BACKTEST.md)：竞品3/4/QuantX的数量口径与证据等级。
+1. [当前状态与决策](docs/CURRENT_STATE.md)：当前权威顺序、数据阻断与本轮授权边界。
+2. [R3.2 已批准范围](docs/MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md)及[DR01–DR06 消费者合同](docs/MISHI_RADAR_TO_CHSTOCKDATA_DR01_DR06_CONSUMER_REQUEST_2026-10-16.md)：正式范围与当前/历史双资格。
+3. [最新运行规格候选](docs/MISHI_RADAR_R3_2_PRODUCT_OPERATING_SPEC_CANDIDATE_2026-10-19.md)及[Owner 决策记录](docs/MISHI_RADAR_R3_2_OWNER_DECISIONS_2026-10-19.md)：OD-1/OD-2 规则基线、OD-3 未冻结数值与限定验收。
+4. [DR01 最终来源报告](outputs/dr01-current-unblock-2026-10-18/DR01-CURRENT-report.md)及[DR02–DR06 综合差距报告](outputs/dr02-dr06-consolidation-2026-10-19/DR02-DR06-consolidated-gap-report.md)：已完成调查与剩余数据资格缺口。
+5. 较早的[范围讨论](docs/2026-10-15-V0_1_SCOPE_DISCUSSION.md)、[策略提案](docs/2026-10-15-LAUNCH_STRATEGIES.md)、[回测提案](docs/2026-10-15-BACKTEST_CAPABILITIES.md)及[竞品对照](docs/2026-10-15-COMPETITOR_STRATEGY_BACKTEST.md)保留来源身份；冲突以最新范围和 Owner 决策为准。
 
 ## 文档与研究资料导航
 
@@ -23,7 +25,7 @@
 | [综合竞品截图索引](docs/research/competitor-scope-2026-10-15.json) | 当轮25张图片路径；后续增补另见三款竞品对照，不是全部已读图片总表 |
 | [本机资料利用基线](docs/LOCAL_RESEARCH_ASSETS.md) | 五个资料库实际检查范围、用途和限制 |
 | [聚宽全文阅读入口](docs/joinquant-full-review/README.md) | 完成状态、逐文件记录、机制、缺陷及原始路径索引 |
-| [交付软件命名提案](docs/2026-10-15-PRODUCT_NAMING.md) | 主推荐觅势，含全称、英文及工程名建议；待Owner确认 |
+| [软件命名与目录记录](docs/2026-10-15-PRODUCT_NAMING.md) | 工程/目录名已确认mishi-radar；中文名觅势仍为提案 |
 
 ## 文档使用规则
 
@@ -35,6 +37,6 @@
 
 ## Git收录范围
 
-提交产品文档、研究结论、逐文件语义记录、索引及既有覆盖校验。源码阅读切块、抽取副本和图片保留在本机，由`.gitignore`排除；不删除、不当作产品代码导入。外部截图与资料库仍位于各文档列明的本机路径，新环境不能假定其可访问。
+提交产品文档、研究结论、逐文件语义记录、索引、覆盖校验，以及`outputs/`中报告引用的原始响应、请求账本、调查脚本和身份清单。`.gitattributes`保留哈希所标识合同及证据的原始字节。源码阅读切块、抽取副本和图片保留在本机，由既有`.gitignore`排除；不删除、不当作产品代码导入。外部截图与资料库仍位于各文档列明的本机路径，新环境不能假定其可访问。
 
 当前尚无产品程序、运行方式或产品测试套件。文档整理的验证只涉及链接、结构与记录格式，不代表策略或行情数据已验证。
