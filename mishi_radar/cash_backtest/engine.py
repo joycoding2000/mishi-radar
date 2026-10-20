@@ -1442,6 +1442,8 @@ class _Engine:
         else:
             status = "SUCCEEDED"
         metrics = self._metrics()
+        monthly_returns = self._period_returns(7)
+        yearly_returns = self._period_returns(4)
         return BacktestResult(
             status=status,
             blockers=tuple(self.blockers),
@@ -1454,9 +1456,28 @@ class _Engine:
             position_history=list(self.position_history),
             final_positions=final_positions,
             metrics=metrics,
+            monthly_returns=monthly_returns,
+            yearly_returns=yearly_returns,
             reconciliation=list(self.reconciliation),
             synthetic=self.config.synthetic,
         )
+
+    def _period_returns(self, prefix_length: int) -> dict[str, Decimal]:
+        if not self.nav_points:
+            return {}
+        returns: dict[str, Decimal] = {}
+        previous_nav = Decimal(1)
+        current_key = self.nav_points[0].date[:prefix_length]
+        last_nav = Decimal(1)
+        for point in self.nav_points:
+            key = point.date[:prefix_length]
+            if key != current_key:
+                returns[current_key] = last_nav / previous_nav - 1
+                previous_nav = last_nav
+                current_key = key
+            last_nav = point.nav
+        returns[current_key] = last_nav / previous_nav - 1
+        return returns
 
     def _metrics(self) -> dict[str, Decimal | float | None]:
         if not self.nav_points:

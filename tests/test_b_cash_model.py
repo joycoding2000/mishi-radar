@@ -95,7 +95,7 @@ class CashModelSpecExampleTests(unittest.TestCase):
         self.assertTrue(all(item["equity_ok"] for item in result.reconciliation))
 
     def test_no_signal_keeps_cash_and_nav_one(self) -> None:
-        dates = trading_dates(4)
+        dates = trading_dates(30)
         days = [
             market_day(day, {"SH:600001": bar(day, 10, 10)})
             for day in dates
@@ -107,6 +107,10 @@ class CashModelSpecExampleTests(unittest.TestCase):
         self.assertEqual(result.nav_points[-1].nav, Decimal(1))
         self.assertEqual(result.fills, [])
         self.assertIsNone(result.metrics["win_rate"])
+        self.assertIn("2026-09", result.monthly_returns)
+        self.assertIn("2026-10", result.monthly_returns)
+        self.assertEqual(result.monthly_returns["2026-10"], Decimal(0))
+        self.assertEqual(result.yearly_returns["2026"], Decimal(0))
 
     def test_unknown_signal_availability_blocks(self) -> None:
         dates = trading_dates(3)

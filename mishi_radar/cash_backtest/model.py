@@ -397,6 +397,8 @@ class BacktestResult:
     position_history: list[PositionSnapshot]
     final_positions: list[PositionSnapshot]
     metrics: dict[str, Decimal | float | None]
+    monthly_returns: dict[str, Decimal]
+    yearly_returns: dict[str, Decimal]
     reconciliation: list[dict[str, Any]]
     synthetic: bool
 
