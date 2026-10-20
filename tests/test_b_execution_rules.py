@@ -219,6 +219,49 @@ class UnknownSignalTests(unittest.TestCase):
         self.assertTrue(any("ENTRY_CONFLICT_UNKNOWN" in item for item in result.blockers))
 
 
+class OccupiedPositionTests(unittest.TestCase):
+    def test_unsold_position_occupies_slot_and_cash_is_not_released(self) -> None:
+        dates = trading_dates(4)
+        days = []
+        for day in dates:
+            if day == dates[2]:
+                bars = {
+                    "SH:600001": bar(day, 10, 10),
+                    "SH:600002": bar(day, 9, 9, limit_down=9),
+                    "SH:600003": bar(day, 10, 10),
+                    "SH:600004": bar(day, 10, 10),
+                }
+            else:
+                bars = {sid: bar(day, 10, 10) for sid in ("SH:600001", "SH:600002", "SH:600003", "SH:600004")}
+            days.append(market_day(day, bars))
+        signals = {
+            dates[0]: (
+                signal("SH:600001", dates[0], candidate_rank=1, pool_rank=1),
+                signal("SH:600002", dates[0], candidate_rank=2, pool_rank=2),
+            ),
+            dates[1]: (
+                signal("SH:600003", dates[1], candidate_rank=1, pool_rank=1),
+                signal("SH:600004", dates[1], candidate_rank=2, pool_rank=2),
+            ),
+        }
+        result = run_backtest(
+            make_input(dates, days, signals_by_signal_date=signals),
+            config(initial_cash=Decimal(100000), top_n=2, rebalance_days=1, start_date=dates[1], stop_loss=None),
+        )
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        day2_positions = {
+            p.security_id: p.quantity for p in result.position_history if p.date == dates[2]
+        }
+        self.assertEqual(set(day2_positions), {"SH:600002", "SH:600003"})
+        failed_sell = [
+            o for o in result.orders if o.security_id == "SH:600002" and o.side == "SELL" and o.attempt_date == dates[2]
+        ][0]
+        self.assertEqual(failed_sell.status, "UNFILLED")
+        self.assertEqual(failed_sell.reason, "LIMIT_DOWN")
+        self.assertNotIn("SH:600004", day2_positions)
+        self.assertLess(result.nav_points[1].cash, Decimal(50000))
+
+
 class S04NoAddTests(unittest.TestCase):
     def test_existing_s04_position_is_not_augmented(self) -> None:
         dates = trading_dates(3)

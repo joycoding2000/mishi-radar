@@ -80,6 +80,7 @@ class CashModelSpecExampleTests(unittest.TestCase):
         self.assertEqual(failed_sell[0].status, "UNFILLED")
         self.assertEqual(failed_sell[0].reason, "LIMIT_DOWN")
         self.assertEqual(failed_sell[0].commission, Decimal(0))
+        self.assertEqual(failed_sell[0].signal_date, dates[1])
 
         day3 = result.nav_points[2]
         self.assertEqual(day3.cash, Decimal(46085))

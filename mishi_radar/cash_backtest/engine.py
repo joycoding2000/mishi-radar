@@ -166,12 +166,14 @@ class _Engine:
         self.exited_today = set()
         self.today_buy_gross = ZERO
         self.today_sell_gross = ZERO
-        self._apply_corporate_actions(date, day)
+        full_index = self.full_calendar.index(date)
+        previous_date = self.full_calendar[full_index - 1] if full_index > 0 else None
+        raw_signals = self.data.signals_by_signal_date.get(previous_date, ()) if previous_date else ()
+        relevant_ids = set(self.positions) | {signal.security_id for signal in raw_signals}
+        self._apply_corporate_actions(date, day, relevant_ids)
         self._process_external_dividend_claims(date)
         self._process_dividend_payments(date)
 
-        full_index = self.full_calendar.index(date)
-        previous_date = self.full_calendar[full_index - 1] if full_index > 0 else None
         if previous_date is not None:
             for request in self.data.exit_requests_by_signal_date.get(previous_date, ()):
                 self._add_locked_exit(request)
@@ -215,13 +217,30 @@ class _Engine:
         target_ids = {signal.security_id for signal in targets}
 
         locked_ids = {sid for sid, requests in self.locked_exits.items() if requests}
-        sell_plan = self._build_sell_plan(date, mark_open, open_values, target_weight, target_ids, is_rebalance, locked_ids)
+        sell_plan = self._build_sell_plan(
+            date,
+            mark_open,
+            open_values,
+            target_weight,
+            target_ids,
+            is_rebalance,
+            locked_ids,
+            previous_date,
+        )
         for sid in sorted(sell_plan, key=lambda item: self._sell_sort_key(item, sell_plan[item])):
             plan = sell_plan[sid]
             position = self.positions.get(sid)
             if position is None:
                 continue
-            self._execute_sell(date, position, plan["quantity"], plan["reasons"], plan["locked"], plan["exit_intent"])
+            self._execute_sell(
+                date,
+                position,
+                plan["quantity"],
+                plan["reasons"],
+                plan["locked"],
+                plan["exit_intent"],
+                plan["signal_date"],
+            )
 
         if is_rebalance:
             self._execute_buys(date, targets, mark_open, target_weight, candidate_pool)
@@ -304,6 +323,7 @@ class _Engine:
         target_ids: set[str],
         is_rebalance: bool,
         locked_ids: set[str],
+        previous_date: str | None,
     ) -> dict[str, dict]:
         plan: dict[str, dict] = {}
         for sid, position in self.positions.items():
@@ -311,8 +331,11 @@ class _Engine:
             locked = sid in locked_ids
             exit_intent = locked
             quantity = 0
+            signal_date = previous_date
             if locked:
-                reasons = [request.reason for request in self.locked_exits.get(sid, ())]
+                requests = self.locked_exits.get(sid, ())
+                reasons = [request.reason for request in requests]
+                signal_date = min(request.trigger_date for request in requests) if requests else previous_date
                 quantity = position.quantity
             elif is_rebalance:
                 if sid not in target_ids:
@@ -334,6 +357,7 @@ class _Engine:
                     "reasons": reasons,
                     "locked": locked,
                     "exit_intent": exit_intent,
+                    "signal_date": signal_date,
                 }
         return plan
 
@@ -455,6 +479,7 @@ class _Engine:
         reasons: Sequence[str],
         locked: bool,
         exit_intent: bool,
+        signal_date: str | None,
     ) -> None:
         sid = position.security_id
         bar = self._bar(date, sid)
@@ -472,6 +497,7 @@ class _Engine:
                 "UNFILLED",
                 reason="SUSPENDED",
                 strategy_id=position.strategy_id,
+                signal_date=signal_date,
             )
             return
         if bar.suspended is None:
@@ -493,6 +519,7 @@ class _Engine:
                 "UNFILLED",
                 reason="LIMIT_DOWN",
                 strategy_id=position.strategy_id,
+                signal_date=signal_date,
             )
             return
         if limit_down is not None and sell_price < limit_down:
@@ -504,6 +531,7 @@ class _Engine:
                 "UNFILLED",
                 reason="PRICE_OUTSIDE_LIMIT",
                 strategy_id=position.strategy_id,
+                signal_date=signal_date,
             )
             return
         sellable = position.sellable_quantity(date)
@@ -516,6 +544,7 @@ class _Engine:
                 "UNFILLED",
                 reason="T_SELL_RESTRICTED",
                 strategy_id=position.strategy_id,
+                signal_date=signal_date,
             )
             return
         quantity = min(requested_quantity, sellable)
@@ -557,6 +586,7 @@ class _Engine:
             other_fees=other_fees,
             reason=";".join(reasons),
             strategy_id=position.strategy_id,
+            signal_date=signal_date,
         )
         self.fills.append(
             Fill(order.order_id, sid, "SELL", date, quantity, sell_price, gross, commission, other_fees)
@@ -870,20 +900,20 @@ class _Engine:
                 self.dividend_entitlements[key] = (action.security_id, position.quantity)
                 self.pending_actions[key] = action
 
-    def _apply_corporate_actions(self, date: str, day: MarketDay) -> None:
-        if not day.corporate_actions_complete and self.positions:
+    def _apply_corporate_actions(self, date: str, day: MarketDay, relevant_ids: set[str]) -> None:
+        if not day.corporate_actions_complete and relevant_ids:
             raise _Blocked(f"CORPORATE_ACTION_COVERAGE_INCOMPLETE:{date}")
         for action in self.actions_by_effective.get(date, ()):
             position = self.positions.get(action.security_id)
             if action.status in ("ANNOUNCED", "CANCELLED"):
                 continue
             if action.status in ("UNKNOWN", "CONFLICT"):
-                if position is not None:
+                if action.security_id in relevant_ids:
                     raise _Blocked(f"CORPORATE_ACTION_UNKNOWN:{action.security_id}:{action.action_type}:{date}")
                 self.warnings.append(f"CORPORATE_ACTION_UNKNOWN_IGNORED:{action.security_id}:{date}")
                 continue
             if action.status != "IMPLEMENTED":
-                if position is not None:
+                if action.security_id in relevant_ids:
                     raise _Blocked(f"CORPORATE_ACTION_STATUS_UNKNOWN:{action.security_id}:{date}")
                 continue
             if position is None:
@@ -1365,6 +1395,7 @@ class _Engine:
         other_fees: Decimal = ZERO,
         reason: str | None = None,
         strategy_id: str | None = None,
+        signal_date: str | None = None,
     ) -> Order:
         self.order_counter += 1
         order = Order(
@@ -1372,7 +1403,7 @@ class _Engine:
             security_id=security_id,
             side=side,
             attempt_date=date,
-            signal_date=None,
+            signal_date=signal_date,
             status=status,
             requested_quantity=requested_quantity,
             filled_quantity=filled_quantity,

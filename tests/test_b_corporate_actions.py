@@ -161,6 +161,49 @@ class CorporateActionTests(unittest.TestCase):
         self.assertEqual(result.status, "BLOCKED")
         self.assertTrue(any("CORPORATE_ACTION_UNKNOWN" in item for item in result.blockers))
 
+    def test_unknown_corporate_action_blocks_buy_candidate(self) -> None:
+        dates = trading_dates(3)
+        action = CorporateAction(
+            security_id="SH:600001",
+            action_type="CASH_DIVIDEND",
+            effective_date=dates[1],
+            status="UNKNOWN",
+            cash_per_share=Decimal("0.1"),
+        )
+        days = []
+        for day in dates:
+            days.append(
+                market_day(
+                    day,
+                    {"SH:600001": bar(day, 10, 10)},
+                    corporate_actions=(action,) if day == dates[1] else (),
+                )
+            )
+        result = run_backtest(
+            make_input(dates, days, signals_by_signal_date={dates[0]: (signal("SH:600001", dates[0]),)}),
+            config(initial_cash=Decimal(1005), top_n=1, start_date=dates[1], stop_loss=None),
+        )
+        self.assertEqual(result.status, "BLOCKED")
+        self.assertTrue(any("CORPORATE_ACTION_UNKNOWN" in item for item in result.blockers))
+
+    def test_incomplete_corporate_action_coverage_blocks_candidate_before_buy(self) -> None:
+        dates = trading_dates(3)
+        days = []
+        for day in dates:
+            days.append(
+                market_day(
+                    day,
+                    {"SH:600001": bar(day, 10, 10)},
+                    corporate_actions_complete=day != dates[1],
+                )
+            )
+        result = run_backtest(
+            make_input(dates, days, signals_by_signal_date={dates[0]: (signal("SH:600001", dates[0]),)}),
+            config(initial_cash=Decimal(1005), top_n=1, start_date=dates[1], stop_loss=None),
+        )
+        self.assertEqual(result.status, "BLOCKED")
+        self.assertTrue(any("CORPORATE_ACTION_COVERAGE_INCOMPLETE" in item for item in result.blockers))
+
     def test_incomplete_corporate_action_coverage_blocks_held_security(self) -> None:
         dates = trading_dates(4)
         days = []
