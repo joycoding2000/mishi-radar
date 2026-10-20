@@ -3,9 +3,10 @@ from __future__ import annotations
 import unittest
 from decimal import Decimal
 
-from mishi_radar.strategy_core.config import default_configs
+from mishi_radar.strategy_core.config import S01Config, default_configs
 from mishi_radar.strategy_core.engine import compute_all, evaluate_exit, signal_records
 from mishi_radar.strategy_core.model import ConditionStatus, ExitContext, num
+from mishi_radar.strategy_core.strategies import ma_value
 
 from tests.a_fixtures import default_financial, flat, make_snapshot, trading_dates, trend
 
@@ -36,6 +37,84 @@ class ExitTests(unittest.TestCase):
             ExitContext(holding_days=0, common_stop_unknown=True),
         )
         self.assertEqual(unknown.status, ConditionStatus.UNKNOWN)
+
+    @staticmethod
+    def _personal_ma10():
+        return default_configs().with_s01(
+            S01Config(ma_short=10, config_id="S01_PERSONAL", config_version="S01_PERSONAL/v1")
+        )
+
+    def test_personal_s01_ma10_exit_uses_configured_short_ma(self) -> None:
+        dates = trading_dates(20)
+        closes = [Decimal("8.0")] * 10 + [Decimal("12.0")] * 9 + [Decimal("11.0")]
+        snapshot = make_snapshot(dates, {"SH:600001": closes}, benchmark_closes=[100] * 20)
+        self.assertEqual(ma_value(snapshot, "SH:600001", 10).value, Decimal("11.9"))
+        self.assertEqual(ma_value(snapshot, "SH:600001", 20).value, Decimal("9.95"))
+        personal = self._personal_ma10()
+        decision = evaluate_exit(
+            snapshot,
+            "S01",
+            "SH:600001",
+            ExitContext(holding_days=0),
+            personal,
+        )
+        self.assertEqual(decision.status, ConditionStatus.TRUE)
+        self.assertIn("STRATEGY_EXIT:S01_BELOW_MA20", decision.reasons)
+
+    def test_default_s01_ma20_does_not_exit_on_same_input(self) -> None:
+        dates = trading_dates(20)
+        closes = [Decimal("8.0")] * 10 + [Decimal("12.0")] * 9 + [Decimal("11.0")]
+        snapshot = make_snapshot(dates, {"SH:600001": closes}, benchmark_closes=[100] * 20)
+        decision = evaluate_exit(
+            snapshot,
+            "S01",
+            "SH:600001",
+            ExitContext(holding_days=0),
+            default_configs(),
+        )
+        self.assertEqual(decision.status, ConditionStatus.FALSE)
+
+    def test_s06_exit_keeps_default_when_personal_ma10_would_exit(self) -> None:
+        dates = trading_dates(20)
+        closes = [Decimal("8.0")] * 10 + [Decimal("12.0")] * 9 + [Decimal("11.0")]
+        snapshot = make_snapshot(dates, {"SH:600001": closes}, benchmark_closes=[100] * 20)
+        personal = self._personal_ma10()
+        personal_s01 = evaluate_exit(
+            snapshot, "S01", "SH:600001", ExitContext(holding_days=0), personal
+        )
+        s06 = evaluate_exit(
+            snapshot,
+            "S06",
+            "SH:600001",
+            ExitContext(holding_days=0, industry_rank_history=(1, 1)),
+            personal,
+        )
+        self.assertEqual(personal_s01.status, ConditionStatus.TRUE)
+        self.assertEqual(s06.status, ConditionStatus.FALSE)
+
+    def test_s06_exit_keeps_default_when_personal_ma10_would_not_exit(self) -> None:
+        dates = trading_dates(20)
+        closes = [Decimal("9.4")] * 10 + [Decimal("8.8")] * 9 + [Decimal("9.0")]
+        snapshot = make_snapshot(dates, {"SH:600001": closes}, benchmark_closes=[100] * 20)
+        self.assertEqual(ma_value(snapshot, "SH:600001", 10).value, Decimal("8.82"))
+        self.assertEqual(ma_value(snapshot, "SH:600001", 20).value, Decimal("9.11"))
+        personal = self._personal_ma10()
+        personal_s01 = evaluate_exit(
+            snapshot, "S01", "SH:600001", ExitContext(holding_days=0), personal
+        )
+        default_s01 = evaluate_exit(
+            snapshot, "S01", "SH:600001", ExitContext(holding_days=0), default_configs()
+        )
+        s06 = evaluate_exit(
+            snapshot,
+            "S06",
+            "SH:600001",
+            ExitContext(holding_days=0, industry_rank_history=(1, 1)),
+            personal,
+        )
+        self.assertEqual(personal_s01.status, ConditionStatus.FALSE)
+        self.assertEqual(default_s01.status, ConditionStatus.TRUE)
+        self.assertEqual(s06.status, ConditionStatus.TRUE)
 
     def test_strategy_specific_exits(self) -> None:
         below = _snapshot_with_last_close(Decimal(5))

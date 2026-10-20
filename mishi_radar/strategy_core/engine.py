@@ -161,7 +161,7 @@ def evaluate_exit(
         unknown.append("PRICE_UNKNOWN")
 
     if strategy_id == "S01":
-        ma = ma_value(snapshot, security_id, S01_DEFAULT_CONFIG.ma_short)
+        ma = ma_value(snapshot, security_id, cfg.ma_short)
         if ma.usable and price.usable and price.value is not None and ma.value is not None:
             if price.value < ma.value:
                 reasons.append("STRATEGY_EXIT:S01_BELOW_MA20")
