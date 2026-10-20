@@ -4,8 +4,14 @@ import unittest
 from decimal import Decimal
 
 from mishi_radar.strategy_core.config import S01Config, default_configs
-from mishi_radar.strategy_core.engine import compute_all, evaluate_exit, signal_records
-from mishi_radar.strategy_core.model import ConditionStatus, ExitContext, num
+from mishi_radar.strategy_core.engine import compute_all, compute_strategy, evaluate_exit, signal_records
+from mishi_radar.strategy_core.model import (
+    ConditionStatus,
+    ExitContext,
+    confirmed_zero,
+    num,
+    raw_zero_unknown,
+)
 from mishi_radar.strategy_core.strategies import ma_value
 
 from tests.a_fixtures import default_financial, flat, make_snapshot, trading_dates, trend
@@ -179,6 +185,115 @@ class ExitTests(unittest.TestCase):
         s08 = evaluate_exit(snapshot, "S08", "SH:600001", ExitContext(holding_days=0))
         self.assertEqual(s08.status, ConditionStatus.TRUE)
         self.assertTrue(any("S08_THREE_DAY_OUTFLOW" in item for item in s08.reasons))
+
+
+class S08ExitAvailabilityTests(unittest.TestCase):
+    @staticmethod
+    def _snapshot(dates, last_five):
+        flows = {day: num(1) for day in dates[:-5]}
+        for day, value in zip(dates[-5:], last_five):
+            flows[day] = value
+        return make_snapshot(
+            dates,
+            {"SH:600001": [Decimal(10)] * 20},
+            benchmark_closes=[100] * 20,
+            fund_flows={"SH:600001": flows},
+        )
+
+    def test_d2_after_close_three_day_outflow_is_unknown(self) -> None:
+        dates = trading_dates(20)
+        snapshot = self._snapshot(
+            dates,
+            [
+                num(1),
+                num(1),
+                num(-1, available_at=f"{dates[-1]}T23:59:59"),
+                num(-1, available_at=f"{dates[-1]}T23:59:59"),
+                num(-1, available_at=f"{dates[-1]}T23:59:59"),
+            ]
+        )
+        decision = evaluate_exit(snapshot, "S08", "SH:600001", ExitContext(holding_days=0))
+        self.assertEqual(decision.status, ConditionStatus.UNKNOWN)
+        self.assertIn("S08_LAST_THREE_FLOWS_UNKNOWN", decision.reasons)
+
+    def test_before_close_three_day_outflow_still_exits(self) -> None:
+        dates = trading_dates(20)
+        snapshot = self._snapshot(
+            dates,
+            [
+                num(1),
+                num(1),
+                num(-1, available_at=f"{dates[-1]}T14:59:59"),
+                num(-1, available_at=f"{dates[-1]}T14:59:59"),
+                num(-1, available_at=f"{dates[-1]}T14:59:59"),
+            ]
+        )
+        decision = evaluate_exit(snapshot, "S08", "SH:600001", ExitContext(holding_days=0))
+        self.assertEqual(decision.status, ConditionStatus.TRUE)
+        self.assertIn("STRATEGY_EXIT:S08_THREE_DAY_OUTFLOW", decision.reasons)
+
+    def test_partially_unavailable_flow_is_not_a_confirmed_exit(self) -> None:
+        dates = trading_dates(20)
+        snapshot = self._snapshot(
+            dates,
+            [
+                num(1),
+                num(1),
+                num(-1, available_at=f"{dates[-1]}T14:00:00"),
+                num(-1, available_at=f"{dates[-1]}T23:59:59"),
+                num(-1, available_at=f"{dates[-1]}T14:00:00"),
+            ]
+        )
+        decision = evaluate_exit(snapshot, "S08", "SH:600001", ExitContext(holding_days=0))
+        self.assertEqual(decision.status, ConditionStatus.UNKNOWN)
+        self.assertNotEqual(decision.status, ConditionStatus.TRUE)
+
+    def test_confirmed_zero_is_not_unknown_and_not_a_negative_day(self) -> None:
+        dates = trading_dates(20)
+        snapshot = self._snapshot(
+            dates,
+            [
+                num(1),
+                num(1),
+                num(-1, available_at=f"{dates[-1]}T14:00:00"),
+                confirmed_zero(available_at=f"{dates[-1]}T14:00:00"),
+                num(-1, available_at=f"{dates[-1]}T14:00:00"),
+            ]
+        )
+        decision = evaluate_exit(snapshot, "S08", "SH:600001", ExitContext(holding_days=0))
+        self.assertEqual(decision.status, ConditionStatus.FALSE)
+        self.assertNotEqual(decision.status, ConditionStatus.UNKNOWN)
+
+    def test_raw_zero_remains_unknown(self) -> None:
+        dates = trading_dates(20)
+        snapshot = self._snapshot(
+            dates,
+            [
+                num(1),
+                num(1),
+                num(-1, available_at=f"{dates[-1]}T14:00:00"),
+                raw_zero_unknown(available_at=f"{dates[-1]}T14:00:00", reason="RAW_ZERO_UNCERTIFIED"),
+                num(-1, available_at=f"{dates[-1]}T14:00:00"),
+            ]
+        )
+        decision = evaluate_exit(snapshot, "S08", "SH:600001", ExitContext(holding_days=0))
+        self.assertEqual(decision.status, ConditionStatus.UNKNOWN)
+        self.assertIn("S08_LAST_THREE_FLOWS_UNKNOWN", decision.reasons)
+
+    def test_s08_entry_path_keeps_availability_unknown(self) -> None:
+        dates = trading_dates(20)
+        snapshot = self._snapshot(
+            dates,
+            [
+                num(1),
+                num(1),
+                num(-1, available_at=f"{dates[-1]}T23:59:59"),
+                num(-1, available_at=f"{dates[-1]}T23:59:59"),
+                num(-1, available_at=f"{dates[-1]}T23:59:59"),
+            ]
+        )
+        result = compute_strategy(snapshot, "S08", default_configs())
+        self.assertEqual(result.rows["SH:600001"].signal_status, ConditionStatus.UNKNOWN)
 
 
 class DeterminismTests(unittest.TestCase):

@@ -18,6 +18,7 @@ from .model import (
 )
 from .strategies import (
     STRATEGY_IDS,
+    _check_available,
     _index,
     _s01_metrics,
     _s07_metrics,
@@ -249,6 +250,8 @@ def _last_three_flows(snapshot: MarketSnapshot, security_id: str) -> list[Decima
     values: list[Decimal] = []
     for date in snapshot.calendar[end_index - 2 : end_index + 1]:
         flow = snapshot.fund_flows.get(security_id, {}).get(date)
+        if flow is not None:
+            flow = _check_available(flow, snapshot.business_date)
         if flow is None or not flow.usable or flow.status is ValueStatus.RAW_ZERO_SEMANTICS_UNKNOWN:
             return None
         assert flow.value is not None
