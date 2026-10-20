@@ -167,6 +167,37 @@ class S03Tests(unittest.TestCase):
         self.assertEqual(result.rows["SH:600002"].confirmation_status, ConditionStatus.FALSE)
         self.assertEqual(result.rows["SH:600002"].signal_status, ConditionStatus.FALSE)
 
+    def test_missing_yesterday_high_is_unknown(self) -> None:
+        dates = trading_dates(61)
+        closes = self._closes(Decimal("12.5"))
+        bad = make_bar(dates[-2], closes[-2], high=Decimal("12.5"))
+        snapshot = make_snapshot(
+            dates,
+            {"SH:600001": closes},
+            benchmark_closes=[100] * 61,
+            bars_override={"SH:600001": {dates[-2]: bad}},
+        )
+        from mishi_radar.strategy_core.model import Numeric, ValueStatus
+
+        bars = dict(snapshot.bars["SH:600001"])
+        original = bars[dates[-2]]
+        bars[dates[-2]] = original.__class__(
+            date=original.date,
+            open=original.open,
+            high=Numeric(None, ValueStatus.MISSING, "HIGH_MISSING"),
+            low=original.low,
+            close=original.close,
+            volume=original.volume,
+            amount=original.amount,
+            adjustment_factor=original.adjustment_factor,
+            volume_factor=original.volume_factor,
+        )
+        snapshot = snapshot.__class__(
+            **{**snapshot.__dict__, "bars": {**snapshot.bars, "SH:600001": bars}}
+        )
+        result = compute_strategy(snapshot, "S03", default_configs())
+        self.assertEqual(result.rows["SH:600001"].signal_status, ConditionStatus.UNKNOWN)
+
 
 class S04Tests(unittest.TestCase):
     def _closes(self, *, base: Decimal = Decimal(10), d_minus_1: Decimal = Decimal("9.2")) -> list[Decimal]:
@@ -205,6 +236,18 @@ class S04Tests(unittest.TestCase):
         row = result.rows["SH:600001"]
         self.assertEqual(row.signal_status, ConditionStatus.TRUE)
         self.assertEqual(row.entry_conflict_exit, ConditionStatus.TRUE)
+
+    def test_missing_d_minus_6_is_unknown(self) -> None:
+        dates = trading_dates(30)
+        closes = self._closes()
+        snapshot = make_snapshot(
+            dates,
+            {"SH:600001": closes},
+            benchmark_closes=[100] * 30,
+            bars_override={"SH:600001": {dates[-7]: make_bar(dates[-7], None)}},
+        )
+        result = compute_strategy(snapshot, "S04", default_configs())
+        self.assertEqual(result.rows["SH:600001"].signal_status, ConditionStatus.UNKNOWN)
 
     def test_prior_drop_window_ends_at_d_minus_1_and_uses_d_minus_6(self) -> None:
         dates = trading_dates(30)

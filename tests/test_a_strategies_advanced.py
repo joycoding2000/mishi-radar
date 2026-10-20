@@ -177,6 +177,24 @@ class S06Tests(unittest.TestCase):
             self.assertEqual(row.signal_state.value, "ELIGIBLE_NOT_TRIGGERED")
             self.assertIsNotNone(row.pool_rank)
 
+    def test_missing_member_value_makes_industry_unknown(self) -> None:
+        snapshot = self._snapshot()
+        business_date = snapshot.business_date
+        bars = {
+            sid: {
+                day: bar
+                for day, bar in security_bars.items()
+                if not (sid == "SH:600002" and day == business_date)
+            }
+            for sid, security_bars in snapshot.bars.items()
+        }
+        snapshot = snapshot.__class__(**{**snapshot.__dict__, "bars": bars})
+        result = compute_strategy(snapshot, "S06", default_configs())
+        self.assertEqual(result.industries["IND_STRONG"].status, "UNKNOWN")
+        self.assertFalse(result.pool_complete)
+        self.assertEqual(result.rows["SH:600001"].eligibility, Eligibility.INPUT_UNKNOWN)
+        self.assertIsNone(result.rows["SH:600001"].pool_rank)
+
     def test_s06_binding_ignores_personal_s01_config(self) -> None:
         snapshot = self._snapshot()
         personal = S01Config(ma_short=10, config_id="S01_PERSONAL", config_version="S01_PERSONAL/v1")
