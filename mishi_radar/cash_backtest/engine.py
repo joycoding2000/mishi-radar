@@ -41,6 +41,7 @@ from .model import (
 
 CENT = Decimal("0.01")
 ZERO = Decimal("0")
+MODEL_OPEN_TIME = "09:30:00"
 
 
 class _Blocked(Exception):
@@ -292,6 +293,22 @@ class _Engine:
             result.append(signal)
         return result
 
+    @staticmethod
+    def _available_before_open(available_at: str, trade_date: str) -> bool:
+        date_part = available_at[:10]
+        if date_part < trade_date:
+            return True
+        if date_part > trade_date:
+            return False
+        if len(available_at) <= 10:
+            return True
+        if available_at[10] not in ("T", " "):
+            return True
+        time_part = available_at[11:19]
+        if len(time_part) == 5:
+            time_part += ":00"
+        return time_part < MODEL_OPEN_TIME
+
     def _execution_date(self, signal: Signal) -> str | None:
         try:
             base_index = self.full_calendar.index(signal.signal_date)
@@ -305,10 +322,10 @@ class _Engine:
             if self.config.require_known_signal_availability:
                 raise _Blocked(f"SIGNAL_AVAILABILITY_UNKNOWN:{signal.security_id}")
             return first_open
-        if signal.available_at <= first_open:
+        if self._available_before_open(signal.available_at, first_open):
             return first_open
-        for date in self.full_calendar[next_index:]:
-            if date >= signal.available_at:
+        for date in self.full_calendar[next_index + 1 :]:
+            if self._available_before_open(signal.available_at, date):
                 return date
         return None
 
