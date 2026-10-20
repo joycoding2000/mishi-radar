@@ -136,6 +136,12 @@ class _Engine:
     def _prepare(self) -> None:
         if not self.data.fee_schedule.applies(self.start_date):
             raise _Blocked("FEE_SCHEDULE_NOT_APPLICABLE_AT_START")
+        boundaries = tuple(self.config.segment_boundaries)
+        if boundaries:
+            if len(set(boundaries)) != len(boundaries) or tuple(sorted(boundaries)) != boundaries:
+                raise _Blocked("SEGMENT_BOUNDARIES_INVALID")
+            if any(boundary not in self.dates or boundary <= self.start_date for boundary in boundaries):
+                raise _Blocked("SEGMENT_BOUNDARY_NOT_IN_RANGE")
         for date in self.dates:
             if date not in self.data.market_days:
                 raise _Blocked(f"MARKET_DAY_MISSING:{date}")
@@ -1444,6 +1450,7 @@ class _Engine:
         metrics = self._metrics()
         monthly_returns = self._period_returns(7)
         yearly_returns = self._period_returns(4)
+        fixed_segment_returns = self._fixed_segment_returns()
         return BacktestResult(
             status=status,
             blockers=tuple(self.blockers),
@@ -1458,9 +1465,29 @@ class _Engine:
             metrics=metrics,
             monthly_returns=monthly_returns,
             yearly_returns=yearly_returns,
+            fixed_segment_returns=fixed_segment_returns,
             reconciliation=list(self.reconciliation),
             synthetic=self.config.synthetic,
         )
+
+    def _fixed_segment_returns(self) -> dict[str, Decimal]:
+        boundaries = tuple(self.config.segment_boundaries)
+        if not boundaries or not self.nav_points:
+            return {}
+        index_by_date = {point.date: index for index, point in enumerate(self.nav_points)}
+        returns: dict[str, Decimal] = {}
+        previous_nav = Decimal(1)
+        start_index = 0
+        for segment_number, boundary in enumerate(boundaries, 1):
+            boundary_index = index_by_date[boundary]
+            if boundary_index <= start_index:
+                continue
+            end_nav = self.nav_points[boundary_index - 1].nav
+            returns[f"SEG{segment_number}"] = end_nav / previous_nav - 1
+            previous_nav = end_nav
+            start_index = boundary_index
+        returns[f"SEG{len(boundaries) + 1}"] = self.nav_points[-1].nav / previous_nav - 1
+        return returns
 
     def _period_returns(self, prefix_length: int) -> dict[str, Decimal]:
         if not self.nav_points:

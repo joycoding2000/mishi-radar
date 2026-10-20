@@ -227,6 +227,7 @@ class BacktestConfig:
     synthetic: bool = True
     start_date: str | None = None
     end_date: str | None = None
+    segment_boundaries: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "initial_cash", dec(self.initial_cash))
@@ -399,6 +400,7 @@ class BacktestResult:
     metrics: dict[str, Decimal | float | None]
     monthly_returns: dict[str, Decimal]
     yearly_returns: dict[str, Decimal]
+    fixed_segment_returns: dict[str, Decimal]
     reconciliation: list[dict[str, Any]]
     synthetic: bool
 

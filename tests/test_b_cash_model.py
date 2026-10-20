@@ -100,7 +100,10 @@ class CashModelSpecExampleTests(unittest.TestCase):
             market_day(day, {"SH:600001": bar(day, 10, 10)})
             for day in dates
         ]
-        result = run_backtest(make_input(dates, days), config(top_n=2, stop_loss=None))
+        result = run_backtest(
+            make_input(dates, days),
+            config(top_n=2, stop_loss=None, segment_boundaries=(dates[10],)),
+        )
         self.assertEqual(result.status, "SUCCEEDED", result.blockers)
         self.assertEqual(result.nav_points[-1].cash, Decimal(100000))
         self.assertEqual(result.nav_points[-1].equity, Decimal(100000))
@@ -111,6 +114,8 @@ class CashModelSpecExampleTests(unittest.TestCase):
         self.assertIn("2026-10", result.monthly_returns)
         self.assertEqual(result.monthly_returns["2026-10"], Decimal(0))
         self.assertEqual(result.yearly_returns["2026"], Decimal(0))
+        self.assertEqual(result.fixed_segment_returns["SEG1"], Decimal(0))
+        self.assertEqual(result.fixed_segment_returns["SEG2"], Decimal(0))
 
     def test_unknown_signal_availability_blocks(self) -> None:
         dates = trading_dates(3)
