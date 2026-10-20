@@ -1029,6 +1029,12 @@ class _Engine:
         for sid in sorted(self.positions):
             position = self.positions[sid]
             price = mark_close[sid]
+            bar = self._bar(date, sid)
+            mark_status = (
+                "STALE_MARK_CONFIRMED_SUSPENSION"
+                if bar is not None and bar.suspended is True
+                else "RAW_CLOSE"
+            )
             self.position_history.append(
                 PositionSnapshot(
                     date=date,
@@ -1043,6 +1049,7 @@ class _Engine:
                     r_open=position.r_open(price),
                     holding_days=position.holding_days,
                     industry_id=position.industry_id,
+                    mark_status=mark_status,
                 )
             )
         self._append_reconciliation(date, mark_open, mark_close, market_value, equity)

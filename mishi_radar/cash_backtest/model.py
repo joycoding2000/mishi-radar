@@ -370,6 +370,7 @@ class PositionSnapshot:
     r_open: Decimal | None
     holding_days: int
     industry_id: str | None
+    mark_status: str = "RAW_CLOSE"
 
 
 @dataclass(frozen=True)

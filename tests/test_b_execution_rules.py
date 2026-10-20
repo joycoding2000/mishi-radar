@@ -317,6 +317,27 @@ class FeesAndSlippageTests(unittest.TestCase):
         self.assertTrue(all(item["equity_ok"] for item in result.reconciliation))
 
 
+class SuspensionValuationTests(unittest.TestCase):
+    def test_confirmed_suspension_uses_stale_mark_and_is_labeled(self) -> None:
+        dates = trading_dates(4)
+        days = []
+        for index, day in enumerate(dates):
+            if index >= 2:
+                bars = {"SH:600001": bar(day, None, None, suspended=True)}
+            else:
+                bars = {"SH:600001": bar(day, 10, 10)}
+            days.append(market_day(day, bars))
+        result = run_backtest(
+            make_input(dates, days, signals_by_signal_date={dates[0]: (signal("SH:600001", dates[0]),)}),
+            config(initial_cash=Decimal(1005), top_n=1, start_date=dates[1], stop_loss=None),
+        )
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        suspended = [p for p in result.position_history if p.date == dates[2]][0]
+        self.assertEqual(suspended.market_value, Decimal(1000))
+        self.assertEqual(suspended.mark_status, "STALE_MARK_CONFIRMED_SUSPENSION")
+        self.assertEqual(result.nav_points[-1].equity, Decimal(1000))
+
+
 class RestrictionTests(unittest.TestCase):
     def test_buy_at_limit_up_is_unfilled(self) -> None:
         dates = trading_dates(3)
