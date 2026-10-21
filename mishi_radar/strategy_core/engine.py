@@ -212,7 +212,14 @@ def evaluate_exit(
         if blocker is not None:
             fin = snapshot.financials.get(security_id)
             known_failure = blocker.status is ValueStatus.NOT_APPLICABLE
-            if not known_failure and blocker.reason == "VALUE_NOT_YET_AVAILABLE" and fin is not None:
+            excluded_reasons = {
+                "FINANCIAL_AVAILABILITY_UNKNOWN",
+                "FINANCIAL_NOT_YET_AVAILABLE",
+                "FINANCIAL_CLASSIFICATION_UNKNOWN",
+                "FINANCIAL_INDUSTRY_UNKNOWN",
+                "FINANCIAL_CONFLICT",
+            }
+            if not known_failure and fin is not None and blocker.reason not in excluded_reasons:
                 known_failure = _s07_known_failure(fin, cfg.roe_threshold, snapshot.business_date)
             if known_failure:
                 reasons.append("STRATEGY_EXIT:S07_CONDITION_FAILED")

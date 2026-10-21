@@ -196,6 +196,21 @@ class S07FinancialTests(unittest.TestCase):
                 self.assertEqual(stop.status, ConditionStatus.TRUE)
                 self.assertIn("STOP_LOSS", stop.reasons)
 
+    def test_known_negative_ocf_dominates_missing_profit(self) -> None:
+        dates = trading_dates(70)
+        sid = "SH:600001"
+        snapshot = make_snapshot(dates, {sid: trend(70, 10, "0.002")})
+        fin = replace(
+            default_financial("IND_A", dates[-1]),
+            pe_ttm=num(10),
+            np_ytd=Numeric(None, ValueStatus.MISSING, "NP_MISSING"),
+            ocf_ytd=num(-10),
+        )
+        snapshot = replace(snapshot, financials={sid: fin})
+        decision = evaluate_exit(snapshot, "S07", sid, ExitContext(holding_days=1))
+        self.assertEqual(decision.status, ConditionStatus.TRUE)
+        self.assertIn("STRATEGY_EXIT:S07_CONDITION_FAILED", decision.reasons)
+
     def test_known_nonpositive_pe_exits_s07(self) -> None:
         dates = trading_dates(70)
         sid = "SH:600001"
