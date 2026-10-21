@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace as dataclass_replace
 from decimal import Decimal
 from typing import Callable, Iterable, Mapping, Sequence
 
@@ -88,10 +89,41 @@ def _check_available(value: Numeric, business_date: str) -> Numeric:
     return value
 
 
+def _bar_validation_reason(bar: MarketBar, date: str) -> str | None:
+    if bar.date != date:
+        return "BAR_BUSINESS_DATE_MISMATCH"
+    prices = (bar.open, bar.high, bar.low, bar.close)
+    if any(item.usable and item.value is not None and item.value <= 0 for item in prices):
+        return "NON_POSITIVE_PRICE"
+    if all(item.usable and item.value is not None for item in prices):
+        open_value = bar.open.value
+        high_value = bar.high.value
+        low_value = bar.low.value
+        close_value = bar.close.value
+        assert open_value is not None and high_value is not None
+        assert low_value is not None and close_value is not None
+        if high_value < max(open_value, close_value) or low_value > min(open_value, close_value):
+            return "OHLC_CONTRADICTION"
+        if high_value < low_value:
+            return "OHLC_CONTRADICTION"
+    if bar.volume.usable and bar.volume.value is not None and bar.volume.value < 0:
+        return "NEGATIVE_VOLUME"
+    if bar.amount.usable and bar.amount.value is not None and bar.amount.value < 0:
+        return "NEGATIVE_AMOUNT"
+    if bar.adjustment_factor.usable and bar.adjustment_factor.value is not None and bar.adjustment_factor.value <= 0:
+        return "NON_POSITIVE_ADJUSTMENT_FACTOR"
+    if bar.volume_factor.usable and bar.volume_factor.value is not None and bar.volume_factor.value <= 0:
+        return "NON_POSITIVE_VOLUME_FACTOR"
+    return None
+
+
 def _bar_value(snapshot: MarketSnapshot, security_id: str, date: str, field: str) -> Numeric:
     bar = _bar(snapshot, security_id, date)
     if bar is None:
         return Numeric(None, ValueStatus.MISSING, "BAR_MISSING")
+    invalid_reason = _bar_validation_reason(bar, date)
+    if invalid_reason is not None:
+        return Numeric(None, ValueStatus.INVALID, invalid_reason)
     business_date = snapshot.business_date
     if field == "adjusted_open":
         raw = _check_available(bar.open, business_date)
@@ -331,6 +363,7 @@ def _base_eligibility(snapshot: MarketSnapshot, security: SecurityInfo, bundle: 
 
     known_failure = False
     unknown_reasons: list[str] = []
+    blocked_eligibility: Eligibility | None = None
 
     if security.is_st is True:
         known_failure = True
@@ -361,6 +394,7 @@ def _base_eligibility(snapshot: MarketSnapshot, security: SecurityInfo, bundle: 
         unknown_reasons.append("AVG_AMOUNT_NOT_APPLICABLE")
     elif not amount.usable:
         unknown_reasons.append(f"AVG_AMOUNT_{amount.status.value}")
+        blocked_eligibility = _eligibility_from_blocker(amount)
     else:
         assert amount.value is not None
         if amount.value < bundle.common.min_avg_amount_20:
@@ -371,7 +405,7 @@ def _base_eligibility(snapshot: MarketSnapshot, security: SecurityInfo, bundle: 
     if known_failure:
         return Eligibility.BASE_EXCLUDED, reasons
     if unknown_reasons:
-        return Eligibility.INPUT_UNKNOWN, reasons
+        return blocked_eligibility or Eligibility.INPUT_UNKNOWN, reasons
     return Eligibility.SCORABLE, reasons
 
 
@@ -450,6 +484,9 @@ def _finalize(
     notes: Iterable[str] = (),
     bound_s01_config_version: str | None = None,
 ) -> StrategyResult:
+    for row in rows.values():
+        row.config_id = config_id
+        row.config_version = config_version
     scorable = [row for row in rows.values() if row.eligibility is Eligibility.SCORABLE]
     scorable.sort(key=key_fn)
     for rank, row in enumerate(scorable, 1):
@@ -481,7 +518,7 @@ def _finalize(
     )
 
 
-def _pool_is_complete(snapshot: MarketSnapshot, rows: Mapping[str, RowResult]) -> bool:
+def _pool_inputs_complete(snapshot: MarketSnapshot, rows: Mapping[str, RowResult]) -> bool:
     if not snapshot.universe_complete:
         return False
     determinate = {
@@ -489,12 +526,16 @@ def _pool_is_complete(snapshot: MarketSnapshot, rows: Mapping[str, RowResult]) -
         Eligibility.BASE_EXCLUDED,
         Eligibility.STRATEGY_NOT_APPLICABLE,
     }
-    for row in rows.values():
-        if row.eligibility not in determinate:
-            return False
-        if row.eligibility is Eligibility.SCORABLE and row.signal_status is ConditionStatus.UNKNOWN:
-            return False
-    return True
+    return all(row.eligibility in determinate for row in rows.values())
+
+
+def _pool_is_complete(snapshot: MarketSnapshot, rows: Mapping[str, RowResult]) -> bool:
+    if not _pool_inputs_complete(snapshot, rows):
+        return False
+    return not any(
+        row.eligibility is Eligibility.SCORABLE and row.signal_status is ConditionStatus.UNKNOWN
+        for row in rows.values()
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -763,8 +804,8 @@ def compute_s02(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=_DEFAULT_CONFIG_IDS["S02"],
-        config_version=_DEFAULT_CONFIG_VERSIONS["S02"],
+        config_id=cfg.config_id,
+        config_version=cfg.config_version,
     )
 
 
@@ -884,8 +925,8 @@ def compute_s03(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=_DEFAULT_CONFIG_IDS["S03"],
-        config_version=_DEFAULT_CONFIG_VERSIONS["S03"],
+        config_id=cfg.config_id,
+        config_version=cfg.config_version,
     )
 
 
@@ -998,8 +1039,8 @@ def compute_s04(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=_DEFAULT_CONFIG_IDS["S04"],
-        config_version=_DEFAULT_CONFIG_VERSIONS["S04"],
+        config_id=cfg.config_id,
+        config_version=cfg.config_version,
     )
 
 
@@ -1076,6 +1117,7 @@ def compute_s05(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
             confirmation_status=ConditionStatus.UNKNOWN,
         )
 
+    pool_complete = _pool_inputs_complete(snapshot, rows)
     if metrics_by_id:
         sigma_population = [metrics_by_id[sid]["sigma60"] for sid in metrics_by_id]
         illiq_population = [metrics_by_id[sid]["illiq60"] for sid in metrics_by_id]
@@ -1084,11 +1126,19 @@ def compute_s05(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
             q_illiq = percentile_high(metrics["illiq60"], illiq_population)
             assert q_sigma is not None and q_illiq is not None
             score = ((1 - q_sigma) + (1 - q_illiq)) / 2
-            condition = (
-                metrics["price"] > metrics["ma60"]
-                and metrics["ma60"] > metrics["ma60_prev"]
-                and q_sigma <= cfg.low_vol_percentile
-            )
+            trend = metrics["price"] > metrics["ma60"] and metrics["ma60"] > metrics["ma60_prev"]
+            if pool_complete:
+                low_vol = ConditionStatus.TRUE if q_sigma <= cfg.low_vol_percentile else ConditionStatus.FALSE
+            else:
+                low_vol = ConditionStatus.UNKNOWN
+            if not trend:
+                overall = ConditionStatus.FALSE
+            elif low_vol is ConditionStatus.TRUE:
+                overall = ConditionStatus.TRUE
+            elif low_vol is ConditionStatus.FALSE:
+                overall = ConditionStatus.FALSE
+            else:
+                overall = ConditionStatus.UNKNOWN
             row = rows[sid]
             row.metrics.update(
                 {
@@ -1102,20 +1152,18 @@ def compute_s05(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
                     "price": metrics["price"],
                 }
             )
-            row.signal_status = ConditionStatus.TRUE if condition else ConditionStatus.FALSE
-            row.observation_status = row.signal_status
-            row.confirmation_status = row.signal_status
-            row.conditions["trend"] = (
-                ConditionStatus.TRUE
-                if metrics["price"] > metrics["ma60"] and metrics["ma60"] > metrics["ma60_prev"]
-                else ConditionStatus.FALSE
-            )
-            row.conditions["low_vol_percentile"] = (
-                ConditionStatus.TRUE if q_sigma <= cfg.low_vol_percentile else ConditionStatus.FALSE
-            )
-            if condition:
+            row.signal_status = overall
+            row.observation_status = ConditionStatus.TRUE if trend else ConditionStatus.FALSE
+            row.confirmation_status = low_vol
+            row.conditions["trend"] = ConditionStatus.TRUE if trend else ConditionStatus.FALSE
+            row.conditions["low_vol_percentile"] = low_vol
+            if overall is ConditionStatus.TRUE:
                 row.formal_candidate = True
                 row.signal_state = SignalState.CANDIDATE
+            elif overall is ConditionStatus.UNKNOWN:
+                row.signal_state = SignalState.INPUT_UNKNOWN
+            else:
+                row.signal_state = SignalState.ELIGIBLE_NOT_TRIGGERED
 
     def key(row: RowResult) -> tuple:
         return (
@@ -1125,15 +1173,14 @@ def compute_s05(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
             row.security_id,
         )
 
-    pool_complete = _pool_is_complete(snapshot, rows)
     return _finalize(
         snapshot,
         "S05",
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=_DEFAULT_CONFIG_IDS["S05"],
-        config_version=_DEFAULT_CONFIG_VERSIONS["S05"],
+        config_id=cfg.config_id,
+        config_version=cfg.config_version,
     )
 
 
@@ -1342,6 +1389,21 @@ def compute_s06(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
             s01_metrics[sid] = metrics
 
     industries = _s06_industry_stats(snapshot, bundle, base, s01_metrics, s01_error, cfg)
+    industry_cross_complete = (
+        snapshot.universe_complete
+        and snapshot.industry_mapping_complete
+        and all(item.status in ("OK", "EMPTY") for item in industries.values())
+    )
+    if not industry_cross_complete:
+        industries = {
+            industry_id: dataclass_replace(
+                item,
+                total_rank=None,
+                strong=False,
+                reasons=item.reasons + ("INDUSTRY_CROSS_SECTION_INCOMPLETE",),
+            )
+            for industry_id, item in industries.items()
+        }
 
     industry_members: dict[str, list[str]] = {}
     for industry_id, item in industries.items():
@@ -1498,6 +1560,13 @@ def compute_s06(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
             row.reasons = ("CONCENTRATION_EXCLUDED",)
         elif trigger and not industry.strong:
             row.reasons = ("INDUSTRY_NOT_STRONG",)
+        if not industry_cross_complete and trigger:
+            row.signal_status = ConditionStatus.UNKNOWN
+            row.confirmation_status = ConditionStatus.UNKNOWN
+            row.signal_state = SignalState.INPUT_UNKNOWN
+            row.formal_candidate = False
+            row.conditions["strong_industry"] = ConditionStatus.UNKNOWN
+            row.reasons = tuple(dict.fromkeys(row.reasons + ("INDUSTRY_CROSS_SECTION_INCOMPLETE",)))
         rows[sid] = row
 
     replacements_by_industry: dict[str, list[RowResult]] = {}
@@ -1531,8 +1600,8 @@ def compute_s06(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=complete,
-        config_id=_DEFAULT_CONFIG_IDS["S06"],
-        config_version=_DEFAULT_CONFIG_VERSIONS["S06"],
+        config_id=cfg.config_id,
+        config_version=cfg.config_version,
         industries=industries,
         bound_s01_config_version=S01_DEFAULT_CONFIG_VERSION,
         notes=("S06_BINDS_" + S01_DEFAULT_CONFIG_VERSION,),
@@ -1603,6 +1672,20 @@ def _financial_available_at(available_at: str, business_date: str) -> bool:
     return True
 
 
+def _financial_component_blocker(fin: FinancialSnapshot, business_date: str) -> Numeric | None:
+    names = ["pe_ttm", "np_ytd", "ocf_ytd", "equity", "equity_prior_same"]
+    if not fin.is_year_end:
+        names.extend(["np_fy_prior", "ocf_fy_prior", "np_ytd_prior_same", "ocf_ytd_prior_same"])
+    for name in names:
+        value = getattr(fin, name, None)
+        if value is None:
+            continue
+        checked = _check_available(value, business_date)
+        if checked.status is ValueStatus.UNKNOWN and checked.reason == "VALUE_NOT_YET_AVAILABLE":
+            return checked
+    return None
+
+
 def _s07_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, Decimal], Numeric | None]:
     fin = snapshot.financials.get(security_id)
     if fin is None:
@@ -1617,6 +1700,9 @@ def _s07_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, 
         return {}, Numeric(None, ValueStatus.NOT_APPLICABLE, "FINANCIAL_TEMPLATE_NOT_APPLICABLE")
     if fin.industry_id is None:
         return {}, Numeric(None, ValueStatus.UNKNOWN, "FINANCIAL_INDUSTRY_UNKNOWN")
+    component_blocker = _financial_component_blocker(fin, snapshot.business_date)
+    if component_blocker is not None:
+        return {}, component_blocker
     if fin.pe_business_date != snapshot.business_date:
         return {}, Numeric(None, ValueStatus.UNKNOWN, "PE_BUSINESS_DATE_NOT_D")
     pe = fin.pe_ttm
@@ -1737,8 +1823,8 @@ def compute_s07(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=_DEFAULT_CONFIG_IDS["S07"],
-        config_version=_DEFAULT_CONFIG_VERSIONS["S07"],
+        config_id=cfg.config_id,
+        config_version=cfg.config_version,
     )
 
 
@@ -1846,30 +1932,39 @@ def compute_s08(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
             continue
         price = row.metrics["price"]
         ma20 = row.metrics["ma20"]
-        if price is None or ma20 is None:
-            continue
-        condition = (
+        flow_condition = (
             metrics["positive_days"] >= cfg.positive_days_required
             and metrics["net_sum"] > 0
-            and price > ma20
         )
-        row.signal_status = ConditionStatus.TRUE if condition else ConditionStatus.FALSE
-        row.observation_status = (
-            ConditionStatus.TRUE
-            if metrics["positive_days"] >= cfg.positive_days_required and metrics["net_sum"] > 0
-            else ConditionStatus.FALSE
-        )
-        row.confirmation_status = ConditionStatus.TRUE if price > ma20 else ConditionStatus.FALSE
+        if price is None or ma20 is None:
+            price_condition = ConditionStatus.UNKNOWN
+        else:
+            price_condition = ConditionStatus.TRUE if price > ma20 else ConditionStatus.FALSE
+        if not flow_condition:
+            overall = ConditionStatus.FALSE
+        elif price_condition is ConditionStatus.TRUE:
+            overall = ConditionStatus.TRUE
+        elif price_condition is ConditionStatus.FALSE:
+            overall = ConditionStatus.FALSE
+        else:
+            overall = ConditionStatus.UNKNOWN
+        row.signal_status = overall
+        row.observation_status = ConditionStatus.TRUE if flow_condition else ConditionStatus.FALSE
+        row.confirmation_status = price_condition
         row.conditions["positive_days"] = (
             ConditionStatus.TRUE
             if metrics["positive_days"] >= cfg.positive_days_required
             else ConditionStatus.FALSE
         )
         row.conditions["net_sum_positive"] = ConditionStatus.TRUE if metrics["net_sum"] > 0 else ConditionStatus.FALSE
-        row.conditions["price_above_ma20"] = ConditionStatus.TRUE if price > ma20 else ConditionStatus.FALSE
-        if condition:
+        row.conditions["price_above_ma20"] = price_condition
+        if overall is ConditionStatus.TRUE:
             row.formal_candidate = True
             row.signal_state = SignalState.CANDIDATE
+        elif overall is ConditionStatus.UNKNOWN:
+            row.signal_state = SignalState.INPUT_UNKNOWN
+        else:
+            row.signal_state = SignalState.ELIGIBLE_NOT_TRIGGERED
 
     def key(row: RowResult) -> tuple:
         return (
@@ -1886,8 +1981,8 @@ def compute_s08(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=_DEFAULT_CONFIG_IDS["S08"],
-        config_version=_DEFAULT_CONFIG_VERSIONS["S08"],
+        config_id=cfg.config_id,
+        config_version=cfg.config_version,
     )
 
 

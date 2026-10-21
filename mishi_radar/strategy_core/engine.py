@@ -209,7 +209,10 @@ def evaluate_exit(
     elif strategy_id == "S07":
         metrics, blocker = _s07_metrics(snapshot, security_id)
         if blocker is not None:
-            unknown.append("S07_CONDITION_UNKNOWN")
+            if blocker.status is ValueStatus.NOT_APPLICABLE:
+                reasons.append("STRATEGY_EXIT:S07_CONDITION_FAILED")
+            else:
+                unknown.append("S07_CONDITION_UNKNOWN")
         else:
             condition = metrics["np_ttm"] > 0 and metrics["ocf_ttm"] > 0 and metrics["roe_ttm"] >= cfg.roe_threshold
             if not condition:

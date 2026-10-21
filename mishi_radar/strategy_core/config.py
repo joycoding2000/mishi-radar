@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import MISSING, dataclass, fields, replace
 from decimal import Decimal
 
 DEFAULT_CONFIG_VERSION = "R3.2-2026-10-19-OD1-v1"
@@ -13,6 +13,58 @@ S01_DEFAULT_CONFIG_VERSION = f"{S01_DEFAULT_CONFIG_ID}/{DEFAULT_CONFIG_VERSION}"
 def _require_choice(field_name: str, value, allowed) -> None:
     if value not in allowed:
         raise ValueError(f"{field_name}={value!r} is outside the approved whitelist {sorted(allowed, key=str)}")
+
+
+def _config_value(value) -> str:
+    if isinstance(value, Decimal):
+        return format(value, "f")
+    return str(value)
+
+
+def _canonical_config(config, exclude: set[str]) -> str:
+    parts = []
+    for item in fields(config):
+        if item.name in exclude:
+            continue
+        parts.append(f"{item.name}={_config_value(getattr(config, item.name))}")
+    return ";".join(parts)
+
+
+def _default_canonical(cls, exclude: set[str]) -> str:
+    parts = []
+    for item in fields(cls):
+        if item.name in exclude:
+            continue
+        if item.default is not MISSING:
+            value = item.default
+        elif item.default_factory is not MISSING:
+            value = item.default_factory()
+        else:
+            continue
+        parts.append(f"{item.name}={_config_value(value)}")
+    return ";".join(parts)
+
+
+def _apply_identity(config, strategy_id: str) -> None:
+    exclude = {"config_id", "config_version"}
+    if config.config_id is None and config.config_version is None:
+        canonical = _canonical_config(config, exclude)
+        if canonical == _default_canonical(type(config), exclude):
+            object.__setattr__(config, "config_id", f"{strategy_id}_DEFAULT")
+            object.__setattr__(
+                config,
+                "config_version",
+                f"{strategy_id}_DEFAULT/{DEFAULT_CONFIG_VERSION}",
+            )
+        else:
+            object.__setattr__(config, "config_id", f"{strategy_id}_PERSONAL")
+            object.__setattr__(
+                config,
+                "config_version",
+                f"{strategy_id}_PERSONAL/{DEFAULT_CONFIG_VERSION}:{canonical}",
+            )
+    elif config.config_id is None or config.config_version is None:
+        raise ValueError("config_id and config_version must be provided together")
 
 
 @dataclass(frozen=True)
@@ -36,8 +88,8 @@ class S01Config:
     ma_short: int = 20
     ma_long: int = 60
     max_holding: int = 20
-    config_id: str = S01_DEFAULT_CONFIG_ID
-    config_version: str = S01_DEFAULT_CONFIG_VERSION
+    config_id: str | None = None
+    config_version: str | None = None
 
     def __post_init__(self) -> None:
         _require_choice("ma_short", self.ma_short, {10, 20, 30})
@@ -45,6 +97,7 @@ class S01Config:
         _require_choice("max_holding", self.max_holding, {10, 20})
         if self.ma_short >= self.ma_long:
             raise ValueError("ma_short must be smaller than ma_long")
+        _apply_identity(self, "S01")
 
 
 @dataclass(frozen=True)
@@ -53,12 +106,15 @@ class S02Config:
     shrink_ratio: Decimal = Decimal("0.8")
     breakout_volume: Decimal = Decimal("1.5")
     max_holding: int = 10
+    config_id: str | None = None
+    config_version: str | None = None
 
     def __post_init__(self) -> None:
         _require_choice("platform_width", self.platform_width, {Decimal("0.10"), Decimal("0.15"), Decimal("0.20")})
         _require_choice("shrink_ratio", self.shrink_ratio, {Decimal("0.6"), Decimal("0.8"), Decimal("1.0")})
         _require_choice("breakout_volume", self.breakout_volume, {Decimal("1.2"), Decimal("1.5"), Decimal("2.0")})
         _require_choice("max_holding", self.max_holding, {5, 10, 20})
+        _apply_identity(self, "S02")
 
 
 @dataclass(frozen=True)
@@ -67,6 +123,8 @@ class S03Config:
     drawdown_low: Decimal = Decimal("0.03")
     drawdown_high: Decimal = Decimal("0.10")
     max_holding: int = 10
+    config_id: str | None = None
+    config_version: str | None = None
 
     def __post_init__(self) -> None:
         _require_choice("ma_distance", self.ma_distance, {Decimal("0.02"), Decimal("0.03"), Decimal("0.05")})
@@ -80,12 +138,15 @@ class S03Config:
             },
         )
         _require_choice("max_holding", self.max_holding, {5, 10, 20})
+        _apply_identity(self, "S03")
 
 
 @dataclass(frozen=True)
 class S04Config:
     prior_drop_threshold: Decimal = Decimal("-0.08")
     max_holding: int = 5
+    config_id: str | None = None
+    config_version: str | None = None
 
     def __post_init__(self) -> None:
         _require_choice(
@@ -94,12 +155,15 @@ class S04Config:
             {Decimal("-0.05"), Decimal("-0.08"), Decimal("-0.10")},
         )
         _require_choice("max_holding", self.max_holding, {3, 5, 10})
+        _apply_identity(self, "S04")
 
 
 @dataclass(frozen=True)
 class S05Config:
     low_vol_percentile: Decimal = Decimal("0.40")
     max_holding: int = 20
+    config_id: str | None = None
+    config_version: str | None = None
 
     def __post_init__(self) -> None:
         _require_choice(
@@ -108,6 +172,7 @@ class S05Config:
             {Decimal("0.20"), Decimal("0.30"), Decimal("0.40")},
         )
         _require_choice("max_holding", self.max_holding, {10, 20})
+        _apply_identity(self, "S05")
 
 
 @dataclass(frozen=True)
@@ -117,6 +182,8 @@ class S06Config:
     max_per_industry: int = 2
     max_holding: int = 20
     bound_s01_config_version: str = S01_DEFAULT_CONFIG_VERSION
+    config_id: str | None = None
+    config_version: str | None = None
 
     def __post_init__(self) -> None:
         _require_choice(
@@ -129,26 +196,33 @@ class S06Config:
         _require_choice("max_holding", self.max_holding, {10, 20})
         if self.bound_s01_config_version != S01_DEFAULT_CONFIG_VERSION:
             raise ValueError("S06 must bind the fixed S01_DEFAULT/R3.2-2026-10-19-OD1-v1 identity")
+        _apply_identity(self, "S06")
 
 
 @dataclass(frozen=True)
 class S07Config:
     roe_threshold: Decimal = Decimal("0.10")
     rebalance_days: int = 20
+    config_id: str | None = None
+    config_version: str | None = None
 
     def __post_init__(self) -> None:
         _require_choice("roe_threshold", self.roe_threshold, {Decimal("0.08"), Decimal("0.10"), Decimal("0.15")})
         _require_choice("rebalance_days", self.rebalance_days, {10, 20})
+        _apply_identity(self, "S07")
 
 
 @dataclass(frozen=True)
 class S08Config:
     positive_days_required: int = 3
     max_holding: int = 10
+    config_id: str | None = None
+    config_version: str | None = None
 
     def __post_init__(self) -> None:
         _require_choice("positive_days_required", self.positive_days_required, {3, 4, 5})
         _require_choice("max_holding", self.max_holding, {5, 10, 20})
+        _apply_identity(self, "S08")
 
 
 S01_DEFAULT_CONFIG = S01Config()

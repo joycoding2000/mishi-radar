@@ -155,6 +155,29 @@ def _unknown_dimension(
     )
 
 
+def _status_from_eligibility(eligibility: Eligibility) -> ValueStatus:
+    mapping = {
+        Eligibility.BASE_EXCLUDED: ValueStatus.NOT_APPLICABLE,
+        Eligibility.STRATEGY_NOT_APPLICABLE: ValueStatus.NOT_APPLICABLE,
+        Eligibility.INPUT_UNKNOWN: ValueStatus.UNKNOWN,
+        Eligibility.MISSING: ValueStatus.MISSING,
+        Eligibility.FAILED: ValueStatus.REQUEST_FAILED,
+        Eligibility.STALE: ValueStatus.STALE,
+        Eligibility.INVALID: ValueStatus.INVALID,
+        Eligibility.CONFLICT: ValueStatus.CONFLICT,
+    }
+    return mapping.get(eligibility, ValueStatus.UNKNOWN)
+
+
+def _base_pool_incomplete(base: Mapping[str, tuple[Eligibility, list[str]]]) -> bool:
+    determinate = {
+        Eligibility.SCORABLE,
+        Eligibility.BASE_EXCLUDED,
+        Eligibility.STRATEGY_NOT_APPLICABLE,
+    }
+    return any(eligibility not in determinate for eligibility, _ in base.values())
+
+
 def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = None) -> DiagnosticResult:
     bundle = bundle or ConfigBundle()
     rows: dict[str, dict[str, DimensionResult]] = {}
@@ -176,7 +199,7 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             momentum_errors[sid] = blocker
         else:
             momentum_metrics[sid] = metrics
-    momentum_pool_complete = snapshot.universe_complete
+    momentum_pool_complete = snapshot.universe_complete and not _base_pool_incomplete(base)
     for sid, (eligibility, _) in base.items():
         if eligibility is Eligibility.SCORABLE and sid not in momentum_metrics:
             momentum_pool_complete = False
@@ -200,7 +223,7 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             rows[sid]["momentum"] = _unknown_dimension(
                 snapshot,
                 "momentum",
-                ValueStatus.NOT_APPLICABLE,
+                _status_from_eligibility(eligibility),
                 "BASE_ELIGIBILITY:" + ",".join(reasons),
                 "E01",
                 "ER20/ER60",
@@ -224,7 +247,11 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
                 pool_size=len(momentum_metrics),
             )
             continue
-        score = momentum_scores.get(sid) if momentum_pool_complete else None
+        score = (
+            momentum_scores.get(sid)
+            if momentum_pool_complete and len(momentum_metrics) >= 2
+            else None
+        )
         rows[sid]["momentum"] = _dimension(
             name="momentum",
             raw_value=metrics["er20"],
@@ -252,8 +279,12 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             reversal_errors[sid] = blocker
         else:
             reversal_metrics[sid] = metrics
-    reversal_pool_complete = snapshot.universe_complete and len(reversal_metrics) == sum(
-        1 for eligibility, _ in base.values() if eligibility is Eligibility.SCORABLE
+    reversal_pool_complete = (
+        snapshot.universe_complete
+        and not _base_pool_incomplete(base)
+        and len(reversal_metrics) == sum(
+            1 for eligibility, _ in base.values() if eligibility is Eligibility.SCORABLE
+        )
     )
     reversal_population = [reversal_metrics[sid]["prior_drop5"] for sid in sorted(reversal_metrics)]
     for sid, (eligibility, reasons) in base.items():
@@ -261,7 +292,7 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             rows[sid]["reversal"] = _unknown_dimension(
                 snapshot,
                 "reversal",
-                ValueStatus.NOT_APPLICABLE,
+                _status_from_eligibility(eligibility),
                 "BASE_ELIGIBILITY:" + ",".join(reasons),
                 "E_REVERSAL",
                 "D-6..D-1",
@@ -285,7 +316,11 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             )
             continue
         q = percentile_high(metrics["prior_drop5"], reversal_population)
-        score = Decimal(100) * (1 - q) if q is not None and reversal_pool_complete else None
+        score = (
+            Decimal(100) * (1 - q)
+            if q is not None and reversal_pool_complete and len(reversal_metrics) >= 2
+            else None
+        )
         rows[sid]["reversal"] = _dimension(
             name="reversal",
             raw_value=metrics["prior_drop5"],
@@ -307,7 +342,9 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
     financial_errors: dict[str, Numeric] = {}
     financial_industry: dict[str, str] = {}
     industry_incomplete: set[str] = set()
-    global_financial_incomplete = False
+    global_financial_incomplete = (
+        not snapshot.universe_complete or _base_pool_incomplete(base)
+    )
     for sid, (eligibility, _) in base.items():
         if eligibility is not Eligibility.SCORABLE:
             continue
@@ -347,7 +384,7 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             rows[sid]["value"] = _unknown_dimension(
                 snapshot,
                 "value",
-                ValueStatus.NOT_APPLICABLE,
+                _status_from_eligibility(eligibility),
                 "BASE_ELIGIBILITY:" + ",".join(reasons),
                 "E07",
                 "PE_TTM",
@@ -357,7 +394,7 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             rows[sid]["quality"] = _unknown_dimension(
                 snapshot,
                 "quality",
-                ValueStatus.NOT_APPLICABLE,
+                _status_from_eligibility(eligibility),
                 "BASE_ELIGIBILITY:" + ",".join(reasons),
                 "E07",
                 "ROE_TTM",
@@ -376,8 +413,9 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             q_pe = percentile_high(financial_metrics[sid]["pe_ttm"], [financial_metrics[x]["pe_ttm"] for x in industry_pools.get(industry or "", [])])
             q_roe = percentile_high(financial_metrics[sid]["roe_ttm"], [financial_metrics[x]["roe_ttm"] for x in industry_pools.get(industry or "", [])])
             assert q_pe is not None and q_roe is not None
-            value_score = Decimal(100) * (1 - q_pe) if complete else None
-            quality_score = Decimal(100) * q_roe if complete else None
+            score_available = complete and len(industry_pools.get(industry or "", [])) >= 2
+            value_score = Decimal(100) * (1 - q_pe) if score_available else None
+            quality_score = Decimal(100) * q_roe if score_available else None
             rows[sid]["value"] = _dimension(
                 name="value",
                 raw_value=financial_metrics[sid]["pe_ttm"],
@@ -450,7 +488,7 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             e05_errors[sid] = blocker
         else:
             e05_metrics[sid] = metrics
-    e05_pool_complete = snapshot.universe_complete
+    e05_pool_complete = snapshot.universe_complete and not _base_pool_incomplete(base)
     for sid, (eligibility, _) in base.items():
         if eligibility is Eligibility.SCORABLE and sid not in e05_metrics:
             blocker = e05_errors.get(sid)
@@ -465,7 +503,7 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             rows[sid]["low_volatility"] = _unknown_dimension(
                 snapshot,
                 "low_volatility",
-                ValueStatus.NOT_APPLICABLE,
+                _status_from_eligibility(eligibility),
                 "BASE_ELIGIBILITY:" + ",".join(reasons),
                 "E05",
                 "60 market days",
@@ -475,7 +513,7 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             rows[sid]["liquidity"] = _unknown_dimension(
                 snapshot,
                 "liquidity",
-                ValueStatus.NOT_APPLICABLE,
+                _status_from_eligibility(eligibility),
                 "BASE_ELIGIBILITY:" + ",".join(reasons),
                 "E05",
                 "60 market days",
@@ -521,7 +559,11 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             name="low_volatility",
             raw_value=metrics["sigma60"],
             unit="ratio",
-            score=Decimal(100) * (1 - q_sigma) if e05_pool_complete else None,
+            score=(
+                Decimal(100) * (1 - q_sigma)
+                if e05_pool_complete and len(e05_metrics) >= 2
+                else None
+            ),
             status=ValueStatus.VALUE,
             pool_id="E05",
             pool_size=len(e05_metrics),
@@ -536,7 +578,11 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
             name="liquidity",
             raw_value=metrics["illiq60"],
             unit="1/CNY",
-            score=Decimal(100) * (1 - q_illiq) if e05_pool_complete else None,
+            score=(
+                Decimal(100) * (1 - q_illiq)
+                if e05_pool_complete and len(e05_metrics) >= 2
+                else None
+            ),
             status=ValueStatus.VALUE,
             pool_id="E05",
             pool_size=len(e05_metrics),

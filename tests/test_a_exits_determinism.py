@@ -98,6 +98,23 @@ class ExitTests(unittest.TestCase):
         self.assertEqual(personal_s01.status, ConditionStatus.TRUE)
         self.assertEqual(s06.status, ConditionStatus.FALSE)
 
+    def test_s02_exit_uses_mechanically_adjusted_platform(self) -> None:
+        dates = trading_dates(20)
+        snapshot = make_snapshot(
+            dates,
+            {"SH:600001": [Decimal("4.90")] * 20},
+            benchmark_closes=[100] * 20,
+        )
+        decision = evaluate_exit(
+            snapshot,
+            "S02",
+            "SH:600001",
+            ExitContext(holding_days=0, entry_platform_upper=Decimal(5)),
+            default_configs(),
+        )
+        self.assertEqual(decision.status, ConditionStatus.TRUE)
+        self.assertIn("STRATEGY_EXIT:S02_BELOW_PLATFORM", decision.reasons)
+
     def test_s06_exit_keeps_default_when_personal_ma10_would_not_exit(self) -> None:
         dates = trading_dates(20)
         closes = [Decimal("9.4")] * 10 + [Decimal("8.8")] * 9 + [Decimal("9.0")]
