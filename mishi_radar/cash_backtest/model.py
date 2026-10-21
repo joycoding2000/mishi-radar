@@ -220,7 +220,7 @@ class BacktestConfig:
     strategy_id: str = "S01"
     initial_cash: Decimal = Decimal("100000")
     top_n: int = 10
-    rebalance_days: int = 5
+    rebalance_days: int | None = None
     s06_industry_cap: int = 2
     stop_loss: Decimal | None = Decimal("0.08")
     require_known_signal_availability: bool = True
@@ -236,8 +236,16 @@ class BacktestConfig:
             raise ValueError("initial_cash must be positive")
         if self.top_n <= 0:
             raise ValueError("top_n must be positive")
+        if self.rebalance_days is None:
+            object.__setattr__(
+                self,
+                "rebalance_days",
+                20 if self.strategy_id == "S07" else 5,
+            )
         if self.rebalance_days <= 0:
             raise ValueError("rebalance_days must be positive")
+        if self.strategy_id == "S07" and self.rebalance_days not in (10, 20):
+            raise ValueError("S07 rebalance_days must be 10 or 20")
         if self.s06_industry_cap <= 0:
             raise ValueError("s06_industry_cap must be positive")
 
@@ -269,6 +277,7 @@ class Lot:
     quantity: int
     acquired_date: str
     sellable_date: str
+    dividend_actions: set[str] = field(default_factory=set)
 
 
 @dataclass
@@ -287,6 +296,7 @@ class Position:
     industry_id: str | None = None
     realized_trading_pnl: Decimal = Decimal("0")
     realized_dividend: Decimal = Decimal("0")
+    dividend_layers: list[dict] = field(default_factory=list)
 
     def sellable_quantity(self, date: str) -> int:
         return sum(lot.quantity for lot in self.lots if lot.sellable_date <= date)
@@ -383,6 +393,7 @@ class ClosedCycle:
     realized_trading_pnl: Decimal
     realized_dividend: Decimal
     total_pnl: Decimal
+    realized_corporate_action_pnl: Decimal = Decimal("0")
 
 
 @dataclass

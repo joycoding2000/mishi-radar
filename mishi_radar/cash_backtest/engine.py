@@ -362,9 +362,29 @@ class _Engine:
                 quantity = position.quantity
             elif is_rebalance:
                 if sid not in target_ids:
-                    reasons = ["RANK_REMOVAL"]
-                    quantity = position.quantity
+                    if not any(
+                        request.reason == "RANK_REMOVAL"
+                        for request in self.locked_exits.get(sid, ())
+                    ):
+                        self._add_locked_exit(
+                            ExitRequest(
+                                security_id=sid,
+                                reason="RANK_REMOVAL",
+                                trigger_date=previous_date or date,
+                                priority=4,
+                                strategy_id=position.strategy_id,
+                            )
+                        )
+                    locked = True
                     exit_intent = True
+                    requests = self.locked_exits.get(sid, ())
+                    reasons = [request.reason for request in requests]
+                    signal_date = (
+                        min(request.trigger_date for request in requests)
+                        if requests
+                        else previous_date
+                    )
+                    quantity = position.quantity
                 else:
                     current_value = open_values.get(sid, ZERO)
                     if current_value > target_weight:
@@ -386,7 +406,7 @@ class _Engine:
 
     @staticmethod
     def _sell_sort_key(sid: str, plan: Mapping) -> tuple:
-        return (0 if plan["locked"] else 1, sid)
+        return (0 if plan["locked"] else 1, plan["signal_date"] or "", sid)
 
     def _execute_buys(
         self,
@@ -399,7 +419,7 @@ class _Engine:
         used: set[str] = set()
 
         def attempt(signal: Signal, replacement_for: Signal | None = None, replacement_reason: str | None = None) -> bool:
-            if len(self.positions) >= self.config.top_n:
+            if len(self.positions) >= self.config.top_n and signal.security_id not in self.positions:
                 return False
             if signal.security_id in self.exited_today:
                 return False
@@ -418,8 +438,8 @@ class _Engine:
             return filled
 
         for index, target in enumerate(targets):
-            if len(self.positions) >= self.config.top_n:
-                break
+            if len(self.positions) >= self.config.top_n and target.security_id not in self.positions:
+                continue
             if target.security_id in used:
                 continue
             filled, reason = False, None
@@ -533,7 +553,7 @@ class _Engine:
         limit_down = self._limit_down(date, sid, bar, rule)
         if limit_down is None and not (bar.no_price_limit or rule.no_price_limit):
             raise _Blocked(f"SELL_PRICE_LIMIT_UNKNOWN:{sid}:{date}")
-        if limit_down is not None and (bar.open <= limit_down or sell_price <= limit_down):
+        if limit_down is not None and bar.open <= limit_down:
             self._record_order(
                 sid,
                 "SELL",
@@ -570,11 +590,14 @@ class _Engine:
                 signal_date=signal_date,
             )
             return
+        if not exit_intent and rule.sell_lot_size > 0:
+            requested_quantity = (requested_quantity // rule.sell_lot_size) * rule.sell_lot_size
+            if requested_quantity <= 0:
+                return
         quantity = min(requested_quantity, sellable)
         if quantity <= 0:
             return
         will_close = quantity == position.quantity
-        new_claims = self._allocate_pending_entitlements(position, quantity, date, will_close)
         gross = _money(sell_price * Decimal(quantity))
         commission, other_fees = self._sell_fees(date, gross)
         fees = commission + other_fees
@@ -584,17 +607,20 @@ class _Engine:
         self.total_commission += commission
         self.total_tax += _money(gross * self.data.fee_schedule.sell_tax_rate)
         cost_sold, cost_remaining = allocate_sale_cost(position.cost_open, quantity, position.quantity)
-        dividend_sold, dividend_remaining, dividend_units_remaining = split_dividend_entitlement(
-            position.dividend_open, position.dividend_units, quantity
+        taken_lots = self._reduce_lots(position, date, quantity)
+        dividend_sold = self._sell_dividend_layers(position, taken_lots)
+        new_claims = self._allocate_pending_entitlements(position, taken_lots, date, will_close)
+        position.dividend_open = sum(
+            (layer["remaining_amount"] for layer in position.dividend_layers), ZERO
         )
-        position.dividend_open = dividend_remaining
-        position.dividend_units = dividend_units_remaining
+        position.dividend_units = int(
+            sum((layer["remaining_quantity"] for layer in position.dividend_layers), Decimal(0))
+        )
         realized_trade = _money(gross - fees - cost_sold)
         position.realized_trading_pnl += realized_trade
         position.realized_dividend += dividend_sold
         position.cost_open = cost_remaining
         position.quantity -= quantity
-        self._reduce_lots(position, date, quantity)
         order_status = "FILLED" if quantity == requested_quantity else "PARTIAL_QUANTITY"
         order = self._record_order(
             sid,
@@ -801,39 +827,72 @@ class _Engine:
     # Corporate actions
     # ------------------------------------------------------------------
 
+    def _sell_dividend_layers(self, position: Position, taken_lots: Sequence[tuple[Lot, int]]) -> Decimal:
+        sold = ZERO
+        for lot, quantity_sold in taken_lots:
+            if quantity_sold <= 0:
+                continue
+            for key in lot.dividend_actions:
+                layer = next(
+                    (item for item in position.dividend_layers if item["key"] == key and item["remaining_quantity"] > 0),
+                    None,
+                )
+                if layer is None:
+                    continue
+                if Decimal(quantity_sold) >= layer["remaining_quantity"]:
+                    amount = layer["remaining_amount"]
+                    layer["remaining_amount"] = ZERO
+                    layer["remaining_quantity"] = Decimal(0)
+                else:
+                    amount = _money(layer["per_share"] * Decimal(quantity_sold))
+                    layer["remaining_amount"] -= amount
+                    layer["remaining_quantity"] -= Decimal(quantity_sold)
+                sold += amount
+        position.dividend_layers = [
+            layer for layer in position.dividend_layers if layer["remaining_quantity"] > 0
+        ]
+        return sold
+
     def _allocate_pending_entitlements(
         self,
         position: Position,
-        quantity_sold: int,
+        taken_lots: Sequence[tuple[Lot, int]],
         date: str,
         will_close: bool,
     ) -> list[dict]:
         claims: list[dict] = []
-        for key, (security_id, entitled_quantity) in list(self.dividend_entitlements.items()):
-            if security_id != position.security_id or entitled_quantity <= 0:
+        for lot, quantity_sold in taken_lots:
+            if quantity_sold <= 0:
                 continue
-            action = self.pending_actions.get(key)
-            if action is None or action.effective_date <= date:
-                continue
-            sold_entitled = min(quantity_sold, entitled_quantity)
-            if sold_entitled <= 0:
-                continue
-            if action.action_type != "CASH_DIVIDEND":
-                raise _Blocked(
-                    f"ENTITLEMENT_SALE_BEFORE_EFFECTIVE:{position.security_id}:{action.action_type}:{date}"
+            for key in lot.dividend_actions:
+                action = self.pending_actions.get(key)
+                if action is None or action.effective_date <= date:
+                    continue
+                if action.action_type not in ("CASH_DIVIDEND", "BONUS_SHARES", "SPLIT", "MERGE"):
+                    raise _Blocked(
+                        f"ENTITLEMENT_SALE_BEFORE_EFFECTIVE:{position.security_id}:{action.action_type}:{date}"
+                    )
+                entitlement = self.dividend_entitlements.get(key)
+                if entitlement is not None:
+                    security_id, entitled_quantity = entitlement
+                    self.dividend_entitlements[key] = (
+                        security_id,
+                        max(0, entitled_quantity - quantity_sold),
+                    )
+                claims.append(
+                    {
+                        "security_id": position.security_id,
+                        "quantity": quantity_sold,
+                        "action": action,
+                        "strategy_id": position.strategy_id,
+                        "industry_id": position.industry_id,
+                        "entry_platform_upper": position.entry_platform_upper,
+                        "closed_cycle_index": None,
+                        "opened_on": position.holding_start,
+                        "closed_on": date if will_close else None,
+                        "processed": False,
+                    }
                 )
-            self.dividend_entitlements[key] = (security_id, entitled_quantity - sold_entitled)
-            claims.append(
-                {
-                    "security_id": position.security_id,
-                    "quantity": sold_entitled,
-                    "action": action,
-                    "closed_cycle_index": None,
-                    "opened_on": position.holding_start,
-                    "closed_on": date if will_close else None,
-                    "processed": False,
-                }
-            )
         return claims
 
     def _process_external_dividend_claims(self, date: str) -> None:
@@ -843,6 +902,12 @@ class _Engine:
             action: CorporateAction = claim["action"]
             if action.effective_date != date:
                 continue
+            if action.action_type in ("BONUS_SHARES", "SPLIT", "MERGE"):
+                self._apply_external_share_claim(claim, action, date)
+                claim["processed"] = True
+                continue
+            if action.action_type != "CASH_DIVIDEND":
+                raise _Blocked(f"EXTERNAL_ACTION_UNSUPPORTED:{action.action_type}:{claim['security_id']}:{date}")
             if action.cash_per_share is None or action.dividend_tax_rate is None:
                 raise _Blocked(f"EXTERNAL_DIVIDEND_TERMS_UNKNOWN:{claim['security_id']}:{date}")
             gross = _money(action.cash_per_share * Decimal(claim["quantity"]))
@@ -911,8 +976,81 @@ class _Engine:
             )
             claim["processed"] = True
 
+    def _apply_external_share_claim(self, claim: dict, action: CorporateAction, date: str) -> None:
+        if action.share_multiplier is None or action.share_multiplier <= 0:
+            raise _Blocked(f"SHARE_MULTIPLIER_MISSING:{claim['security_id']}:{date}")
+        exact = Decimal(claim["quantity"]) * (action.share_multiplier - 1)
+        new_quantity = int(exact.to_integral_value(rounding=ROUND_FLOOR))
+        if new_quantity < 0:
+            raise _Blocked(f"REVERSE_SHARE_CLAIM_UNSUPPORTED:{claim['security_id']}:{date}")
+        if new_quantity != exact:
+            if action.cash_in_lieu is None:
+                raise _Blocked(f"FRACTIONAL_SHARES_UNHANDLED:{claim['security_id']}:{date}")
+            self.cash += action.cash_in_lieu
+            self.cash_adjustments.append(
+                {"reason": f"CASH_IN_LIEU:{claim['security_id']}:{date}", "amount": action.cash_in_lieu}
+            )
+        if new_quantity <= 0:
+            return
+        bar = self._bar(date, claim["security_id"])
+        delivery_price = None
+        if bar is not None:
+            if bar.open is not None and bar.open > 0:
+                delivery_price = bar.open
+            elif bar.close is not None and bar.close > 0:
+                delivery_price = bar.close
+        if delivery_price is None:
+            raise _Blocked(f"BONUS_DELIVERY_PRICE_UNKNOWN:{claim['security_id']}:{date}")
+        bonus_value = _money(delivery_price * Decimal(new_quantity))
+        cycle_index = claim["closed_cycle_index"]
+        if cycle_index is not None:
+            cycle = self.closed_cycles[cycle_index]
+            self.closed_cycles[cycle_index] = replace(
+                cycle,
+                realized_corporate_action_pnl=cycle.realized_corporate_action_pnl + bonus_value,
+                total_pnl=cycle.total_pnl + bonus_value,
+            )
+            cost_basis = bonus_value
+        else:
+            cost_basis = ZERO
+        position = self.positions.get(claim["security_id"])
+        sellable_date = action.new_share_sellable_date or date
+        platform = claim.get("entry_platform_upper")
+        if platform is not None:
+            platform = platform / action.share_multiplier
+        if position is None:
+            self.positions[claim["security_id"]] = Position(
+                security_id=claim["security_id"],
+                strategy_id=claim.get("strategy_id") or "UNKNOWN",
+                quantity=new_quantity,
+                cost_open=cost_basis,
+                dividend_open=ZERO,
+                dividend_units=0,
+                lots=[Lot(new_quantity, date, sellable_date)],
+                holding_start=claim.get("opened_on") or date,
+                holding_days=0,
+                last_mark=None,
+                entry_platform_upper=platform,
+                industry_id=claim.get("industry_id"),
+            )
+        else:
+            position.quantity += new_quantity
+            position.lots.append(Lot(new_quantity, date, sellable_date))
+            position.cost_open += cost_basis
+            if position.entry_platform_upper is not None and platform is not None:
+                position.entry_platform_upper = platform
+        self.warnings.append(
+            f"BONUS_DELIVERED_AFTER_SALE:{claim['security_id']}:{new_quantity}:{date}"
+        )
+
     def _process_record_dates(self, date: str) -> None:
         for action in self.actions_by_record.get(date, ()):
+            if action.status in ("ANNOUNCED", "CANCELLED"):
+                continue
+            if action.status in ("UNKNOWN", "CONFLICT"):
+                if action.security_id in self.positions:
+                    raise _Blocked(f"CORPORATE_ACTION_UNKNOWN:{action.security_id}:{action.action_type}")
+                continue
             if action.status != "IMPLEMENTED":
                 if action.security_id in self.positions:
                     raise _Blocked(f"CORPORATE_ACTION_NOT_IMPLEMENTED:{action.security_id}:{action.action_type}")
@@ -922,6 +1060,8 @@ class _Engine:
                 key = _action_key(action)
                 self.dividend_entitlements[key] = (action.security_id, position.quantity)
                 self.pending_actions[key] = action
+                for lot in position.lots:
+                    lot.dividend_actions.add(key)
 
     def _apply_corporate_actions(self, date: str, day: MarketDay, relevant_ids: set[str]) -> None:
         if not day.corporate_actions_complete and relevant_ids:
@@ -959,11 +1099,11 @@ class _Engine:
             raise _Blocked(f"DIVIDEND_TAX_RATE_UNKNOWN:{action.security_id}:{date}")
         if position.last_mark is not None:
             position.last_mark = max(ZERO, position.last_mark - action.cash_per_share)
-        entitlement = self.dividend_entitlements.get(_action_key(action))
+        key = _action_key(action)
         if action.record_date is not None:
-            quantity = entitlement[1] if entitlement is not None else 0
+            quantity = sum(lot.quantity for lot in position.lots if key in lot.dividend_actions)
         else:
-            quantity = position.quantity
+            quantity = sum(lot.quantity for lot in position.lots)
         if quantity <= 0:
             return
         gross = _money(action.cash_per_share * Decimal(quantity))
@@ -972,8 +1112,20 @@ class _Engine:
         self.receivables += gross
         self.payables += tax
         self.total_tax += tax
+        per_share = net / Decimal(quantity)
+        position.dividend_layers.append(
+            {
+                "key": key,
+                "per_share": per_share,
+                "remaining_quantity": Decimal(quantity),
+                "remaining_amount": net,
+                "action": action,
+            }
+        )
         position.dividend_open += net
-        position.dividend_units = quantity
+        position.dividend_units = int(
+            sum(layer["remaining_quantity"] for layer in position.dividend_layers)
+        )
         self.dividend_payments.append(
             {
                 "security_id": action.security_id,
@@ -1002,6 +1154,7 @@ class _Engine:
             if action.cash_in_lieu is None:
                 raise _Blocked(f"FRACTIONAL_SHARES_UNHANDLED:{action.security_id}:{date}")
             self.cash += action.cash_in_lieu
+            position.realized_trading_pnl += action.cash_in_lieu
             self.cash_adjustments.append(
                 {"reason": f"CASH_IN_LIEU:{action.security_id}:{date}", "amount": action.cash_in_lieu}
             )
@@ -1014,8 +1167,14 @@ class _Engine:
         elif delta < 0:
             self._reduce_lots(position, date, -delta, respect_sellable=False)
         position.quantity = new_quantity
-        if position.dividend_units > new_quantity:
-            position.dividend_units = new_quantity
+        for layer in position.dividend_layers:
+            layer["per_share"] = layer["per_share"] / action.share_multiplier
+            layer["remaining_quantity"] = layer["remaining_quantity"] * action.share_multiplier
+        position.dividend_units = int(
+            sum((layer["remaining_quantity"] for layer in position.dividend_layers), Decimal(0))
+        )
+        if position.entry_platform_upper is not None:
+            position.entry_platform_upper = position.entry_platform_upper / action.share_multiplier
         if position.last_mark is not None:
             position.last_mark = position.last_mark / action.share_multiplier
 
@@ -1186,7 +1345,30 @@ class _Engine:
         day = self.data.market_days.get(date)
         if day is None:
             return None
-        return day.bars.get(security_id)
+        bar = day.bars.get(security_id)
+        if bar is None:
+            return None
+        if bar.date != date:
+            raise _Blocked(f"BAR_BUSINESS_DATE_MISMATCH:{security_id}:{bar.date}!={date}")
+        prices = (bar.open, bar.high, bar.low, bar.close)
+        if any(value is not None and value <= 0 for value in prices):
+            raise _Blocked(f"NON_POSITIVE_BAR_PRICE:{security_id}:{date}")
+        if all(value is not None for value in prices):
+            open_value = bar.open
+            high_value = bar.high
+            low_value = bar.low
+            close_value = bar.close
+            assert open_value is not None and high_value is not None
+            assert low_value is not None and close_value is not None
+            if high_value < max(open_value, close_value) or low_value > min(open_value, close_value):
+                raise _Blocked(f"INVALID_BAR_OHLC:{security_id}:{date}")
+            if high_value < low_value:
+                raise _Blocked(f"INVALID_BAR_OHLC:{security_id}:{date}")
+        if bar.volume is not None and bar.volume < 0:
+            raise _Blocked(f"NEGATIVE_BAR_VOLUME:{security_id}:{date}")
+        if bar.amount is not None and bar.amount < 0:
+            raise _Blocked(f"NEGATIVE_BAR_AMOUNT:{security_id}:{date}")
+        return bar
 
     def _previous_close(self, date: str, security_id: str) -> Decimal | None:
         index = self.full_calendar.index(date)
@@ -1321,8 +1503,15 @@ class _Engine:
         return self.full_calendar[target]
 
     @staticmethod
-    def _reduce_lots(position: Position, date: str, quantity: int, *, respect_sellable: bool = True) -> None:
+    def _reduce_lots(
+        position: Position,
+        date: str,
+        quantity: int,
+        *,
+        respect_sellable: bool = True,
+    ) -> list[tuple[Lot, int]]:
         remaining = quantity
+        taken: list[tuple[Lot, int]] = []
         lots = sorted(position.lots, key=lambda lot: (lot.sellable_date, lot.acquired_date))
         new_lots: list[Lot] = []
         for lot in lots:
@@ -1334,11 +1523,20 @@ class _Engine:
                 continue
             take = min(remaining, lot.quantity)
             remaining -= take
+            taken.append((lot, take))
             if lot.quantity > take:
-                new_lots.append(Lot(lot.quantity - take, lot.acquired_date, lot.sellable_date))
+                new_lots.append(
+                    Lot(
+                        lot.quantity - take,
+                        lot.acquired_date,
+                        lot.sellable_date,
+                        set(lot.dividend_actions),
+                    )
+                )
         position.lots = new_lots
         if remaining > 0:
             raise _Blocked(f"LOT_QUANTITY_MISMATCH:{position.security_id}:{date}")
+        return taken
 
     def _add_locked_exit(self, request: ExitRequest) -> None:
         if request.security_id not in self.positions:
@@ -1495,15 +1693,19 @@ class _Engine:
         returns: dict[str, Decimal] = {}
         previous_nav = Decimal(1)
         start_index = 0
+        processed = 0
         for segment_number, boundary in enumerate(boundaries, 1):
-            boundary_index = index_by_date[boundary]
+            boundary_index = index_by_date.get(boundary)
+            if boundary_index is None:
+                break
             if boundary_index <= start_index:
                 continue
             end_nav = self.nav_points[boundary_index - 1].nav
             returns[f"SEG{segment_number}"] = end_nav / previous_nav - 1
             previous_nav = end_nav
             start_index = boundary_index
-        returns[f"SEG{len(boundaries) + 1}"] = self.nav_points[-1].nav / previous_nav - 1
+            processed = segment_number
+        returns[f"SEG{processed + 1}"] = self.nav_points[-1].nav / previous_nav - 1
         return returns
 
     def _period_returns(self, prefix_length: int) -> dict[str, Decimal]:

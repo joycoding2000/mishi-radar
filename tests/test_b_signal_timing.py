@@ -66,6 +66,55 @@ class SignalOpenTimingTests(unittest.TestCase):
         self.assertEqual(len(result.fills), 1)
         self.assertEqual(result.fills[0].date, self.trade_day)
 
+    def test_post_open_old_signal_expires_when_superseded(self) -> None:
+        dates = trading_dates(3)
+        old_sid = "SH:600001"
+        new_sid = "SH:600002"
+        days = [
+            market_day(day, {sid: bar(day, 5, 5) for sid in (old_sid, new_sid)})
+            for day in dates
+        ]
+        old = signal(
+            old_sid,
+            dates[0],
+            strategy_id="S02",
+            available_at=f"{dates[1]}T09:30:01",
+        )
+        new = signal(
+            new_sid,
+            dates[1],
+            strategy_id="S02",
+            available_at=f"{dates[1]}T15:00:00",
+        )
+        result = run_backtest(
+            make_input(
+                dates,
+                days,
+                signals_by_signal_date={dates[0]: (old,), dates[1]: (new,)},
+            ),
+            config(
+                strategy_id="S02",
+                initial_cash=Decimal(1005),
+                top_n=1,
+                start_date=dates[1],
+                rebalance_days=1,
+                stop_loss=None,
+            ),
+        )
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual(
+            [(fill.security_id, fill.date, fill.quantity) for fill in result.fills],
+            [(new_sid, dates[2], 200)],
+        )
+        self.assertTrue(
+            any(
+                order.security_id == old_sid
+                and order.status == "EXPIRED"
+                and order.reason == "EXPIRED_INPUT_WINDOW"
+                for order in result.orders
+            )
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
