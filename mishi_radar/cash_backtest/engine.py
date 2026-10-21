@@ -1017,7 +1017,14 @@ class _Engine:
         if new_quantity < 0:
             raise _Blocked(f"REVERSE_SHARE_CLAIM_UNSUPPORTED:{claim['security_id']}:{date}")
         pending = claim.get("pending_cycle")
-        position = pending if pending is not None else self.positions.get(claim["security_id"])
+        existing = self.positions.get(claim["security_id"])
+        merge_source = pending if pending is not None and existing is not None and existing is not pending else None
+        if merge_source is not None:
+            position = existing
+        elif pending is not None:
+            position = pending
+        else:
+            position = existing
         cash_in_lieu_pnl = ZERO
         if new_quantity != exact:
             if action.cash_in_lieu is None:
@@ -1054,7 +1061,19 @@ class _Engine:
             )
         else:
             position.realized_trading_pnl += cash_in_lieu_pnl
-            if position.entry_platform_upper is not None and platform is not None:
+            if merge_source is not None:
+                position.realized_trading_pnl += merge_source.realized_trading_pnl
+                position.realized_dividend += merge_source.realized_dividend
+                position.dividend_open += merge_source.dividend_open
+                position.dividend_units += merge_source.dividend_units
+                merge_source.realized_trading_pnl = ZERO
+                merge_source.realized_dividend = ZERO
+                merge_source.dividend_open = ZERO
+                merge_source.dividend_units = 0
+                self.warnings.append(
+                    f"PENDING_CYCLE_MERGED_REENTRY:{claim['security_id']}:{date}"
+                )
+            if position.entry_platform_upper is None and platform is not None:
                 position.entry_platform_upper = platform
         position.quantity += new_quantity
         position.lots.append(Lot(new_quantity, date, sellable_date))
@@ -1163,6 +1182,8 @@ class _Engine:
         if action.record_date is not None:
             entitlement = self.dividend_entitlements.get(_action_key(action))
             entitled_quantity = entitlement[1] if entitlement is not None else 0
+            if entitled_quantity <= 0:
+                return
             if entitled_quantity != position.quantity:
                 raise _Blocked(f"SHARE_CHANGE_ENTITLEMENT_MISMATCH:{action.security_id}:{date}")
         old_quantity = position.quantity
@@ -1313,6 +1334,8 @@ class _Engine:
         if self.config.stop_loss is None:
             return
         for sid, position in self.positions.items():
+            if position.cost_open <= 0:
+                continue
             price = mark_close[sid]
             r_open = remaining_open_stop_ratio(
                 Decimal(position.quantity) * price, position.dividend_open, position.cost_open

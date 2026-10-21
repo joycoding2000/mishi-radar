@@ -480,6 +480,89 @@ class CorporateActionDefectTests(unittest.TestCase):
         self.assertEqual(result.nav_points[-1].nav, Decimal(1))
         self.assertEqual(result.closed_cycles[0].total_pnl, Decimal(0))
 
+    def test_bonus_delivery_with_default_stop_does_not_block(self) -> None:
+        dates = trading_dates(5)
+        action = CorporateAction(
+            SID,
+            "BONUS_SHARES",
+            dates[3],
+            record_date=dates[1],
+            share_multiplier=Decimal(2),
+            new_share_sellable_date=dates[3],
+        )
+        prices = [Decimal(10), Decimal(10), Decimal(5), Decimal(5), Decimal(5)]
+        days = [
+            market_day(
+                day,
+                {SID: bar(day, prices[index], prices[index])},
+                corporate_actions=(action,) if index == 3 else (),
+            )
+            for index, day in enumerate(dates)
+        ]
+        result = run_backtest(
+            make_input(
+                dates,
+                days,
+                signals_by_signal_date={dates[0]: (signal(SID, dates[0]),)},
+                exit_requests_by_signal_date={dates[1]: (exit_request(SID, dates[1]),)},
+                rules=(synthetic_rule(lot_size=1),),
+                fees=synthetic_fees(min_commission=0),
+            ),
+            config(
+                start_date=dates[1],
+                top_n=1,
+                initial_cash=Decimal(1000),
+                rebalance_days=20,
+                stop_loss=Decimal("0.08"),
+            ),
+        )
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual([position.quantity for position in result.final_positions], [100])
+        self.assertEqual(result.nav_points[-1].equity, Decimal(1000))
+
+    def test_bonus_delivery_after_reentry_preserves_both_quantities(self) -> None:
+        dates = trading_dates(5)
+        action = CorporateAction(
+            SID,
+            "BONUS_SHARES",
+            dates[4],
+            record_date=dates[1],
+            share_multiplier=Decimal(2),
+            new_share_sellable_date=dates[4],
+        )
+        prices = [Decimal(10), Decimal(10), Decimal(5), Decimal(5), Decimal(5)]
+        days = [
+            market_day(
+                day,
+                {SID: bar(day, prices[index], prices[index])},
+                corporate_actions=(action,) if index == 4 else (),
+            )
+            for index, day in enumerate(dates)
+        ]
+        result = run_backtest(
+            make_input(
+                dates,
+                days,
+                signals_by_signal_date={
+                    dates[0]: (signal(SID, dates[0]),),
+                    dates[2]: (signal(SID, dates[2]),),
+                },
+                exit_requests_by_signal_date={dates[1]: (exit_request(SID, dates[1]),)},
+                rules=(synthetic_rule(lot_size=1),),
+                fees=synthetic_fees(min_commission=0),
+            ),
+            config(
+                start_date=dates[1],
+                top_n=1,
+                initial_cash=Decimal(1000),
+                rebalance_days=2,
+                stop_loss=None,
+            ),
+        )
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual([position.quantity for position in result.final_positions], [200])
+        self.assertEqual(result.nav_points[-1].equity, Decimal(1000))
+
     def test_external_fractional_cash_stays_in_original_cycle(self) -> None:
         dates = trading_dates(5)
         action = CorporateAction(
