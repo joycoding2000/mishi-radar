@@ -644,32 +644,50 @@ class _Engine:
         if exit_intent:
             self.exited_today.add(sid)
         if position.quantity == 0:
-            position.realized_dividend += position.dividend_open
-            position.dividend_open = ZERO
-            cycle_total = cycle_total_pnl(position.realized_trading_pnl, position.realized_dividend)
-            self.closed_cycles.append(
-                ClosedCycle(
-                    security_id=sid,
-                    strategy_id=position.strategy_id,
-                    opened_on=position.holding_start,
-                    closed_on=date,
-                    realized_trading_pnl=position.realized_trading_pnl,
-                    realized_dividend=position.realized_dividend,
-                    total_pnl=cycle_total,
+            future_share_claims = [
+                claim
+                for claim in new_claims
+                if claim["action"].action_type in ("BONUS_SHARES", "SPLIT", "MERGE")
+            ]
+            if future_share_claims:
+                for claim in self.external_dividend_claims:
+                    if (
+                        claim["security_id"] == sid
+                        and not claim["processed"]
+                        and claim["closed_cycle_index"] is None
+                    ):
+                        claim["pending_cycle"] = position
+                for claim in new_claims:
+                    claim["pending_cycle"] = position
+                del self.positions[sid]
+                self.locked_exits.pop(sid, None)
+            else:
+                position.realized_dividend += position.dividend_open
+                position.dividend_open = ZERO
+                cycle_total = cycle_total_pnl(position.realized_trading_pnl, position.realized_dividend)
+                self.closed_cycles.append(
+                    ClosedCycle(
+                        security_id=sid,
+                        strategy_id=position.strategy_id,
+                        opened_on=position.holding_start,
+                        closed_on=date,
+                        realized_trading_pnl=position.realized_trading_pnl,
+                        realized_dividend=position.realized_dividend,
+                        total_pnl=cycle_total,
+                    )
                 )
-            )
-            cycle_index = len(self.closed_cycles) - 1
-            for claim in self.external_dividend_claims:
-                if (
-                    claim["security_id"] == sid
-                    and not claim["processed"]
-                    and claim["closed_cycle_index"] is None
-                ):
+                cycle_index = len(self.closed_cycles) - 1
+                for claim in self.external_dividend_claims:
+                    if (
+                        claim["security_id"] == sid
+                        and not claim["processed"]
+                        and claim["closed_cycle_index"] is None
+                    ):
+                        claim["closed_cycle_index"] = cycle_index
+                for claim in new_claims:
                     claim["closed_cycle_index"] = cycle_index
-            for claim in new_claims:
-                claim["closed_cycle_index"] = cycle_index
-            del self.positions[sid]
-            self.locked_exits.pop(sid, None)
+                del self.positions[sid]
+                self.locked_exits.pop(sid, None)
         self.external_dividend_claims.extend(new_claims)
 
     def _try_buy(
@@ -916,6 +934,21 @@ class _Engine:
             self.receivables += gross
             self.payables += tax
             self.total_tax += tax
+            pending = claim.get("pending_cycle")
+            if pending is not None:
+                pending.realized_dividend += net
+                self.dividend_payments.append(
+                    {
+                        "security_id": claim["security_id"],
+                        "pay_date": action.pay_date,
+                        "gross": gross,
+                        "tax": tax,
+                        "net": net,
+                        "paid": False,
+                    }
+                )
+                claim["processed"] = True
+                continue
             cycle_index = claim["closed_cycle_index"]
             if cycle_index is not None:
                 cycle = self.closed_cycles[cycle_index]
@@ -983,6 +1016,9 @@ class _Engine:
         new_quantity = int(exact.to_integral_value(rounding=ROUND_FLOOR))
         if new_quantity < 0:
             raise _Blocked(f"REVERSE_SHARE_CLAIM_UNSUPPORTED:{claim['security_id']}:{date}")
+        pending = claim.get("pending_cycle")
+        position = pending if pending is not None else self.positions.get(claim["security_id"])
+        cash_in_lieu_pnl = ZERO
         if new_quantity != exact:
             if action.cash_in_lieu is None:
                 raise _Blocked(f"FRACTIONAL_SHARES_UNHANDLED:{claim['security_id']}:{date}")
@@ -990,55 +1026,39 @@ class _Engine:
             self.cash_adjustments.append(
                 {"reason": f"CASH_IN_LIEU:{claim['security_id']}:{date}", "amount": action.cash_in_lieu}
             )
+            if position is not None:
+                position.realized_trading_pnl += action.cash_in_lieu
+            else:
+                cash_in_lieu_pnl = action.cash_in_lieu
         if new_quantity <= 0:
             return
-        bar = self._bar(date, claim["security_id"])
-        delivery_price = None
-        if bar is not None:
-            if bar.open is not None and bar.open > 0:
-                delivery_price = bar.open
-            elif bar.close is not None and bar.close > 0:
-                delivery_price = bar.close
-        if delivery_price is None:
-            raise _Blocked(f"BONUS_DELIVERY_PRICE_UNKNOWN:{claim['security_id']}:{date}")
-        bonus_value = _money(delivery_price * Decimal(new_quantity))
-        cycle_index = claim["closed_cycle_index"]
-        if cycle_index is not None:
-            cycle = self.closed_cycles[cycle_index]
-            self.closed_cycles[cycle_index] = replace(
-                cycle,
-                realized_corporate_action_pnl=cycle.realized_corporate_action_pnl + bonus_value,
-                total_pnl=cycle.total_pnl + bonus_value,
-            )
-            cost_basis = bonus_value
-        else:
-            cost_basis = ZERO
-        position = self.positions.get(claim["security_id"])
         sellable_date = action.new_share_sellable_date or date
         platform = claim.get("entry_platform_upper")
         if platform is not None:
             platform = platform / action.share_multiplier
         if position is None:
-            self.positions[claim["security_id"]] = Position(
+            position = Position(
                 security_id=claim["security_id"],
                 strategy_id=claim.get("strategy_id") or "UNKNOWN",
-                quantity=new_quantity,
-                cost_open=cost_basis,
+                quantity=0,
+                cost_open=ZERO,
                 dividend_open=ZERO,
                 dividend_units=0,
-                lots=[Lot(new_quantity, date, sellable_date)],
+                lots=[],
                 holding_start=claim.get("opened_on") or date,
                 holding_days=0,
                 last_mark=None,
                 entry_platform_upper=platform,
                 industry_id=claim.get("industry_id"),
+                realized_trading_pnl=cash_in_lieu_pnl,
             )
         else:
-            position.quantity += new_quantity
-            position.lots.append(Lot(new_quantity, date, sellable_date))
-            position.cost_open += cost_basis
+            position.realized_trading_pnl += cash_in_lieu_pnl
             if position.entry_platform_upper is not None and platform is not None:
                 position.entry_platform_upper = platform
+        position.quantity += new_quantity
+        position.lots.append(Lot(new_quantity, date, sellable_date))
+        self.positions[claim["security_id"]] = position
         self.warnings.append(
             f"BONUS_DELIVERED_AFTER_SALE:{claim['security_id']}:{new_quantity}:{date}"
         )
@@ -1161,9 +1181,28 @@ class _Engine:
             self.warnings.append(f"CASH_IN_LIEU:{action.security_id}:{date}:{action.cash_in_lieu}")
         delta = new_quantity - old_quantity
         if delta > 0:
-            position.lots.append(
-                Lot(delta, date, action.new_share_sellable_date or date)
-            )
+            source_lots = list(position.lots)
+            remaining_delta = delta
+            sellable_date = action.new_share_sellable_date or date
+            for source in source_lots:
+                if remaining_delta <= 0:
+                    break
+                share = int(
+                    (Decimal(source.quantity) * (action.share_multiplier - 1)).to_integral_value(
+                        rounding=ROUND_FLOOR
+                    )
+                )
+                share = min(share, remaining_delta)
+                if share > 0:
+                    position.lots.append(
+                        Lot(share, date, sellable_date, set(source.dividend_actions))
+                    )
+                    remaining_delta -= share
+            if remaining_delta > 0:
+                actions: set[str] = set()
+                for source in source_lots:
+                    actions.update(source.dividend_actions)
+                position.lots.append(Lot(remaining_delta, date, sellable_date, actions))
         elif delta < 0:
             self._reduce_lots(position, date, -delta, respect_sellable=False)
         position.quantity = new_quantity
