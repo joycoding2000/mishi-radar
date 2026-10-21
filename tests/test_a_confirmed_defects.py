@@ -30,6 +30,26 @@ from tests.a_fixtures import default_financial, make_snapshot, trading_dates, tr
 
 
 class ConfigIdentityTests(unittest.TestCase):
+    def test_replace_and_common_config_changes_keep_distinct_identity(self) -> None:
+        dates = trading_dates(70)
+        sid = "SH:600001"
+        snapshot = make_snapshot(dates, {sid: trend(70, 10, "0.002")})
+        base = default_configs()
+        edited = replace(base, s02=replace(base.s02, platform_width=Decimal("0.10")))
+        common = replace(base, common=replace(base.common, min_avg_amount_20=Decimal("50000000")))
+        records = []
+        for bundle in (base, edited, common):
+            records.append(
+                signal_records({"S02": compute_strategy(snapshot, "S02", bundle)})[0]
+            )
+        keys = [
+            (record["config_id"], record["config_version"], record["signal_id"])
+            for record in records
+        ]
+        self.assertNotEqual(keys[0], keys[1])
+        self.assertNotEqual(keys[0], keys[2])
+        self.assertNotEqual(keys[1], keys[2])
+
     def test_personal_configurations_keep_distinct_identity(self) -> None:
         dates = trading_dates(70)
         sid = "SH:600001"
@@ -142,6 +162,40 @@ class S07FinancialTests(unittest.TestCase):
                 result = compute_strategy(local, "S07", default_configs())
                 self.assertEqual(result.rows[sid].signal_status, ConditionStatus.UNKNOWN)
 
+    def test_known_false_component_dominates_future_component(self) -> None:
+        dates = trading_dates(70)
+        sid = "SH:600001"
+        snapshot = make_snapshot(dates, {sid: trend(70, 10, "0.002")})
+        base_fin = default_financial("IND_A", dates[-1])
+        cases = {
+            "negative_pe": replace(
+                base_fin,
+                pe_ttm=num(-1),
+                np_ytd=num(-10),
+                ocf_ytd=replace(base_fin.ocf_ytd, available_at=f"{dates[-1]}T23:59:59"),
+            ),
+            "negative_ocf": replace(
+                base_fin,
+                pe_ttm=num(10),
+                np_ytd=replace(base_fin.np_ytd, available_at=f"{dates[-1]}T23:59:59"),
+                ocf_ytd=num(-10),
+            ),
+        }
+        for name, fin in cases.items():
+            with self.subTest(case=name):
+                local = replace(snapshot, financials={sid: fin})
+                decision = evaluate_exit(local, "S07", sid, ExitContext(holding_days=1))
+                self.assertEqual(decision.status, ConditionStatus.TRUE)
+                self.assertIn("STRATEGY_EXIT:S07_CONDITION_FAILED", decision.reasons)
+                stop = evaluate_exit(
+                    local,
+                    "S07",
+                    sid,
+                    ExitContext(holding_days=1, common_stop_triggered=True),
+                )
+                self.assertEqual(stop.status, ConditionStatus.TRUE)
+                self.assertIn("STOP_LOSS", stop.reasons)
+
     def test_known_nonpositive_pe_exits_s07(self) -> None:
         dates = trading_dates(70)
         sid = "SH:600001"
@@ -202,6 +256,19 @@ class IncompletePoolTriggerTests(unittest.TestCase):
 
 
 class ThreeValuedLogicTests(unittest.TestCase):
+    def test_s08_known_false_price_survives_missing_flow(self) -> None:
+        dates = trading_dates(70)
+        sid = "SH:600001"
+        snapshot = make_snapshot(dates, {sid: [Decimal(10)] * 69 + [Decimal(9)]})
+        flows = dict(snapshot.fund_flows[sid])
+        flows[dates[-1]] = Numeric(None, ValueStatus.MISSING, "FLOW_MISSING")
+        snapshot = replace(snapshot, fund_flows={sid: flows})
+        result = compute_strategy(snapshot, "S08", default_configs())
+        row = result.rows[sid]
+        self.assertEqual(row.signal_status, ConditionStatus.FALSE)
+        self.assertTrue(row.reasons)
+        self.assertEqual(row.conditions["price_above_ma20"], ConditionStatus.FALSE)
+
     def test_s08_known_false_flow_survives_missing_price(self) -> None:
         dates = trading_dates(70)
         sid = "SH:600001"

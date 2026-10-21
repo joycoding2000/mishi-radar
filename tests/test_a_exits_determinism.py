@@ -299,15 +299,14 @@ class S08ExitAvailabilityTests(unittest.TestCase):
 
     def test_s08_entry_path_keeps_availability_unknown(self) -> None:
         dates = trading_dates(20)
-        snapshot = self._snapshot(
+        flows = {day: num(1) for day in dates[:-5]}
+        for day in dates[-3:]:
+            flows[day] = num(-1, available_at=f"{dates[-1]}T23:59:59")
+        snapshot = make_snapshot(
             dates,
-            [
-                num(1),
-                num(1),
-                num(-1, available_at=f"{dates[-1]}T23:59:59"),
-                num(-1, available_at=f"{dates[-1]}T23:59:59"),
-                num(-1, available_at=f"{dates[-1]}T23:59:59"),
-            ]
+            {"SH:600001": trend(20, 10, "0.002")},
+            benchmark_closes=[100] * 20,
+            fund_flows={"SH:600001": flows},
         )
         result = compute_strategy(snapshot, "S08", default_configs())
         self.assertEqual(result.rows["SH:600001"].signal_status, ConditionStatus.UNKNOWN)

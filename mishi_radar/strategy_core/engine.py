@@ -21,6 +21,7 @@ from .strategies import (
     _check_available,
     _index,
     _s01_metrics,
+    _s07_known_failure,
     _s07_metrics,
     _s08_metrics,
     _value_at,
@@ -209,7 +210,11 @@ def evaluate_exit(
     elif strategy_id == "S07":
         metrics, blocker = _s07_metrics(snapshot, security_id)
         if blocker is not None:
-            if blocker.status is ValueStatus.NOT_APPLICABLE:
+            fin = snapshot.financials.get(security_id)
+            known_failure = blocker.status is ValueStatus.NOT_APPLICABLE
+            if not known_failure and blocker.reason == "VALUE_NOT_YET_AVAILABLE" and fin is not None:
+                known_failure = _s07_known_failure(fin, cfg.roe_threshold, snapshot.business_date)
+            if known_failure:
                 reasons.append("STRATEGY_EXIT:S07_CONDITION_FAILED")
             else:
                 unknown.append("S07_CONDITION_UNKNOWN")

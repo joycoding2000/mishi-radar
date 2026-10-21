@@ -579,6 +579,7 @@ def _s01_trigger(metrics: Mapping[str, Decimal]) -> ConditionStatus:
 
 def compute_s01(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResult:
     cfg = bundle.s01
+    config_id, config_version = bundle.effective_identity("S01")
     rows: dict[str, RowResult] = {}
     metrics_by_id: dict[str, dict[str, Decimal]] = {}
     for sid in sorted(snapshot.securities):
@@ -667,8 +668,8 @@ def compute_s01(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=cfg.config_id,
-        config_version=cfg.config_version,
+        config_id=config_id,
+        config_version=config_version,
         bound_s01_config_version=cfg.config_version,
     )
 
@@ -739,6 +740,7 @@ def _s02_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, 
 
 def compute_s02(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResult:
     cfg = bundle.s02
+    config_id, config_version = bundle.effective_identity("S02")
     rows: dict[str, RowResult] = {}
     metrics_by_id: dict[str, dict[str, Decimal]] = {}
     for sid in sorted(snapshot.securities):
@@ -804,8 +806,8 @@ def compute_s02(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=cfg.config_id,
-        config_version=cfg.config_version,
+        config_id=config_id,
+        config_version=config_version,
     )
 
 
@@ -860,6 +862,7 @@ def _s03_metrics(snapshot: MarketSnapshot, security_id: str, cfg) -> tuple[dict[
 
 def compute_s03(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResult:
     cfg = bundle.s03
+    config_id, config_version = bundle.effective_identity("S03")
     rows: dict[str, RowResult] = {}
     metrics_by_id: dict[str, dict[str, Decimal]] = {}
     for sid in sorted(snapshot.securities):
@@ -925,8 +928,8 @@ def compute_s03(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=cfg.config_id,
-        config_version=cfg.config_version,
+        config_id=config_id,
+        config_version=config_version,
     )
 
 
@@ -972,6 +975,7 @@ def _s04_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, 
 
 def compute_s04(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResult:
     cfg = bundle.s04
+    config_id, config_version = bundle.effective_identity("S04")
     rows: dict[str, RowResult] = {}
     metrics_by_id: dict[str, dict[str, Decimal]] = {}
     for sid in sorted(snapshot.securities):
@@ -1039,8 +1043,8 @@ def compute_s04(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=cfg.config_id,
-        config_version=cfg.config_version,
+        config_id=config_id,
+        config_version=config_version,
     )
 
 
@@ -1078,6 +1082,7 @@ def _s05_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, 
 
 def compute_s05(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResult:
     cfg = bundle.s05
+    config_id, config_version = bundle.effective_identity("S05")
     rows: dict[str, RowResult] = {}
     metrics_by_id: dict[str, dict[str, Decimal]] = {}
     for sid in sorted(snapshot.securities):
@@ -1179,8 +1184,8 @@ def compute_s05(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=cfg.config_id,
-        config_version=cfg.config_version,
+        config_id=config_id,
+        config_version=config_version,
     )
 
 
@@ -1370,6 +1375,7 @@ def _s06_industry_stats(
 
 def compute_s06(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResult:
     cfg = bundle.s06
+    config_id, config_version = bundle.effective_identity("S06")
     # S06 always uses the fixed default S01 identity, never the personal S01.
     s01_cfg = S01_DEFAULT_CONFIG
     rows: dict[str, RowResult] = {}
@@ -1600,8 +1606,8 @@ def compute_s06(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=complete,
-        config_id=cfg.config_id,
-        config_version=cfg.config_version,
+        config_id=config_id,
+        config_version=config_version,
         industries=industries,
         bound_s01_config_version=S01_DEFAULT_CONFIG_VERSION,
         notes=("S06_BINDS_" + S01_DEFAULT_CONFIG_VERSION,),
@@ -1686,6 +1692,70 @@ def _financial_component_blocker(fin: FinancialSnapshot, business_date: str) -> 
     return None
 
 
+def _available_ttm_value(
+    current: Numeric,
+    prior_fy: Numeric | None,
+    prior_same: Numeric | None,
+    is_year_end: bool,
+    business_date: str,
+) -> Decimal | None:
+    current = _check_available(current, business_date)
+    if not current.usable:
+        return None
+    if is_year_end:
+        return current.value
+    if prior_fy is None or prior_same is None:
+        return None
+    prior_fy = _check_available(prior_fy, business_date)
+    prior_same = _check_available(prior_same, business_date)
+    if not prior_fy.usable or not prior_same.usable:
+        return None
+    assert current.value is not None and prior_fy.value is not None and prior_same.value is not None
+    return current.value + prior_fy.value - prior_same.value
+
+
+def _s07_known_failure(fin: FinancialSnapshot, threshold: Decimal, business_date: str) -> bool:
+    pe = _check_available(fin.pe_ttm, business_date)
+    if pe.usable and pe.value is not None and pe.value <= 0:
+        return True
+
+    equity = _check_available(fin.equity, business_date)
+    prior_equity = (
+        _check_available(fin.equity_prior_same, business_date)
+        if fin.equity_prior_same is not None
+        else None
+    )
+    equity_average = None
+    if equity.usable and prior_equity is not None and prior_equity.usable:
+        assert equity.value is not None and prior_equity.value is not None
+        equity_average = (equity.value + prior_equity.value) / 2
+        if equity_average <= 0:
+            return True
+
+    np_ttm = _available_ttm_value(
+        fin.np_ytd,
+        fin.np_fy_prior,
+        fin.np_ytd_prior_same,
+        fin.is_year_end,
+        business_date,
+    )
+    if np_ttm is not None and np_ttm <= 0:
+        return True
+    ocf_ttm = _available_ttm_value(
+        fin.ocf_ytd,
+        fin.ocf_fy_prior,
+        fin.ocf_ytd_prior_same,
+        fin.is_year_end,
+        business_date,
+    )
+    if ocf_ttm is not None and ocf_ttm <= 0:
+        return True
+    if np_ttm is not None and equity_average is not None and equity_average > 0:
+        if np_ttm / equity_average < threshold:
+            return True
+    return False
+
+
 def _s07_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, Decimal], Numeric | None]:
     fin = snapshot.financials.get(security_id)
     if fin is None:
@@ -1722,6 +1792,7 @@ def _s07_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, 
 
 def compute_s07(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResult:
     cfg = bundle.s07
+    config_id, config_version = bundle.effective_identity("S07")
     rows: dict[str, RowResult] = {}
     metrics_by_id: dict[str, dict[str, Decimal]] = {}
     for sid in sorted(snapshot.securities):
@@ -1823,8 +1894,8 @@ def compute_s07(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=cfg.config_id,
-        config_version=cfg.config_version,
+        config_id=config_id,
+        config_version=config_version,
     )
 
 
@@ -1878,6 +1949,7 @@ def _s08_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, 
 
 def compute_s08(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResult:
     cfg = bundle.s08
+    config_id, config_version = bundle.effective_identity("S08")
     rows: dict[str, RowResult] = {}
     metrics_by_id: dict[str, dict[str, Decimal]] = {}
     for sid in sorted(snapshot.securities):
@@ -1893,21 +1965,36 @@ def compute_s08(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
                 reasons=base_reasons,
             )
             continue
+        price = _value_at(snapshot, sid, snapshot.business_date, "adjusted_close")
+        ma20 = ma_value(snapshot, sid, 20)
+        if price.usable and ma20.usable:
+            assert price.value is not None and ma20.value is not None
+            price_condition = ConditionStatus.TRUE if price.value > ma20.value else ConditionStatus.FALSE
+        else:
+            price_condition = ConditionStatus.UNKNOWN
         metrics, blocker = _s08_metrics(snapshot, sid)
         if blocker is not None:
             eligibility = _eligibility_from_blocker(blocker)
-            rows[sid] = _row(
+            row = _row(
                 snapshot,
                 sid,
                 "S08",
                 eligibility=eligibility,
                 state=_state_from_eligibility(eligibility),
+                signal_status=ConditionStatus.FALSE if price_condition is ConditionStatus.FALSE else ConditionStatus.UNKNOWN,
+                observation_status=ConditionStatus.UNKNOWN,
+                confirmation_status=price_condition,
                 reasons=(_blocked_reason("S08_INPUT", blocker),),
             )
+            row.metrics["price"] = price.value if price.usable else None
+            row.metrics["ma20"] = ma20.value if ma20.usable else None
+            row.conditions["price_above_ma20"] = price_condition
+            if not price.usable or not ma20.usable:
+                price_blocker = price if not price.usable else ma20
+                row.reasons = row.reasons + (_blocked_reason("S08_MA20_INPUT", price_blocker),)
+            rows[sid] = row
             continue
         metrics_by_id[sid] = metrics
-        price = _value_at(snapshot, sid, snapshot.business_date, "adjusted_close")
-        ma20 = ma_value(snapshot, sid, 20)
         row = _row(
             snapshot,
             sid,
@@ -1981,8 +2068,8 @@ def compute_s08(snapshot: MarketSnapshot, bundle: ConfigBundle) -> StrategyResul
         rows,
         key,
         pool_complete=pool_complete,
-        config_id=cfg.config_id,
-        config_version=cfg.config_version,
+        config_id=config_id,
+        config_version=config_version,
     )
 
 

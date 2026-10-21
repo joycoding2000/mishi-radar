@@ -47,24 +47,31 @@ def _default_canonical(cls, exclude: set[str]) -> str:
 
 def _apply_identity(config, strategy_id: str) -> None:
     exclude = {"config_id", "config_version"}
+    canonical = _canonical_config(config, exclude)
+    default_canonical = _default_canonical(type(config), exclude)
+    default_id = f"{strategy_id}_DEFAULT"
+    default_version = f"{default_id}/{DEFAULT_CONFIG_VERSION}"
+    personal_id = f"{strategy_id}_PERSONAL"
+    personal_prefix = f"{personal_id}/{DEFAULT_CONFIG_VERSION}:"
+
+    def set_default() -> None:
+        object.__setattr__(config, "config_id", default_id)
+        object.__setattr__(config, "config_version", default_version)
+
+    def set_personal() -> None:
+        object.__setattr__(config, "config_id", personal_id)
+        object.__setattr__(config, "config_version", personal_prefix + canonical)
+
     if config.config_id is None and config.config_version is None:
-        canonical = _canonical_config(config, exclude)
-        if canonical == _default_canonical(type(config), exclude):
-            object.__setattr__(config, "config_id", f"{strategy_id}_DEFAULT")
-            object.__setattr__(
-                config,
-                "config_version",
-                f"{strategy_id}_DEFAULT/{DEFAULT_CONFIG_VERSION}",
-            )
-        else:
-            object.__setattr__(config, "config_id", f"{strategy_id}_PERSONAL")
-            object.__setattr__(
-                config,
-                "config_version",
-                f"{strategy_id}_PERSONAL/{DEFAULT_CONFIG_VERSION}:{canonical}",
-            )
+        set_default() if canonical == default_canonical else set_personal()
     elif config.config_id is None or config.config_version is None:
         raise ValueError("config_id and config_version must be provided together")
+    elif config.config_id == default_id and config.config_version == default_version:
+        if canonical != default_canonical:
+            set_personal()
+    elif config.config_id == personal_id and config.config_version.startswith(personal_prefix):
+        if config.config_version != personal_prefix + canonical:
+            set_personal()
 
 
 @dataclass(frozen=True)
@@ -247,6 +254,17 @@ class ConfigBundle:
     s06: S06Config = S06_DEFAULT_CONFIG
     s07: S07Config = S07_DEFAULT_CONFIG
     s08: S08Config = S08_DEFAULT_CONFIG
+
+    def effective_identity(self, strategy_id: str) -> tuple[str, str]:
+        config = getattr(self, strategy_id.lower())
+        common_canonical = _canonical_config(self.common, set())
+        common_default = _default_canonical(CommonConfig, set())
+        if common_canonical == common_default:
+            return config.config_id, config.config_version
+        return (
+            f"{config.config_id}_COMMON",
+            f"{config.config_version}|COMMON:{common_canonical}",
+        )
 
     def with_s01(self, config: S01Config) -> "ConfigBundle":
         """Return a copy with a personal S01 configuration.
