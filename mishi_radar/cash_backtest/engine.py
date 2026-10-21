@@ -98,6 +98,7 @@ class _Engine:
 
         self.cash = config.initial_cash
         self.positions: dict[str, Position] = {}
+        self.legacy_positions: list[Position] = []
         self.receivables = ZERO
         self.payables = ZERO
         self.total_fees = ZERO
@@ -121,6 +122,8 @@ class _Engine:
         self.exited_today: set[str] = set()
         self.today_buy_gross = ZERO
         self.today_sell_gross = ZERO
+        self.today_sell_gross_by_security: dict[str, Decimal] = {}
+        self.today_sell_fees_by_security: dict[str, tuple[Decimal, Decimal]] = {}
         self.prev_equity = config.initial_cash
         self.prev_nav = Decimal(1)
         self.nav_peak = Decimal(1)
@@ -167,16 +170,43 @@ class _Engine:
     # Main day loop
     # ------------------------------------------------------------------
 
+    def _holdings(self) -> dict[str, Position]:
+        holdings = dict(self.positions)
+        for index, position in enumerate(self.legacy_positions):
+            holdings[f"{position.security_id}#LEGACY{index}"] = position
+        return holdings
+
+    def _remove_position(self, position: Position) -> None:
+        sid = position.security_id
+        if self.positions.get(sid) is position:
+            del self.positions[sid]
+        elif position in self.legacy_positions:
+            self.legacy_positions.remove(position)
+
+    def _has_holding(self, security_id: str) -> bool:
+        if security_id in self.positions:
+            return True
+        return any(
+            position.security_id == security_id and position.quantity > 0
+            for position in self.legacy_positions
+        )
+
     def _run_day(self, date: str, day_index: int) -> None:
         day = self.data.market_days[date]
         self.current_date = date
         self.exited_today = set()
         self.today_buy_gross = ZERO
         self.today_sell_gross = ZERO
+        self.today_sell_gross_by_security = {}
+        self.today_sell_fees_by_security = {}
         full_index = self.full_calendar.index(date)
         previous_date = self.full_calendar[full_index - 1] if full_index > 0 else None
         raw_signals = self.data.signals_by_signal_date.get(previous_date, ()) if previous_date else ()
-        relevant_ids = set(self.positions) | {signal.security_id for signal in raw_signals}
+        relevant_ids = (
+            set(self.positions)
+            | {position.security_id for position in self.legacy_positions}
+            | {signal.security_id for signal in raw_signals}
+        )
         self._apply_corporate_actions(date, day, relevant_ids)
         self._process_external_dividend_claims(date)
         self._process_dividend_payments(date)
@@ -185,16 +215,17 @@ class _Engine:
             for request in self.data.exit_requests_by_signal_date.get(previous_date, ()):
                 self._add_locked_exit(request)
 
-        for position in self.positions.values():
+        holdings = self._holdings()
+        for position in holdings.values():
             if position.holding_start < date:
                 position.holding_days += 1
 
         mark_open: dict[str, Decimal] = {}
         open_values: dict[str, Decimal] = {}
-        for sid, position in self.positions.items():
-            price = self._mark_open(date, sid, position)
-            mark_open[sid] = price
-            open_values[sid] = Decimal(position.quantity) * price
+        for key, position in holdings.items():
+            price = self._mark_open(date, position.security_id, position)
+            mark_open[key] = price
+            open_values[key] = Decimal(position.quantity) * price
         e_open = self.cash + self.receivables - self.payables + sum(open_values.values(), ZERO)
         target_weight = e_open / Decimal(self.config.top_n) if e_open > 0 else ZERO
 
@@ -234,14 +265,11 @@ class _Engine:
             locked_ids,
             previous_date,
         )
-        for sid in sorted(sell_plan, key=lambda item: self._sell_sort_key(item, sell_plan[item])):
-            plan = sell_plan[sid]
-            position = self.positions.get(sid)
-            if position is None:
-                continue
+        for key in sorted(sell_plan, key=lambda item: self._sell_sort_key(item, sell_plan[item])):
+            plan = sell_plan[key]
             self._execute_sell(
                 date,
-                position,
+                plan["position"],
                 plan["quantity"],
                 plan["reasons"],
                 plan["locked"],
@@ -349,7 +377,9 @@ class _Engine:
         previous_date: str | None,
     ) -> dict[str, dict]:
         plan: dict[str, dict] = {}
-        for sid, position in self.positions.items():
+        for key, position in self._holdings().items():
+            sid = position.security_id
+            is_legacy = position in self.legacy_positions
             reasons: list[str] = []
             locked = sid in locked_ids
             exit_intent = locked
@@ -360,7 +390,7 @@ class _Engine:
                 reasons = [request.reason for request in requests]
                 signal_date = min(request.trigger_date for request in requests) if requests else previous_date
                 quantity = position.quantity
-            elif is_rebalance:
+            elif is_rebalance and not is_legacy:
                 if sid not in target_ids:
                     if not any(
                         request.reason == "RANK_REMOVAL"
@@ -386,7 +416,7 @@ class _Engine:
                     )
                     quantity = position.quantity
                 else:
-                    current_value = open_values.get(sid, ZERO)
+                    current_value = open_values.get(key, ZERO)
                     if current_value > target_weight:
                         sell_price = self._probe_sell_price(date, sid)
                         if sell_price is not None and sell_price > 0:
@@ -395,12 +425,13 @@ class _Engine:
                             if quantity > 0:
                                 reasons = ["TARGET_WEIGHT_REDUCTION"]
             if quantity > 0:
-                plan[sid] = {
+                plan[key] = {
                     "quantity": min(quantity, position.quantity),
                     "reasons": reasons,
                     "locked": locked,
                     "exit_intent": exit_intent,
                     "signal_date": signal_date,
+                    "position": position,
                 }
         return plan
 
@@ -599,7 +630,7 @@ class _Engine:
             return
         will_close = quantity == position.quantity
         gross = _money(sell_price * Decimal(quantity))
-        commission, other_fees = self._sell_fees(date, gross)
+        commission, other_fees = self._incremental_sell_fees(date, sid, gross)
         fees = commission + other_fees
         cash_in = gross - fees
         self.cash += cash_in
@@ -659,8 +690,9 @@ class _Engine:
                         claim["pending_cycle"] = position
                 for claim in new_claims:
                     claim["pending_cycle"] = position
-                del self.positions[sid]
-                self.locked_exits.pop(sid, None)
+                self._remove_position(position)
+                if not self._has_holding(sid):
+                    self.locked_exits.pop(sid, None)
             else:
                 position.realized_dividend += position.dividend_open
                 position.dividend_open = ZERO
@@ -686,8 +718,9 @@ class _Engine:
                         claim["closed_cycle_index"] = cycle_index
                 for claim in new_claims:
                     claim["closed_cycle_index"] = cycle_index
-                del self.positions[sid]
-                self.locked_exits.pop(sid, None)
+                self._remove_position(position)
+                if not self._has_holding(sid):
+                    self.locked_exits.pop(sid, None)
         self.external_dividend_claims.extend(new_claims)
 
     def _try_buy(
@@ -1018,9 +1051,9 @@ class _Engine:
             raise _Blocked(f"REVERSE_SHARE_CLAIM_UNSUPPORTED:{claim['security_id']}:{date}")
         pending = claim.get("pending_cycle")
         existing = self.positions.get(claim["security_id"])
-        merge_source = pending if pending is not None and existing is not None and existing is not pending else None
-        if merge_source is not None:
-            position = existing
+        legacy_cycle = pending is not None and existing is not None and existing is not pending
+        if legacy_cycle:
+            position = pending
         elif pending is not None:
             position = pending
         else:
@@ -1061,23 +1094,15 @@ class _Engine:
             )
         else:
             position.realized_trading_pnl += cash_in_lieu_pnl
-            if merge_source is not None:
-                position.realized_trading_pnl += merge_source.realized_trading_pnl
-                position.realized_dividend += merge_source.realized_dividend
-                position.dividend_open += merge_source.dividend_open
-                position.dividend_units += merge_source.dividend_units
-                merge_source.realized_trading_pnl = ZERO
-                merge_source.realized_dividend = ZERO
-                merge_source.dividend_open = ZERO
-                merge_source.dividend_units = 0
-                self.warnings.append(
-                    f"PENDING_CYCLE_MERGED_REENTRY:{claim['security_id']}:{date}"
-                )
             if position.entry_platform_upper is None and platform is not None:
                 position.entry_platform_upper = platform
         position.quantity += new_quantity
         position.lots.append(Lot(new_quantity, date, sellable_date))
-        self.positions[claim["security_id"]] = position
+        if legacy_cycle:
+            if position not in self.legacy_positions:
+                self.legacy_positions.append(position)
+        else:
+            self.positions[claim["security_id"]] = position
         self.warnings.append(
             f"BONUS_DELIVERED_AFTER_SALE:{claim['security_id']}:{new_quantity}:{date}"
         )
@@ -1259,13 +1284,14 @@ class _Engine:
         open_equity: Decimal,
         target_weight: Decimal,
     ) -> None:
+        holdings = self._holdings()
         mark_close: dict[str, Decimal] = {}
-        for sid, position in self.positions.items():
-            price = self._mark_close(date, sid, position)
-            mark_close[sid] = price
+        for key, position in holdings.items():
+            price = self._mark_close(date, position.security_id, position)
+            mark_close[key] = price
             position.last_mark = price
         market_value = sum(
-            (Decimal(position.quantity) * mark_close[sid] for sid, position in self.positions.items()),
+            (Decimal(position.quantity) * mark_close[key] for key, position in holdings.items()),
             ZERO,
         )
         equity = self.cash + self.receivables - self.payables + market_value
@@ -1291,16 +1317,17 @@ class _Engine:
             benchmark=benchmark,
             daily_return=daily_return,
             drawdown=drawdown,
-            position_count=len(self.positions),
+            position_count=len({position.security_id for position in holdings.values()}),
             open_equity=open_equity,
             target_weight=target_weight,
             turnover=turnover,
             position_ratio=position_ratio,
         )
         self.nav_points.append(nav_point)
-        for sid in sorted(self.positions):
-            position = self.positions[sid]
-            price = mark_close[sid]
+        for key in sorted(holdings):
+            position = holdings[key]
+            sid = position.security_id
+            price = mark_close[key]
             bar = self._bar(date, sid)
             mark_status = (
                 "STALE_MARK_CONFIRMED_SUSPENSION"
@@ -1333,10 +1360,11 @@ class _Engine:
     def _evaluate_stop_loss(self, date: str, mark_close: Mapping[str, Decimal]) -> None:
         if self.config.stop_loss is None:
             return
-        for sid, position in self.positions.items():
+        for key, position in self._holdings().items():
             if position.cost_open <= 0:
                 continue
-            price = mark_close[sid]
+            sid = position.security_id
+            price = mark_close[key]
             r_open = remaining_open_stop_ratio(
                 Decimal(position.quantity) * price, position.dividend_open, position.cost_open
             )
@@ -1374,12 +1402,19 @@ class _Engine:
         for adjustment in self.cash_adjustments:
             expected_cash += adjustment["amount"]
         equity_equation = self.cash + self.receivables - self.payables + market_value
+        holdings = self._holdings()
         open_market_value = sum(
-            (Decimal(position.quantity) * mark_open.get(sid, position.last_mark or ZERO) for sid, position in self.positions.items()),
+            (
+                Decimal(position.quantity) * mark_open.get(key, position.last_mark or ZERO)
+                for key, position in holdings.items()
+            ),
             ZERO,
         )
         close_market_value = sum(
-            (Decimal(position.quantity) * mark_close.get(sid, position.last_mark or ZERO) for sid, position in self.positions.items()),
+            (
+                Decimal(position.quantity) * mark_close.get(key, position.last_mark or ZERO)
+                for key, position in holdings.items()
+            ),
             ZERO,
         )
         self.reconciliation.append(
@@ -1557,6 +1592,24 @@ class _Engine:
         other = _money(gross * schedule.sell_tax_rate) + _money(gross * schedule.transfer_fee_rate)
         return commission, other
 
+    def _incremental_sell_fees(
+        self, date: str, security_id: str, gross: Decimal
+    ) -> tuple[Decimal, Decimal]:
+        previous_gross = self.today_sell_gross_by_security.get(security_id, ZERO)
+        previous_commission, previous_other = self.today_sell_fees_by_security.get(
+            security_id, (ZERO, ZERO)
+        )
+        cumulative_gross = previous_gross + gross
+        cumulative_commission, cumulative_other = self._sell_fees(date, cumulative_gross)
+        commission = cumulative_commission - previous_commission
+        other = cumulative_other - previous_other
+        self.today_sell_gross_by_security[security_id] = cumulative_gross
+        self.today_sell_fees_by_security[security_id] = (
+            cumulative_commission,
+            cumulative_other,
+        )
+        return commission, other
+
     def _sellable_date(self, date: str, delay_days: int) -> str:
         index = self.full_calendar.index(date)
         target = index + max(0, delay_days)
@@ -1708,7 +1761,7 @@ class _Engine:
         final_positions = [
             snapshot for snapshot in self.position_history if self.nav_points and snapshot.date == self.nav_points[-1].date
         ]
-        if self.locked_exits and self.positions:
+        if self.locked_exits and (self.positions or self.legacy_positions):
             for sid in sorted(self.locked_exits):
                 if self.locked_exits[sid]:
                     self.warnings.append(f"PENDING_EXIT_OUTSIDE_RANGE:{sid}")

@@ -560,8 +560,195 @@ class CorporateActionDefectTests(unittest.TestCase):
             ),
         )
         self.assertEqual(result.status, "SUCCEEDED", result.blockers)
-        self.assertEqual([position.quantity for position in result.final_positions], [200])
+        self.assertEqual(sum(position.quantity for position in result.final_positions), 200)
         self.assertEqual(result.nav_points[-1].equity, Decimal(1000))
+
+    def test_bonus_delivery_after_reentry_keeps_separate_cycle_attribution(self) -> None:
+        dates = trading_dates(6)
+        action = CorporateAction(
+            SID,
+            "BONUS_SHARES",
+            dates[4],
+            record_date=dates[1],
+            share_multiplier=Decimal(2),
+            new_share_sellable_date=dates[4],
+        )
+        prices = [
+            Decimal(10),
+            Decimal(10),
+            Decimal(5),
+            Decimal(5),
+            Decimal(5),
+            Decimal(6),
+        ]
+        days = [
+            market_day(
+                day,
+                {SID: bar(day, prices[index], prices[index])},
+                corporate_actions=(action,) if index == 4 else (),
+            )
+            for index, day in enumerate(dates)
+        ]
+        result = run_backtest(
+            make_input(
+                dates,
+                days,
+                signals_by_signal_date={
+                    dates[0]: (signal(SID, dates[0]),),
+                    dates[2]: (signal(SID, dates[2]),),
+                },
+                exit_requests_by_signal_date={
+                    dates[1]: (exit_request(SID, dates[1]),),
+                    dates[4]: (exit_request(SID, dates[4]),),
+                },
+                rules=(synthetic_rule(lot_size=1),),
+                fees=synthetic_fees(min_commission=0),
+            ),
+            config(
+                start_date=dates[1],
+                top_n=1,
+                initial_cash=Decimal(1000),
+                rebalance_days=2,
+                stop_loss=None,
+            ),
+        )
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual(result.nav_points[-1].cash, Decimal(1200))
+        self.assertEqual(result.metrics["closed_cycle_count"], Decimal(2))
+        self.assertFalse(
+            any(warning.startswith("PENDING_CYCLE_MERGED_REENTRY") for warning in result.warnings)
+        )
+        cycles = sorted(
+            (cycle.opened_on, cycle.closed_on, cycle.total_pnl)
+            for cycle in result.closed_cycles
+        )
+        self.assertEqual(
+            cycles,
+            [
+                (dates[1], dates[5], Decimal(100)),
+                (dates[3], dates[5], Decimal(100)),
+            ],
+        )
+
+    def test_parallel_holding_same_day_sell_combines_minimum_commission(self) -> None:
+        dates = trading_dates(6)
+        action = CorporateAction(
+            SID,
+            "BONUS_SHARES",
+            dates[4],
+            record_date=dates[1],
+            share_multiplier=Decimal(2),
+            new_share_sellable_date=dates[4],
+        )
+        prices = [
+            Decimal(10),
+            Decimal(10),
+            Decimal(5),
+            Decimal(5),
+            Decimal(5),
+            Decimal(6),
+        ]
+        days = [
+            market_day(
+                day,
+                {SID: bar(day, prices[index], prices[index])},
+                corporate_actions=(action,) if index == 4 else (),
+            )
+            for index, day in enumerate(dates)
+        ]
+        result = run_backtest(
+            make_input(
+                dates,
+                days,
+                signals_by_signal_date={
+                    dates[0]: (signal(SID, dates[0]),),
+                    dates[2]: (signal(SID, dates[2]),),
+                },
+                exit_requests_by_signal_date={
+                    dates[1]: (exit_request(SID, dates[1]),),
+                    dates[4]: (exit_request(SID, dates[4]),),
+                },
+                rules=(synthetic_rule(lot_size=1),),
+                fees=synthetic_fees(commission_rate=Decimal("0.0003"), min_commission=5),
+            ),
+            config(
+                start_date=dates[1],
+                top_n=1,
+                initial_cash=Decimal(1010),
+                rebalance_days=2,
+                stop_loss=None,
+            ),
+        )
+        same_day_sells = [
+            fill for fill in result.fills if fill.side == "SELL" and fill.date == dates[5]
+        ]
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual(sum(fill.quantity for fill in same_day_sells), 199)
+        self.assertEqual(sum(fill.gross for fill in same_day_sells), Decimal(1194))
+        self.assertEqual(sum(fill.commission for fill in same_day_sells), Decimal(5))
+        self.assertEqual(result.nav_points[-1].cash, Decimal(1189))
+
+    def test_locked_exit_retries_legacy_holding_after_main_position_closes(self) -> None:
+        dates = trading_dates(7)
+        action = CorporateAction(
+            SID,
+            "BONUS_SHARES",
+            dates[4],
+            record_date=dates[1],
+            share_multiplier=Decimal(2),
+            new_share_sellable_date=dates[6],
+        )
+        prices = [
+            Decimal(10),
+            Decimal(10),
+            Decimal(5),
+            Decimal(5),
+            Decimal(5),
+            Decimal(6),
+            Decimal(6),
+        ]
+        days = [
+            market_day(
+                day,
+                {SID: bar(day, prices[index], prices[index])},
+                corporate_actions=(action,) if index == 4 else (),
+            )
+            for index, day in enumerate(dates)
+        ]
+        result = run_backtest(
+            make_input(
+                dates,
+                days,
+                signals_by_signal_date={
+                    dates[0]: (signal(SID, dates[0]),),
+                    dates[2]: (signal(SID, dates[2]),),
+                },
+                exit_requests_by_signal_date={
+                    dates[1]: (exit_request(SID, dates[1]),),
+                    dates[4]: (exit_request(SID, dates[4]),),
+                },
+                rules=(synthetic_rule(lot_size=1),),
+                fees=synthetic_fees(min_commission=0),
+            ),
+            config(
+                start_date=dates[1],
+                top_n=1,
+                initial_cash=Decimal(1000),
+                rebalance_days=2,
+                stop_loss=None,
+            ),
+        )
+        first_attempt = [
+            fill for fill in result.fills if fill.side == "SELL" and fill.date == dates[5]
+        ]
+        retry = [
+            fill for fill in result.fills if fill.side == "SELL" and fill.date == dates[6]
+        ]
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual(sum(fill.quantity for fill in first_attempt), 100)
+        self.assertEqual(sum(fill.quantity for fill in retry), 100)
+        self.assertEqual(sum(position.quantity for position in result.final_positions), 0)
+        self.assertEqual(result.nav_points[-1].cash, Decimal(1200))
 
     def test_external_fractional_cash_stays_in_original_cycle(self) -> None:
         dates = trading_dates(5)
