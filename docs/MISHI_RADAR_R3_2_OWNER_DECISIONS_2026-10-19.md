@@ -30,3 +30,7 @@ Gate保持：依据[DR01-CURRENT最终报告](../outputs/dr01-current-unblock-20
 - **接受对象/结果**：本记录及其所链接规格中OD-1/OD-2、上述三项指定语义，`ACCEPTED_RULE_BASELINE_ONLY`。规则与合成算例可作为后续固定fixture实施基线；本轮文档/合成算术18项校验通过，包含+10%/-80%反例、费用分摊、分红归属/支付、送转、配置版本、链接和章节引用；授权范围外544个文件指纹一致。规格§9.3为后续测试要求、§9.4为合成期望值，未执行产品测试。
 - **仍待证据**：规格§9.2未过的数据Gate、真实交易/费用规则、OD-3运行和权益数值；DR04-P继续CLOSED，DR04-M继续NOT_AUTHORIZED。不把本记录当作真实扫描/回测、DR01功能验收、整份Design Freeze或发布验收。
 - **变更边界/停止点**：只修订两份既有文档并内嵌本记录，无新增文件、生产代码、依赖、架构、接口或功能范围；未重新调查数据、运行真实回测、提交或推送。停在**Owner Review**，`NEXT_PHASE_AUTHORIZED=NO`；固定fixture、纯函数、UI实施及后续真实联算均须另行明确授权。
+
+### 后续补充索引（2026-10-22追加，不改写上述历史记录）
+
+Owner明确确认2026-10-21批准X01-A、X01-CR、U1-A、U2-A、U3-A；对应[Owner Decision Addendum](MISHI_RADAR_R3_2_OWNER_DECISION_ADDENDUM_2026-10-21.md)及[X01局部CR](MISHI_RADAR_R3_2_X01_LOCAL_CR_2026-10-21.md)已形成待Owner Review的记录草案。仅该CR列明的非调仓日顺延范围优先于原一般禁买条款；其余冻结行为和真实数据/实施/发布Gate不变。本次批准及文档记录不构成代码、测试、接口实现或下一阶段授权。

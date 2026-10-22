@@ -2,6 +2,8 @@
 
 更新：2026-10-19。用途：新对话优先读取，区分已批准范围、规则基线、数据资格和实施授权。详细依据见各主题文件；本文件汇总当前仍有效的结论。
 
+**2026-10-22补充（保留下方历史状态）**：Owner明确确认2026-10-21批准X01-A、X01-CR、U1-A、U2-A、U3-A，详见[Owner Decision Addendum](MISHI_RADAR_R3_2_OWNER_DECISION_ADDENDUM_2026-10-21.md)及[X01局部CR](MISHI_RADAR_R3_2_X01_LOCAL_CR_2026-10-21.md)。五项批准事实已记录，文档草案停在Owner Review；仅局部CR显式补充原非调仓日禁买规则，其余冻结行为不变。X01/U1–U3实现和合成验收仍待单独授权与证据；DR01–DR06、真实来源资格、UI、发布及其它Gate未获新通过，不启动DeepSeek实施，不自动提交、合并或推送。
+
 ## 当前权威与资格
 
 以 Owner 最新明确指令 → [R3.2 已批准范围](MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md) → [DR01–DR06 消费者合同](MISHI_RADAR_TO_CHSTOCKDATA_DR01_DR06_CONSUMER_REQUEST_2026-10-16.md)及已接受专项合同 → 最新资格事实 → 较早提案为顺序。[最新运行规格候选](MISHI_RADAR_R3_2_PRODUCT_OPERATING_SPEC_CANDIDATE_2026-10-19.md)与[Owner 决策记录](MISHI_RADAR_R3_2_OWNER_DECISIONS_2026-10-19.md)记录 OD-1/OD-2 已批准的规则基线；**FULL_DESIGN_NOT_FROZEN**，OD-3 为 **PRINCIPLES_ACCEPTED / NUMERIC_TERMS_UNKNOWN**。Git 提交不改变这些身份。
