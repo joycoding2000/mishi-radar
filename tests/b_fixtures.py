@@ -14,10 +14,12 @@ from mishi_radar.cash_backtest.model import (
     BacktestConfig,
     BacktestInput,
     DailyBar,
+    EligibilitySnapshot,
     ExitRequest,
     FeeSchedule,
     MarketDay,
     Signal,
+    SignalBatch,
     TradingRule,
 )
 
@@ -180,20 +182,33 @@ def synthetic_fees(
     commission_rate: Decimal | int | str = "0",
     min_commission: Decimal | int | str = 5,
     slippage_rate: Decimal | int | str = "0",
+    buy_tax_rate: Decimal | int | str = "0",
     sell_tax_rate: Decimal | int | str = "0",
     transfer_fee_rate: Decimal | int | str = "0",
+    effective_from: str = "2000-01-01",
+    effective_to: str | None = None,
+    market: str | None = None,
+    security_id: str | None = None,
+    side: str | None = None,
+    known_at: str | None = None,
+    version: str = "SYNTHETIC-FEES-1",
 ) -> FeeSchedule:
     return FeeSchedule(
-        effective_from="2000-01-01",
+        effective_from=effective_from,
+        effective_to=effective_to,
         commission_rate=dec(commission_rate),
         min_commission=dec(min_commission),
         slippage_rate=dec(slippage_rate),
-        buy_tax_rate=dec(0),
+        buy_tax_rate=dec(buy_tax_rate),
         sell_tax_rate=dec(sell_tax_rate),
         transfer_fee_rate=dec(transfer_fee_rate),
         source="SYNTHETIC",
-        version="SYNTHETIC-FEES-1",
+        version=version,
         synthetic=True,
+        market=market,
+        security_id=security_id,
+        side=side,
+        known_at=known_at,
     )
 
 
@@ -205,6 +220,9 @@ def make_input(
     exit_requests_by_signal_date: Mapping[str, Sequence[ExitRequest]] | None = None,
     rules: Sequence[TradingRule] | None = None,
     fees: FeeSchedule | None = None,
+    signal_batches: Sequence[SignalBatch] | None = None,
+    eligibility_by_date: Mapping[str, EligibilitySnapshot] | None = None,
+    fee_schedules: Sequence[FeeSchedule] | None = None,
 ) -> BacktestInput:
     return BacktestInput(
         calendar=tuple(dates),
@@ -216,6 +234,9 @@ def make_input(
         trading_rules=tuple(rules) if rules is not None else (synthetic_rule(),),
         fee_schedule=fees or synthetic_fees(),
         benchmark_id="SH:000001:INDEX",
+        signal_batches=tuple(signal_batches or ()),
+        eligibility_by_date=dict(eligibility_by_date or {}),
+        fee_schedules=tuple(fee_schedules or ()),
     )
 
 

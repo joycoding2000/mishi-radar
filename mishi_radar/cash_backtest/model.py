@@ -11,6 +11,8 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any, Mapping, Sequence
 
+from ..time_contract import validate_local_date, validate_local_datetime
+
 
 def dec(value: Decimal | int | str | float | None) -> Decimal | None:
     if value is None:
@@ -39,6 +41,55 @@ class DailyBar:
 
 
 @dataclass(frozen=True)
+class DividendTaxBinding:
+    """Versioned tax fact bound to actual entitled lots.
+
+    A binding may select by stable lot id or by an inclusive acquisition-date
+    interval.  Confirmed bindings carry exactly one of a tax rate or a
+    per-share tax amount; ambiguous or missing bindings are rejected by the
+    engine rather than defaulted to zero.
+    """
+
+    lot_id: str | None = None
+    acquisition_from: str | None = None
+    acquisition_to: str | None = None
+    tax_rate: Decimal | None = None
+    tax_per_share: Decimal | None = None
+    known_at: str | None = None
+    pay_date: str | None = None
+    confirmed_on: str | None = None
+    rule_version: str = "SYNTHETIC-TAX-1"
+    source: str = "SYNTHETIC"
+    status: str = "CONFIRMED"
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "tax_rate", dec(self.tax_rate))
+        object.__setattr__(self, "tax_per_share", dec(self.tax_per_share))
+        for name in ("acquisition_from", "acquisition_to", "pay_date", "confirmed_on"):
+            value = getattr(self, name)
+            if value is not None:
+                validate_local_date(value, field=name)
+        if self.known_at is not None:
+            validate_local_datetime(self.known_at, field="known_at")
+        if self.status not in {"CONFIRMED", "UNKNOWN", "CONFLICT"}:
+            raise ValueError(f"unknown dividend tax status {self.status!r}")
+        if self.status == "CONFIRMED" and (self.tax_rate is None) == (self.tax_per_share is None):
+            raise ValueError("confirmed dividend tax binding requires exactly one of tax_rate/tax_per_share")
+        if self.acquisition_from is not None and self.acquisition_to is not None:
+            if self.acquisition_from > self.acquisition_to:
+                raise ValueError("acquisition_from must not be after acquisition_to")
+
+    def matches(self, lot: "Lot") -> bool:
+        if self.lot_id is not None:
+            return self.lot_id == lot.lot_id
+        if self.acquisition_from is not None and lot.acquired_date < self.acquisition_from:
+            return False
+        if self.acquisition_to is not None and lot.acquired_date > self.acquisition_to:
+            return False
+        return True
+
+
+@dataclass(frozen=True)
 class CorporateAction:
     security_id: str
     action_type: str
@@ -54,10 +105,17 @@ class CorporateAction:
     source: str = "SYNTHETIC"
     version: str = "SYNTHETIC-CA-1"
     note: str | None = None
+    dividend_tax_bindings: tuple[DividendTaxBinding, ...] = ()
 
     def __post_init__(self) -> None:
         for name in ("cash_per_share", "share_multiplier", "dividend_tax_rate", "cash_in_lieu"):
             object.__setattr__(self, name, dec(getattr(self, name)))
+        validate_local_date(self.effective_date, field="effective_date")
+        if self.record_date is not None:
+            validate_local_date(self.record_date, field="record_date")
+        if self.pay_date is not None:
+            validate_local_date(self.pay_date, field="pay_date")
+        object.__setattr__(self, "dividend_tax_bindings", tuple(self.dividend_tax_bindings))
 
 
 @dataclass(frozen=True)
@@ -118,6 +176,10 @@ class FeeSchedule:
     source: str = "SYNTHETIC"
     version: str = "SYNTHETIC-FEES-1"
     synthetic: bool = True
+    market: str | None = None
+    security_id: str | None = None
+    side: str | None = None
+    known_at: str | None = None
 
     def __post_init__(self) -> None:
         for name in (
@@ -129,9 +191,24 @@ class FeeSchedule:
             "transfer_fee_rate",
         ):
             object.__setattr__(self, name, dec(getattr(self, name)))
+        validate_local_date(self.effective_from, field="effective_from")
+        if self.effective_to is not None:
+            validate_local_date(self.effective_to, field="effective_to")
+        if self.side is not None and self.side not in {"BUY", "SELL"}:
+            raise ValueError(f"unknown fee side {self.side!r}")
+        if self.known_at is not None:
+            validate_local_datetime(self.known_at, field="known_at")
 
     def applies(self, date: str) -> bool:
         return self.effective_from <= date and (self.effective_to is None or date <= self.effective_to)
+
+    def matches(self, date: str, market: str, security_id: str, side: str) -> bool:
+        return (
+            self.applies(date)
+            and (self.market is None or self.market == market)
+            and (self.security_id is None or self.security_id == security_id)
+            and (self.side is None or self.side == side)
+        )
 
 
 @dataclass(frozen=True)
@@ -165,10 +242,22 @@ class Signal:
     reasons: tuple[str, ...] = ()
     entry_platform_upper: Decimal | None = None
     metrics: Mapping[str, Any] = field(default_factory=dict)
+    config_id: str = ""
+    available_at_kind: str = "SYNTHETIC_DATE_COMPAT"
 
     def __post_init__(self) -> None:
         if self.available_at == "UNKNOWN":
             object.__setattr__(self, "available_at", None)
+        if self.available_at is not None:
+            validate_local_datetime(self.available_at, field="available_at", allow_date=True)
+            if len(self.available_at) == 10 and self.available_at_kind != "SYNTHETIC_DATE_COMPAT":
+                raise ValueError("date-only available_at requires SYNTHETIC_DATE_COMPAT")
+            if len(self.available_at) > 10 and self.available_at_kind not in {
+                "SYNTHETIC_DATE_COMPAT",
+                "LOCAL_DATETIME",
+            }:
+                raise ValueError(f"unknown available_at_kind {self.available_at_kind!r}")
+        validate_local_date(self.signal_date, field="signal_date")
         object.__setattr__(self, "entry_platform_upper", dec(self.entry_platform_upper))
         if self.entry_platform_upper is None:
             raw = self.metrics.get("u20") if self.metrics else None
@@ -203,7 +292,102 @@ class Signal:
             reasons=tuple(payload.get("reasons", ())),
             entry_platform_upper=dec(payload.get("entry_platform_upper")),
             metrics=dict(payload.get("metrics", {})),
+            config_id=str(payload.get("config_id", "")),
+            available_at_kind=str(payload.get("available_at_kind", "SYNTHETIC_DATE_COMPAT")),
         )
+
+
+@dataclass(frozen=True)
+class SignalBatch:
+    """X01 batch identity and evidence for one strategy/config/rank scope."""
+
+    strategy_id: str
+    config_id: str
+    config_version: str
+    signal_date: str
+    available_at: str
+    status: str = "COMPLETE"
+    signals: tuple[Signal, ...] = ()
+    coverage_until: str | None = None
+    scope_key: str | None = None
+    batch_id: str | None = None
+    source: str = "SYNTHETIC"
+    version: str = "SYNTHETIC-BATCH-1"
+    published_at: str | None = None
+
+    def __post_init__(self) -> None:
+        validate_local_date(self.signal_date, field="signal_date")
+        validate_local_datetime(self.available_at, field="available_at")
+        if self.published_at is not None:
+            validate_local_datetime(self.published_at, field="published_at")
+        if self.coverage_until is not None:
+            validate_local_datetime(self.coverage_until, field="coverage_until")
+        if self.status not in {"COMPLETE", "COMPLETE_EMPTY", "NO_PUBLICATION", "UNKNOWN", "INCOMPLETE"}:
+            raise ValueError(f"unknown batch status {self.status!r}")
+        object.__setattr__(self, "signals", tuple(self.signals))
+        scope = self.scope_key or f"{self.strategy_id}|{self.config_id}|{self.config_version}"
+        object.__setattr__(self, "scope_key", scope)
+        if self.batch_id is None:
+            object.__setattr__(
+                self,
+                "batch_id",
+                f"{scope}|{self.signal_date}|{self.available_at}",
+            )
+        if self.status == "COMPLETE" and not self.signals:
+            raise ValueError("COMPLETE batch requires at least one signal; use COMPLETE_EMPTY")
+        if self.status == "COMPLETE_EMPTY" and self.signals:
+            raise ValueError("COMPLETE_EMPTY batch must not carry signals")
+        for signal in self.signals:
+            if signal.strategy_id != self.strategy_id or signal.signal_date != self.signal_date:
+                raise ValueError("batch signals must share batch strategy and signal_date")
+
+    @property
+    def complete(self) -> bool:
+        return self.status in {"COMPLETE", "COMPLETE_EMPTY"}
+
+    @property
+    def decision_available_at(self) -> str:
+        if self.published_at is None:
+            return self.available_at
+        return max(self.available_at, self.published_at)
+
+
+@dataclass(frozen=True)
+class EligibilityRecord:
+    security_id: str
+    status: str
+    effective_from: str
+    known_at: str
+    effective_to: str | None = None
+    reason: str = ""
+    source: str = "SYNTHETIC"
+    version: str = "SYNTHETIC-ELIGIBILITY-1"
+
+    def __post_init__(self) -> None:
+        if self.status not in {"ELIGIBLE", "INELIGIBLE", "UNKNOWN"}:
+            raise ValueError(f"unknown eligibility status {self.status!r}")
+        validate_local_date(self.effective_from, field="effective_from")
+        if self.effective_to is not None:
+            validate_local_date(self.effective_to, field="effective_to")
+        validate_local_datetime(self.known_at, field="known_at")
+        if self.effective_to is not None and self.effective_from > self.effective_to:
+            raise ValueError("effective_from must not be after effective_to")
+
+    def applies(self, date: str) -> bool:
+        return self.effective_from <= date and (self.effective_to is None or date <= self.effective_to)
+
+
+@dataclass(frozen=True)
+class EligibilitySnapshot:
+    date: str
+    records: tuple[EligibilityRecord, ...] = ()
+    complete: bool = True
+    source: str = "SYNTHETIC"
+    version: str = "SYNTHETIC-ELIGIBILITY-1"
+
+    def __post_init__(self) -> None:
+        validate_local_date(self.date, field="date")
+        object.__setattr__(self, "records", tuple(self.records))
 
 
 @dataclass(frozen=True)
@@ -260,6 +444,9 @@ class BacktestInput:
     fee_schedule: FeeSchedule | None = None
     benchmark_id: str = "SH:000001:INDEX"
     board_by_security: Mapping[str, str] = field(default_factory=dict)
+    signal_batches: tuple[SignalBatch, ...] = ()
+    eligibility_by_date: Mapping[str, EligibilitySnapshot] = field(default_factory=dict)
+    fee_schedules: tuple[FeeSchedule, ...] = ()
 
     def __post_init__(self) -> None:
         if not self.calendar:
@@ -268,8 +455,18 @@ class BacktestInput:
             raise ValueError("calendar must be sorted ascending")
         if len(set(self.calendar)) != len(self.calendar):
             raise ValueError("calendar must not contain duplicate dates")
-        if self.fee_schedule is None:
-            raise ValueError("fee_schedule is required")
+        if self.fee_schedule is None and not self.fee_schedules:
+            raise ValueError("fee_schedule or fee_schedules is required")
+        object.__setattr__(self, "signal_batches", tuple(self.signal_batches))
+        object.__setattr__(self, "fee_schedules", tuple(self.fee_schedules))
+        for key, snapshot in self.eligibility_by_date.items():
+            if key != snapshot.date:
+                raise ValueError(f"eligibility snapshot key/date mismatch: {key}!={snapshot.date}")
+            if snapshot.date not in self.calendar:
+                raise ValueError(f"eligibility snapshot date not in calendar: {snapshot.date}")
+        for batch in self.signal_batches:
+            if batch.signal_date not in self.calendar:
+                raise ValueError(f"batch signal_date not in calendar: {batch.signal_date}")
 
 
 @dataclass
@@ -278,6 +475,7 @@ class Lot:
     acquired_date: str
     sellable_date: str
     dividend_actions: set[str] = field(default_factory=set)
+    lot_id: str | None = None
 
 
 @dataclass
@@ -414,6 +612,10 @@ class BacktestResult:
     fixed_segment_returns: dict[str, Decimal]
     reconciliation: list[dict[str, Any]]
     synthetic: bool
+    fee_entries: list[dict[str, Any]] = field(default_factory=list)
+    dividend_tax_entries: list[dict[str, Any]] = field(default_factory=list)
+    proposal_entries: list[dict[str, Any]] = field(default_factory=list)
+    eligibility_entries: list[dict[str, Any]] = field(default_factory=list)
 
     @property
     def succeeded(self) -> bool:

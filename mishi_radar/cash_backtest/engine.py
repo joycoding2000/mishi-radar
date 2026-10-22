@@ -18,6 +18,7 @@ from .accounting import (
     remaining_open_stop_ratio,
     split_dividend_entitlement,
 )
+from ..time_contract import is_before_open, parse_local_datetime, validate_local_datetime
 from .model import (
     BacktestConfig,
     BacktestInput,
@@ -25,6 +26,9 @@ from .model import (
     ClosedCycle,
     CorporateAction,
     DailyBar,
+    DividendTaxBinding,
+    EligibilityRecord,
+    EligibilitySnapshot,
     ExitRequest,
     FeeSchedule,
     Fill,
@@ -35,6 +39,7 @@ from .model import (
     Position,
     PositionSnapshot,
     Signal,
+    SignalBatch,
     TradingRule,
     dec,
 )
@@ -113,12 +118,18 @@ class _Engine:
         self.warnings: list[str] = []
         self.blockers: list[str] = []
         self.locked_exits: dict[str, list[ExitRequest]] = {}
+        self.pending_batches: list[dict] = []
+        self.proposal_entries: list[dict] = []
+        self.eligibility_entries: list[dict] = []
+        self.fee_entries: list[dict] = []
+        self.dividend_tax_entries: list[dict] = []
         self.dividend_entitlements: dict[str, tuple[str, int]] = {}
         self.pending_actions: dict[str, CorporateAction] = {}
         self.external_dividend_claims: list[dict] = []
         self.dividend_payments: list[dict] = []
         self.cash_adjustments: list[dict] = []
         self.order_counter = 0
+        self.lot_counter = 0
         self.exited_today: set[str] = set()
         self.today_buy_gross = ZERO
         self.today_sell_gross = ZERO
@@ -138,8 +149,12 @@ class _Engine:
     # ------------------------------------------------------------------
 
     def _prepare(self) -> None:
-        if not self.data.fee_schedule.applies(self.start_date):
-            raise _Blocked("FEE_SCHEDULE_NOT_APPLICABLE_AT_START")
+        if self.data.fee_schedule is not None and not self.data.fee_schedules:
+            if not self.data.fee_schedule.applies(self.start_date):
+                raise _Blocked("FEE_SCHEDULE_NOT_APPLICABLE_AT_START")
+        for schedule in self.data.fee_schedules:
+            if schedule.known_at is not None:
+                validate_local_datetime(schedule.known_at, field="known_at")
         boundaries = tuple(self.config.segment_boundaries)
         if boundaries:
             if len(set(boundaries)) != len(boundaries) or tuple(sorted(boundaries)) != boundaries:
@@ -230,7 +245,68 @@ class _Engine:
         target_weight = e_open / Decimal(self.config.top_n) if e_open > 0 else ZERO
 
         is_rebalance = (self.full_calendar.index(date) - self.start_index) % self.config.rebalance_days == 0
-        signals = self._signals_for_trade_date(previous_date, date)
+        if self.data.signal_batches:
+            signals, deferred_batches, normal_decision = self._update_batches(date, is_rebalance)
+        else:
+            signals = self._signals_for_trade_date(previous_date, date)
+            deferred_batches = []
+            normal_decision = True
+        effective_rebalance = is_rebalance and normal_decision
+        candidate_pool, targets = self._build_targets(signals)
+        target_ids = {signal.security_id for signal in targets}
+
+        self._apply_eligibility_locks(date)
+        locked_ids = {sid for sid, requests in self.locked_exits.items() if requests}
+        sell_plan = self._build_sell_plan(
+            date,
+            mark_open,
+            open_values,
+            target_weight,
+            target_ids,
+            effective_rebalance,
+            locked_ids,
+            previous_date,
+        )
+        for key in sorted(sell_plan, key=lambda item: self._sell_sort_key(item, sell_plan[item])):
+            plan = sell_plan[key]
+            self._execute_sell(
+                date,
+                plan["position"],
+                plan["quantity"],
+                plan["reasons"],
+                plan["locked"],
+                plan["exit_intent"],
+                plan["signal_date"],
+            )
+
+        if effective_rebalance:
+            self._execute_buys(date, targets, mark_open, target_weight, candidate_pool)
+
+        for pending in deferred_batches:
+            deferred_signals = list(pending["batch"].signals)
+            deferred_candidates, deferred_targets = self._build_targets(deferred_signals)
+            before_fills = len(self.fills)
+            self._execute_buys(
+                date,
+                deferred_targets,
+                mark_open,
+                target_weight,
+                deferred_candidates,
+            )
+            self._record_proposal(
+                pending["batch"],
+                "FILLED" if len(self.fills) > before_fills else "ATTEMPT_FAILED",
+                "DEFERRED_ATTEMPT",
+                date,
+            )
+
+        self._close_day(date, day, mark_open, e_open, target_weight)
+
+    # ------------------------------------------------------------------
+    # Signals and target construction
+    # ------------------------------------------------------------------
+
+    def _build_targets(self, signals: Sequence[Signal]) -> tuple[list[Signal], list[Signal]]:
         eligible_signals = [
             signal
             for signal in signals
@@ -251,40 +327,249 @@ class _Engine:
             formal_targets = list(candidate_pool)
         candidate_pool.sort(key=self._candidate_sort_key)
         formal_targets.sort(key=self._candidate_sort_key)
-        targets = formal_targets[: self.config.top_n]
-        target_ids = {signal.security_id for signal in targets}
+        return candidate_pool, formal_targets[: self.config.top_n]
 
-        locked_ids = {sid for sid, requests in self.locked_exits.items() if requests}
-        sell_plan = self._build_sell_plan(
-            date,
-            mark_open,
-            open_values,
-            target_weight,
-            target_ids,
-            is_rebalance,
-            locked_ids,
-            previous_date,
+    def _batch_anchor(self, batch: SignalBatch) -> str | None:
+        try:
+            index = self.full_calendar.index(batch.signal_date)
+        except ValueError:
+            raise _Blocked(f"SIGNAL_BATCH_DATE_NOT_IN_CALENDAR:{batch.batch_id}")
+        if index + 1 >= len(self.full_calendar):
+            return None
+        return self.full_calendar[index + 1]
+
+    def _batch_available_before_open(self, batch: SignalBatch, trade_date: str) -> bool:
+        try:
+            return is_before_open(batch.decision_available_at, trade_date)
+        except ValueError as exc:
+            raise _Blocked(f"SIGNAL_BATCH_AVAILABILITY_INVALID:{batch.batch_id}:{exc}") from exc
+
+    def _batch_first_eligible_open(self, batch: SignalBatch) -> str | None:
+        anchor = self._batch_anchor(batch)
+        if anchor is None:
+            return None
+        start = self.full_calendar.index(anchor)
+        for day in self.full_calendar[start:]:
+            if self._batch_available_before_open(batch, day):
+                return day
+        return None
+
+    def _record_proposal(
+        self,
+        batch: SignalBatch,
+        status: str,
+        reason: str,
+        date: str | None,
+    ) -> None:
+        self.proposal_entries.append(
+            {
+                "batch_id": batch.batch_id,
+                "scope_key": batch.scope_key,
+                "strategy_id": batch.strategy_id,
+                "config_id": batch.config_id,
+                "config_version": batch.config_version,
+                "signal_date": batch.signal_date,
+                "available_at": batch.available_at,
+                "published_at": batch.published_at,
+                "decision_available_at": batch.decision_available_at,
+                "anchor_date": self._batch_anchor(batch),
+                "coverage_until": batch.coverage_until,
+                "status": status,
+                "reason": reason,
+                "date": date,
+                "signal_count": len(batch.signals),
+            }
         )
-        for key in sorted(sell_plan, key=lambda item: self._sell_sort_key(item, sell_plan[item])):
-            plan = sell_plan[key]
-            self._execute_sell(
-                date,
-                plan["position"],
-                plan["quantity"],
-                plan["reasons"],
-                plan["locked"],
-                plan["exit_intent"],
-                plan["signal_date"],
+
+    def _replacement_for(self, pending: dict, open_at: str) -> SignalBatch | None:
+        old: SignalBatch = pending["batch"]
+        old_available = parse_local_datetime(old.decision_available_at, field="decision_available_at")
+        open_time = parse_local_datetime(open_at, field="trade_open")
+        candidates = [
+            batch
+            for batch in self.data.signal_batches
+            if batch.strategy_id == self.config.strategy_id
+            and batch.scope_key == old.scope_key
+            and batch.batch_id != old.batch_id
+            and batch.signal_date >= old.signal_date
+            and old_available
+            < parse_local_datetime(batch.decision_available_at, field="decision_available_at")
+            <= open_time
+        ]
+        candidates.sort(
+            key=lambda batch: (
+                parse_local_datetime(batch.decision_available_at, field="decision_available_at"),
+                batch.signal_date,
+                batch.batch_id,
             )
+        )
+        for batch in candidates:
+            if batch.status in {"UNKNOWN", "INCOMPLETE"}:
+                self._record_proposal(batch, "BLOCKED", "SIGNAL_BATCH_UNKNOWN", open_at[:10])
+                raise _Blocked(f"SIGNAL_BATCH_UNKNOWN:{batch.batch_id}")
+            if batch.complete:
+                return batch
+        return None
 
-        if is_rebalance:
-            self._execute_buys(date, targets, mark_open, target_weight, candidate_pool)
+    def _update_batches(
+        self, date: str, is_rebalance: bool
+    ) -> tuple[list[Signal], list[dict], bool]:
+        open_at = f"{date}T09:30:00"
+        batches = [
+            batch
+            for batch in self.data.signal_batches
+            if batch.strategy_id == self.config.strategy_id
+        ]
 
-        self._close_day(date, day, mark_open, e_open, target_weight)
+        for pending in list(self.pending_batches):
+            replacement = self._replacement_for(pending, open_at)
+            if replacement is not None:
+                self._record_proposal(
+                    pending["batch"],
+                    "REPLACED",
+                    f"REPLACED_BY:{replacement.batch_id}",
+                    date,
+                )
+                self.pending_batches.remove(pending)
 
-    # ------------------------------------------------------------------
-    # Signals and target construction
-    # ------------------------------------------------------------------
+        for batch in batches:
+            anchor = self._batch_anchor(batch)
+            if anchor is None or anchor > date:
+                continue
+            if parse_local_datetime(
+                batch.decision_available_at, field="decision_available_at"
+            ) > parse_local_datetime(open_at, field="trade_open"):
+                continue
+            if batch.status in {"UNKNOWN", "INCOMPLETE"}:
+                self._record_proposal(batch, "BLOCKED", "SIGNAL_BATCH_UNKNOWN", date)
+                raise _Blocked(f"SIGNAL_BATCH_UNKNOWN:{batch.batch_id}")
+
+        normal_signals: list[Signal] = []
+        normal_decision = False
+        for batch in batches:
+            anchor = self._batch_anchor(batch)
+            if anchor != date:
+                continue
+            if batch.status in {"UNKNOWN", "INCOMPLETE"}:
+                if parse_local_datetime(
+                    batch.decision_available_at, field="decision_available_at"
+                ) <= parse_local_datetime(open_at, field="trade_open"):
+                    self._record_proposal(batch, "BLOCKED", "SIGNAL_BATCH_UNKNOWN", date)
+                    raise _Blocked(f"SIGNAL_BATCH_UNKNOWN:{batch.batch_id}")
+                self._record_proposal(batch, "IGNORED", "UNKNOWN_NOT_YET_AVAILABLE", date)
+                continue
+            if batch.status == "NO_PUBLICATION":
+                self._record_proposal(batch, "NO_PUBLICATION", "CONFIRMED_NO_RELEASE", date)
+                continue
+            if batch.status == "COMPLETE_EMPTY":
+                if self._batch_available_before_open(batch, date):
+                    normal_decision = True
+                self._record_proposal(batch, "EMPTY", "COMPLETE_EMPTY_BATCH", date)
+                continue
+            if batch.status != "COMPLETE":
+                continue
+            if self._batch_available_before_open(batch, date):
+                normal_decision = True
+                if is_rebalance:
+                    self._record_proposal(batch, "NORMAL", "AVAILABLE_BEFORE_ANCHOR_OPEN", date)
+                    normal_signals.extend(batch.signals)
+                else:
+                    self._record_proposal(batch, "IGNORED", "NON_REBALANCE_NEW_BATCH", date)
+                continue
+            if not is_rebalance:
+                self._record_proposal(batch, "IGNORED", "NON_REBALANCE_NEW_BATCH", date)
+                continue
+            first_eligible = self._batch_first_eligible_open(batch)
+            if first_eligible is None:
+                self._record_proposal(batch, "EXPIRED", "NO_SUBSEQUENT_OPEN", date)
+                continue
+            pending = {
+                "batch": batch,
+                "anchor_date": anchor,
+                "first_eligible_open": first_eligible,
+                "attempted": False,
+            }
+            self.pending_batches.append(pending)
+            self._record_proposal(batch, "PENDING", "AVAILABLE_AFTER_ANCHOR_OPEN", date)
+
+        ready: list[dict] = []
+        for pending in list(self.pending_batches):
+            first_eligible = pending["first_eligible_open"]
+            if date < first_eligible:
+                continue
+            batch = pending["batch"]
+            if batch.coverage_until is None:
+                self._record_proposal(batch, "BLOCKED", "COVERAGE_UNKNOWN", date)
+                raise _Blocked(f"SIGNAL_BATCH_COVERAGE_UNKNOWN:{batch.batch_id}")
+            try:
+                covered = parse_local_datetime(
+                    batch.coverage_until, field="coverage_until"
+                ) >= parse_local_datetime(open_at, field="trade_open")
+            except ValueError as exc:
+                raise _Blocked(f"SIGNAL_BATCH_COVERAGE_INVALID:{batch.batch_id}:{exc}") from exc
+            if not covered:
+                self._record_proposal(batch, "BLOCKED", "COVERAGE_INCOMPLETE", date)
+                raise _Blocked(f"SIGNAL_BATCH_COVERAGE_INCOMPLETE:{batch.batch_id}")
+            pending["attempted"] = True
+            self.pending_batches.remove(pending)
+            self._record_proposal(batch, "ATTEMPTING", "DEFERRED_ATTEMPT", date)
+            ready.append(pending)
+        return normal_signals, ready, normal_decision
+
+    def _eligibility_status(self, date: str, security_id: str) -> tuple[str, str | None]:
+        if not self.data.eligibility_by_date:
+            return "ELIGIBLE", None
+        snapshot = self.data.eligibility_by_date.get(date)
+        if snapshot is None:
+            raise _Blocked(f"ELIGIBILITY_COVERAGE_MISSING:{date}")
+        if not snapshot.complete:
+            raise _Blocked(f"ELIGIBILITY_COVERAGE_INCOMPLETE:{date}")
+        open_at = parse_local_datetime(f"{date}T09:30:00", field="trade_open")
+        records = [
+            record
+            for record in snapshot.records
+            if record.security_id == security_id and record.applies(date)
+        ]
+        if not records:
+            return "UNKNOWN", "ELIGIBILITY_RECORD_MISSING"
+        usable = [
+            record
+            for record in records
+            if parse_local_datetime(record.known_at, field="known_at") < open_at
+        ]
+        if not usable:
+            if any(parse_local_datetime(record.known_at, field="known_at") >= open_at for record in records):
+                raise _Blocked(f"ELIGIBILITY_NOT_KNOWN_AT_OPEN:{security_id}:{date}")
+            return "UNKNOWN", "ELIGIBILITY_NOT_YET_KNOWN"
+        statuses = {record.status for record in usable}
+        if len(statuses) > 1:
+            raise _Blocked(f"ELIGIBILITY_CONFLICT:{security_id}:{date}")
+        chosen = max(usable, key=lambda record: (record.known_at, record.version))
+        return chosen.status, chosen.reason or None
+
+    def _apply_eligibility_locks(self, date: str) -> None:
+        if not self.data.eligibility_by_date:
+            return
+        for position in self._holdings().values():
+            status, reason = self._eligibility_status(date, position.security_id)
+            self.eligibility_entries.append(
+                {
+                    "date": date,
+                    "security_id": position.security_id,
+                    "status": status,
+                    "reason": reason,
+                }
+            )
+            if status == "INELIGIBLE":
+                self._add_locked_exit(
+                    ExitRequest(
+                        security_id=position.security_id,
+                        reason="ELIGIBILITY_RISK",
+                        trigger_date=date,
+                        priority=2,
+                        strategy_id=position.strategy_id,
+                    )
+                )
 
     def _signals_for_trade_date(self, previous_date: str | None, trade_date: str) -> list[Signal]:
         if previous_date is None:
@@ -580,7 +865,8 @@ class _Engine:
             raise _Blocked(f"SELL_BAR_STATUS_UNKNOWN:{sid}:{date}:{bar.data_status}")
         if bar.open is None or bar.open <= 0:
             raise _Blocked(f"SELL_OPEN_PRICE_UNKNOWN:{sid}:{date}")
-        sell_price = _floor_tick(bar.open * (Decimal(1) - self.data.fee_schedule.slippage_rate), rule.tick_size)
+        fee_schedule = self._fee_schedule(date, sid, "SELL")
+        sell_price = _floor_tick(bar.open * (Decimal(1) - fee_schedule.slippage_rate), rule.tick_size)
         limit_down = self._limit_down(date, sid, bar, rule)
         if limit_down is None and not (bar.no_price_limit or rule.no_price_limit):
             raise _Blocked(f"SELL_PRICE_LIMIT_UNKNOWN:{sid}:{date}")
@@ -636,7 +922,7 @@ class _Engine:
         self.cash += cash_in
         self.total_fees += fees
         self.total_commission += commission
-        self.total_tax += _money(gross * self.data.fee_schedule.sell_tax_rate)
+        self.total_tax += _money(gross * fee_schedule.sell_tax_rate)
         cost_sold, cost_remaining = allocate_sale_cost(position.cost_open, quantity, position.quantity)
         taken_lots = self._reduce_lots(position, date, quantity)
         dividend_sold = self._sell_dividend_layers(position, taken_lots)
@@ -734,6 +1020,37 @@ class _Engine:
         replacement_reason: str | None = None,
     ) -> tuple[bool, str | None]:
         sid = signal.security_id
+        eligibility_status, eligibility_reason = self._eligibility_status(date, sid)
+        if self.data.eligibility_by_date:
+            self.eligibility_entries.append(
+                {
+                    "date": date,
+                    "security_id": sid,
+                    "status": eligibility_status,
+                    "reason": eligibility_reason,
+                    "source": "BUY_CANDIDATE",
+                }
+            )
+        if eligibility_status == "INELIGIBLE":
+            self._record_signal_order(
+                signal,
+                date,
+                "UNFILLED",
+                "ELIGIBILITY_INELIGIBLE",
+                replacement_for,
+                replacement_reason,
+            )
+            return False, "ELIGIBILITY_INELIGIBLE"
+        if eligibility_status == "UNKNOWN":
+            self._record_signal_order(
+                signal,
+                date,
+                "UNFILLED",
+                "ELIGIBILITY_UNKNOWN",
+                replacement_for,
+                replacement_reason,
+            )
+            return False, "ELIGIBILITY_UNKNOWN"
         bar = self._bar(date, sid)
         rule = self._rule(date, sid)
         if bar is None:
@@ -754,7 +1071,8 @@ class _Engine:
         current_position = self.positions.get(sid)
         if current_position is not None and signal.strategy_id == "S04":
             return False, None
-        buy_price = _ceil_tick(bar.open * (Decimal(1) + self.data.fee_schedule.slippage_rate), rule.tick_size)
+        fee_schedule = self._fee_schedule(date, sid, "BUY")
+        buy_price = _ceil_tick(bar.open * (Decimal(1) + fee_schedule.slippage_rate), rule.tick_size)
         current_value = Decimal(current_position.quantity) * mark_open if current_position is not None and mark_open is not None else ZERO
         budget = max(ZERO, target_weight - current_value)
         if budget <= 0:
@@ -762,7 +1080,7 @@ class _Engine:
         lot_size = rule.lot_size
         if lot_size <= 0:
             raise _Blocked(f"LOT_SIZE_INVALID:{sid}:{date}")
-        planned_quantity = self._max_affordable_quantity(date, buy_price, budget, lot_size)
+        planned_quantity = self._max_affordable_quantity(date, sid, buy_price, budget, lot_size)
 
         if self.config.strategy_id == "S06":
             if signal.industry_id is None:
@@ -823,13 +1141,24 @@ class _Engine:
         quantity = planned_quantity
 
         gross = _money(buy_price * Decimal(quantity))
-        commission, other_fees = self._buy_fees(date, gross)
+        commission, other_fees = self._buy_fees(date, sid, gross)
         fees = commission + other_fees
+        self.fee_entries.append(
+            {
+                "date": date,
+                "security_id": sid,
+                "side": "BUY",
+                "version": fee_schedule.version,
+                "gross": gross,
+                "commission": commission,
+                "other_fees": other_fees,
+            }
+        )
         total_cost = gross + fees
         self.cash -= total_cost
         self.total_fees += fees
         self.total_commission += commission
-        self.total_tax += _money(gross * self.data.fee_schedule.buy_tax_rate)
+        self.total_tax += _money(gross * fee_schedule.buy_tax_rate)
         self.today_buy_gross += gross
         if current_position is None:
             sellable_date = self._sellable_date(date, rule.sell_delay_days)
@@ -840,7 +1169,7 @@ class _Engine:
                 cost_open=total_cost,
                 dividend_open=ZERO,
                 dividend_units=0,
-                lots=[Lot(quantity, date, sellable_date)],
+                lots=[Lot(quantity, date, sellable_date, lot_id=self._allocate_lot_id(sid, date))],
                 holding_start=date,
                 holding_days=1,
                 last_mark=buy_price,
@@ -852,7 +1181,12 @@ class _Engine:
             current_position.quantity += quantity
             current_position.cost_open += total_cost
             current_position.lots.append(
-                Lot(quantity, date, self._sellable_date(date, rule.sell_delay_days))
+                Lot(
+                    quantity,
+                    date,
+                    self._sellable_date(date, rule.sell_delay_days),
+                    lot_id=self._allocate_lot_id(sid, date),
+                )
             )
             if current_position.entry_platform_upper is None:
                 current_position.entry_platform_upper = signal.entry_platform_upper
@@ -885,7 +1219,17 @@ class _Engine:
                 continue
             for key in lot.dividend_actions:
                 layer = next(
-                    (item for item in position.dividend_layers if item["key"] == key and item["remaining_quantity"] > 0),
+                    (
+                        item
+                        for item in position.dividend_layers
+                        if item["key"] == key
+                        and item["remaining_quantity"] > 0
+                        and (
+                            item.get("lot_id") is None
+                            or lot.lot_id is None
+                            or item.get("lot_id") == lot.lot_id
+                        )
+                    ),
                     None,
                 )
                 if layer is None:
@@ -941,6 +1285,8 @@ class _Engine:
                         "closed_cycle_index": None,
                         "opened_on": position.holding_start,
                         "closed_on": date if will_close else None,
+                        "lot_id": lot.lot_id,
+                        "acquired_date": lot.acquired_date,
                         "processed": False,
                     }
                 )
@@ -959,10 +1305,17 @@ class _Engine:
                 continue
             if action.action_type != "CASH_DIVIDEND":
                 raise _Blocked(f"EXTERNAL_ACTION_UNSUPPORTED:{action.action_type}:{claim['security_id']}:{date}")
-            if action.cash_per_share is None or action.dividend_tax_rate is None:
+            if action.cash_per_share is None:
                 raise _Blocked(f"EXTERNAL_DIVIDEND_TERMS_UNKNOWN:{claim['security_id']}:{date}")
             gross = _money(action.cash_per_share * Decimal(claim["quantity"]))
-            tax = _money(gross * action.dividend_tax_rate)
+            tax, _basis, _version = self._select_dividend_tax(
+                action,
+                lot_id=claim.get("lot_id"),
+                acquired_date=claim.get("acquired_date") or claim.get("opened_on") or date,
+                quantity=int(claim["quantity"]),
+                gross=gross,
+                date=date,
+            )
             net = gross - tax
             self.receivables += gross
             self.payables += tax
@@ -1097,7 +1450,14 @@ class _Engine:
             if position.entry_platform_upper is None and platform is not None:
                 position.entry_platform_upper = platform
         position.quantity += new_quantity
-        position.lots.append(Lot(new_quantity, date, sellable_date))
+        position.lots.append(
+            Lot(
+                new_quantity,
+                date,
+                sellable_date,
+                lot_id=self._allocate_lot_id(claim["security_id"], date),
+            )
+        )
         if legacy_cycle:
             if position not in self.legacy_positions:
                 self.legacy_positions.append(position)
@@ -1156,37 +1516,117 @@ class _Engine:
             else:
                 raise _Blocked(f"CORPORATE_ACTION_UNHANDLED:{action.action_type}:{action.security_id}:{date}")
 
+    def _select_dividend_tax(
+        self,
+        action: CorporateAction,
+        *,
+        lot_id: str | None,
+        acquired_date: str,
+        quantity: int,
+        gross: Decimal,
+        date: str,
+    ) -> tuple[Decimal, str, str]:
+        if action.dividend_tax_bindings and action.dividend_tax_rate is not None:
+            raise _Blocked(f"DIVIDEND_TAX_DOUBLE_SOURCE:{action.security_id}:{date}")
+        if not action.dividend_tax_bindings:
+            if action.dividend_tax_rate is None:
+                raise _Blocked(f"DIVIDEND_TAX_RATE_UNKNOWN:{action.security_id}:{date}")
+            return _money(gross * action.dividend_tax_rate), "SCALAR", action.version
+        open_at = parse_local_datetime(f"{date}T09:30:00", field="trade_open")
+        matches = []
+        probe = Lot(quantity, acquired_date, date, lot_id=lot_id)
+        for binding in action.dividend_tax_bindings:
+            if not binding.matches(probe):
+                continue
+            if binding.known_at is None:
+                raise _Blocked(f"DIVIDEND_TAX_KNOWN_AT_MISSING:{action.security_id}:{date}")
+            if parse_local_datetime(binding.known_at, field="known_at") >= open_at:
+                continue
+            matches.append(binding)
+        if len(matches) != 1:
+            raise _Blocked(
+                f"DIVIDEND_TAX_BINDING_{'AMBIGUOUS' if matches else 'MISSING'}:{action.security_id}:{date}"
+            )
+        binding = matches[0]
+        if binding.status != "CONFIRMED":
+            raise _Blocked(f"DIVIDEND_TAX_BINDING_{binding.status}:{action.security_id}:{date}")
+        if binding.tax_rate is not None:
+            tax = _money(gross * binding.tax_rate)
+            basis = "RATE"
+        else:
+            assert binding.tax_per_share is not None
+            tax = _money(binding.tax_per_share * Decimal(quantity))
+            basis = "PER_SHARE"
+        self.dividend_tax_entries.append(
+            {
+                "security_id": action.security_id,
+                "effective_date": action.effective_date,
+                "record_date": action.record_date,
+                "pay_date": action.pay_date,
+                "known_at": binding.known_at,
+                "lot_id": lot_id,
+                "acquired_date": acquired_date,
+                "quantity": quantity,
+                "gross": gross,
+                "tax": tax,
+                "basis": basis,
+                "rate": binding.tax_rate,
+                "per_share": binding.tax_per_share,
+                "rule_version": binding.rule_version,
+                "source": binding.source,
+            }
+        )
+        return tax, basis, binding.rule_version
+
     def _apply_cash_dividend(self, action: CorporateAction, position: Position, date: str) -> None:
         if action.cash_per_share is None:
             raise _Blocked(f"DIVIDEND_CASH_PER_SHARE_MISSING:{action.security_id}:{date}")
-        if action.dividend_tax_rate is None:
-            raise _Blocked(f"DIVIDEND_TAX_RATE_UNKNOWN:{action.security_id}:{date}")
         if position.last_mark is not None:
             position.last_mark = max(ZERO, position.last_mark - action.cash_per_share)
         key = _action_key(action)
         if action.record_date is not None:
-            quantity = sum(lot.quantity for lot in position.lots if key in lot.dividend_actions)
+            lots = [lot for lot in position.lots if key in lot.dividend_actions]
         else:
-            quantity = sum(lot.quantity for lot in position.lots)
-        if quantity <= 0:
+            lots = list(position.lots)
+        total_quantity = sum(lot.quantity for lot in lots)
+        if total_quantity <= 0:
             return
-        gross = _money(action.cash_per_share * Decimal(quantity))
-        tax = _money(gross * action.dividend_tax_rate)
-        net = gross - tax
-        self.receivables += gross
-        self.payables += tax
-        self.total_tax += tax
-        per_share = net / Decimal(quantity)
-        position.dividend_layers.append(
-            {
-                "key": key,
-                "per_share": per_share,
-                "remaining_quantity": Decimal(quantity),
-                "remaining_amount": net,
-                "action": action,
-            }
-        )
-        position.dividend_open += net
+        total_gross = ZERO
+        total_tax = ZERO
+        layers: list[dict] = []
+        for lot in lots:
+            if lot.quantity <= 0:
+                continue
+            gross = _money(action.cash_per_share * Decimal(lot.quantity))
+            tax, _basis, tax_version = self._select_dividend_tax(
+                action,
+                lot_id=lot.lot_id,
+                acquired_date=lot.acquired_date,
+                quantity=lot.quantity,
+                gross=gross,
+                date=date,
+            )
+            net = gross - tax
+            total_gross += gross
+            total_tax += tax
+            layers.append(
+                {
+                    "key": key,
+                    "lot_id": lot.lot_id,
+                    "per_share": net / Decimal(lot.quantity),
+                    "remaining_quantity": Decimal(lot.quantity),
+                    "remaining_amount": net,
+                    "tax": tax,
+                    "tax_version": tax_version,
+                    "action": action,
+                }
+            )
+        net_total = total_gross - total_tax
+        self.receivables += total_gross
+        self.payables += total_tax
+        self.total_tax += total_tax
+        position.dividend_layers.extend(layers)
+        position.dividend_open += net_total
         position.dividend_units = int(
             sum(layer["remaining_quantity"] for layer in position.dividend_layers)
         )
@@ -1194,9 +1634,9 @@ class _Engine:
             {
                 "security_id": action.security_id,
                 "pay_date": action.pay_date,
-                "gross": gross,
-                "tax": tax,
-                "net": net,
+                "gross": total_gross,
+                "tax": total_tax,
+                "net": net_total,
                 "paid": False,
             }
         )
@@ -1241,14 +1681,28 @@ class _Engine:
                 share = min(share, remaining_delta)
                 if share > 0:
                     position.lots.append(
-                        Lot(share, date, sellable_date, set(source.dividend_actions))
+                        Lot(
+                            share,
+                            date,
+                            sellable_date,
+                            set(source.dividend_actions),
+                            source.lot_id,
+                        )
                     )
                     remaining_delta -= share
             if remaining_delta > 0:
                 actions: set[str] = set()
                 for source in source_lots:
                     actions.update(source.dividend_actions)
-                position.lots.append(Lot(remaining_delta, date, sellable_date, actions))
+                position.lots.append(
+                    Lot(
+                        remaining_delta,
+                        date,
+                        sellable_date,
+                        actions,
+                        self._allocate_lot_id(action.security_id, date),
+                    )
+                )
         elif delta < 0:
             self._reduce_lots(position, date, -delta, respect_sellable=False)
         position.quantity = new_quantity
@@ -1504,7 +1958,8 @@ class _Engine:
         rule = self._rule(date, security_id)
         if bar is None or rule is None or bar.open is None or bar.suspended is True:
             return None
-        return _floor_tick(bar.open * (Decimal(1) - self.data.fee_schedule.slippage_rate), rule.tick_size)
+        schedule = self._fee_schedule(date, security_id, "SELL")
+        return _floor_tick(bar.open * (Decimal(1) - schedule.slippage_rate), rule.tick_size)
 
     def _rule(self, date: str, security_id: str) -> TradingRule | None:
         exchange = security_id.split(":", 1)[0]
@@ -1559,33 +2014,61 @@ class _Engine:
     # Accounting helpers
     # ------------------------------------------------------------------
 
-    def _max_affordable_quantity(self, date: str, price: Decimal, budget: Decimal, lot_size: int) -> int:
+    def _allocate_lot_id(self, security_id: str, date: str) -> str:
+        self.lot_counter += 1
+        return f"{security_id}:{date}:L{self.lot_counter:06d}"
+
+    def _max_affordable_quantity(
+        self, date: str, security_id: str, price: Decimal, budget: Decimal, lot_size: int
+    ) -> int:
         if price <= 0 or lot_size <= 0:
             return 0
         cap = min(budget, self.cash)
         quantity = int((cap / (price * Decimal(lot_size))).to_integral_value(rounding=ROUND_FLOOR)) * lot_size
         while quantity >= lot_size:
             gross = _money(price * Decimal(quantity))
-            commission, other_fees = self._buy_fees(date, gross)
+            commission, other_fees = self._buy_fees(date, security_id, gross)
             if gross + commission + other_fees <= budget and gross + commission + other_fees <= self.cash:
                 return quantity
             quantity -= lot_size
         return 0
 
-    def _buy_fees(self, date: str, gross: Decimal) -> tuple[Decimal, Decimal]:
-        schedule = self.data.fee_schedule
-        if not schedule.applies(date):
-            raise _Blocked(f"FEE_SCHEDULE_NOT_APPLICABLE:{date}")
+    @staticmethod
+    def _fee_market(security_id: str) -> str:
+        return security_id.split(":", 1)[0]
+
+    def _fee_schedule(self, date: str, security_id: str, side: str) -> FeeSchedule:
+        if not self.data.fee_schedules:
+            schedule = self.data.fee_schedule
+            if schedule is None or not schedule.applies(date):
+                raise _Blocked(f"FEE_SCHEDULE_NOT_APPLICABLE:{date}")
+            return schedule
+        open_at = parse_local_datetime(f"{date}T09:30:00", field="trade_open")
+        matches = []
+        for schedule in self.data.fee_schedules:
+            if not schedule.matches(date, self._fee_market(security_id), security_id, side):
+                continue
+            if schedule.known_at is not None:
+                if parse_local_datetime(schedule.known_at, field="known_at") >= open_at:
+                    continue
+            matches.append(schedule)
+        if not matches:
+            raise _Blocked(f"FEE_SCHEDULE_NOT_APPLICABLE:{security_id}:{side}:{date}")
+        if len(matches) > 1:
+            versions = ",".join(sorted(schedule.version for schedule in matches))
+            raise _Blocked(f"FEE_SCHEDULE_CONFLICT:{security_id}:{side}:{date}:{versions}")
+        return matches[0]
+
+    def _buy_fees(self, date: str, security_id: str, gross: Decimal) -> tuple[Decimal, Decimal]:
+        schedule = self._fee_schedule(date, security_id, "BUY")
         if gross <= 0:
             return ZERO, ZERO
         commission = max(_money(gross * schedule.commission_rate), schedule.min_commission)
         other = _money(gross * schedule.transfer_fee_rate) + _money(gross * schedule.buy_tax_rate)
         return commission, other
 
-    def _sell_fees(self, date: str, gross: Decimal) -> tuple[Decimal, Decimal]:
-        schedule = self.data.fee_schedule
-        if not schedule.applies(date):
-            raise _Blocked(f"FEE_SCHEDULE_NOT_APPLICABLE:{date}")
+    def _sell_fees(self, date: str, security_id: str, gross: Decimal) -> tuple[Decimal, Decimal]:
+        schedule = self._fee_schedule(date, security_id, "SELL")
         if gross <= 0:
             return ZERO, ZERO
         commission = max(_money(gross * schedule.commission_rate), schedule.min_commission)
@@ -1600,13 +2083,31 @@ class _Engine:
             security_id, (ZERO, ZERO)
         )
         cumulative_gross = previous_gross + gross
-        cumulative_commission, cumulative_other = self._sell_fees(date, cumulative_gross)
+        schedule = self._fee_schedule(date, security_id, "SELL")
+        cumulative_commission = max(
+            _money(cumulative_gross * schedule.commission_rate), schedule.min_commission
+        )
+        cumulative_other = _money(cumulative_gross * schedule.sell_tax_rate) + _money(
+            cumulative_gross * schedule.transfer_fee_rate
+        )
         commission = cumulative_commission - previous_commission
         other = cumulative_other - previous_other
         self.today_sell_gross_by_security[security_id] = cumulative_gross
         self.today_sell_fees_by_security[security_id] = (
             cumulative_commission,
             cumulative_other,
+        )
+        self.fee_entries.append(
+            {
+                "date": date,
+                "security_id": security_id,
+                "side": "SELL",
+                "version": schedule.version,
+                "gross": gross,
+                "cumulative_gross": cumulative_gross,
+                "commission": commission,
+                "other_fees": other,
+            }
         )
         return commission, other
 
@@ -1654,7 +2155,7 @@ class _Engine:
         return taken
 
     def _add_locked_exit(self, request: ExitRequest) -> None:
-        if request.security_id not in self.positions:
+        if not self._has_holding(request.security_id):
             return
         requests = self.locked_exits.setdefault(request.security_id, [])
         key = (request.reason, request.trigger_date, request.priority)
@@ -1798,6 +2299,10 @@ class _Engine:
             fixed_segment_returns=fixed_segment_returns,
             reconciliation=list(self.reconciliation),
             synthetic=self.config.synthetic,
+            fee_entries=list(self.fee_entries),
+            dividend_tax_entries=list(self.dividend_tax_entries),
+            proposal_entries=list(self.proposal_entries),
+            eligibility_entries=list(self.eligibility_entries),
         )
 
     def _fixed_segment_returns(self) -> dict[str, Decimal]:
