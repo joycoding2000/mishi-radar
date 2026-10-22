@@ -680,6 +680,12 @@ class _Engine:
                 self.warnings.append(
                     f"LEGACY_SIGNAL_PENDING_OUTSIDE_REPLAY:{signal.security_id}:{signal.signal_date}"
                 )
+                self._record_simple_order(
+                    signal,
+                    trade_date,
+                    "PENDING",
+                    "AWAITING_FIRST_ELIGIBLE_OPEN",
+                )
                 continue
             if execution_date > trade_date:
                 next_signals = [

@@ -59,6 +59,12 @@ class SignalOpenTimingTests(unittest.TestCase):
         self.assertEqual(result.fills, [])
         self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
         self.assertTrue(
+            any(
+                order.status == "PENDING" and order.reason == "AWAITING_FIRST_ELIGIBLE_OPEN"
+                for order in result.orders
+            )
+        )
+        self.assertTrue(
             any("LEGACY_SIGNAL_PENDING_OUTSIDE_REPLAY" in warning for warning in result.warnings)
         )
 
