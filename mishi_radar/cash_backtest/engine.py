@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import replace
+from datetime import datetime
 from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR, ROUND_HALF_UP
 from typing import Iterable, Mapping, Sequence
 
@@ -18,7 +19,7 @@ from .accounting import (
     remaining_open_stop_ratio,
     split_dividend_entitlement,
 )
-from ..time_contract import is_before_open, parse_local_datetime, validate_local_datetime
+from ..time_contract import parse_local_datetime, validate_local_datetime
 from .model import (
     BacktestConfig,
     BacktestInput,
@@ -46,7 +47,6 @@ from .model import (
 
 CENT = Decimal("0.01")
 ZERO = Decimal("0")
-MODEL_OPEN_TIME = "09:30:00"
 
 
 class _Blocked(Exception):
@@ -149,12 +149,14 @@ class _Engine:
     # ------------------------------------------------------------------
 
     def _prepare(self) -> None:
+        for schedule in self._fee_candidates():
+            if schedule.known_at is not None:
+                validate_local_datetime(schedule.known_at, field="known_at")
+            elif not schedule.synthetic:
+                raise _Blocked(f"FEE_SCHEDULE_KNOWN_AT_MISSING:{schedule.version}")
         if self.data.fee_schedule is not None and not self.data.fee_schedules:
             if not self.data.fee_schedule.applies(self.start_date):
                 raise _Blocked("FEE_SCHEDULE_NOT_APPLICABLE_AT_START")
-        for schedule in self.data.fee_schedules:
-            if schedule.known_at is not None:
-                validate_local_datetime(schedule.known_at, field="known_at")
         boundaries = tuple(self.config.segment_boundaries)
         if boundaries:
             if len(set(boundaries)) != len(boundaries) or tuple(sorted(boundaries)) != boundaries:
@@ -338,9 +340,39 @@ class _Engine:
             return None
         return self.full_calendar[index + 1]
 
+    @staticmethod
+    def _signal_available_instant(signal: Signal) -> datetime | None:
+        if signal.available_at is None:
+            return None
+        value = signal.available_at
+        if len(value) == 10:
+            close = "T15:00:00" if signal.available_at_kind == "NORMALIZED_AVAILABLE_DATE" else "T00:00:00"
+            return datetime.fromisoformat(f"{value}{close}")
+        return parse_local_datetime(value, field="available_at")
+
+    def _batch_decision_instant(self, batch: SignalBatch) -> datetime:
+        effective = parse_local_datetime(
+            batch.decision_available_at, field="decision_available_at"
+        )
+        for signal in batch.signals:
+            if not signal.pool_complete:
+                raise _Blocked(f"SIGNAL_POOL_INCOMPLETE:{batch.batch_id}:{signal.security_id}")
+            instant = self._signal_available_instant(signal)
+            if instant is None:
+                raise _Blocked(
+                    f"SIGNAL_AVAILABILITY_UNKNOWN:{batch.batch_id}:{signal.security_id}"
+                )
+            if instant > effective:
+                effective = instant
+        return effective
+
+    @staticmethod
+    def _open_instant(trade_date: str) -> datetime:
+        return datetime.fromisoformat(f"{trade_date}T09:30:00")
+
     def _batch_available_before_open(self, batch: SignalBatch, trade_date: str) -> bool:
         try:
-            return is_before_open(batch.decision_available_at, trade_date)
+            return self._batch_decision_instant(batch) < self._open_instant(trade_date)
         except ValueError as exc:
             raise _Blocked(f"SIGNAL_BATCH_AVAILABILITY_INVALID:{batch.batch_id}:{exc}") from exc
 
@@ -353,6 +385,20 @@ class _Engine:
             if self._batch_available_before_open(batch, day):
                 return day
         return None
+
+    def _require_batch_coverage(self, batch: SignalBatch, date: str) -> None:
+        if batch.coverage_until is None:
+            self._record_proposal(batch, "BLOCKED", "COVERAGE_UNKNOWN", date)
+            raise _Blocked(f"SIGNAL_BATCH_COVERAGE_UNKNOWN:{batch.batch_id}")
+        try:
+            covered = parse_local_datetime(
+                batch.coverage_until, field="coverage_until"
+            ) >= self._open_instant(date)
+        except ValueError as exc:
+            raise _Blocked(f"SIGNAL_BATCH_COVERAGE_INVALID:{batch.batch_id}:{exc}") from exc
+        if not covered:
+            self._record_proposal(batch, "BLOCKED", "COVERAGE_INCOMPLETE", date)
+            raise _Blocked(f"SIGNAL_BATCH_COVERAGE_INCOMPLETE:{batch.batch_id}")
 
     def _record_proposal(
         self,
@@ -383,27 +429,22 @@ class _Engine:
 
     def _replacement_for(self, pending: dict, open_at: str) -> SignalBatch | None:
         old: SignalBatch = pending["batch"]
-        old_available = parse_local_datetime(old.decision_available_at, field="decision_available_at")
+        old_available = self._batch_decision_instant(old)
         open_time = parse_local_datetime(open_at, field="trade_open")
-        candidates = [
-            batch
-            for batch in self.data.signal_batches
-            if batch.strategy_id == self.config.strategy_id
-            and batch.scope_key == old.scope_key
-            and batch.batch_id != old.batch_id
-            and batch.signal_date >= old.signal_date
-            and old_available
-            < parse_local_datetime(batch.decision_available_at, field="decision_available_at")
-            <= open_time
-        ]
-        candidates.sort(
-            key=lambda batch: (
-                parse_local_datetime(batch.decision_available_at, field="decision_available_at"),
-                batch.signal_date,
-                batch.batch_id,
-            )
-        )
-        for batch in candidates:
+        candidates: list[tuple[datetime, SignalBatch]] = []
+        for batch in self.data.signal_batches:
+            if (
+                batch.strategy_id != self.config.strategy_id
+                or batch.scope_key != old.scope_key
+                or batch.batch_id == old.batch_id
+                or batch.signal_date < old.signal_date
+            ):
+                continue
+            available = self._batch_decision_instant(batch)
+            if old_available < available <= open_time:
+                candidates.append((available, batch))
+        candidates.sort(key=lambda item: (item[0], item[1].signal_date, item[1].batch_id))
+        for _available, batch in candidates:
             if batch.status in {"UNKNOWN", "INCOMPLETE"}:
                 self._record_proposal(batch, "BLOCKED", "SIGNAL_BATCH_UNKNOWN", open_at[:10])
                 raise _Blocked(f"SIGNAL_BATCH_UNKNOWN:{batch.batch_id}")
@@ -463,14 +504,48 @@ class _Engine:
                 continue
             if batch.status == "COMPLETE_EMPTY":
                 if self._batch_available_before_open(batch, date):
+                    self._require_batch_coverage(batch, date)
                     normal_decision = True
-                self._record_proposal(batch, "EMPTY", "COMPLETE_EMPTY_BATCH", date)
+                    self._record_proposal(batch, "EMPTY", "COMPLETE_EMPTY_BATCH", date)
+                    continue
+                if not is_rebalance:
+                    self._record_proposal(batch, "IGNORED", "NON_REBALANCE_NEW_BATCH", date)
+                    continue
+                first_eligible = self._batch_first_eligible_open(batch)
+                if first_eligible is None:
+                    if batch.coverage_until is None:
+                        self._record_proposal(batch, "BLOCKED", "COVERAGE_UNKNOWN", date)
+                        raise _Blocked(f"SIGNAL_BATCH_COVERAGE_UNKNOWN:{batch.batch_id}")
+                    self.pending_batches.append(
+                        {
+                            "batch": batch,
+                            "anchor_date": anchor,
+                            "first_eligible_open": None,
+                            "attempted": False,
+                            "empty": True,
+                        }
+                    )
+                    self._record_proposal(
+                        batch, "PENDING", "AWAITING_FIRST_ELIGIBLE_OPEN", date
+                    )
+                    continue
+                self.pending_batches.append(
+                    {
+                        "batch": batch,
+                        "anchor_date": anchor,
+                        "first_eligible_open": first_eligible,
+                        "attempted": False,
+                        "empty": True,
+                    }
+                )
+                self._record_proposal(batch, "PENDING", "AVAILABLE_AFTER_ANCHOR_OPEN", date)
                 continue
             if batch.status != "COMPLETE":
                 continue
             if self._batch_available_before_open(batch, date):
                 normal_decision = True
                 if is_rebalance:
+                    self._require_batch_coverage(batch, date)
                     self._record_proposal(batch, "NORMAL", "AVAILABLE_BEFORE_ANCHOR_OPEN", date)
                     normal_signals.extend(batch.signals)
                 else:
@@ -481,13 +556,28 @@ class _Engine:
                 continue
             first_eligible = self._batch_first_eligible_open(batch)
             if first_eligible is None:
-                self._record_proposal(batch, "EXPIRED", "NO_SUBSEQUENT_OPEN", date)
+                if batch.coverage_until is None:
+                    self._record_proposal(batch, "BLOCKED", "COVERAGE_UNKNOWN", date)
+                    raise _Blocked(f"SIGNAL_BATCH_COVERAGE_UNKNOWN:{batch.batch_id}")
+                self.pending_batches.append(
+                    {
+                        "batch": batch,
+                        "anchor_date": anchor,
+                        "first_eligible_open": None,
+                        "attempted": False,
+                        "empty": False,
+                    }
+                )
+                self._record_proposal(
+                    batch, "PENDING", "AWAITING_FIRST_ELIGIBLE_OPEN", date
+                )
                 continue
             pending = {
                 "batch": batch,
                 "anchor_date": anchor,
                 "first_eligible_open": first_eligible,
                 "attempted": False,
+                "empty": False,
             }
             self.pending_batches.append(pending)
             self._record_proposal(batch, "PENDING", "AVAILABLE_AFTER_ANCHOR_OPEN", date)
@@ -495,29 +585,23 @@ class _Engine:
         ready: list[dict] = []
         for pending in list(self.pending_batches):
             first_eligible = pending["first_eligible_open"]
-            if date < first_eligible:
+            if first_eligible is None or date < first_eligible:
                 continue
             batch = pending["batch"]
-            if batch.coverage_until is None:
-                self._record_proposal(batch, "BLOCKED", "COVERAGE_UNKNOWN", date)
-                raise _Blocked(f"SIGNAL_BATCH_COVERAGE_UNKNOWN:{batch.batch_id}")
-            try:
-                covered = parse_local_datetime(
-                    batch.coverage_until, field="coverage_until"
-                ) >= parse_local_datetime(open_at, field="trade_open")
-            except ValueError as exc:
-                raise _Blocked(f"SIGNAL_BATCH_COVERAGE_INVALID:{batch.batch_id}:{exc}") from exc
-            if not covered:
-                self._record_proposal(batch, "BLOCKED", "COVERAGE_INCOMPLETE", date)
-                raise _Blocked(f"SIGNAL_BATCH_COVERAGE_INCOMPLETE:{batch.batch_id}")
+            self._require_batch_coverage(batch, date)
             pending["attempted"] = True
             self.pending_batches.remove(pending)
+            if pending.get("empty"):
+                self._record_proposal(batch, "EMPTY", "COMPLETE_EMPTY_BATCH", date)
+                continue
             self._record_proposal(batch, "ATTEMPTING", "DEFERRED_ATTEMPT", date)
             ready.append(pending)
         return normal_signals, ready, normal_decision
 
     def _eligibility_status(self, date: str, security_id: str) -> tuple[str, str | None]:
         if not self.data.eligibility_by_date:
+            if not self.config.synthetic:
+                raise _Blocked(f"ELIGIBILITY_COVERAGE_MISSING:{date}")
             return "ELIGIBLE", None
         snapshot = self.data.eligibility_by_date.get(date)
         if snapshot is None:
@@ -576,6 +660,11 @@ class _Engine:
             return []
         signals = list(self.data.signals_by_signal_date.get(previous_date, ()))
         strategy_signals = [signal for signal in signals if signal.strategy_id == self.config.strategy_id]
+        if strategy_signals and not self.config.synthetic:
+            raise _Blocked(
+                f"LEGACY_SIGNAL_ROUTE_REQUIRES_SYNTHETIC_COMPAT:"
+                f"{self.config.strategy_id}:{previous_date}"
+            )
         if any(not signal.pool_complete for signal in strategy_signals):
             raise _Blocked(f"SIGNAL_POOL_INCOMPLETE:{self.config.strategy_id}:{previous_date}")
         result: list[Signal] = []
@@ -588,14 +677,20 @@ class _Engine:
                     raise _Blocked(f"CANDIDATE_RANK_MISSING:{signal.security_id}")
             execution_date = self._execution_date(signal)
             if execution_date is None:
-                self._record_simple_order(
-                    signal,
-                    trade_date,
-                    "EXPIRED",
-                    "EXPIRED_INPUT_WINDOW",
+                self.warnings.append(
+                    f"LEGACY_SIGNAL_PENDING_OUTSIDE_REPLAY:{signal.security_id}:{signal.signal_date}"
                 )
                 continue
             if execution_date > trade_date:
+                next_signals = [
+                    item
+                    for item in self.data.signals_by_signal_date.get(trade_date, ())
+                    if item.strategy_id == self.config.strategy_id
+                ]
+                if not next_signals:
+                    raise _Blocked(
+                        f"LEGACY_SIGNAL_REQUIRES_BATCH:{signal.security_id}:{signal.signal_date}"
+                    )
                 self._record_simple_order(
                     signal,
                     trade_date,
@@ -606,22 +701,6 @@ class _Engine:
             result.append(signal)
         return result
 
-    @staticmethod
-    def _available_before_open(available_at: str, trade_date: str) -> bool:
-        date_part = available_at[:10]
-        if date_part < trade_date:
-            return True
-        if date_part > trade_date:
-            return False
-        if len(available_at) <= 10:
-            return True
-        if available_at[10] not in ("T", " "):
-            return True
-        time_part = available_at[11:19]
-        if len(time_part) == 5:
-            time_part += ":00"
-        return time_part < MODEL_OPEN_TIME
-
     def _execution_date(self, signal: Signal) -> str | None:
         try:
             base_index = self.full_calendar.index(signal.signal_date)
@@ -631,14 +710,15 @@ class _Engine:
         if next_index >= len(self.full_calendar):
             return None
         first_open = self.full_calendar[next_index]
-        if signal.available_at is None:
+        instant = self._signal_available_instant(signal)
+        if instant is None:
             if self.config.require_known_signal_availability:
                 raise _Blocked(f"SIGNAL_AVAILABILITY_UNKNOWN:{signal.security_id}")
             return first_open
-        if self._available_before_open(signal.available_at, first_open):
+        if instant < self._open_instant(first_open):
             return first_open
         for date in self.full_calendar[next_index + 1 :]:
-            if self._available_before_open(signal.available_at, date):
+            if instant < self._open_instant(date):
                 return date
         return None
 
@@ -1050,7 +1130,7 @@ class _Engine:
                 replacement_for,
                 replacement_reason,
             )
-            return False, "ELIGIBILITY_UNKNOWN"
+            raise _Blocked(f"ELIGIBILITY_UNKNOWN:{sid}:{date}")
         bar = self._bar(date, sid)
         rule = self._rule(date, sid)
         if bar is None:
@@ -1453,9 +1533,9 @@ class _Engine:
         position.lots.append(
             Lot(
                 new_quantity,
-                date,
+                claim.get("acquired_date") or date,
                 sellable_date,
-                lot_id=self._allocate_lot_id(claim["security_id"], date),
+                lot_id=claim.get("lot_id") or self._allocate_lot_id(claim["security_id"], date),
             )
         )
         if legacy_cycle:
@@ -1670,6 +1750,7 @@ class _Engine:
             source_lots = list(position.lots)
             remaining_delta = delta
             sellable_date = action.new_share_sellable_date or date
+            allocations: list[tuple[Lot, int]] = []
             for source in source_lots:
                 if remaining_delta <= 0:
                     break
@@ -1679,17 +1760,26 @@ class _Engine:
                     )
                 )
                 share = min(share, remaining_delta)
-                if share > 0:
-                    position.lots.append(
-                        Lot(
-                            share,
-                            date,
-                            sellable_date,
-                            set(source.dividend_actions),
-                            source.lot_id,
-                        )
+                allocations.append((source, share))
+                remaining_delta -= share
+            if remaining_delta > 0 and source_lots:
+                first_source, first_share = allocations[0] if allocations else (source_lots[0], 0)
+                allocations = [(first_source, first_share + remaining_delta)] + [
+                    item for item in allocations[1:]
+                ]
+                remaining_delta = 0
+            for source, share in allocations:
+                if share <= 0:
+                    continue
+                position.lots.append(
+                    Lot(
+                        share,
+                        source.acquired_date,
+                        sellable_date,
+                        set(source.dividend_actions),
+                        source.lot_id,
                     )
-                    remaining_delta -= share
+                )
             if remaining_delta > 0:
                 actions: set[str] = set()
                 for source in source_lots:
@@ -2037,20 +2127,30 @@ class _Engine:
     def _fee_market(security_id: str) -> str:
         return security_id.split(":", 1)[0]
 
+    def _fee_candidates(self) -> list[FeeSchedule]:
+        if self.data.fee_schedules:
+            return list(self.data.fee_schedules)
+        if self.data.fee_schedule is not None:
+            return [self.data.fee_schedule]
+        return []
+
     def _fee_schedule(self, date: str, security_id: str, side: str) -> FeeSchedule:
-        if not self.data.fee_schedules:
-            schedule = self.data.fee_schedule
-            if schedule is None or not schedule.applies(date):
-                raise _Blocked(f"FEE_SCHEDULE_NOT_APPLICABLE:{date}")
-            return schedule
         open_at = parse_local_datetime(f"{date}T09:30:00", field="trade_open")
         matches = []
-        for schedule in self.data.fee_schedules:
+        for schedule in self._fee_candidates():
+            if not schedule.synthetic and (schedule.market is None or schedule.side is None):
+                raise _Blocked(
+                    f"FEE_SCHEDULE_KEY_INCOMPLETE:{schedule.version}:{security_id}:{side}:{date}"
+                )
             if not schedule.matches(date, self._fee_market(security_id), security_id, side):
                 continue
-            if schedule.known_at is not None:
-                if parse_local_datetime(schedule.known_at, field="known_at") >= open_at:
-                    continue
+            if schedule.known_at is None:
+                if not schedule.synthetic:
+                    raise _Blocked(
+                        f"FEE_SCHEDULE_KNOWN_AT_MISSING:{schedule.version}:{security_id}:{side}:{date}"
+                    )
+            elif parse_local_datetime(schedule.known_at, field="known_at") >= open_at:
+                continue
             matches.append(schedule)
         if not matches:
             raise _Blocked(f"FEE_SCHEDULE_NOT_APPLICABLE:{security_id}:{side}:{date}")
@@ -2147,6 +2247,7 @@ class _Engine:
                         lot.acquired_date,
                         lot.sellable_date,
                         set(lot.dividend_actions),
+                        lot.lot_id,
                     )
                 )
         position.lots = new_lots
@@ -2266,6 +2367,10 @@ class _Engine:
             for sid in sorted(self.locked_exits):
                 if self.locked_exits[sid]:
                     self.warnings.append(f"PENDING_EXIT_OUTSIDE_RANGE:{sid}")
+        for pending in self.pending_batches:
+            self.warnings.append(
+                f"PENDING_PROPOSAL_OUTSIDE_RANGE:{pending['batch'].batch_id}"
+            )
         cash_ok = all(item["cash_ok"] for item in self.reconciliation)
         equity_ok = all(item["equity_ok"] for item in self.reconciliation)
         engine_error = any(item.startswith("ENGINE_ERROR") for item in self.blockers)

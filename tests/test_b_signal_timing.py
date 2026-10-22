@@ -55,10 +55,12 @@ class SignalOpenTimingTests(unittest.TestCase):
 
     def test_signal_known_after_open_is_not_executed_at_that_open(self) -> None:
         result = self._run(f"{self.trade_day}T09:30:01")
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
         self.assertEqual(result.fills, [])
-        expired = [order for order in result.orders if order.status == "EXPIRED"]
-        self.assertEqual(len(expired), 1)
-        self.assertEqual(expired[0].reason, "EXPIRED_INPUT_WINDOW")
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
+        self.assertTrue(
+            any("LEGACY_SIGNAL_PENDING_OUTSIDE_REPLAY" in warning for warning in result.warnings)
+        )
 
     def test_previous_day_evening_timestamp_is_before_next_open(self) -> None:
         result = self._run(f"{self.signal_day}T23:59:59")

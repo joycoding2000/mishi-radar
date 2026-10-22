@@ -130,6 +130,7 @@ def signal(
         execution_replacement_order=execution_replacement_order,
         entry_conflict_exit=entry_conflict_exit,
         available_at=available_at if available_at is not None else signal_date,
+        available_at_kind="SYNTHETIC_DATE_COMPAT",
         pool_complete=pool_complete,
         signal_id=f"{strategy_id}:{security_id}:{signal_date}:SYNTHETIC",
         entry_platform_upper=dec(entry_platform_upper),

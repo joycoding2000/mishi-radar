@@ -216,7 +216,10 @@ class Signal:
     """Structured signal record produced by the OD-1 kernel.
 
     ``from_dict`` accepts the JSON-compatible records returned by
-    ``mishi_radar.strategy_core.engine.signal_records``.
+    ``mishi_radar.strategy_core.engine.signal_records``.  ``available_at_kind``
+    is part of the consumption contract: date-only values are ambiguous unless
+    the producer names them as either a legacy synthetic timely value or a
+    normalized "usable at this day's close" value.
     """
 
     security_id: str
@@ -243,20 +246,31 @@ class Signal:
     entry_platform_upper: Decimal | None = None
     metrics: Mapping[str, Any] = field(default_factory=dict)
     config_id: str = ""
-    available_at_kind: str = "SYNTHETIC_DATE_COMPAT"
+    available_at_kind: str = "UNSPECIFIED"
 
     def __post_init__(self) -> None:
         if self.available_at == "UNKNOWN":
             object.__setattr__(self, "available_at", None)
+        if self.available_at_kind == "UNSPECIFIED":
+            if self.available_at is not None:
+                raise ValueError("available_at_kind is required when available_at is present")
+            object.__setattr__(self, "available_at_kind", "UNKNOWN")
+        if self.available_at_kind not in {
+            "SYNTHETIC_DATE_COMPAT",
+            "NORMALIZED_AVAILABLE_DATE",
+            "LOCAL_DATETIME",
+            "UNKNOWN",
+        }:
+            raise ValueError(f"unknown available_at_kind {self.available_at_kind!r}")
         if self.available_at is not None:
             validate_local_datetime(self.available_at, field="available_at", allow_date=True)
-            if len(self.available_at) == 10 and self.available_at_kind != "SYNTHETIC_DATE_COMPAT":
-                raise ValueError("date-only available_at requires SYNTHETIC_DATE_COMPAT")
-            if len(self.available_at) > 10 and self.available_at_kind not in {
+            if self.available_at_kind == "UNKNOWN":
+                raise ValueError("available_at_kind UNKNOWN requires available_at UNKNOWN")
+            if len(self.available_at) == 10 and self.available_at_kind not in {
                 "SYNTHETIC_DATE_COMPAT",
-                "LOCAL_DATETIME",
+                "NORMALIZED_AVAILABLE_DATE",
             }:
-                raise ValueError(f"unknown available_at_kind {self.available_at_kind!r}")
+                raise ValueError("date-only available_at requires an explicit date semantics kind")
         validate_local_date(self.signal_date, field="signal_date")
         object.__setattr__(self, "entry_platform_upper", dec(self.entry_platform_upper))
         if self.entry_platform_upper is None:
@@ -266,6 +280,19 @@ class Signal:
 
     @classmethod
     def from_dict(cls, payload: Mapping[str, Any]) -> "Signal":
+        available_at = payload.get("available_at")
+        available_at = None if available_at in (None, "UNKNOWN") else str(available_at)
+        kind = payload.get("available_at_kind")
+        if kind is None:
+            if available_at is None:
+                kind = "UNKNOWN"
+            elif len(available_at) > 10:
+                kind = "LOCAL_DATETIME"
+            else:
+                raise ValueError(
+                    "available_at_kind is required for date-only available_at; "
+                    "the producer must distinguish synthetic timely values from normalized close values"
+                )
         return cls(
             security_id=str(payload["security_id"]),
             strategy_id=str(payload["strategy_id"]),
@@ -284,16 +311,14 @@ class Signal:
             formal_candidate=bool(payload.get("formal_candidate", True)),
             execution_replacement_order=payload.get("execution_replacement_order"),
             entry_conflict_exit=str(payload.get("entry_conflict_exit", "FALSE")),
-            available_at=(
-                None if payload.get("available_at") in (None, "UNKNOWN") else str(payload.get("available_at"))
-            ),
+            available_at=available_at,
             pool_complete=bool(payload.get("pool_complete", True)),
             signal_id=payload.get("signal_id"),
             reasons=tuple(payload.get("reasons", ())),
             entry_platform_upper=dec(payload.get("entry_platform_upper")),
             metrics=dict(payload.get("metrics", {})),
             config_id=str(payload.get("config_id", "")),
-            available_at_kind=str(payload.get("available_at_kind", "SYNTHETIC_DATE_COMPAT")),
+            available_at_kind=str(kind),
         )
 
 
