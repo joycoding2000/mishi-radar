@@ -49,6 +49,24 @@ def compute_diagnostics(snapshot: MarketSnapshot, bundle: ConfigBundle | None = 
     return _compute_diagnostics(snapshot, bundle or default_configs())
 
 
+def _available_at_kind(available_at: str | None, input_version: str) -> str:
+    """Name the exact semantics of the exported availability value.
+
+    Date-only values produced from an explicitly synthetic input keep the
+    legacy timely-availability meaning.  Any other date-only value is a
+    normalized "usable at this market day's close" value and must not be
+    shifted forward a second time.  Full timestamps carry no such ambiguity.
+    """
+
+    if available_at is None:
+        return "UNKNOWN"
+    if len(available_at) > 10:
+        return "LOCAL_DATETIME"
+    if input_version.startswith("SYNTHETIC"):
+        return "SYNTHETIC_DATE_COMPAT"
+    return "NORMALIZED_AVAILABLE_DATE"
+
+
 def _json_value(value: Any) -> Any:
     if isinstance(value, Decimal):
         return format(value, "f")
@@ -104,6 +122,7 @@ def signal_records(results: Mapping[str, StrategyResult]) -> list[dict[str, Any]
                     "entry_conflict_exit": row.entry_conflict_exit.value,
                     "entry_platform_upper": _json_value(row.metrics.get("u20")),
                     "available_at": row.available_at or "UNKNOWN",
+                    "available_at_kind": _available_at_kind(row.available_at, row.input_version),
                     "bound_s01_config_version": result.bound_s01_config_version,
                     "reasons": list(row.reasons),
                     "metrics": _json_value(row.metrics),

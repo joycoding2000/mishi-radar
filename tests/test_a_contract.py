@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from dataclasses import replace
 from decimal import Decimal
 
 from mishi_radar.strategy_core.config import default_configs
@@ -40,6 +41,7 @@ REQUIRED_FIELDS = {
     "entry_conflict_exit",
     "entry_platform_upper",
     "available_at",
+    "available_at_kind",
     "bound_s01_config_version",
     "reasons",
     "metrics",
@@ -64,9 +66,28 @@ class SignalContractTests(unittest.TestCase):
         self.assertTrue(REQUIRED_FIELDS.issubset(record))
         self.assertEqual(record["entry_platform_upper"], "10")
         self.assertEqual(record["available_at"], dates[-1])
+        self.assertEqual(record["available_at_kind"], "SYNTHETIC_DATE_COMPAT")
         self.assertEqual(record["strategy_id"], "S02")
         self.assertEqual(record["qualification_status"], "SCORABLE")
         self.assertEqual(record["signal_status"], "TRUE")
+
+    def test_exported_availability_names_normalized_date_and_datetime(self) -> None:
+        dates = trading_dates(30)
+        base = make_snapshot(dates, {"SH:600001": flat(30, "9.5")})
+        cases = (
+            (replace(base, input_version="OD1-REAL-1", available_at=dates[-1]), "NORMALIZED_AVAILABLE_DATE"),
+            (replace(base, input_version="OD1-REAL-1", available_at=dates[-1] + "T15:00:00"), "LOCAL_DATETIME"),
+            (replace(base, available_at=None), "UNKNOWN"),
+        )
+        for snapshot, expected in cases:
+            records = signal_records({"S01": compute_strategy(snapshot, "S01", default_configs())})
+            record = next(item for item in records if item["security_id"] == "SH:600001")
+            self.assertEqual(record["available_at_kind"], expected)
+        unknown = signal_records(
+            {"S01": compute_strategy(replace(base, available_at=None), "S01", default_configs())}
+        )
+        record = next(item for item in unknown if item["security_id"] == "SH:600001")
+        self.assertEqual(record["available_at"], "UNKNOWN")
 
 
 if __name__ == "__main__":
