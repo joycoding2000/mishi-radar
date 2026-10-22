@@ -285,6 +285,57 @@ class GateEligibilityTests(unittest.TestCase):
         self.assertTrue(any("ELIGIBILITY_UNKNOWN" in item for item in result.blockers))
         self.assertEqual(result.fills, [])
 
+    def _held_coverage(self, dates, mode: str):
+        coverage = _eligibility(dates)
+        for day in dates[2:]:
+            if mode == "MISSING_RECORD":
+                coverage[day] = replace(coverage[day], records=())
+            else:
+                coverage[day] = replace(
+                    coverage[day],
+                    records=(replace(coverage[day].records[0], status="UNKNOWN"),),
+                )
+        return coverage
+
+    def _held_case(self, mode: str):
+        dates = trading_dates(5, end=date(2026, 10, 16))
+        days = [market_day(day, {SID: bar(day, 5, 5)}) for day in dates]
+        batch = _batch(
+            signal_date=dates[0],
+            available_at=f"{dates[0]}T15:00:00",
+            signals=(signal(SID, dates[0]),),
+            coverage_until=f"{dates[4]}T15:00:00",
+        )
+        return run_backtest(
+            make_input(
+                dates,
+                days,
+                signal_batches=(batch,),
+                eligibility_by_date=self._held_coverage(dates, mode),
+            ),
+            config(
+                start_date=dates[1],
+                initial_cash=Decimal(1000),
+                top_n=1,
+                rebalance_days=5,
+                synthetic=False,
+            ),
+        )
+
+    def test_g05_held_unknown_blocks_at_first_unknown_open(self) -> None:
+        result = self._held_case("UNKNOWN")
+        self.assertEqual(result.status, "BLOCKED")
+        self.assertTrue(any("ELIGIBILITY_UNKNOWN" in item for item in result.blockers))
+        self.assertEqual(len(result.nav_points), 1)
+        self.assertFalse(any(fill.side == "SELL" for fill in result.fills))
+
+    def test_g05_held_missing_record_blocks_at_first_unknown_open(self) -> None:
+        result = self._held_case("MISSING_RECORD")
+        self.assertEqual(result.status, "BLOCKED")
+        self.assertTrue(any("ELIGIBILITY_UNKNOWN" in item for item in result.blockers))
+        self.assertEqual(len(result.nav_points), 1)
+        self.assertFalse(any(fill.side == "SELL" for fill in result.fills))
+
 
 class GateFeeKeyTests(unittest.TestCase):
     def _run(self, fees, fee_schedules=(), rebalance_days=1):
@@ -468,21 +519,64 @@ class GateLotSourceTests(unittest.TestCase):
 
 
 class GateLegacyBoundaryTests(unittest.TestCase):
-    def test_legacy_late_signal_requires_batch_instead_of_expiring(self) -> None:
+    def _run_legacy(self, next_signal=None, end_date=None):
         dates = trading_dates(5, end=date(2026, 10, 16))
         days = [market_day(day, {SID: bar(day, 5, 5)}) for day in dates]
-        late = signal(SID, dates[0], available_at=f"{dates[1]}T09:30:01")
-        result = run_backtest(
-            make_input(
-                dates,
-                days,
-                signals_by_signal_date={dates[0]: (late,), dates[1]: ()},
+        mapping = {dates[0]: (signal(SID, dates[0], available_at=f"{dates[1]}T09:30:01"),)}
+        if next_signal is not None:
+            mapping[dates[1]] = (next_signal,)
+        return run_backtest(
+            make_input(dates, days, signals_by_signal_date=mapping),
+            config(
+                start_date=dates[1],
+                initial_cash=Decimal(1005),
+                top_n=1,
+                rebalance_days=5,
+                end_date=end_date,
             ),
-            config(start_date=dates[1], initial_cash=Decimal(1005), top_n=1, rebalance_days=5),
         )
+
+    def test_legacy_late_signal_requires_batch_instead_of_expiring(self) -> None:
+        result = self._run_legacy()
         self.assertEqual(result.status, "BLOCKED")
         self.assertTrue(any("LEGACY_SIGNAL_REQUIRES_BATCH" in item for item in result.blockers))
-        self.assertFalse(any(entry.status == "EXPIRED" for entry in result.orders))
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
+
+    def test_legacy_future_next_member_cannot_expire_old_signal(self) -> None:
+        dates = trading_dates(5, end=date(2026, 10, 16))
+        future = signal(SID, dates[1], available_at=f"{dates[3]}T15:00:00")
+        result = self._run_legacy(future)
+        self.assertEqual(result.status, "BLOCKED")
+        self.assertTrue(any("LEGACY_SIGNAL_REQUIRES_BATCH" in item for item in result.blockers))
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
+        self.assertEqual(result.fills, [])
+
+    def test_legacy_incomplete_next_pool_cannot_expire_old_signal(self) -> None:
+        dates = trading_dates(5, end=date(2026, 10, 16))
+        incomplete = replace(signal(SID, dates[1]), pool_complete=False)
+        result = self._run_legacy(incomplete)
+        self.assertEqual(result.status, "BLOCKED")
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
+        self.assertEqual(result.fills, [])
+
+    def test_legacy_unknown_next_member_cannot_expire_old_signal(self) -> None:
+        dates = trading_dates(5, end=date(2026, 10, 16))
+        unknown = replace(
+            signal(SID, dates[1]),
+            available_at=None,
+            available_at_kind="UNKNOWN",
+        )
+        result = self._run_legacy(unknown)
+        self.assertEqual(result.status, "BLOCKED")
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
+        self.assertEqual(result.fills, [])
+
+    def test_legacy_cutoff_with_future_member_has_no_invented_expiry(self) -> None:
+        dates = trading_dates(5, end=date(2026, 10, 16))
+        future = signal(SID, dates[1], available_at=f"{dates[3]}T15:00:00")
+        result = self._run_legacy(future, end_date=dates[1])
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
+        self.assertEqual(result.fills, [])
 
     def test_non_synthetic_legacy_signal_is_rejected(self) -> None:
         dates = trading_dates(3, end=date(2026, 10, 15))

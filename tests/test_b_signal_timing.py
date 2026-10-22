@@ -74,7 +74,7 @@ class SignalOpenTimingTests(unittest.TestCase):
         self.assertEqual(len(result.fills), 1)
         self.assertEqual(result.fills[0].date, self.trade_day)
 
-    def test_post_open_old_signal_expires_when_superseded(self) -> None:
+    def test_post_open_old_signal_with_future_member_requires_batch(self) -> None:
         dates = trading_dates(3)
         old_sid = "SH:600001"
         new_sid = "SH:600002"
@@ -109,19 +109,12 @@ class SignalOpenTimingTests(unittest.TestCase):
                 stop_loss=None,
             ),
         )
-        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
-        self.assertEqual(
-            [(fill.security_id, fill.date, fill.quantity) for fill in result.fills],
-            [(new_sid, dates[2], 200)],
-        )
+        self.assertEqual(result.status, "BLOCKED")
         self.assertTrue(
-            any(
-                order.security_id == old_sid
-                and order.status == "EXPIRED"
-                and order.reason == "EXPIRED_INPUT_WINDOW"
-                for order in result.orders
-            )
+            any("LEGACY_SIGNAL_REQUIRES_BATCH" in blocker for blocker in result.blockers)
         )
+        self.assertEqual(result.fills, [])
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
 
 
 if __name__ == "__main__":

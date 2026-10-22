@@ -654,6 +654,8 @@ class _Engine:
                         strategy_id=position.strategy_id,
                     )
                 )
+            elif status == "UNKNOWN":
+                raise _Blocked(f"ELIGIBILITY_UNKNOWN:{position.security_id}:{date}")
 
     def _signals_for_trade_date(self, previous_date: str | None, trade_date: str) -> list[Signal]:
         if previous_date is None:
@@ -688,22 +690,9 @@ class _Engine:
                 )
                 continue
             if execution_date > trade_date:
-                next_signals = [
-                    item
-                    for item in self.data.signals_by_signal_date.get(trade_date, ())
-                    if item.strategy_id == self.config.strategy_id
-                ]
-                if not next_signals:
-                    raise _Blocked(
-                        f"LEGACY_SIGNAL_REQUIRES_BATCH:{signal.security_id}:{signal.signal_date}"
-                    )
-                self._record_simple_order(
-                    signal,
-                    trade_date,
-                    "EXPIRED",
-                    "EXPIRED_INPUT_WINDOW",
+                raise _Blocked(
+                    f"LEGACY_SIGNAL_REQUIRES_BATCH:{signal.security_id}:{signal.signal_date}"
                 )
-                continue
             result.append(signal)
         return result
 
