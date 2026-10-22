@@ -5,6 +5,7 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import Any, Mapping
 
+from ..time_contract import validate_local_datetime
 from .config import ConfigBundle, S01_DEFAULT_CONFIG, default_configs
 from .diagnostics import compute_diagnostics as _compute_diagnostics
 from .diagnostics import style_view
@@ -70,6 +71,8 @@ def signal_records(results: Mapping[str, StrategyResult]) -> list[dict[str, Any]
         result = results[strategy_id]
         for security_id in sorted(result.rows):
             row = result.rows[security_id]
+            if row.available_at is not None:
+                validate_local_datetime(row.available_at, field="available_at", allow_date=True)
             records.append(
                 {
                     "signal_id": f"{row.strategy_id}:{row.security_id}:{row.signal_date}:{row.config_version}",

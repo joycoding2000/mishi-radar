@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from dataclasses import replace
 from decimal import Decimal
 
 from mishi_radar.strategy_core.config import S01Config, default_configs
@@ -305,6 +306,35 @@ class S07Tests(unittest.TestCase):
         self.assertEqual(row.signal_status, ConditionStatus.UNKNOWN)
         self.assertFalse(result.pool_complete)
         self.assertIsNone(row.pool_rank)
+
+    def test_raw_announcement_date_maps_to_next_close_but_normalized_date_does_not_shift(self) -> None:
+        dates = trading_dates(30)
+        announcement_day, business_day = dates[-2], dates[-1]
+        base = default_financial("IND_VAL", business_day)
+        raw = replace(base, available_at=None, announced_on=announcement_day)
+        normalized = replace(base, available_at=business_day, announced_on=announcement_day)
+        same_day_announcement = replace(base, available_at=None, announced_on=business_day)
+        for financial, expected in (
+            (raw, ConditionStatus.TRUE),
+            (normalized, ConditionStatus.TRUE),
+            (same_day_announcement, ConditionStatus.UNKNOWN),
+        ):
+            snapshot = make_snapshot(
+                dates,
+                {"SH:600001": trend(30, 10, "0.001")},
+                benchmark_closes=[100] * 30,
+                financials={"SH:600001": financial},
+            )
+            result = compute_strategy(snapshot, "S07", default_configs())
+            self.assertEqual(result.rows["SH:600001"].signal_status, expected)
+
+    def test_offset_availability_is_rejected(self) -> None:
+        with self.assertRaises(ValueError):
+            default_financial(
+                "IND_VAL",
+                "2026-10-16",
+                available_at="2026-10-16T10:00:00+08:00",
+            )
 
 
 class S08Tests(unittest.TestCase):

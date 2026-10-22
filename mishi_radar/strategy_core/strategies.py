@@ -11,6 +11,7 @@ from .config import (
     S01_DEFAULT_CONFIG_VERSION,
     ConfigBundle,
 )
+from ..time_contract import parse_local_datetime, validate_local_datetime
 from .mathx import (
     ZERO,
     dec,
@@ -73,14 +74,16 @@ def _bar(snapshot: MarketSnapshot, security_id: str, date: str) -> MarketBar | N
 def _is_available(available_at: str | None, business_date: str) -> bool:
     if available_at is None:
         return True
-    date_part = available_at[:10]
-    if date_part < business_date:
+    validate_local_datetime(available_at, field="available_at", allow_date=True)
+    parsed = parse_local_datetime(available_at, field="available_at", allow_date=True)
+    business = parse_local_datetime(f"{business_date}T00:00:00", field="business_date")
+    if parsed.date() < business.date():
         return True
-    if date_part > business_date:
+    if parsed.date() > business.date():
         return False
-    if len(available_at) > 10 and ("T" in available_at or " " in available_at):
-        return available_at[11:19] <= "15:00:00"
-    return True
+    if len(available_at) == 10:
+        return True
+    return parsed.time() <= parse_local_datetime(f"{business_date}T15:00:00", field="close").time()
 
 
 def _check_available(value: Numeric, business_date: str) -> Numeric:
@@ -1667,15 +1670,27 @@ def _ttm_metrics(fin: FinancialSnapshot) -> tuple[dict[str, Decimal], Numeric | 
 
 
 def _financial_available_at(available_at: str, business_date: str) -> bool:
-    date_part = available_at[:10]
-    if date_part < business_date:
+    validate_local_datetime(available_at, field="available_at", allow_date=True)
+    parsed = parse_local_datetime(available_at, field="available_at", allow_date=True)
+    business = parse_local_datetime(f"{business_date}T00:00:00", field="business_date")
+    if parsed.date() < business.date():
         return True
-    if date_part > business_date:
+    if parsed.date() > business.date():
         return False
-    if len(available_at) > 10 and ("T" in available_at or " " in available_at):
-        time_part = available_at[11:19]
-        return time_part <= "15:00:00"
-    return True
+    if len(available_at) == 10:
+        return True
+    return parsed.time() <= parse_local_datetime(f"{business_date}T15:00:00", field="close").time()
+
+
+def _financial_availability(fin: FinancialSnapshot, calendar: Sequence[str]) -> str | None:
+    if fin.available_at is not None:
+        return fin.available_at
+    if fin.announced_on is None:
+        return None
+    for day in calendar:
+        if day > fin.announced_on:
+            return day
+    return None
 
 
 def _financial_component_blocker(fin: FinancialSnapshot, business_date: str) -> Numeric | None:
@@ -1760,9 +1775,10 @@ def _s07_metrics(snapshot: MarketSnapshot, security_id: str) -> tuple[dict[str, 
     fin = snapshot.financials.get(security_id)
     if fin is None:
         return {}, Numeric(None, ValueStatus.MISSING, "FINANCIAL_SNAPSHOT_MISSING")
-    if fin.available_at is None:
+    available_at = _financial_availability(fin, snapshot.calendar)
+    if available_at is None:
         return {}, Numeric(None, ValueStatus.UNKNOWN, "FINANCIAL_AVAILABILITY_UNKNOWN")
-    if not _financial_available_at(fin.available_at, snapshot.business_date):
+    if not _financial_available_at(available_at, snapshot.business_date):
         return {}, Numeric(None, ValueStatus.UNKNOWN, "FINANCIAL_NOT_YET_AVAILABLE")
     if fin.is_financial is None:
         return {}, Numeric(None, ValueStatus.UNKNOWN, "FINANCIAL_CLASSIFICATION_UNKNOWN")

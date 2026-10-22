@@ -13,6 +13,8 @@ from decimal import Decimal
 from enum import Enum
 from typing import Mapping
 
+from ..time_contract import validate_local_date, validate_local_datetime
+
 
 class ValueStatus(str, Enum):
     VALUE = "VALUE"
@@ -79,6 +81,8 @@ class Numeric:
             raise ValueError(f"{self.status.value} requires a value")
         if self.status is ValueStatus.CONFIRMED_ZERO and self.value != 0:
             raise ValueError("CONFIRMED_ZERO requires value 0")
+        if self.available_at is not None:
+            validate_local_datetime(self.available_at, field="available_at", allow_date=True)
 
     @property
     def usable(self) -> bool:
@@ -249,6 +253,12 @@ class FinancialSnapshot:
     input_version: str = "SYNTHETIC"
     conflict: bool = False
 
+    def __post_init__(self) -> None:
+        if self.available_at is not None:
+            validate_local_datetime(self.available_at, field="available_at", allow_date=True)
+        if self.announced_on is not None:
+            validate_local_date(self.announced_on, field="announced_on")
+
     @classmethod
     def from_ttm(
         cls,
@@ -311,6 +321,8 @@ class MarketSnapshot:
             raise ValueError("calendar must not contain duplicate dates")
         if self.business_date != self.calendar[-1]:
             raise ValueError("business_date must be the last completed market day")
+        if self.available_at is not None:
+            validate_local_datetime(self.available_at, field="available_at", allow_date=True)
 
 
 @dataclass(frozen=True)
