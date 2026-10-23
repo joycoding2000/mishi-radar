@@ -1,0 +1,532 @@
+{
+  "scenarios": [
+    {
+      "f1": {
+        "actual_published": false,
+        "batch_identity": "SYNTHETIC_FIXTURE_BATCH",
+        "counts": {
+          "beyond_top_n": 2,
+          "failed_rows": 0,
+          "formal_candidates": 4,
+          "kernel_candidate_size": 4,
+          "pool_size": 6,
+          "preview_candidates": 0,
+          "top_n_returned": 2,
+          "unknown_rows": 0
+        },
+        "outcome": {
+          "computation_ok": true,
+          "empty_is_success": false,
+          "failure": null,
+          "formal_identity_available": true,
+          "kind": "CANDIDATES",
+          "sample_only": false
+        },
+        "pool_complete": true
+      },
+      "f3": {
+        "dimension_counts": {
+          "missing": 0,
+          "not_applicable": 0,
+          "total": 6,
+          "value": 6
+        },
+        "failed_strategies": [],
+        "hit_strategies": [
+          "S01",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ],
+        "missing_dimensions": [],
+        "security_id": "SYN:000001",
+        "unknown_strategies": []
+      },
+      "f7": {
+        "availability": {
+          "actual_published_at": null,
+          "availability_status": "SYNTHETIC_ONLY",
+          "available_at": "2026-10-16",
+          "available_at_kind": "SYNTHETIC_DATE_COMPAT",
+          "computed_at": "2026-10-16T18:00:00",
+          "computed_at_status": "FIXTURE_DECLARED",
+          "fetched_at": "UNKNOWN",
+          "fetched_at_status": "UNKNOWN",
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "source_time": "UNKNOWN",
+          "source_time_basis": "FIXTURE_HAS_NO_REAL_SOURCE_TIMESTAMP",
+          "source_time_status": "UNKNOWN",
+          "source_times": {
+            "financial": "UNKNOWN",
+            "fund_flow": "UNKNOWN",
+            "industry": "UNKNOWN",
+            "price": "UNKNOWN"
+          }
+        },
+        "gates": {
+          "actual_published": false,
+          "current_scan_qualified": false,
+          "formal_history_ranking": false,
+          "historical_replay_qualified": false,
+          "real_market_data": false,
+          "real_source_used": false
+        },
+        "publication_identity": {
+          "actual_published": false,
+          "actual_published_at": null,
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "formal_history_ranking_allowed": false,
+          "history_ranking_writable": false,
+          "identity": "SYNTHETIC_FIXTURE",
+          "reason": "SYNTHETIC_FIXTURE_IS_NOT_ACTUAL_PUBLICATION"
+        },
+        "quality": {
+          "failed_rows": 0,
+          "failed_strategies": [],
+          "missing_rows": 0,
+          "partial_strategies": [],
+          "unknown_rows": 0
+        }
+      },
+      "marker": "SYNTHETIC / FIXTURE",
+      "scenario": "normal"
+    },
+    {
+      "f1": {
+        "actual_published": false,
+        "batch_identity": "SYNTHETIC_FIXTURE_BATCH",
+        "counts": {
+          "beyond_top_n": 0,
+          "failed_rows": 0,
+          "formal_candidates": 0,
+          "kernel_candidate_size": 0,
+          "pool_size": 6,
+          "preview_candidates": 0,
+          "top_n_returned": 0,
+          "unknown_rows": 0
+        },
+        "outcome": {
+          "computation_ok": true,
+          "empty_is_success": true,
+          "failure": null,
+          "formal_identity_available": true,
+          "kind": "EMPTY",
+          "sample_only": false
+        },
+        "pool_complete": true
+      },
+      "f3": {
+        "dimension_counts": {
+          "missing": 0,
+          "not_applicable": 0,
+          "total": 6,
+          "value": 6
+        },
+        "failed_strategies": [],
+        "hit_strategies": [],
+        "missing_dimensions": [],
+        "security_id": "SYN:000001",
+        "unknown_strategies": []
+      },
+      "f7": {
+        "availability": {
+          "actual_published_at": null,
+          "availability_status": "SYNTHETIC_ONLY",
+          "available_at": "2026-10-16",
+          "available_at_kind": "SYNTHETIC_DATE_COMPAT",
+          "computed_at": "2026-10-16T18:00:00",
+          "computed_at_status": "FIXTURE_DECLARED",
+          "fetched_at": "UNKNOWN",
+          "fetched_at_status": "UNKNOWN",
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "source_time": "UNKNOWN",
+          "source_time_basis": "FIXTURE_HAS_NO_REAL_SOURCE_TIMESTAMP",
+          "source_time_status": "UNKNOWN",
+          "source_times": {
+            "financial": "UNKNOWN",
+            "fund_flow": "UNKNOWN",
+            "industry": "UNKNOWN",
+            "price": "UNKNOWN"
+          }
+        },
+        "gates": {
+          "actual_published": false,
+          "current_scan_qualified": false,
+          "formal_history_ranking": false,
+          "historical_replay_qualified": false,
+          "real_market_data": false,
+          "real_source_used": false
+        },
+        "publication_identity": {
+          "actual_published": false,
+          "actual_published_at": null,
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "formal_history_ranking_allowed": false,
+          "history_ranking_writable": false,
+          "identity": "SYNTHETIC_FIXTURE",
+          "reason": "SYNTHETIC_FIXTURE_IS_NOT_ACTUAL_PUBLICATION"
+        },
+        "quality": {
+          "failed_rows": 0,
+          "failed_strategies": [],
+          "missing_rows": 0,
+          "partial_strategies": [],
+          "unknown_rows": 0
+        }
+      },
+      "marker": "SYNTHETIC / FIXTURE",
+      "scenario": "empty"
+    },
+    {
+      "f1": {
+        "actual_published": false,
+        "batch_identity": "SYNTHETIC_FIXTURE_BATCH",
+        "counts": {
+          "beyond_top_n": 0,
+          "failed_rows": 0,
+          "formal_candidates": 0,
+          "kernel_candidate_size": 4,
+          "pool_size": 5,
+          "preview_candidates": 4,
+          "top_n_returned": 0,
+          "unknown_rows": 1
+        },
+        "outcome": {
+          "computation_ok": true,
+          "empty_is_success": false,
+          "failure": null,
+          "formal_identity_available": false,
+          "kind": "PREVIEW",
+          "sample_only": true
+        },
+        "pool_complete": false
+      },
+      "f3": {
+        "dimension_counts": {
+          "missing": 6,
+          "not_applicable": 0,
+          "total": 6,
+          "value": 0
+        },
+        "failed_strategies": [],
+        "hit_strategies": [],
+        "missing_dimensions": [
+          "momentum",
+          "reversal",
+          "value",
+          "quality",
+          "low_volatility",
+          "liquidity"
+        ],
+        "security_id": "SYN:000006",
+        "unknown_strategies": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ]
+      },
+      "f7": {
+        "availability": {
+          "actual_published_at": null,
+          "availability_status": "SYNTHETIC_ONLY",
+          "available_at": "2026-10-16",
+          "available_at_kind": "SYNTHETIC_DATE_COMPAT",
+          "computed_at": "2026-10-16T18:00:00",
+          "computed_at_status": "FIXTURE_DECLARED",
+          "fetched_at": "UNKNOWN",
+          "fetched_at_status": "UNKNOWN",
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "source_time": "UNKNOWN",
+          "source_time_basis": "FIXTURE_HAS_NO_REAL_SOURCE_TIMESTAMP",
+          "source_time_status": "UNKNOWN",
+          "source_times": {
+            "financial": "UNKNOWN",
+            "fund_flow": "UNKNOWN",
+            "industry": "UNKNOWN",
+            "price": "UNKNOWN"
+          }
+        },
+        "gates": {
+          "actual_published": false,
+          "current_scan_qualified": false,
+          "formal_history_ranking": false,
+          "historical_replay_qualified": false,
+          "real_market_data": false,
+          "real_source_used": false
+        },
+        "publication_identity": {
+          "actual_published": false,
+          "actual_published_at": null,
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "formal_history_ranking_allowed": false,
+          "history_ranking_writable": false,
+          "identity": "SYNTHETIC_FIXTURE",
+          "reason": "SYNTHETIC_FIXTURE_IS_NOT_ACTUAL_PUBLICATION"
+        },
+        "quality": {
+          "failed_rows": 0,
+          "failed_strategies": [],
+          "missing_rows": 8,
+          "partial_strategies": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05",
+            "S06",
+            "S07",
+            "S08"
+          ],
+          "unknown_rows": 17
+        }
+      },
+      "marker": "SYNTHETIC / FIXTURE",
+      "scenario": "unknown"
+    },
+    {
+      "f1": {
+        "actual_published": false,
+        "batch_identity": "SYNTHETIC_FIXTURE_BATCH",
+        "counts": {
+          "beyond_top_n": 0,
+          "failed_rows": 0,
+          "formal_candidates": 0,
+          "kernel_candidate_size": 0,
+          "pool_size": 0,
+          "preview_candidates": 0,
+          "top_n_returned": 0,
+          "unknown_rows": 6
+        },
+        "outcome": {
+          "computation_ok": true,
+          "empty_is_success": false,
+          "failure": null,
+          "formal_identity_available": false,
+          "kind": "UNKNOWN",
+          "sample_only": false
+        },
+        "pool_complete": false
+      },
+      "f3": {
+        "dimension_counts": {
+          "missing": 6,
+          "not_applicable": 0,
+          "total": 6,
+          "value": 0
+        },
+        "failed_strategies": [],
+        "hit_strategies": [],
+        "missing_dimensions": [
+          "momentum",
+          "reversal",
+          "value",
+          "quality",
+          "low_volatility",
+          "liquidity"
+        ],
+        "security_id": "SYN:000001",
+        "unknown_strategies": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ]
+      },
+      "f7": {
+        "availability": {
+          "actual_published_at": null,
+          "availability_status": "UNKNOWN",
+          "available_at": "UNKNOWN",
+          "available_at_kind": "UNKNOWN",
+          "computed_at": "2026-10-16T18:00:00",
+          "computed_at_status": "FIXTURE_DECLARED",
+          "fetched_at": "UNKNOWN",
+          "fetched_at_status": "UNKNOWN",
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "source_time": "UNKNOWN",
+          "source_time_basis": "FIXTURE_HAS_NO_REAL_SOURCE_TIMESTAMP",
+          "source_time_status": "UNKNOWN",
+          "source_times": {
+            "financial": "UNKNOWN",
+            "fund_flow": "UNKNOWN",
+            "industry": "UNKNOWN",
+            "price": "UNKNOWN"
+          }
+        },
+        "gates": {
+          "actual_published": false,
+          "current_scan_qualified": false,
+          "formal_history_ranking": false,
+          "historical_replay_qualified": false,
+          "real_market_data": false,
+          "real_source_used": false
+        },
+        "publication_identity": {
+          "actual_published": false,
+          "actual_published_at": null,
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "formal_history_ranking_allowed": false,
+          "history_ranking_writable": false,
+          "identity": "SYNTHETIC_FIXTURE",
+          "reason": "SYNTHETIC_FIXTURE_IS_NOT_ACTUAL_PUBLICATION"
+        },
+        "quality": {
+          "failed_rows": 0,
+          "failed_strategies": [],
+          "missing_rows": 48,
+          "partial_strategies": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05",
+            "S06",
+            "S07",
+            "S08"
+          ],
+          "unknown_rows": 48
+        }
+      },
+      "marker": "SYNTHETIC / FIXTURE",
+      "scenario": "unavailable"
+    },
+    {
+      "f1": {
+        "actual_published": false,
+        "batch_identity": "SYNTHETIC_FIXTURE_BATCH",
+        "counts": {
+          "beyond_top_n": 0,
+          "failed_rows": 6,
+          "formal_candidates": 0,
+          "kernel_candidate_size": 0,
+          "pool_size": 0,
+          "preview_candidates": 0,
+          "top_n_returned": 0,
+          "unknown_rows": 0
+        },
+        "outcome": {
+          "computation_ok": false,
+          "empty_is_success": false,
+          "failure": {
+            "code": "STRATEGY_INPUT_FAILED",
+            "failed_rows": 6,
+            "message": "all rows failed; no scorable pool"
+          },
+          "formal_identity_available": false,
+          "kind": "FAILED",
+          "sample_only": false
+        },
+        "pool_complete": false
+      },
+      "f3": {
+        "dimension_counts": {
+          "missing": 6,
+          "not_applicable": 0,
+          "total": 6,
+          "value": 0
+        },
+        "failed_strategies": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08"
+        ],
+        "hit_strategies": [],
+        "missing_dimensions": [
+          "momentum",
+          "reversal",
+          "value",
+          "quality",
+          "low_volatility",
+          "liquidity"
+        ],
+        "security_id": "SYN:000001",
+        "unknown_strategies": []
+      },
+      "f7": {
+        "availability": {
+          "actual_published_at": null,
+          "availability_status": "UNKNOWN",
+          "available_at": "UNKNOWN",
+          "available_at_kind": "UNKNOWN",
+          "computed_at": "2026-10-16T18:00:00",
+          "computed_at_status": "FIXTURE_DECLARED",
+          "fetched_at": "UNKNOWN",
+          "fetched_at_status": "UNKNOWN",
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "source_time": "UNKNOWN",
+          "source_time_basis": "FIXTURE_HAS_NO_REAL_SOURCE_TIMESTAMP",
+          "source_time_status": "UNKNOWN",
+          "source_times": {
+            "financial": "UNKNOWN",
+            "fund_flow": "UNKNOWN",
+            "industry": "UNKNOWN",
+            "price": "UNKNOWN"
+          }
+        },
+        "gates": {
+          "actual_published": false,
+          "current_scan_qualified": false,
+          "formal_history_ranking": false,
+          "historical_replay_qualified": false,
+          "real_market_data": false,
+          "real_source_used": false
+        },
+        "publication_identity": {
+          "actual_published": false,
+          "actual_published_at": null,
+          "fixture_declared_published_at": "2026-10-16T18:05:00",
+          "formal_history_ranking_allowed": false,
+          "history_ranking_writable": false,
+          "identity": "SYNTHETIC_FIXTURE",
+          "reason": "SYNTHETIC_FIXTURE_IS_NOT_ACTUAL_PUBLICATION"
+        },
+        "quality": {
+          "failed_rows": 48,
+          "failed_strategies": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05",
+            "S06",
+            "S07",
+            "S08"
+          ],
+          "missing_rows": 0,
+          "partial_strategies": [
+            "S01",
+            "S02",
+            "S03",
+            "S04",
+            "S05",
+            "S06",
+            "S07",
+            "S08"
+          ],
+          "unknown_rows": 0
+        }
+      },
+      "marker": "SYNTHETIC / FIXTURE",
+      "scenario": "failed"
+    }
+  ],
+  "schema": {
+    "contract": "WP-FX01A-STATE-MATRIX",
+    "contract_version": "FX01A-RESULT-CONTRACT-v1"
+  }
+}

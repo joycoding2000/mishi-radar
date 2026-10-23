@@ -1,0 +1,170 @@
+{
+  "record": "WP-FX01A_OWNER_ACCEPTANCE_PAUSED_FX01_SHA256",
+  "generated_at": "2026-10-23T14:32:44+08:00",
+  "git_head": "b9a7fba6be9515fc3271eac7a7a97ab65f53e64d",
+  "scope": "Paused WP-FX01 untracked files; none are staged or committed by this record.",
+  "limitation": "Current-state baseline only. No pre-implementation SHA256 manifest or recoverable snapshot exists; this list does not prove pre-implementation identity.",
+  "file_count": 32,
+  "files": [
+    {
+      "path": "mishi_radar/demo/__init__.py",
+      "bytes": 481,
+      "sha256": "13f43bfaa64a4d00999cb943e572c85704ea9dfcfe2f8393c4aeb99c4b711c54"
+    },
+    {
+      "path": "mishi_radar/demo/__main__.py",
+      "bytes": 625,
+      "sha256": "e5f7ff83c656346d32f9b9d97e9e325e5ed8c15ba7b24d0cb4e288ebdcce81ff"
+    },
+    {
+      "path": "mishi_radar/demo/app.py",
+      "bytes": 10742,
+      "sha256": "1f5e78b30e172c44ce97c5387e5e6ca410928ad955e804230d45d3f5afa11ac1"
+    },
+    {
+      "path": "mishi_radar/demo/backtest.py",
+      "bytes": 12578,
+      "sha256": "b6832911b758c48e24c4ebc70eb8dc83803224acc5462fbb1d86e958ff5edceb"
+    },
+    {
+      "path": "mishi_radar/demo/fixtures.py",
+      "bytes": 16538,
+      "sha256": "07c692db30979d335e83b8e4efe4c9cb609f26b5420833a5663ba36592b57d0b"
+    },
+    {
+      "path": "mishi_radar/demo/service.py",
+      "bytes": 51034,
+      "sha256": "46dd58ed84a39c20b988894f91a8f467755376d63d4dfccb0287f538f14be716"
+    },
+    {
+      "path": "mishi_radar/demo/static/app.css",
+      "bytes": 16669,
+      "sha256": "97c4656da6a1db040f490c1d7c00601dc56637eaa3fda980554504ad3979a130"
+    },
+    {
+      "path": "mishi_radar/demo/static/app.js",
+      "bytes": 594,
+      "sha256": "add9800ea5a951e8bf2b9d6d180548b2644f98f917c03835f72f80c322b47e62"
+    },
+    {
+      "path": "mishi_radar/demo/templates/backtest.html",
+      "bytes": 10486,
+      "sha256": "c2a8004eee42af431c54b53ab914eda65e678b17f3d9515f180d508bb56bc3ab"
+    },
+    {
+      "path": "mishi_radar/demo/templates/base.html",
+      "bytes": 2052,
+      "sha256": "4c4991c692bd86052d9cd5beb26a2a4e0179d11712dc7a1cc32d0bd0fee43456"
+    },
+    {
+      "path": "mishi_radar/demo/templates/error.html",
+      "bytes": 494,
+      "sha256": "963307f4b58549eb7da11e7d5f3e7dcdefaeaae51a15afaab34c9bc3780afc42"
+    },
+    {
+      "path": "mishi_radar/demo/templates/index.html",
+      "bytes": 11527,
+      "sha256": "c7d0b4d7cdd8abddfeb52a6e2dab42498d6ac7159be38c997eca7e265de467ca"
+    },
+    {
+      "path": "mishi_radar/demo/templates/status.html",
+      "bytes": 4917,
+      "sha256": "5c8c5e6b66e20a083bc85a152cc814e3708315e4ae03b9008031060e4adf02cb"
+    },
+    {
+      "path": "mishi_radar/demo/templates/stock.html",
+      "bytes": 7735,
+      "sha256": "e9421368a30f6ab770c2e69edfcb921885f18071fd53f876a05b47f9bc49e1fb"
+    },
+    {
+      "path": "mishi_radar/demo/templates/watch.html",
+      "bytes": 7180,
+      "sha256": "ff1ed4cd33d8f22637982ab137f5d03e5acdea5372fe692c0a23f9271d97c597"
+    },
+    {
+      "path": "mishi_radar/demo/watch.py",
+      "bytes": 5372,
+      "sha256": "f8d914bb8426811549e2009c2c45dd31d9b4530a9e57280010a5ae4685a2578c"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/browser-watchlist.json",
+      "bytes": 3525,
+      "sha256": "35a13e0ba4118df1d5003b8ef4183853cf37615ab66fa0a97de341f33172eb0c"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/browser_check.py",
+      "bytes": 4924,
+      "sha256": "d7ecf8503b434c03a133fc4e7a4ea9394486eed59b0637f70d248e3a19269e82"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-01-f1.png",
+      "bytes": 763577,
+      "sha256": "46d164fce2959ed7a206fa1b74ae4f0166cb89153cee18858e05c3bd8c2c8591"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-02-f3.png",
+      "bytes": 472308,
+      "sha256": "90cb7a1f6aa0452fbedc7651a0ecd625997ac7a0dd6987e64ca027c2b16a05a4"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-03-f5.png",
+      "bytes": 302812,
+      "sha256": "c2cc715a666ed12d1e18e79f166304b43a914ee4675b4164ab057eaeed730482"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-04-f6-u3.png",
+      "bytes": 457702,
+      "sha256": "e4422fb82d2d057c0bc51bfb39860e88b50deaa6c2f61fcab58d159742ea511d"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-05-f6-failures.png",
+      "bytes": 471662,
+      "sha256": "abab97de4f50d42e354dc99f3dae21ab3797aa8e8ce230fc6efbfa7e9cd3844d"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-06-f1-empty.png",
+      "bytes": 302028,
+      "sha256": "d76486b8a15fe51aaeb95975d798638d3d805e2e21b46a387185a1c6ff0ddfcd"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-07-f1-unknown.png",
+      "bytes": 832616,
+      "sha256": "d60802019ca618d2948bf0ac1e4d60e8af4a24d537bb5f2ad687d5a53b7582cc"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-08-f7.png",
+      "bytes": 663816,
+      "sha256": "5fa1ef7dc4f73483a5d0db05ebecb25fa793e963ef8166374409ec030bfebf0e"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-01-f1.png",
+      "bytes": 1722721,
+      "sha256": "8361b76960b62f7521ba9a5a9ff697b226d31905b090db23922cf9950a7a8755"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-02-f3.png",
+      "bytes": 1168555,
+      "sha256": "71cebb0d2613ad65e19dfb91ca3380b332a442e7b6b959175a55795783315dd3"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-03-f5.png",
+      "bytes": 687017,
+      "sha256": "65c6e9cd16f6cbb10fa8dc8ce6b3bce0c1785ee48d876f13b52de52171b74317"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-04-f6.png",
+      "bytes": 1550765,
+      "sha256": "924654dc9f3518375dcb605d2a9017413741c25135065b41855e43b6d5408a72"
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-05-f1-unknown.png",
+      "bytes": 1758256,
+      "sha256": "0f9e0b32a0eed85d211530c3f51cc1e0318a2ba87a303109fd6dfaa55db18c16"
+    },
+    {
+      "path": "tests/test_demo_product.py",
+      "bytes": 14514,
+      "sha256": "625db64856cbd1f874925c904bb5af93c2b9b3b237a378643efad766e20d002c"
+    }
+  ]
+}
