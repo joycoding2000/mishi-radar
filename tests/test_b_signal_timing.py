@@ -1,0 +1,121 @@
+from __future__ import annotations
+
+import unittest
+from datetime import date
+from decimal import Decimal
+
+from mishi_radar.cash_backtest.engine import run_backtest
+
+from tests.b_fixtures import bar, config, make_input, market_day, signal, trading_dates
+
+
+class SignalOpenTimingTests(unittest.TestCase):
+    dates = trading_dates(2, end=date(2026, 10, 19))
+    signal_day, trade_day = dates
+
+    def _run(self, available_at: str):
+        days = [
+            market_day(self.signal_day, {"SH:600001": bar(self.signal_day, 5, 5)}),
+            market_day(self.trade_day, {"SH:600001": bar(self.trade_day, 5, 5)}),
+        ]
+        item = signal(
+            "SH:600001",
+            self.signal_day,
+            strategy_id="S02",
+            candidate_rank=1,
+            pool_rank=1,
+            available_at=available_at,
+        )
+        return run_backtest(
+            make_input(self.dates, days, signals_by_signal_date={self.signal_day: (item,)}),
+            config(
+                strategy_id="S02",
+                initial_cash=Decimal(1005),
+                top_n=1,
+                start_date=self.trade_day,
+                stop_loss=None,
+            ),
+        )
+
+    def test_signal_known_before_next_open_executes_at_next_open(self) -> None:
+        result = self._run(f"{self.trade_day}T09:00:00")
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual(
+            [(fill.date, fill.quantity, fill.price) for fill in result.fills],
+            [(self.trade_day, 200, Decimal(5))],
+        )
+        self.assertEqual(result.nav_points[-1].cash, Decimal(0))
+        self.assertEqual(result.nav_points[-1].equity, Decimal(1000))
+
+    def test_signal_known_just_before_open_executes_at_next_open(self) -> None:
+        result = self._run(f"{self.trade_day}T09:29:59")
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual(len(result.fills), 1)
+        self.assertEqual(result.fills[0].date, self.trade_day)
+
+    def test_signal_known_after_open_is_not_executed_at_that_open(self) -> None:
+        result = self._run(f"{self.trade_day}T09:30:01")
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual(result.fills, [])
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
+        self.assertTrue(
+            any(
+                order.status == "PENDING" and order.reason == "AWAITING_FIRST_ELIGIBLE_OPEN"
+                for order in result.orders
+            )
+        )
+        self.assertTrue(
+            any("LEGACY_SIGNAL_PENDING_OUTSIDE_REPLAY" in warning for warning in result.warnings)
+        )
+
+    def test_previous_day_evening_timestamp_is_before_next_open(self) -> None:
+        result = self._run(f"{self.signal_day}T23:59:59")
+        self.assertEqual(result.status, "SUCCEEDED", result.blockers)
+        self.assertEqual(len(result.fills), 1)
+        self.assertEqual(result.fills[0].date, self.trade_day)
+
+    def test_post_open_old_signal_with_future_member_requires_batch(self) -> None:
+        dates = trading_dates(3)
+        old_sid = "SH:600001"
+        new_sid = "SH:600002"
+        days = [
+            market_day(day, {sid: bar(day, 5, 5) for sid in (old_sid, new_sid)})
+            for day in dates
+        ]
+        old = signal(
+            old_sid,
+            dates[0],
+            strategy_id="S02",
+            available_at=f"{dates[1]}T09:30:01",
+        )
+        new = signal(
+            new_sid,
+            dates[1],
+            strategy_id="S02",
+            available_at=f"{dates[1]}T15:00:00",
+        )
+        result = run_backtest(
+            make_input(
+                dates,
+                days,
+                signals_by_signal_date={dates[0]: (old,), dates[1]: (new,)},
+            ),
+            config(
+                strategy_id="S02",
+                initial_cash=Decimal(1005),
+                top_n=1,
+                start_date=dates[1],
+                rebalance_days=1,
+                stop_loss=None,
+            ),
+        )
+        self.assertEqual(result.status, "BLOCKED")
+        self.assertTrue(
+            any("LEGACY_SIGNAL_REQUIRES_BATCH" in blocker for blocker in result.blockers)
+        )
+        self.assertEqual(result.fills, [])
+        self.assertFalse(any(order.status == "EXPIRED" for order in result.orders))
+
+
+if __name__ == "__main__":
+    unittest.main()
