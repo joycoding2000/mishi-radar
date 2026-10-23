@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "user": "fixture-user",
+  "entries": [
+    {
+      "watch_id": "w-765c9127ffa7",
+      "user": "fixture-user",
+      "security_id": "SH:600012",
+      "strategy_id": "S01",
+      "scenario": "normal",
+      "style": "BALANCED/1",
+      "batch_id": "FX01:normal:S01:2026-10-16:S01_DEFAULT_R3.2-2026-10-19-OD1-v1:FX01-2026-10-23-v1",
+      "created_at": "2026-10-23T10:23:13",
+      "snapshot": {
+        "fixture_version": "FX01-2026-10-23-v1",
+        "fixture_marker": "SYNTHETIC / FIXTURE / 非真实行情",
+        "scenario": "normal",
+        "security_id": "SH:600012",
+        "security_name": "合成丑 · 非真实证券",
+        "industry_id": null,
+        "industry_name": null,
+        "strategy_id": "S01",
+        "strategy_label": "S01 趋势强势",
+        "batch_id": "FX01:normal:S01:2026-10-16:S01_DEFAULT_R3.2-2026-10-19-OD1-v1:FX01-2026-10-23-v1",
+        "signal_date": "2026-10-16",
+        "config_id": "S01_DEFAULT",
+        "config_version": "S01_DEFAULT/R3.2-2026-10-19-OD1-v1",
+        "input_version": "SYNTHETIC-FX01-2026-10-23-v1:normal",
+        "available_at": "2026-10-16",
+        "price_date": "2026-10-16",
+        "price_close": "10.70763725945046085015035036",
+        "price_status": "VALUE",
+        "eligibility": "SCORABLE",
+        "signal_state": "CANDIDATE",
+        "signal_state_label": "候选",
+        "signal_status": "TRUE",
+        "formal_candidate": true,
+        "preview_candidate": false,
+        "candidate_rank": 1,
+        "sample_candidate_rank": 1,
+        "pool_rank": 1,
+        "sample_pool_rank": 1,
+        "pool_size": 12,
+        "pool_complete": true,
+        "main_adverse": "没有已知 FALSE 条件；仍仅为固定规则展示",
+        "positive_conditions": [
+          "趋势条件（P>MA20>MA60）",
+          "ER20>0"
+        ],
+        "adverse_conditions": [],
+        "dimensions": {
+          "momentum": {
+            "label": "动量",
+            "value_text": "8.99%",
+            "score_text": "95.8",
+            "status": "VALUE",
+            "pool_size": 12,
+            "pool_complete": true
+          },
+          "value": {
+            "label": "价值",
+            "value_text": "13.00x",
+            "score_text": "62.5",
+            "status": "VALUE",
+            "pool_size": 4,
+            "pool_complete": true
+          },
+          "quality": {
+            "label": "质量",
+            "value_text": "19.00%",
+            "score_text": "37.5",
+            "status": "VALUE",
+            "pool_size": 4,
+            "pool_complete": true
+          },
+          "reversal": {
+            "label": "反转",
+            "value_text": "2.27%",
+            "score_text": "4.2",
+            "status": "VALUE",
+            "pool_size": 12,
+            "pool_complete": true
+          },
+          "low_volatility": {
+            "label": "低波",
+            "value_text": "0.00%",
+            "score_text": "75.0",
+            "status": "VALUE",
+            "pool_size": 12,
+            "pool_complete": true
+          },
+          "liquidity": {
+            "label": "流动性",
+            "value_text": "0.0096 ×10⁻⁸ /元",
+            "score_text": "12.5",
+            "status": "VALUE",
+            "pool_size": 12,
+            "pool_complete": true
+          }
+        },
+        "available_dimensions": 6
+      },
+      "status": "ACTIVE",
+      "removed_at": null
+    }
+  ]
+}

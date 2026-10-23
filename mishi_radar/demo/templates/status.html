@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}数据状态 F7{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">F7 数据状态</p>
+    <h1>固定 Fixture 数据、覆盖与合同身份</h1>
+    <p class="lead">状态直接来自已验收 <code>mishi_radar.result_contract</code> 的 <code>{{ accepted_contract.contracts[2] }}</code>；区分合同标记、真实发布、来源时间、覆盖与质量。</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill pill-warn">FIXTURE ONLY</span>
+    <dl class="inline-dl">
+      <div><dt>合同版本</dt><dd class="mono">{{ accepted_contract.contract_version }}</dd></div>
+      <div><dt>Owner 验收</dt><dd>{{ accepted_contract.owner_acceptance }}</dd></div>
+      <div><dt>FX01A Fixture</dt><dd class="mono">{{ accepted_contract.fx01a_fixture_version }}</dd></div>
+      <div><dt>真实行情</dt><dd>否</dd></div>
+      <div><dt>网络调用</dt><dd>否</dd></div>
+      <div><dt>真实发布</dt><dd>否</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="notice fixture-notice">
+  <strong>{{ display_marker }}</strong>
+  <span>合同标记 <span class="mono">{{ marker }}</span>；F1/F3/F7 使用同一 FX01A 固定输入。源时间没有真实值，统一为 UNKNOWN。</span>
+</section>
+
+{% for scenario in scenarios %}
+<section class="card scenario-card">
+  <div class="candidate-head">
+    <div>
+      <h2>{{ scenario.label }} <span class="mono small">{{ scenario.scenario }}</span></h2>
+      <p class="muted">{{ scenario.description }}</p>
+    </div>
+    <div class="badge-stack">
+      <span class="pill {{ 'pill-good' if scenario.outcome.tone == 'good' else 'pill-warn' if scenario.outcome.tone == 'warn' else 'pill-bad' }}">{{ scenario.outcome.label }}</span>
+      <span class="pill pill-neutral">{{ scenario.f7_contract.contract }}</span>
+    </div>
+  </div>
+  <dl class="facts four-col">
+    <div><dt>业务日</dt><dd>{{ scenario.fixture.business_date }}</dd></div>
+    <div><dt>日历</dt><dd>{{ scenario.coverage.calendar.start }} → {{ scenario.coverage.calendar.end }}（{{ scenario.coverage.calendar.days }} 日）</dd></div>
+    <div><dt>证券分母</dt><dd>{{ scenario.coverage.universe_size }}（{{ '完整' if scenario.coverage.universe_complete else '不完整' }}）</dd></div>
+    <div><dt>行业映射</dt><dd>{{ '完整' if scenario.coverage.industry_mapping_complete else '不完整' }}（{{ scenario.coverage.industry_count }} 组）</dd></div>
+    <div><dt>合同计算时刻</dt><dd>{{ scenario.availability.computed_at }}（{{ scenario.availability.computed_at_status }}）</dd></div>
+    <div><dt>声明发布时刻</dt><dd>{{ scenario.availability.fixture_declared_published_at }}</dd></div>
+    <div><dt>真实发布时刻</dt><dd>{{ scenario.availability.actual_published_at if scenario.availability.actual_published_at else '无' }}</dd></div>
+    <div><dt>可用时刻</dt><dd>{{ scenario.availability.available_at }}（{{ scenario.availability.available_at_kind }}）</dd></div>
+    <div><dt>价格源时间</dt><dd>{{ scenario.availability.source_times.price }}</dd></div>
+    <div><dt>财务源时间</dt><dd>{{ scenario.availability.source_times.financial }}</dd></div>
+    <div><dt>资金源时间</dt><dd>{{ scenario.availability.source_times.fund_flow }}</dd></div>
+    <div><dt>行业源时间</dt><dd>{{ scenario.availability.source_times.industry }}</dd></div>
+    <div><dt>输入版本</dt><dd class="mono small">{{ scenario.coverage.input_version }}</dd></div>
+    <div><dt>行业分类</dt><dd class="mono small">{{ scenario.coverage.taxonomy_id }} / {{ scenario.coverage.taxonomy_version }}</dd></div>
+    <div><dt>全策略池完整</dt><dd>{{ '是' if scenario.coverage.all_strategies_pool_complete else '否' }}</dd></div>
+    <div><dt>发布身份</dt><dd>{{ scenario.publication_identity.identity }} / actual_published={{ scenario.publication_identity.actual_published }}</dd></div>
+  </dl>
+
+  <div class="quality-grid">
+    <div><span class="metric-value">{{ scenario.quality.rows }}</span><span class="metric-label">合同行数</span></div>
+    <div><span class="metric-value">{{ scenario.quality.unknown_rows }}</span><span class="metric-label">UNKNOWN 行</span></div>
+    <div><span class="metric-value">{{ scenario.quality.failed_rows }}</span><span class="metric-label">FAILED 行</span></div>
+    <div><span class="metric-value">{{ scenario.quality.missing_rows }}</span><span class="metric-label">缺失行</span></div>
+    <div><span class="metric-value">{{ scenario.quality.partial_strategies|length }}</span><span class="metric-label">部分池策略</span></div>
+    <div><span class="metric-value">{{ scenario.quality.failed_strategies|length }}</span><span class="metric-label">失败策略</span></div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>策略</th><th>合同结果</th><th>配置版本</th><th>池 / 候选</th><th>池完整</th><th>状态分布</th></tr></thead>
+      <tbody>
+        {% for item in scenario.strategy_rows %}
+          <tr>
+            <td><b>{{ item.strategy_label }}</b></td>
+            <td><span class="pill {{ 'pill-good' if item.outcome_tone == 'good' else 'pill-warn' if item.outcome_tone == 'warn' else 'pill-bad' }}">{{ item.outcome_label }}</span></td>
+            <td class="mono small">{{ item.config_id }} / {{ item.config_version }}</td>
+            <td>{{ item.pool_size }} / {{ item.candidate_size }}</td>
+            <td>{{ '是' if item.pool_complete else '否' }}</td>
+            <td class="small">{% for state, count in item.counts.state_counts.items() %}{{ state }}={{ count }}{% if not loop.last %} · {% endif %}{% endfor %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="gate-line">
+    <span class="label">合同 Gate</span>
+    {% for key, value in scenario.gates.items() %}<span class="pill {{ 'pill-bad' if value else 'pill-neutral' }}">{{ key }}={{ value }}</span>{% endfor %}
+  </div>
+</section>
+{% endfor %}
+
+<section class="section-head"><div><h2>Web / 内核 Gate</h2><p class="muted">未实现能力保持 Gate，不用空壳页面替代。</p></div></section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>对象</th><th>状态</th><th>说明</th></tr></thead>
+    <tbody>
+      {% for gate in gates %}
+        <tr>
+          <td><b>{{ gate.name }}</b></td>
+          <td><span class="pill {{ 'pill-good' if 'REUSED' in gate.status or 'ACCEPTED' in gate.status else 'pill-warn' if 'GATED' in gate.status or 'UNKNOWN' in gate.status else 'pill-bad' }}">{{ gate.status }}</span></td>
+          <td>{{ gate.detail }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<section class="section-head"><div><h2>F6 合成现金场景</h2><p class="muted">实际入口 <code>mishi_radar.cash_backtest.run_backtest</code>；F6 使用独立固定合成输入，不接真实行情。</p></div></section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>场景</th><th>说明</th><th>入口</th></tr></thead>
+    <tbody>
+      {% for item in backtest_scenarios %}
+        <tr>
+          <td><b>{{ item.label }}</b><br><span class="mono small">{{ item.scenario }}</span></td>
+          <td>{{ item.description }}</td>
+          <td><a class="button button-secondary" href="{{ item.url }}">运行并查看</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

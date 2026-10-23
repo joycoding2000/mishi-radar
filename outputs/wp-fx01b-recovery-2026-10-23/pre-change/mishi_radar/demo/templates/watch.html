@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}关注 F5{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">F5 自选 / 观察</p>
+    <h1>关注与首次快照</h1>
+    <p class="lead">固定演示用户 <code>{{ user }}</code>。关注时冻结当时的证券、规则、批次、名次、条件与六维状态；之后切换固定批次只做“当前对照”，不改写首次快照。</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill pill-good">本地最小存储</span>
+    <p class="small">演示数据隔离存储，不引入正式账户、付费权益或跨设备同步。</p>
+    <p class="small muted">取消只改变当前自选，过去快照与历史记录保留。</p>
+  </div>
+</section>
+
+<section class="notice fixture-notice">
+  <strong>SYNTHETIC / FIXTURE / 非真实行情</strong>
+  <span>以下自选与快照均来自固定 Fixture，不连接券商、不推断真实成交。</span>
+</section>
+
+{% if added %}
+<section class="notice"><strong>已关注</strong><span>首次快照已保存；后续批次变化不会改写该快照。</span></section>
+{% endif %}
+{% if error %}
+<section class="notice warning">
+  <strong>关注未完成</strong>
+  <span>{{ '批次身份不一致，请从当前机会榜重新进入。' if error == 'batch' else '输入无效，未保存关注。' }}</span>
+</section>
+{% endif %}
+
+<section class="controls">
+  <div class="control-group">
+    <div class="label">当前对照批次（用于观察规则变化，不改变快照）</div>
+    <div class="tabs">
+      {% for tab in scenario_tabs %}
+        <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">{{ tab.label }}</a>
+      {% endfor %}
+    </div>
+    <p class="control-note">快照始终保留首次关注的批次；下方“当前对照”明确标注为另一次固定输入。</p>
+  </div>
+</section>
+
+{% if active %}
+<section class="section-head">
+  <div>
+    <h2>当前关注（{{ active_count }}）</h2>
+    <p class="muted">首次关注快照不可变。当前对照只用于解释后续固定批次下的状态变化。</p>
+  </div>
+</section>
+<div class="watch-list">
+  {% for entry in active %}
+    <article class="watch-card">
+      <div class="candidate-head">
+        <div>
+          <h3>{{ entry.snapshot.security_name }}</h3>
+          <div class="mono small">{{ entry.security_id }} · {{ entry.snapshot.industry_name or '行业 UNKNOWN' }}</div>
+        </div>
+        <div class="badge-stack">
+          <span class="pill pill-good">首次快照已冻结</span>
+          <span class="pill pill-neutral">{{ entry.snapshot.strategy_label }}</span>
+        </div>
+      </div>
+      <div class="watch-grid">
+        <section class="snapshot-box">
+          <h4>首次关注快照 · 不可变</h4>
+          <dl class="facts">
+            <div><dt>关注时间</dt><dd>{{ entry.created_at }}</dd></div>
+            <div><dt>快照批次</dt><dd class="mono small">{{ entry.snapshot.batch_id }}</dd></div>
+            <div><dt>信号日 / 价格日</dt><dd>{{ entry.snapshot.signal_date }} / {{ entry.snapshot.price_date }}</dd></div>
+            <div><dt>关注时名次</dt><dd>{% if entry.snapshot.formal_candidate %}正式候选 #{{ entry.snapshot.candidate_rank }} / 全池 #{{ entry.snapshot.pool_rank }}{% elif entry.snapshot.preview_candidate %}PREVIEW #{{ entry.snapshot.sample_candidate_rank }}{% else %}{{ entry.snapshot.signal_state_label }}{% endif %}</dd></div>
+            <div><dt>参考收盘</dt><dd>{{ entry.snapshot.price_close if entry.snapshot.price_close is not none else 'UNKNOWN' }}（合成原始价）</dd></div>
+            <div><dt>六维可用</dt><dd>{{ entry.snapshot.available_dimensions }} / 6</dd></div>
+          </dl>
+          <p><b>主要不利条件：</b>{{ entry.snapshot.main_adverse }}</p>
+          <div class="dimension-mini-grid">
+            {% for key, dim in entry.snapshot.dimensions.items() %}
+              <div class="mini-dim">
+                <span>{{ dim.label }}</span>
+                <b>{{ dim.score_text }}</b>
+                <small>{{ dim.status }}</small>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+        <section class="compare-box">
+          <h4>当前对照 · 场景 {{ entry.current.scenario }}</h4>
+          <p class="compare-status {{ 'warning-text' if entry.current.status in ['UNKNOWN', 'PREVIEW', 'NOT_IN_BATCH'] else '' }}">{{ entry.current.status_label }}</p>
+          <dl class="facts">
+            <div><dt>对照批次</dt><dd class="mono small">{{ entry.current.batch_id if entry.current.batch_id is defined else '—' }}</dd></div>
+            <div><dt>池完整</dt><dd>{{ entry.current.pool_complete if entry.current.pool_complete is defined else '—' }}</dd></div>
+            <div><dt>价格日 / 收盘</dt><dd>{{ entry.current.price_date if entry.current.price_date is defined else '—' }} / {{ entry.current.price_close if entry.current.price_close is defined else 'UNKNOWN' }}</dd></div>
+          </dl>
+          <p class="small muted">{{ entry.snapshot_note }}</p>
+        </section>
+      </div>
+      <div class="card-actions">
+        <a class="button button-secondary" href="/stock?scenario={{ entry.snapshot.scenario }}&strategy_id={{ entry.strategy_id }}&style={{ entry.style }}&security_id={{ entry.security_id }}&batch_id={{ entry.snapshot.batch_id }}">查看首次批次诊断</a>
+        <form method="post" action="/watch/remove">
+          <input type="hidden" name="watch_id" value="{{ entry.watch_id }}">
+          <button class="button button-ghost" type="submit">取消关注（保留历史快照）</button>
+        </form>
+      </div>
+    </article>
+  {% endfor %}
+</div>
+{% else %}
+<section class="empty-state">
+  <h2>还没有关注</h2>
+  <p>从机会榜或个股解释页点击“关注并保存首次快照”。固定演示用户无需登录。</p>
+  <a class="button" href="/?scenario={{ scenario }}">去机会榜</a>
+</section>
+{% endif %}
+
+{% if removed %}
+<section class="section-head">
+  <div>
+    <h2>历史关注记录（{{ removed_count }}）</h2>
+    <p class="muted">取消后只标记当前自选结束；快照、当次名次与取消时间保留。</p>
+  </div>
+</section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>证券</th><th>策略</th><th>首次快照名次</th><th>关注时间</th><th>取消时间</th><th>快照批次</th></tr></thead>
+    <tbody>
+      {% for entry in removed %}
+        <tr>
+          <td><b>{{ entry.snapshot.security_name }}</b><br><span class="mono small">{{ entry.security_id }}</span></td>
+          <td>{{ entry.snapshot.strategy_label }}</td>
+          <td>{% if entry.snapshot.formal_candidate %}#{{ entry.snapshot.candidate_rank }}{% elif entry.snapshot.preview_candidate %}PREVIEW #{{ entry.snapshot.sample_candidate_rank }}{% else %}{{ entry.snapshot.signal_state_label }}{% endif %}</td>
+          <td>{{ entry.created_at }}</td>
+          <td>{{ entry.removed_at }}</td>
+          <td class="mono small">{{ entry.snapshot.batch_id }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

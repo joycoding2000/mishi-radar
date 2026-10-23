@@ -1,0 +1,46 @@
+{% set fixture_marker = "SYNTHETIC / FIXTURE / 非真实行情" %}
+{% set contract_version = "FX01A-RESULT-CONTRACT-v1" %}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>{% block title %}觅势{% endblock %} · FIXTURE 演示</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <div class="fixture-ribbon" role="note">
+    <strong>{{ fixture_marker }}</strong>
+    <span>固定合成数据 · 无网络调用 · F1/F3/F7 复用 {{ contract_version }} · 不构成真实行情、投资建议或收益证据</span>
+  </div>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">MR</span>
+      <div>
+        <strong>觅势 · 机会雷达</strong>
+        <small>WP-FX01 固定 Fixture 产品纵向切片</small>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="/" class="{{ 'active' if request.url.path == '/' else '' }}">机会榜 F1</a>
+      <a href="/watch" class="{{ 'active' if request.url.path == '/watch' else '' }}">关注 F5</a>
+      <a href="/backtest" class="{{ 'active' if request.url.path == '/backtest' else '' }}">现金检验 F6</a>
+      <a href="/status" class="{{ 'active' if request.url.path == '/status' else '' }}">数据状态 F7</a>
+    </nav>
+    <div class="demo-user" title="固定演示用户，不是正式账户系统">
+      演示用户 · <code>fixture-user</code>
+    </div>
+  </header>
+
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <p><strong>边界：</strong>F1/F3/F7 使用已验收 FX01A 结果合同；F5 为最小演示关注；F6 为固定合成现金场景；F2 仅提供策略切换与透明风格显示；F4/H1 保持 Gate，不提供空壳；F8 正式认证与付费权益未实现。</p>
+    <p>F1/F3/F7 不重算规则：<code>mishi_radar.result_contract</code> ← <code>mishi_radar.strategy_core</code>。F6：<code>mishi_radar.cash_backtest.run_backtest</code>。OD-1/OD-2 冻结算法、费用语义与合同未修改。</p>
+  </footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>

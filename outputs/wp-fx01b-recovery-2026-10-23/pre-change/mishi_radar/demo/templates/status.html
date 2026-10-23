@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}数据状态 F7{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">F7 数据状态</p>
+    <h1>固定 Fixture 数据与批次状态</h1>
+    <p class="lead">明确区分固定输入、计算时刻、覆盖、版本与未知项。本页不是真实数据供应状态页，也不把 HTTP 200 当数据合格。</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill pill-warn">FIXTURE ONLY</span>
+    <dl class="inline-dl">
+      <div><dt>Fixture 版本</dt><dd class="mono">{{ fixture.fixture_version }}</dd></div>
+      <div><dt>业务日</dt><dd>{{ fixture.business_date }}</dd></div>
+      <div><dt>真实行情</dt><dd>{{ '是' if fixture.real_market_data else '否' }}</dd></div>
+      <div><dt>网络调用</dt><dd>{{ '是' if fixture.network_used else '否' }}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="notice fixture-notice">
+  <strong>SYNTHETIC / FIXTURE / 非真实行情</strong>
+  <span>所有数据均为固定合成输入；源时间不适用，以下状态只描述演示输入的身份与完整度。</span>
+</section>
+
+<section class="section-head"><div><h2>F1/F3 固定批次</h2><p class="muted">三个可复现场景：正常候选、完整空结果、输入缺失 / UNKNOWN。</p></div></section>
+{% for scenario in scenarios %}
+<section class="card">
+  <div class="candidate-head">
+    <div>
+      <h2>{{ scenario.label }} <span class="mono small">{{ scenario.scenario }}</span></h2>
+      <p class="muted">{{ scenario.description }}</p>
+    </div>
+    <span class="pill {{ 'pill-good' if scenario.universe_complete else 'pill-warn' }}">
+      universe {{ '完整' if scenario.universe_complete else '不完整' }}
+    </span>
+  </div>
+  <dl class="facts four-col">
+    <div><dt>业务日</dt><dd>{{ scenario.business_date }}</dd></div>
+    <div><dt>日历</dt><dd>{{ scenario.calendar_start }} → {{ scenario.calendar_end }}（{{ scenario.calendar_days }} 日）</dd></div>
+    <div><dt>证券分母</dt><dd>{{ scenario.universe_size }}</dd></div>
+    <div><dt>行业映射</dt><dd>{{ '完整' if scenario.industry_mapping_complete else '不完整' }}</dd></div>
+    <div><dt>固定计算时刻</dt><dd>{{ fixture.computed_at }}</dd></div>
+    <div><dt>固定发布时刻</dt><dd>{{ fixture.published_at }}</dd></div>
+    <div><dt>可用日期</dt><dd>{{ scenario.available_at }}</dd></div>
+    <div><dt>输入版本</dt><dd class="mono small">{{ scenario.input_version }}</dd></div>
+    <div><dt>行业分类</dt><dd class="mono small">{{ scenario.taxonomy_id }} / {{ scenario.taxonomy_version }}</dd></div>
+    <div><dt>源时间</dt><dd>UNKNOWN（固定 Fixture）</dd></div>
+  </dl>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>策略</th><th>配置版本</th><th>池</th><th>候选</th><th>池完整</th><th>状态分布</th></tr></thead>
+      <tbody>
+        {% for item in scenario.strategies %}
+          <tr>
+            <td><b>{{ item.strategy_label }}</b></td>
+            <td class="mono small">{{ item.config_id }} / {{ item.config_version }}</td>
+            <td>{{ item.pool_size }}</td>
+            <td>{{ item.candidate_size }}</td>
+            <td>{{ '是' if item.pool_complete else '否（PREVIEW）' }}</td>
+            <td class="small">{% for state, count in item.states.items() %}{{ state }}={{ count }}{% if not loop.last %} · {% endif %}{% endfor %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endfor %}
+
+<section class="section-head"><div><h2>F6 现金场景状态</h2><p class="muted">实际执行入口：<code>mishi_radar.cash_backtest.run_backtest</code>。状态由内核返回。</p></div></section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>场景</th><th>说明</th><th>入口</th></tr></thead>
+    <tbody>
+      {% for item in backtest_scenarios %}
+        <tr>
+          <td><b>{{ item.label }}</b><br><span class="mono small">{{ item.scenario }}</span></td>
+          <td>{{ item.description }}</td>
+          <td><a class="button button-secondary" href="{{ item.url }}">运行并查看</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<section class="section-head"><div><h2>Gate 与边界</h2><p class="muted">本轮不把未实现能力伪装成可用页面。</p></div></section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>对象</th><th>状态</th><th>说明</th></tr></thead>
+    <tbody>
+      {% for gate in gates %}
+        <tr>
+          <td><b>{{ gate.name }}</b></td>
+          <td><span class="pill {{ 'pill-good' if gate.status in ['REUSED'] else 'pill-warn' if 'NOT_IMPLEMENTED' not in gate.status else 'pill-bad' }}">{{ gate.status }}</span></td>
+          <td>{{ gate.detail }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

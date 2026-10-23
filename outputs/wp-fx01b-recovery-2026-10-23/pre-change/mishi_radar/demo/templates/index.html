@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block title %}机会榜 F1{% endblock %}
+{% block content %}
+{% macro candidate_card(item, preview=False) %}
+<article class="candidate-card {{ 'preview' if preview else '' }}">
+  <div class="candidate-head">
+    <div>
+      {% if preview %}
+        <span class="rank rank-preview">PREVIEW 样本 #{{ item.sample_candidate_rank if item.sample_candidate_rank is not none else '—' }}</span>
+      {% else %}
+        <span class="rank">候选 #{{ item.candidate_rank }}</span>
+        <span class="rank-sub">全可评分池 #{{ item.pool_rank }} / {{ item.pool_size }}</span>
+      {% endif %}
+      <h3><a href="{{ item.stock_url }}">{{ item.security_name }}</a></h3>
+      <div class="mono small">{{ item.security_id }} · {{ item.industry_name or '行业 UNKNOWN' }}</div>
+    </div>
+    <div class="badge-stack">
+      <span class="pill {{ 'pill-warn' if preview else 'pill-good' }}">{{ 'PREVIEW · 非正式' if preview else 'FIXTURE 正式候选' }}</span>
+      <span class="pill pill-neutral">{{ item.signal_status_label }}</span>
+    </div>
+  </div>
+
+  <div class="candidate-grid">
+    <div>
+      <div class="label">入选依据（内核 TRUE 条件）</div>
+      {% if item.positive_conditions %}
+        <ul class="compact-list positive-list">
+          {% for text in item.positive_conditions %}<li>{{ text }}</li>{% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">没有已确认 TRUE 条件。</p>
+      {% endif %}
+    </div>
+    <div>
+      <div class="label">主要不利条件 / 展示约束</div>
+      <p class="{{ 'warning-text' if item.adverse_conditions else 'muted' }}">{{ item.main_adverse }}</p>
+      {% if item.adverse_conditions %}
+        <ul class="compact-list adverse-list">
+          {% for text in item.adverse_conditions %}<li>{{ text }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="candidate-foot">
+    <div class="meta-line">
+      <span>信号日 <b>{{ item.signal_date }}</b></span>
+      <span>数据日 <b>{{ item.price_date }}</b></span>
+      <span>收盘（合成原始价） <b>{{ item.price_close if item.price_close is not none else 'UNKNOWN' }}</b></span>
+      <span class="mono">配置 {{ item.config_version }}</span>
+    </div>
+    <div class="tag-line">
+      {% for tag in item.hit_tags %}
+        <span class="pill pill-tag {{ 'pill-warn' if tag.preview else 'pill-neutral' }}">
+          {{ tag.strategy_label }}{% if tag.formal %} · #{{ tag.candidate_rank }}{% elif tag.preview %} · PREVIEW{% endif %}
+        </span>
+      {% endfor %}
+    </div>
+    <div class="card-actions">
+      <a class="button" href="{{ item.stock_url }}">查看个股解释 F3</a>
+      <form method="post" action="/watch/add">
+        <input type="hidden" name="scenario" value="{{ item.scenario if item.scenario is defined else fixture.scenario }}">
+        <input type="hidden" name="security_id" value="{{ item.security_id }}">
+        <input type="hidden" name="strategy_id" value="{{ item.strategy_id }}">
+        <input type="hidden" name="style" value="{{ style.style_id }}">
+        <input type="hidden" name="batch_id" value="{{ item.batch_id }}">
+        <button class="button button-secondary" type="submit">关注并保存首次快照</button>
+      </form>
+    </div>
+  </div>
+</article>
+{% endmacro %}
+
+<section class="page-head">
+  <div>
+    <p class="eyebrow">F1 今日机会 · {{ fixture.scenario_label }}</p>
+    <h1>固定 Fixture 候选榜</h1>
+    <p class="lead">当前规则、条件、信号与名次全部由 OD-1 内核在固定输入上计算；不是真实扫描，也不是手工填写的示例结果。</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill {{ 'pill-warn' if batch.status != 'PUBLISHED_FIXTURE' else 'pill-good' }}">{{ batch.status_label }}</span>
+    <div class="small mono">{{ batch.batch_id }}</div>
+    <dl class="inline-dl">
+      <div><dt>业务日</dt><dd>{{ fixture.business_date }}</dd></div>
+      <div><dt>批次计算</dt><dd>{{ batch.computed_at }}</dd></div>
+      <div><dt>候选 / 池</dt><dd>{{ counts.formal_candidates }} / {{ counts.pool_size }}</dd></div>
+      <div><dt>池完整</dt><dd>{{ '是' if batch.pool_complete else '否（PREVIEW）' }}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="notice fixture-notice">
+  <strong>SYNTHETIC / FIXTURE / 非真实行情</strong>
+  <span>{{ fixture.scenario_description }}</span>
+</section>
+
+<section class="controls">
+  <div class="control-group">
+    <div class="label">固定场景（可复现状态）</div>
+    <div class="tabs">
+      {% for tab in scenario_tabs %}
+        <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">{{ tab.label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="label">透明风格 F2 显示预设 <span class="muted">（不改计算）</span></div>
+    <div class="tabs">
+      {% for tab in style_tabs %}
+        <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">{{ tab.label }}</a>
+      {% endfor %}
+    </div>
+    <p class="control-note">{{ style.note }} 风格 ID：<span class="mono">{{ style.style_id }}</span>。</p>
+  </div>
+  <div class="control-group">
+    <div class="label">策略切换（按风格顺序排列，八策略一键可达）</div>
+    <div class="tabs tabs-wrap">
+      {% for tab in strategy_tabs %}
+        <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">{{ tab.label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="control-row">
+    <form class="search-form" method="get" action="/">
+      <input type="hidden" name="scenario" value="{{ fixture.scenario }}">
+      <input type="hidden" name="strategy" value="{{ strategy_id }}">
+      <input type="hidden" name="style" value="{{ style.style_id }}">
+      <input type="hidden" name="n" value="{{ n }}">
+      <label for="q">在本次候选中搜索代码 / 名称</label>
+      <div class="search-line">
+        <input id="q" name="q" value="{{ query }}" placeholder="例如 600001 或 合成甲">
+        <button class="button button-secondary" type="submit">搜索</button>
+      </div>
+    </form>
+    <div class="display-n">
+      <span class="label">显示 N</span>
+      <div class="tabs">
+        {% for tab in n_tabs %}
+          <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">{{ tab.n }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="refresh-line">
+      <a class="button button-ghost" href="?scenario={{ fixture.scenario }}&strategy={{ strategy_id }}&style={{ style.style_id }}&n={{ n }}&q={{ query }}&refresh=1">重新读取固定批次</a>
+      {% if refresh %}<span class="small muted">{{ refresh_note }}</span>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="summary-strip">
+  <div><span class="metric-value">{{ counts.formal_candidates }}</span><span class="metric-label">正式 Fixture 候选</span></div>
+  <div><span class="metric-value">{{ counts.preview_candidates }}</span><span class="metric-label">PREVIEW 样本</span></div>
+  <div><span class="metric-value">{{ counts.unknown_rows }}</span><span class="metric-label">UNKNOWN / 缺失</span></div>
+  <div><span class="metric-value">{{ counts.pool_size }}</span><span class="metric-label">全可评分池</span></div>
+  <div><span class="metric-value">{{ counts.kernel_candidate_size }}</span><span class="metric-label">内核 candidate_size</span></div>
+</section>
+
+{% if batch.status == 'PREVIEW' %}
+<section class="notice warning">
+  <strong>PREVIEW / 池不完整</strong>
+  <span>本次固定输入存在未解决的输入缺失或整池不完整。页面上的 PREVIEW 名次只是局部样本序号，不写入正式候选身份，也不补齐虚假股票池。</span>
+</section>
+{% endif %}
+
+<section class="section-head">
+  <div>
+    <h2>{{ strategy_label }}</h2>
+    <p class="muted">配置 <span class="mono">{{ batch.config_id }}</span> / <span class="mono">{{ batch.config_version }}</span>；候选按内核 <code>candidate_rank</code> 展示，卡片同时标注全池 <code>pool_rank</code>。</p>
+  </div>
+  {% if strategy_id == 'S06' %}
+    <span class="pill pill-neutral">绑定 S01_DEFAULT · {{ batch.bound_s01_config_version }}</span>
+  {% endif %}
+</section>
+
+{% if candidates %}
+  <div class="candidate-list">
+    {% for item in candidates %}{{ candidate_card(item) }}{% endfor %}
+  </div>
+{% elif batch.status == 'EMPTY' %}
+  <section class="empty-state">
+    <h2>完整空结果（成功）</h2>
+    <p>当前固定输入下，{{ strategy_label }} 的可评分池完整，但没有任何候选。这是正常结果，不是数据失败，也不产生虚假名次。</p>
+    <p class="muted">候选数 0 / 全可评分池 {{ counts.pool_size }}；批次 {{ batch.batch_id }}</p>
+  </section>
+{% elif batch.status == 'PUBLISHED_FIXTURE' and query %}
+  <section class="empty-state">
+    <h2>搜索无匹配</h2>
+    <p>已按“{{ query }}”过滤本次候选，没有匹配证券。清除搜索可恢复完整榜单。</p>
+    <a class="button button-secondary" href="?scenario={{ fixture.scenario }}&strategy={{ strategy_id }}&style={{ style.style_id }}&n={{ n }}">清除搜索</a>
+  </section>
+{% endif %}
+
+{% if preview_candidates %}
+  <section class="section-head">
+    <div>
+      <h2>PREVIEW 候选 <span class="pill pill-warn">非正式</span></h2>
+      <p class="muted">池不完整时内核只给出样本序号；以下内容明确不能当作正式有效候选。</p>
+    </div>
+  </section>
+  <div class="candidate-list">
+    {% for item in preview_candidates %}{{ candidate_card(item, preview=True) }}{% endfor %}
+  </div>
+{% endif %}
+
+{% if unknown_rows %}
+  <section class="section-head">
+    <div>
+      <h2>UNKNOWN / 缺失状态</h2>
+      <p class="muted">这些证券没有精确名次；缺失原因直接来自内核，不用 0、50 分或“未入选”替代。</p>
+    </div>
+  </section>
+  <div class="unknown-grid">
+    {% for item in unknown_rows %}
+      <article class="unknown-card">
+        <div class="candidate-head">
+          <div>
+            <h3>{{ item.security_name }}</h3>
+            <div class="mono small">{{ item.security_id }} · {{ item.industry_name or '行业 UNKNOWN' }}</div>
+          </div>
+          <span class="pill pill-bad">{{ item.signal_state_label }}</span>
+        </div>
+        <p><b>资格：</b>{{ item.eligibility_label }}</p>
+        {% if item.reasons %}
+          <ul class="compact-list adverse-list">
+            {% for reason in item.reasons %}<li>{{ reason.label }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+        <p class="muted">名次：正式 UNKNOWN；样本序号：{{ item.sample_candidate_rank if item.sample_candidate_rank is not none else '—' }}。价格：{{ item.price_close if item.price_close is not none else 'UNKNOWN' }}（{{ item.price_date }}）。</p>
+        <a class="button button-secondary" href="{{ item.stock_url }}">查看个股解释 F3</a>
+      </article>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<section class="fine-print">
+  <p>本页不展示预测胜率、跨策略统一总分或真实收益曲线。多策略命中标签只表示同一固定输入下另一策略的独立 <code>CANDIDATE</code> 状态，不能相加成买入概率。</p>
+  <p>导出：<a href="/export/f1.csv?scenario={{ fixture.scenario }}&strategy={{ strategy_id }}&style={{ style.style_id }}&n={{ n }}">下载本次 F1 CSV（含逐行 FIXTURE 标记）</a></p>
+</section>
+{% endblock %}

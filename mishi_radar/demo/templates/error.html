@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}请求错误{% endblock %}
+{% block content %}
+<section class="empty-state error-state">
+  <p class="eyebrow">FIXTURE 输入校验</p>
+  <h1>{{ title }}</h1>
+  <p>{{ message }}</p>
+  <p class="muted">演示接口会明确拒绝错误或过期的批次身份，不会静默换成另一个固定批次或另一只证券。</p>
+  <a class="button" href="/?scenario=normal&strategy=S01&style=BALANCED/1&n=10">返回机会榜</a>
+</section>
+{% endblock %}

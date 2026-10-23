@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% block title %}现金检验 F6{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">F6 历史现金检验 · 固定合成场景</p>
+    <h1>{{ fixture.backtest_label }}</h1>
+    <p class="lead">{{ fixture.backtest_description }}</p>
+    <p class="small muted">页面调用 OD-2 已验收入口 <code>{{ meta.engine }}</code>；NAV、现金、持仓、成交、费用与失败原因均来自内核返回，不由前端预制。</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill {{ 'pill-good' if succeeded else 'pill-bad' }}">{{ status }}</span>
+    <dl class="inline-dl">
+      <div><dt>初始现金</dt><dd>{{ initial_cash }}</dd></div>
+      <div><dt>Top N</dt><dd>{{ meta.config.top_n }}</dd></div>
+      <div><dt>调仓 R</dt><dd>{{ meta.config.rebalance_days }}</dd></div>
+      <div><dt>FI 版本</dt><dd class="mono">{{ fixture.fixture_version }}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="notice fixture-notice">
+  <strong>SYNTHETIC / FIXTURE / 非真实行情</strong>
+  <span>该结果是固定合成场景，不是真实历史收益、不是实盘、不是投资建议。费用、税费和交易规则均为显式合成假设。</span>
+</section>
+
+<section class="controls">
+  <div class="control-group">
+    <div class="label">可复现的现金场景</div>
+    <div class="tabs">
+      {% for tab in scenario_tabs %}
+        <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">{{ tab.label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if blockers or warnings %}
+<section class="notice {{ 'warning' if blockers else '' }}">
+  {% if blockers %}<strong>BLOCKED / 失败原因</strong><ul class="compact-list">{% for item in blockers %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
+  {% if warnings %}<strong>警告</strong><ul class="compact-list">{% for item in warnings %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
+</section>
+{% endif %}
+
+<section class="summary-strip">
+  <div><span class="metric-value">{{ nav|length }}</span><span class="metric-label">NAV 日数</span></div>
+  <div><span class="metric-value">{{ fills|length }}</span><span class="metric-label">成交笔数</span></div>
+  <div><span class="metric-value">{{ failed_orders|length }}</span><span class="metric-label">失败 / 未成交订单</span></div>
+  <div><span class="metric-value">{{ fees|length }}</span><span class="metric-label">费用分录</span></div>
+  <div><span class="metric-value">{{ 'PASS' if reconciliation_ok else 'FAIL' }}</span><span class="metric-label">现金 / 权益对账</span></div>
+</section>
+
+{% if nav %}
+<section class="section-head">
+  <div><h2>NAV 与现金</h2><p class="muted">Equity = 现金 + 应收 - 应付 + 持仓市值；NAV = Equity / 初始现金。</p></div>
+  <a class="button button-secondary" href="/export/f6.csv?scenario={{ meta.scenario }}">导出 F6 CSV（含逐行 FIXTURE 标记）</a>
+</section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>日期</th><th>现金</th><th>应收</th><th>应付</th><th>持仓市值</th><th>权益</th><th>NAV</th><th>持仓数</th><th>仓位</th></tr></thead>
+    <tbody>
+      {% for point in nav %}
+        <tr>
+          <td>{{ point.date }}</td>
+          <td>{{ point.cash }}</td>
+          <td>{{ point.receivables }}</td>
+          <td>{{ point.payables }}</td>
+          <td>{{ point.market_value }}</td>
+          <td><b>{{ point.equity }}</b></td>
+          <td>{{ point.nav }}</td>
+          <td>{{ point.position_count }}</td>
+          <td>{{ point.position_ratio if point.position_ratio is not none else '—' }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if final_positions %}
+<section class="section-head"><div><h2>期末持仓</h2><p class="muted">持仓、成本与未平仓风险来自内核快照，不是真实账户。</p></div></section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>证券</th><th>数量</th><th>可卖</th><th>剩余成本</th><th>分红权益</th><th>市值</th><th>未平仓损益</th><th>R_open</th><th>持有日</th><th>估值状态</th></tr></thead>
+    <tbody>
+      {% for item in final_positions %}
+        <tr>
+          <td class="mono">{{ item.security_id }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.sellable_quantity }}</td>
+          <td>{{ item.cost_open }}</td>
+          <td>{{ item.dividend_open }}</td>
+          <td>{{ item.market_value }}</td>
+          <td>{{ item.unrealized_pnl }}</td>
+          <td>{{ item.r_open if item.r_open is not none else 'N/A' }}</td>
+          <td>{{ item.holding_days }}</td>
+          <td>{{ item.mark_status }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% else %}
+<section class="empty-state">
+  <h2>没有可展示的 NAV</h2>
+  <p>内核在产生净值前缀前被阻断。失败不是空结果：请看上方 <span class="mono">BLOCKED</span> 原因，不能用旧成功曲线替代。</p>
+</section>
+{% endif %}
+
+<section class="section-head"><div><h2>订单与失败原因</h2><p class="muted">FILLED / UNFILLED / BLOCKED_UNKNOWN 等状态直接来自内核；失败订单不产生费用。</p></div></section>
+{% if orders %}
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>尝试日</th><th>证券</th><th>方向</th><th>状态</th><th>原因</th><th>请求数量</th><th>成交数量</th><th>成交价</th><th>成交额</th><th>佣金</th><th>其它费</th></tr></thead>
+    <tbody>
+      {% for item in orders %}
+        <tr class="{{ 'failed-row' if item.status not in ['FILLED'] else '' }}">
+          <td>{{ item.attempt_date }}</td>
+          <td class="mono">{{ item.security_id }}</td>
+          <td>{{ item.side }}</td>
+          <td><span class="pill {{ 'pill-good' if item.status == 'FILLED' else 'pill-bad' }}">{{ item.status }}</span></td>
+          <td>{{ item.reason or '—' }}</td>
+          <td>{{ item.requested_quantity }}</td>
+          <td>{{ item.filled_quantity }}</td>
+          <td>{{ item.price or '—' }}</td>
+          <td>{{ item.gross }}</td>
+          <td>{{ item.commission }}</td>
+          <td>{{ item.other_fees }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="muted">该场景没有订单（正常空信号或阻断前缀）。</p>
+{% endif %}
+
+<section class="section-head"><div><h2>成交与费用分录</h2><p class="muted">逐笔费用与税费均来自 OD-2 资产账。</p></div></section>
+<div class="split-grid">
+  <div>
+    <h3>成交</h3>
+    {% if fills %}
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>日期</th><th>证券</th><th>方向</th><th>数量</th><th>价格</th><th>成交额</th><th>佣金</th><th>其它费</th></tr></thead>
+          <tbody>
+            {% for item in fills %}
+              <tr><td>{{ item.date }}</td><td class="mono">{{ item.security_id }}</td><td>{{ item.side }}</td><td>{{ item.quantity }}</td><td>{{ item.price }}</td><td>{{ item.gross }}</td><td>{{ item.commission }}</td><td>{{ item.other_fees }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}<p class="muted">无成交。</p>{% endif %}
+  </div>
+  <div>
+    <h3>费用</h3>
+    {% if fees %}
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>日期</th><th>证券</th><th>方向</th><th>版本</th><th>成交额</th><th>佣金</th><th>其它费</th></tr></thead>
+          <tbody>
+            {% for item in fees %}
+              <tr><td>{{ item.date }}</td><td class="mono">{{ item.security_id }}</td><td>{{ item.side }}</td><td>{{ item.version }}</td><td>{{ item.gross }}</td><td>{{ item.commission }}</td><td>{{ item.other_fees }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}<p class="muted">无费用分录。</p>{% endif %}
+  </div>
+</div>
+
+{% if dividend_taxes %}
+<section class="section-head"><div><h2>逐批股息税</h2><p class="muted">按实际有权 Lot 绑定；不把未来出售结果倒推税率。</p></div></section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>证券</th><th>除息日</th><th>取得日</th><th>数量</th><th>税前</th><th>税额</th><th>规则版本</th><th>支付日</th></tr></thead>
+    <tbody>
+      {% for item in dividend_taxes %}
+        <tr><td class="mono">{{ item.security_id }}</td><td>{{ item.effective_date }}</td><td>{{ item.acquired_date }}</td><td>{{ item.quantity }}</td><td>{{ item.gross }}</td><td>{{ item.tax }}</td><td>{{ item.rule_version }}</td><td>{{ item.pay_date }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% if closed_cycles %}
+<section class="section-head"><div><h2>已结束持有周期</h2></div></section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>证券</th><th>开仓</th><th>结束</th><th>已实现交易损益</th><th>已实现分红</th><th>周期总损益</th></tr></thead>
+    <tbody>
+      {% for item in closed_cycles %}
+        <tr><td class="mono">{{ item.security_id }}</td><td>{{ item.opened_on }}</td><td>{{ item.closed_on }}</td><td>{{ item.realized_trading_pnl }}</td><td>{{ item.realized_dividend }}</td><td><b>{{ item.total_pnl }}</b></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<section class="section-head"><div><h2>指标与对账</h2><p class="muted">指标来自内核；空结果 / BLOCKED 与 FAILED 不合并。</p></div></section>
+<div class="metric-grid">
+  {% for key, value in metrics.items() %}
+    <div class="metric-card"><span>{{ key }}</span><b>{{ value if value is not none else 'N/A' }}</b></div>
+  {% endfor %}
+</div>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead><tr><th>日期</th><th>现金</th><th>权益</th><th>现金对账</th><th>权益对账</th></tr></thead>
+    <tbody>
+      {% for item in reconciliation %}
+        <tr><td>{{ item.date }}</td><td>{{ item.cash }}</td><td>{{ item.equity }}</td><td>{{ 'PASS' if item.cash_ok else 'FAIL' }}</td><td>{{ 'PASS' if item.equity_ok else 'FAIL' }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="fine-print">费用、滑点、税费和交易规则均为合成假设，不代表任何券商报价或法定费率。F6 不回填真实发布历史，也不产生真实交易建议。</p>
+{% endblock %}

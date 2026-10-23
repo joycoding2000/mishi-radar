@@ -1,0 +1,334 @@
+{
+  "record": "WP-FX01B_FIXTURE_WEB_CHANGE_RECORD",
+  "generated_at": "2026-10-23T18:03:43+08:00",
+  "baseline_git_head": "87b653e6867286c277c60cc23c4174266fc04091",
+  "baseline_manifest": "outputs/wp-fx01a-owner-acceptance-2026-10-23/paused-fx01-sha256.json",
+  "pre_change_identity_verified": true,
+  "paused_files_total": 32,
+  "paused_files_unchanged": 20,
+  "paused_files_changed": 12,
+  "paused_files_missing": [],
+  "changed_paused_files": [
+    {
+      "path": "mishi_radar/demo/__init__.py",
+      "baseline_bytes": 481,
+      "baseline_sha256": "13f43bfaa64a4d00999cb943e572c85704ea9dfcfe2f8393c4aeb99c4b711c54",
+      "current_bytes": 818,
+      "current_sha256": "cb05fd2881fb6dce6400704fa505e72b0422cd6fb141df9c43e3198b2bbc3776"
+    },
+    {
+      "path": "mishi_radar/demo/app.py",
+      "baseline_bytes": 10742,
+      "baseline_sha256": "1f5e78b30e172c44ce97c5387e5e6ca410928ad955e804230d45d3f5afa11ac1",
+      "current_bytes": 11710,
+      "current_sha256": "5036d1025ec782977ea73e8d0800d3bfb1ca70871770d2e744d7203d10fe7d3b"
+    },
+    {
+      "path": "mishi_radar/demo/fixtures.py",
+      "baseline_bytes": 16538,
+      "baseline_sha256": "07c692db30979d335e83b8e4efe4c9cb609f26b5420833a5663ba36592b57d0b",
+      "current_bytes": 1423,
+      "current_sha256": "f887f8b8f780b3c02867f0ce9fbbf564e05cce8f64470e372526d1b0fe72c24e"
+    },
+    {
+      "path": "mishi_radar/demo/service.py",
+      "baseline_bytes": 51034,
+      "baseline_sha256": "46dd58ed84a39c20b988894f91a8f467755376d63d4dfccb0287f538f14be716",
+      "current_bytes": 56707,
+      "current_sha256": "7a50716a4bb6ebe00d8c3f289f389799197c0f449d167487d80a01be6c7e0796"
+    },
+    {
+      "path": "mishi_radar/demo/static/app.css",
+      "baseline_bytes": 16669,
+      "baseline_sha256": "97c4656da6a1db040f490c1d7c00601dc56637eaa3fda980554504ad3979a130",
+      "current_bytes": 18413,
+      "current_sha256": "f752099f00149b12bd0e2dedd58e3c737cb255e89321b13a56117a80c7646ed5"
+    },
+    {
+      "path": "mishi_radar/demo/templates/backtest.html",
+      "baseline_bytes": 10486,
+      "baseline_sha256": "c2a8004eee42af431c54b53ab914eda65e678b17f3d9515f180d508bb56bc3ab",
+      "current_bytes": 10382,
+      "current_sha256": "f208a9250b80054a3c5a2931ebd47349cbd3d1044b842a27a342c05d06d93e6b"
+    },
+    {
+      "path": "mishi_radar/demo/templates/base.html",
+      "baseline_bytes": 2052,
+      "baseline_sha256": "4c4991c692bd86052d9cd5beb26a2a4e0179d11712dc7a1cc32d0bd0fee43456",
+      "current_bytes": 2238,
+      "current_sha256": "a2c5cd6b77d222767d8845bcfc9c462185f3dd9f8c83e1216c1030799b760b9b"
+    },
+    {
+      "path": "mishi_radar/demo/templates/index.html",
+      "baseline_bytes": 11527,
+      "baseline_sha256": "c7d0b4d7cdd8abddfeb52a6e2dab42498d6ac7159be38c997eca7e265de467ca",
+      "current_bytes": 16716,
+      "current_sha256": "cba602423e3e18029b96c81301f205705ce86a3759b1221d5e605ce39d5aff10"
+    },
+    {
+      "path": "mishi_radar/demo/templates/status.html",
+      "baseline_bytes": 4917,
+      "baseline_sha256": "5c8c5e6b66e20a083bc85a152cc814e3708315e4ae03b9008031060e4adf02cb",
+      "current_bytes": 7489,
+      "current_sha256": "359cc3659e7d4c87b7155f404fe28664a93d3fbcc953660b09509c6d25778f15"
+    },
+    {
+      "path": "mishi_radar/demo/templates/stock.html",
+      "baseline_bytes": 7735,
+      "baseline_sha256": "e9421368a30f6ab770c2e69edfcb921885f18071fd53f876a05b47f9bc49e1fb",
+      "current_bytes": 10186,
+      "current_sha256": "034b713e71e8ec220139f90986851e333c4a9fba9246acfa6e4211c954e0b93c"
+    },
+    {
+      "path": "mishi_radar/demo/templates/watch.html",
+      "baseline_bytes": 7180,
+      "baseline_sha256": "ff1ed4cd33d8f22637982ab137f5d03e5acdea5372fe692c0a23f9271d97c597",
+      "current_bytes": 8495,
+      "current_sha256": "33dab1fef49df01aba6fcbfef82e6bc09799590630dd937094b53bb2d02f5795"
+    },
+    {
+      "path": "tests/test_demo_product.py",
+      "baseline_bytes": 14514,
+      "baseline_sha256": "625db64856cbd1f874925c904bb5af93c2b9b3b237a378643efad766e20d002c",
+      "current_bytes": 26041,
+      "current_sha256": "ddff05bcb5d226152241cfcd812c2266f6c774c6b6afc062a6032fa13c0bb01f"
+    }
+  ],
+  "unchanged_paused_files": [
+    "mishi_radar/demo/__main__.py",
+    "mishi_radar/demo/backtest.py",
+    "mishi_radar/demo/static/app.js",
+    "mishi_radar/demo/templates/error.html",
+    "mishi_radar/demo/watch.py",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/browser-watchlist.json",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/browser_check.py",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-01-f1.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-02-f3.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-03-f5.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-04-f6-u3.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-05-f6-failures.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-06-f1-empty.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-07-f1-unknown.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-08-f7.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-01-f1.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-02-f3.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-03-f5.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-04-f6.png",
+    "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-05-f1-unknown.png"
+  ],
+  "recoverable_pre_change_snapshot": "outputs/wp-fx01b-recovery-2026-10-23/pre-change/",
+  "recoverable_pre_change_manifest": "outputs/wp-fx01b-recovery-2026-10-23/pre-change-sha256.json",
+  "recoverable_pre_change_file_count": 19,
+  "new_or_updated_project_files": [
+    {
+      "path": "README.md",
+      "bytes": 7733,
+      "sha256": "a152eeb8ce5a0520d6cf8b65a570b2637739a941f43220cb71059a464cfbb2a4"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 446,
+      "sha256": "a869f8ac2a7286cc61e015f353783219c7f37648dba154885c9f1eac625ef0c1"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 72,
+      "sha256": "94d8a834081aaadbf75b2100aa1e7f137ff408d66f06eef7e1445364abb5241a"
+    },
+    {
+      "path": "requirements-dev.txt",
+      "bytes": 53,
+      "sha256": "209dc86ec63ab2c53da2520c816c07082cd719d65e877f708c983897e4c177b8"
+    },
+    {
+      "path": "outputs/wp-fx01b-recovery-2026-10-23/pre-change-sha256.json",
+      "bytes": 3681,
+      "sha256": "7780cf1b3c80e189247d623b374d8490111c904b75d7b4733c8447bd74734f37"
+    }
+  ],
+  "new_evidence_files": [
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/browser-watchlist.json",
+      "bytes": 16001,
+      "sha256": "83510d2742fb75a797e80d0bd3c7a85febde83c29066bccbcea06d00e550cb5c"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/browser_check.log",
+      "bytes": 1740,
+      "sha256": "497483c00b0f5b5c37717d4e7d80d21acbfc9db5f17d55039a3926993226a957"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/browser_check.py",
+      "bytes": 7868,
+      "sha256": "bd232b5066501377c62c05fdf8871af69c095f07226d496463d83833b6bd4823"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-01-f1-normal.png",
+      "bytes": 558439,
+      "sha256": "88022a43c1331377f2f9beab59f07e9c6f2128b387ee865cd0c5b47719941bd6"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-01b-f1-n1.png",
+      "bytes": 580593,
+      "sha256": "e18153f4562a65e054beaabe947bdf4153a7b0f4b57e74b139be6f5da23fdaf7"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-02-f3.png",
+      "bytes": 555760,
+      "sha256": "bab872401a8b5c5552eb5d1e949a4f8a31333c6b74d31e689bacc35fb0b074dc"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-03-f5.png",
+      "bytes": 396392,
+      "sha256": "e910a820411149d63ff71eef8cbc219f124351780b9bb3e3fef5472ed5b75447"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-03b-f5-cancelled.png",
+      "bytes": 264253,
+      "sha256": "8663347116444d51995a77cd82220c21196e4a88d34981dbecefb580234b7839"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-04-f1-empty.png",
+      "bytes": 368066,
+      "sha256": "60613df38840ef1b1451edd21d10a465aa242dd9cbdefca82c4113ae64452a40"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-05-f1-preview.png",
+      "bytes": 660944,
+      "sha256": "2b6af0f2623ef893409ab158265983d9e6a53b063cc971de205cd4e52bbfbf82"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-06-f1-unknown.png",
+      "bytes": 434654,
+      "sha256": "f7f38b00ebbbc76fec327acc53881d73b7ab967fc4284014a5d4ea71cf28ef64"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-07-f1-failed.png",
+      "bytes": 431074,
+      "sha256": "62e91428452fea27f3d8289cde66cfd69f4e542ba2bb4495ef3c303d3f3f351e"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-08-f6-u3.png",
+      "bytes": 445353,
+      "sha256": "852f967951ce53cccc11f79f757d201ea2d04c94ee870b098a309dbbbb9bdab9"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-09-f6-failures.png",
+      "bytes": 454459,
+      "sha256": "76f173811b8c13784344eac0c72afc27d061f1b573183be3223cd39299179486"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/desktop-10-f7.png",
+      "bytes": 1140759,
+      "sha256": "91e4262d0fe6904021f655919855405a1307500ab59991674b23a14c6ba29aba"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/empty-f1-export.csv",
+      "bytes": 607,
+      "sha256": "77df628168d4ba8b9cdfbb1000f865cd0fd4b08bcf592f3ca753e5eade71d81d"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-01-f1.png",
+      "bytes": 1303801,
+      "sha256": "96816368e025976951efd894bfc972052afed80dbb9893346e47b5a884e0b749"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-01b-f1-viewport.png",
+      "bytes": 312347,
+      "sha256": "5e3c7c6838618ac503fc0e0f06985ebd293789e1408697e669badcfbd0558406"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-02-f3.png",
+      "bytes": 1381430,
+      "sha256": "e34ffc0eb94baea969088d8a7e36919de3163f0dba4932295f1d2c1b615954eb"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-02b-f3-viewport.png",
+      "bytes": 295322,
+      "sha256": "45f75c1a5f7c27344d4275a2bf60256a0b49c76fa102d279264bcb619b15356a"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-03-f5.png",
+      "bytes": 966565,
+      "sha256": "98f8be5c4732fcf49d9c53ec0abf0ab0e4621f0c79be8a6d6cf27c8d373c48da"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-03b-f5-viewport.png",
+      "bytes": 352017,
+      "sha256": "d968047c070810e80e65199a4e7295fb9bc1dcc95412a9dd15b8175965c38125"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-04-f6.png",
+      "bytes": 1490601,
+      "sha256": "0bb3cdcf345a7c72a04ac828fcc5fa830807b0532ecd6c59e7442796c1529f71"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-04b-f6-viewport.png",
+      "bytes": 418261,
+      "sha256": "7a1b5c22531f4d8e8f922569e6362d6ed4915e82d5a578d87e1b54b0cd3be839"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/mobile-05-f1-failed.png",
+      "bytes": 1085191,
+      "sha256": "c70c043a8a1fda3bf9431b94f19e90926c8e74cae9536233fcdb2e28fb7c9e3c"
+    },
+    {
+      "path": "outputs/wp-fx01b-fixture-vertical-2026-10-23/unittest.log",
+      "bytes": 1420,
+      "sha256": "3e699f0d53818cc568a760547768022fe1d59aad67ef267398cda37e5715b759"
+    }
+  ],
+  "review_fixes": [
+    {
+      "id": "TOP_N_UNREACHABLE",
+      "fix": "F1 N choices now include 1/2/3/5/10/20/30; API and Web expose beyond_top_n exact ranks.",
+      "code": "mishi_radar/demo/service.py:N_CHOICES; mishi_radar/demo/templates/index.html",
+      "test": "tests/test_demo_product.py:test_small_n_reaches_beyond_top_n_exact_ranks",
+      "evidence": [
+        "desktop-01b-f1-n1.png"
+      ]
+    },
+    {
+      "id": "EMPTY_CSV_IDENTITY",
+      "fix": "F1 CSV writes a STATUS row with marker, contract, batch and EMPTY when no result rows exist; no candidate row fabricated.",
+      "code": "mishi_radar/demo/service.py:f1_csv",
+      "test": "tests/test_demo_product.py:test_fixture_identity_in_pages_apis_and_exports",
+      "evidence": [
+        "empty-f1-export.csv"
+      ]
+    }
+  ],
+  "contract_reuse": {
+    "f1": "mishi_radar.result_contract.build_f1",
+    "f3": "mishi_radar.result_contract.build_f3",
+    "f7": "mishi_radar.result_contract.build_f7",
+    "contract_version": "FX01A-RESULT-CONTRACT-v1",
+    "result_contract_modified": false
+  },
+  "f6_engine": "mishi_radar.cash_backtest.run_backtest",
+  "od1_od2_modified": false,
+  "tests": {
+    "command": "python -m unittest discover -s tests -t . -q",
+    "total": 184,
+    "result": "OK",
+    "breakdown": {
+      "fx01a_contract": 9,
+      "a_b_regression": 167,
+      "fx01b_product": 8
+    },
+    "log": "outputs/wp-fx01b-fixture-vertical-2026-10-23/unittest.log"
+  },
+  "browser_evidence": {
+    "class": "BROWSER_SIMULATION",
+    "browser": "Chromium 148 headless",
+    "desktop_viewport": "1440x1000",
+    "mobile_viewport": "390x844",
+    "script": "outputs/wp-fx01b-fixture-vertical-2026-10-23/browser_check.py",
+    "log": "outputs/wp-fx01b-fixture-vertical-2026-10-23/browser_check.log",
+    "real_device_tested": false,
+    "limitation": "No physical Android/iPhone device evidence in this run."
+  },
+  "real_market_data": false,
+  "network_used": false,
+  "push_or_merge": false
+}

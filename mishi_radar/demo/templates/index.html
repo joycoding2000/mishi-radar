@@ -1,0 +1,329 @@
+{% extends "base.html" %}
+{% block title %}机会榜 F1{% endblock %}
+{% block content %}
+{% macro candidate_card(item, preview=False, beyond=False) %}
+<article class="candidate-card {{ 'preview' if preview else '' }} {{ 'beyond' if beyond else '' }}">
+  <div class="candidate-head">
+    <div>
+      {% if preview %}
+        <span class="rank rank-preview">PREVIEW 样本 #{{ item.sample_candidate_rank if item.sample_candidate_rank is not none else '—' }}</span>
+        <span class="rank-sub">{{ item.rank_scope_label }}</span>
+      {% elif beyond %}
+        <span class="rank rank-beyond">榜外候选 #{{ item.candidate_rank }}</span>
+        <span class="rank-sub">全可评分池 #{{ item.pool_rank }} / {{ item.pool_size }}</span>
+      {% else %}
+        <span class="rank">候选 #{{ item.candidate_rank }}</span>
+        <span class="rank-sub">全可评分池 #{{ item.pool_rank }} / {{ item.pool_size }}</span>
+      {% endif %}
+      <h3><a href="{{ item.stock_url }}">{{ item.security_name }}</a></h3>
+      <div class="mono small">{{ item.security_id }} · {{ item.industry_name or '行业 UNKNOWN' }}</div>
+    </div>
+    <div class="badge-stack">
+      <span class="pill {{ 'pill-warn' if preview else 'pill-good' }}">{{ 'PREVIEW · 非正式' if preview else ('榜外 · 精确名次' if beyond else 'FIXTURE 正式候选') }}</span>
+      <span class="pill pill-neutral">{{ item.signal_status_label }}</span>
+    </div>
+  </div>
+
+  <div class="candidate-grid">
+    <div>
+      <div class="label">入选依据（FX01A 合同 TRUE 条件）</div>
+      {% if item.positive_conditions %}
+        <ul class="compact-list positive-list">
+          {% for text in item.positive_conditions %}<li>{{ text }}</li>{% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">没有已确认 TRUE 条件。</p>
+      {% endif %}
+    </div>
+    <div>
+      <div class="label">主要不利条件 / 展示约束</div>
+      <p class="{{ 'warning-text' if item.adverse_conditions else 'muted' }}">{{ item.main_adverse }}</p>
+      {% if item.adverse_conditions %}
+        <ul class="compact-list adverse-list">
+          {% for text in item.adverse_conditions %}<li>{{ text }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="candidate-foot">
+    <div class="meta-line">
+      <span>信号日 <b>{{ item.signal_date }}</b></span>
+      <span>数据日 <b>{{ item.price_date }}</b></span>
+      <span>收盘（合成原始价） <b>{{ item.price_close if item.price_close is not none else 'UNKNOWN' }}</b></span>
+      <span class="mono">配置 {{ item.config_version }}</span>
+    </div>
+    <div class="tag-line">
+      {% for tag in item.hit_tags %}
+        <span class="pill pill-tag {{ 'pill-warn' if tag.preview_candidate else 'pill-neutral' }}">
+          {{ tag.strategy_label }}{% if tag.formal_candidate %} · #{{ tag.candidate_rank }}{% elif tag.preview_candidate %} · PREVIEW #{{ tag.sample_candidate_rank }}{% endif %}
+        </span>
+      {% endfor %}
+    </div>
+    <div class="card-actions">
+      <a class="button" href="{{ item.stock_url }}">查看个股诊断 F3</a>
+      <form method="post" action="/watch/add">
+        <input type="hidden" name="scenario" value="{{ fixture.scenario }}">
+        <input type="hidden" name="security_id" value="{{ item.security_id }}">
+        <input type="hidden" name="strategy_id" value="{{ item.strategy_id }}">
+        <input type="hidden" name="style" value="{{ style.style_id }}">
+        <input type="hidden" name="batch_id" value="{{ item.batch_id }}">
+        <button class="button button-secondary" type="submit">关注并保存首次快照</button>
+      </form>
+    </div>
+  </div>
+</article>
+{% endmacro %}
+
+<section class="page-head">
+  <div>
+    <p class="eyebrow">F1 今日机会 · {{ fixture.scenario_label }}</p>
+    <h1>固定 Fixture 候选榜</h1>
+    <p class="lead">八策略机会、排名、原因与状态由已验收 <code>mishi_radar.result_contract</code>（{{ contract.contract_version }}）提供；Web 层不重算规则。</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill {{ 'pill-good' if outcome.tone == 'good' else 'pill-warn' if outcome.tone == 'warn' else 'pill-bad' }}">{{ outcome.label }}</span>
+    <div class="small mono">{{ batch.batch_id }}</div>
+    <dl class="inline-dl">
+      <div><dt>业务日</dt><dd>{{ fixture.business_date }}</dd></div>
+      <div><dt>FX01A Fixture</dt><dd>{{ fixture.fixture_version }}</dd></div>
+      <div><dt>候选 / 池</dt><dd>{{ counts.formal_candidates }} / {{ counts.pool_size }}</dd></div>
+      <div><dt>池完整</dt><dd>{% if batch.pool_complete %}是{% elif outcome.kind == 'PREVIEW' %}否（PREVIEW）{% elif outcome.kind == 'FAILED' %}否（FAILED）{% else %}否（不完整）{% endif %}</dd></div>
+      <div><dt>真实发布</dt><dd>{{ '否' if not batch.actual_published else '是' }}</dd></div>
+      <div><dt>合同</dt><dd class="mono small">{{ contract.contract }}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="notice fixture-notice">
+  <strong>{{ display_marker }}</strong>
+  <span>{{ fixture.scenario_description }} 合同标记为 <span class="mono">{{ marker }}</span>；无网络调用，不构成真实行情或收益证据。</span>
+</section>
+
+<section class="controls">
+  <div class="control-group">
+    <div class="label">固定场景（FX01A 合同状态矩阵）</div>
+    <div class="tabs tabs-wrap">
+      {% for tab in scenario_tabs %}
+        <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}" title="{{ tab.description }}">{{ tab.label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="label">透明风格 F2 显示预设 <span class="muted">（只改入口顺序与展开重点）</span></div>
+    <div class="tabs">
+      {% for tab in style_tabs %}
+        <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">{{ tab.label }}</a>
+      {% endfor %}
+    </div>
+    <p class="control-note">{{ style.note }} 风格 ID：<span class="mono">{{ style.style_id }}</span>；信号、排名与回测参数不变。</p>
+  </div>
+  <div class="control-group">
+    <div class="label">八策略切换（合同 strategy_catalog）</div>
+    <div class="tabs tabs-wrap">
+      {% for tab in strategy_tabs %}
+        <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">
+          {{ tab.label }}
+          <span class="tab-outcome outcome-{{ tab.outcome_tone }}">{{ tab.outcome }}</span>
+        </a>
+      {% endfor %}
+    </div>
+    <details class="strategy-overview">
+      <summary>查看八策略合同结果概览（同一固定批次）</summary>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>策略</th><th>合同结果</th><th>池 / 候选</th><th>池完整</th><th>UNKNOWN 行</th><th>FAILED 行</th><th>状态分布</th></tr></thead>
+          <tbody>
+            {% for item in strategy_catalog %}
+              <tr class="{{ 'selected-row' if item.active else '' }}">
+                <td><b>{{ item.strategy_label }}</b></td>
+                <td><span class="pill {{ 'pill-good' if item.outcome_tone == 'good' else 'pill-warn' if item.outcome_tone == 'warn' else 'pill-bad' }}">{{ item.outcome_label }}</span></td>
+                <td>{{ item.pool_size }} / {{ item.candidate_size }}</td>
+                <td>{{ '是' if item.pool_complete else '否' }}</td>
+                <td>{{ item.counts.unknown_rows }}</td>
+                <td>{{ item.counts.failed_rows }}</td>
+                <td class="small">{% for state, count in item.counts.state_counts.items() %}{{ state }}={{ count }}{% if not loop.last %} · {% endif %}{% endfor %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+  <div class="control-row">
+    <form class="search-form" method="get" action="/">
+      <input type="hidden" name="scenario" value="{{ fixture.scenario }}">
+      <input type="hidden" name="strategy" value="{{ strategy.strategy_id }}">
+      <input type="hidden" name="style" value="{{ style.style_id }}">
+      <input type="hidden" name="n" value="{{ n }}">
+      <label for="q">在本次结果中搜索代码 / 名称</label>
+      <div class="search-line">
+        <input id="q" name="q" value="{{ query }}" placeholder="例如 SYN:000001 或 合成样本">
+        <button class="button button-secondary" type="submit">搜索</button>
+      </div>
+    </form>
+    <div class="display-n">
+      <span class="label">显示 N / top_n</span>
+      <div class="tabs">
+        {% for tab in n_tabs %}
+          <a class="tab {{ 'active' if tab.active else '' }}" href="{{ tab.url }}">{{ tab.n }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <p class="control-note">小 N（1/2/3/5）用于验证合同 <code>beyond_top_n</code> 的榜外精确名次；不改变任何排名计算。</p>
+    <div class="refresh-line">
+      <a class="button button-ghost" href="{{ refresh_url }}">重新读取固定批次</a>
+      {% if refresh %}<span class="small muted">{{ refresh_note }}</span>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="summary-strip">
+  <div><span class="metric-value">{{ counts.formal_candidates }}</span><span class="metric-label">正式候选</span></div>
+  <div><span class="metric-value">{{ counts.beyond_top_n }}</span><span class="metric-label">榜外精确名次</span></div>
+  <div><span class="metric-value">{{ counts.preview_candidates }}</span><span class="metric-label">PREVIEW 样本</span></div>
+  <div><span class="metric-value">{{ counts.unknown_rows }}</span><span class="metric-label">UNKNOWN 行</span></div>
+  <div><span class="metric-value">{{ counts.failed_rows }}</span><span class="metric-label">FAILED 行</span></div>
+  <div><span class="metric-value">{{ counts.pool_size }}</span><span class="metric-label">可评分池</span></div>
+</section>
+
+{% if outcome.kind == 'PREVIEW' %}
+<section class="notice warning">
+  <strong>PREVIEW / 池不完整</strong>
+  <span>合同 outcome.sample_only=true，formal_identity_available=false。下列 PREVIEW 名次只是样本序号（SAMPLE_ONLY），不写入正式历史排名。</span>
+</section>
+{% elif outcome.kind == 'UNKNOWN' %}
+<section class="notice warning">
+  <strong>UNKNOWN / 不产生名次</strong>
+  <span>合同未给出正式或样本名次；缺失和不可判定项逐行列出，不用 0 名或“未入选”替代。</span>
+</section>
+{% elif outcome.kind == 'FAILED' %}
+<section class="notice warning">
+  <strong>FAILED / 输入请求失败</strong>
+  <span>合同 failure：<span class="mono">{{ outcome.failure.code if outcome.failure else 'UNKNOWN' }}</span> — {{ outcome.failure.message if outcome.failure else '未知失败' }}。失败不是空结果，也不是 UNKNOWN。</span>
+</section>
+{% endif %}
+
+<section class="section-head">
+  <div>
+    <h2>{{ strategy_label if strategy_label is defined else strategy.strategy_id }}</h2>
+    <p class="muted">配置 <span class="mono">{{ strategy.config_id }}</span> / <span class="mono">{{ strategy.config_version }}</span>；本页按合同候选序号显示，并同时列出 <code>pool_rank</code> 和 <code>rank_scope</code>。</p>
+  </div>
+  {% if strategy.strategy_id == 'S06' %}
+    <span class="pill pill-neutral">绑定 S01_DEFAULT · {{ strategy.bound_s01_config_version }}</span>
+  {% endif %}
+</section>
+
+{% if candidates %}
+  <div class="candidate-list">
+    {% for item in candidates %}{{ candidate_card(item) }}{% endfor %}
+  </div>
+{% elif outcome.kind == 'EMPTY' %}
+  <section class="empty-state">
+    <h2>完整空结果（成功）</h2>
+    <p>{{ empty_message }}</p>
+    <p class="muted">outcome.empty_is_success=true；候选数 0 / 全可评分池 {{ counts.pool_size }}；批次 {{ batch.batch_id }}</p>
+  </section>
+{% elif outcome.kind == 'FAILED' %}
+  <section class="empty-state error-state">
+    <h2>FAILED：没有可展示候选</h2>
+    <p>合同把本次运行标为计算失败。失败行保留在下方，不能降级成“完整空结果”。</p>
+  </section>
+{% elif query %}
+  <section class="empty-state">
+    <h2>搜索无匹配</h2>
+    <p>已按“{{ query }}”过滤本次结果，没有匹配证券。</p>
+    <a class="button button-secondary" href="/?scenario={{ fixture.scenario }}&strategy={{ strategy.strategy_id }}&style={{ style.style_id }}&n={{ n }}">清除搜索</a>
+  </section>
+{% endif %}
+
+{% if beyond_top_n %}
+  <section class="section-head">
+    <div>
+      <h2>榜外但仍具精确名次</h2>
+      <p class="muted">这些行超过当前 top_n，但合同仍给出固定批次精确 <code>candidate_rank</code> / <code>pool_rank</code>，不是 PREVIEW。</p>
+    </div>
+  </section>
+  <div class="candidate-list">
+    {% for item in beyond_top_n %}{{ candidate_card(item, beyond=True) }}{% endfor %}
+  </div>
+{% endif %}
+
+{% if preview_candidates %}
+  <section class="section-head">
+    <div>
+      <h2>PREVIEW 候选 <span class="pill pill-warn">非正式</span></h2>
+      <p class="muted">{{ counts.preview_candidates }} 行样本候选；<code>candidate_rank</code> 与 <code>pool_rank</code> 均为 null。</p>
+    </div>
+  </section>
+  <div class="candidate-list">
+    {% for item in preview_candidates %}{{ candidate_card(item, preview=True) }}{% endfor %}
+  </div>
+{% endif %}
+
+{% if unknown_rows %}
+  <section class="section-head">
+    <div>
+      <h2>UNKNOWN / 缺失状态</h2>
+      <p class="muted">这些行没有精确名次；原因与状态直接来自 FX01A 合同，不用 0、50 分或“未入选”替代。</p>
+    </div>
+  </section>
+  <div class="unknown-grid">
+    {% for item in unknown_rows %}
+      <article class="unknown-card">
+        <div class="candidate-head">
+          <div>
+            <h3>{{ item.security_name }}</h3>
+            <div class="mono small">{{ item.security_id }} · {{ item.industry_name or '行业 UNKNOWN' }}</div>
+          </div>
+          <span class="pill pill-bad">{{ item.row_identity_label }}</span>
+        </div>
+        <p><b>资格：</b>{{ item.qualification_label }} · <b>状态：</b>{{ item.signal_state_label }}</p>
+        {% if item.reasons_view %}
+          <ul class="compact-list adverse-list">
+            {% for reason in item.reasons_view %}<li>{{ reason.label }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+        <p class="muted">正式名次：UNKNOWN；样本序号：{{ item.sample_candidate_rank if item.sample_candidate_rank is not none else '—' }}；名次范围：{{ item.rank_scope_label }}。</p>
+        <p class="small">价格：{{ item.price_close if item.price_close is not none else 'UNKNOWN' }}（{{ item.price_date }}）。</p>
+        <a class="button button-secondary" href="{{ item.stock_url }}">查看个股诊断 F3</a>
+      </article>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if failed_rows %}
+  <section class="section-head">
+    <div>
+      <h2>FAILED 行</h2>
+      <p class="muted">输入请求失败与 UNKNOWN、完整空结果分开保存；这些行不显示候选名次。</p>
+    </div>
+  </section>
+  <div class="unknown-grid">
+    {% for item in failed_rows %}
+      <article class="unknown-card failed-card">
+        <div class="candidate-head">
+          <div>
+            <h3>{{ item.security_name }}</h3>
+            <div class="mono small">{{ item.security_id }}</div>
+          </div>
+          <span class="pill pill-bad">{{ item.row_identity_label }}</span>
+        </div>
+        <p><b>资格：</b>{{ item.qualification_label }} · <b>状态：</b>{{ item.signal_state_label }}</p>
+        {% if item.reasons_view %}
+          <ul class="compact-list adverse-list">
+            {% for reason in item.reasons_view %}<li>{{ reason.label }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+        <a class="button button-secondary" href="{{ item.stock_url }}">查看个股诊断 F3</a>
+      </article>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<section class="fine-print">
+  <p>本页不展示预测胜率、跨策略统一总分或真实收益曲线。多策略命中标签只表示同一固定输入下另一策略的独立 CANDIDATE 状态，不能相加成买入概率。</p>
+  <p>身份：<span class="mono">{{ marker }}</span> · {{ display_marker }} · 合同 <span class="mono">{{ contract.contract }} / {{ contract.contract_version }}</span> · Fixture <span class="mono">{{ fixture.fixture_version }}</span>。</p>
+  <p>导出：<a href="/export/f1.csv?scenario={{ fixture.scenario }}&strategy={{ strategy.strategy_id }}&style={{ style.style_id }}&n={{ n }}">下载本次 F1 CSV（逐行含 FIXTURE 标记、合同版本与排名范围）</a></p>
+</section>
+{% endblock %}

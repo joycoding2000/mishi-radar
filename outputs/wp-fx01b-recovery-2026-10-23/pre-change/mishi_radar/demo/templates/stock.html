@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}{{ security_name }} · F3{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">F3 个股诊断</p>
+    <h1>{{ security_name }}</h1>
+    <p class="lead"><span class="mono">{{ security_id }}</span> · {{ industry_name or '行业 UNKNOWN' }} · 所选规则 {{ batch.strategy_label }}</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill {{ 'pill-warn' if batch.status == 'PREVIEW' else 'pill-good' }}">{{ batch.status_label }}</span>
+    {% if summary.formal_candidate %}
+      <div class="big-rank">正式候选 #{{ summary.candidate_rank }} <small>/ 全可评分池 #{{ summary.pool_rank }} / {{ summary.pool_size }}</small></div>
+    {% elif summary.preview_candidate %}
+      <div class="big-rank warning-text">PREVIEW 样本 #{{ summary.sample_candidate_rank }} <small>非正式名次</small></div>
+    {% else %}
+      <div class="big-rank">{{ summary.signal_state_label }}</div>
+    {% endif %}
+    <div class="small mono">{{ batch.batch_id }}</div>
+  </div>
+</section>
+
+<section class="notice fixture-notice">
+  <strong>SYNTHETIC / FIXTURE / 非真实行情</strong>
+  <span>本页解释来自固定输入上的 OD-1 计算结果；不构成收益概率、预测胜率或交易建议。</span>
+</section>
+
+<section class="card-grid">
+  <article class="card">
+    <h2>当前规则结论</h2>
+    <dl class="facts">
+      <div><dt>资格</dt><dd>{{ summary.eligibility_label }}</dd></div>
+      <div><dt>信号状态</dt><dd>{{ summary.signal_state_label }}</dd></div>
+      <div><dt>信号值</dt><dd>{{ summary.signal_status_label }}</dd></div>
+      <div><dt>信号日</dt><dd>{{ time.signal_date }}</dd></div>
+      <div><dt>数据日 / 收盘</dt><dd>{{ time.price_date }} / {{ summary.price_close if summary.price_close is not none else 'UNKNOWN' }}</dd></div>
+      <div><dt>价格来源</dt><dd class="mono">{{ time.price_source }}</dd></div>
+    </dl>
+  </article>
+  <article class="card">
+    <h2>时间与批次身份</h2>
+    <dl class="facts">
+      <div><dt>业务日</dt><dd>{{ time.business_date }}</dd></div>
+      <div><dt>计算 / 固定发布</dt><dd>{{ time.computed_at }} / {{ time.published_at }}</dd></div>
+      <div><dt>可用时刻</dt><dd>{{ time.available_at }} <span class="muted">（{{ time.available_at_kind }}）</span></dd></div>
+      <div><dt>源时间</dt><dd>{{ time.source_time }}</dd></div>
+      <div><dt>输入版本</dt><dd class="mono">{{ time.input_version }}</dd></div>
+      <div><dt>配置版本</dt><dd class="mono">{{ time.config_version }}</dd></div>
+    </dl>
+  </article>
+</section>
+
+<section class="section-head">
+  <div>
+    <h2>正反条件</h2>
+    <p class="muted">逐项来自所选策略内核条件；FALSE 不会被隐藏，UNKNOWN 也不会被当成 FALSE。</p>
+  </div>
+</section>
+<section class="conditions-grid">
+  {% for item in conditions %}
+    <div class="condition condition-{{ item.tone }}">
+      <span class="condition-status">{{ item.status }}</span>
+      <span>{{ item.label }}</span>
+    </div>
+  {% endfor %}
+</section>
+{% if summary.reasons %}
+  <section class="notice warning">
+    <strong>内核附加原因</strong>
+    <ul class="compact-list">
+      {% for reason in summary.reasons %}<li>{{ reason.label }}</li>{% endfor %}
+    </ul>
+  </section>
+{% endif %}
+<p class="callout"><strong>主要不利条件 / 展示约束：</strong>{{ summary.main_adverse }}</p>
+
+<section class="section-head">
+  <div>
+    <h2>六维描述性画像</h2>
+    <p class="muted">分数为同池相对位置 0–100，不是收益概率、胜率或风险保证。缺维留空，不填 0 / 50。当前风格仅改变展开顺序。</p>
+  </div>
+  <span class="pill pill-neutral">{{ available_dimensions }} / 6 维可用</span>
+</section>
+<section class="dimension-grid">
+  {% for dim in dimensions %}
+    <article class="dimension-card {{ 'dimension-missing' if dim.status != 'VALUE' else '' }}">
+      <div class="dimension-head">
+        <h3>{{ dim.label }}</h3>
+        <span class="pill {{ 'pill-neutral' if dim.status == 'VALUE' else 'pill-warn' }}">{{ dim.status_label }}</span>
+      </div>
+      <div class="dimension-value">{{ dim.value_text }}</div>
+      <div class="dimension-score">
+        {% if dim.score_width is not none %}
+          <div class="score-bar"><span style="width: {{ '%.1f'|format(dim.score_width) }}%"></span></div>
+          <span>{{ dim.score_text }} / 100</span>
+        {% else %}
+          <span class="muted">相对分 UNKNOWN（不画分）</span>
+        {% endif %}
+      </div>
+      <dl class="facts small">
+        <div><dt>比较池</dt><dd class="mono">{{ dim.pool_id }}</dd></div>
+        <div><dt>池规模 / 完整</dt><dd>{{ dim.pool_size }} / {{ '是' if dim.pool_complete else '否' }}</dd></div>
+        <div><dt>窗口</dt><dd>{{ dim.window }}</dd></div>
+        <div><dt>业务日</dt><dd>{{ dim.business_date }}</dd></div>
+      </dl>
+      {% if dim.extras %}
+        <div class="small muted">
+          {% for extra in dim.extras %} {{ extra.label }}={{ extra.value }}{% if not loop.last %} · {% endif %}{% endfor %}
+        </div>
+      {% endif %}
+      <p class="dimension-explanation">{{ dim.explanation }}</p>
+      {% if dim.reason %}<p class="warning-text small">{{ dim.reason }}</p>{% endif %}
+    </article>
+  {% endfor %}
+</section>
+{% if diagnostic_notes %}
+  <p class="small muted">诊断备注：{% for note in diagnostic_notes %}{{ note }}{% if not loop.last %}；{% endif %}{% endfor %}</p>
+{% endif %}
+
+<section class="section-head">
+  <div>
+    <h2>全部策略上的同一证券</h2>
+    <p class="muted">各策略逻辑独立，不产生跨策略总评分；S06 的正式身份与执行递补分开显示。</p>
+  </div>
+</section>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr><th>策略</th><th>资格</th><th>状态</th><th>正式候选名次</th><th>全池名次 / 池</th><th>原因</th></tr>
+    </thead>
+    <tbody>
+      {% for row in strategy_rows %}
+        <tr class="{{ 'selected-row' if row.selected else '' }}">
+          <td><b>{{ row.strategy_label }}</b>{% if row.selected %} <span class="pill pill-neutral">当前</span>{% endif %}</td>
+          <td>{{ row.eligibility_label }}</td>
+          <td>{{ row.signal_state_label }}</td>
+          <td>{% if row.formal_candidate %}#{{ row.candidate_rank }}{% elif row.preview_candidate %}PREVIEW #{{ row.sample_candidate_rank }}{% else %}—{% endif %}</td>
+          <td>{% if row.pool_rank is not none %}#{{ row.pool_rank }} / {{ row.pool_size }}{% else %}UNKNOWN / {{ row.pool_size }}{% endif %}</td>
+          <td class="small">{% for reason in row.reasons %}{{ reason.label }}{% if not loop.last %}<br>{% endif %}{% else %}—{% endfor %}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<section class="action-bar">
+  <form method="post" action="/watch/add">
+    <input type="hidden" name="scenario" value="{{ fixture.scenario }}">
+    <input type="hidden" name="security_id" value="{{ security_id }}">
+    <input type="hidden" name="strategy_id" value="{{ batch.strategy_id }}">
+    <input type="hidden" name="style" value="{{ summary.style_id }}">
+    <input type="hidden" name="batch_id" value="{{ time.batch_id }}">
+    <button class="button" type="submit">关注并保存首次快照 F5</button>
+  </form>
+  <a class="button button-secondary" href="{{ backtest_url }}">进入固定合成现金检验 F6</a>
+  <a class="button button-ghost" href="{{ board_url }}">返回机会榜</a>
+</section>
+<p class="fine-print">F6 入口只运行固定的合成现金场景，不是该证券的真实历史回测；不得把合成结果展示为真实收益证据。</p>
+{% endblock %}

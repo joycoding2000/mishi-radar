@@ -11,3 +11,6 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+
+# Local WP-FX01B demo watchlist state.
+/var/
