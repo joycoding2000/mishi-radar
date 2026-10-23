@@ -34,3 +34,15 @@ Gate保持：依据[DR01-CURRENT最终报告](../outputs/dr01-current-unblock-20
 ### 后续补充索引（2026-10-22追加，不改写上述历史记录）
 
 Owner明确确认2026-10-21批准X01-A、X01-CR、U1-A、U2-A、U3-A；对应[Owner Decision Addendum](MISHI_RADAR_R3_2_OWNER_DECISION_ADDENDUM_2026-10-21.md)及[X01局部CR](MISHI_RADAR_R3_2_X01_LOCAL_CR_2026-10-21.md)已形成待Owner Review的记录草案。仅该CR列明的非调仓日顺延范围优先于原一般禁买条款；其余冻结行为和真实数据/实施/发布Gate不变。本次批准及文档记录不构成代码、测试、接口实现或下一阶段授权。
+
+### DR03 时间语义修订（2026-10-23）
+
+Owner 本轮《chstockdata — DR03 时间语义修正与 CAPCO 归档最终收口》明确批准最小合同修订及两仓库必要文档同步。本项为 DR03 行业版本选择的显式合同修订，不将尚未冻结的逐日成员档案或秒级时间标准升级为强制验收。
+
+- 在交易日 T，仅使用 T 之前最新已公开的官方行业分类版本；只有发布日期则从公布后下一交易日开始使用，在已接受日终合同下为该日收盘。两个版本之间沿用上一版本，禁止后发布分类及后续修订回填；不要求逐日迁移、逐秒 known_at 或逐股每日生效证明，不以半年度发布频率本身否决来源。
+- 区分 `actual_classification_effective_date`（来源未提供可 UNKNOWN）与 `published_version_usable_from`（由公布日期确定的保守使用起点）。已知历史修订风险披露，不能声称当前 PDF 已获历史字节级 PIT 认证；新股无分类、遗漏、未分类和来源失败保留原状态/UNKNOWN，不默认行业或非金融。
+- 仅同步 R3.2 §5 DR03 行、消费者请求 DR03 及补充说明、运行规格 §2.1/4.6/4.7。S06 绑定 S01、广度/排序/两日退出、正式前2和原序递补，S07 财务/估值/金融排除及排名公式不变；八策略、全市场、252 净值日另含预热和其它 Gate 不变。
+- 原 S0A/S1/STOP 证据保留；旧 SOURCE_SEMANTICS_MISMATCH/STOP 只适用于旧严格解释，不能推导 CAPCO 在新规则下永久不合格。来源仍为 PARTIAL，CAPCO 为 OFFICIAL_SOURCE_AVAILABLE__REQUALIFICATION_PENDING；当前和历史两个 DR03 Gate 仍 NOT_PASSED。2025H1 内容身份、31 只当前缺口、taxonomy/version、未分类分母、历史全池和 S06/S07 排名影响未解决。
+- 本轮只核对文档差异、纸面版本选择边界与 Git blob 身份，不运行来源资格、S06/S07 实现或实际回测。未来真实数据验收继续核验版本切换前后、防未来信息、UNKNOWN/全池守恒及排名正确性，不新增额外工程 Gate。旧 OD-1/OD-2 接受和测试记录不改写、不冒充新语义实现已验收。
+
+`DR03_CONTRACT_AMENDMENT=APPROVED_DOCUMENTED`；`IMPLEMENTATION_AUTHORIZED=NO`；`CAPCO_REQUALIFICATION=NOT_STARTED`。仅本次白名单文档提交/普通推送获授权，不授权下一 Phase。归档提交及独立远端核对的实际 SHA 由本轮最终交接报告记录，避免提交自引用。
