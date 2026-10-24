@@ -2,6 +2,8 @@
 
 审查日：2026-10-24（Asia/Shanghai）。范围经 Owner 确认为 **仅 mishi-radar**；不审查 systematic-investing-os、chstockdata 的分支、代码或研究资产。本轮整理现有结论，不执行新实验，不改变 Owner Acceptance、数据资格或下一阶段授权。
 
+**同日盘符更正**：Owner确认WD My Passport已由F:改为E:。现用`E:\BaiduNetdiskDownload`，五个原库均可访问；聚宽594份正文原始字节SHA-256全部匹配既有清单。已复现一个chunk的4段正文、3张内嵌图及JQ0594的379行编号文本，见[局部核实](docs/asset-review-2026-10-24/e-drive-source-check.json)。此前“F盘不可访问”只描述旧路径，原件可用性限制已解除；不改写历史源路径身份。269份阅读副本未发现必须长期保留的独立价值，但仍原位暂留REVIEW，待C01–C05后单独核定精确处置范围与授权，不把代表性复现说成全集精确重建通过。
+
 ## 权威状态与恢复入口
 
 | 引用 | 本轮核实身份 | 用途 |
@@ -19,8 +21,8 @@
 | ID / 主题 | 原问题与实际工作 | 已形成结论、原始证据和 Git 引用 | 研究状态 / 证据状态 | 后续价值与取代关系 |
 |---|---|---|---|---|
 | R01 竞品与买家需求 | 哪些发现、解释和回测路径值得交付？静态研究 8 组截图；复用竞品3现场操作、手册、留言及返回结果 | [三款竞品对照](docs/2026-10-15-COMPETITOR_STRATEGY_BACKTEST.md)、[闲鱼证据](docs/2026-10-14-XIANYU_EVIDENCE.md)、[当轮截图索引](docs/research/competitor-scope-2026-10-15.json)。C 盘原图 68 张；另有 1 个 ZIP。竞品3原批次 186 文件。文档在 main；原材料不在 GitHub | ACTIONABLE / INSUFFICIENT_EVIDENCE（本产品付费需求） | 功能路径存在与卖家宣传分开；没有本产品真实付款验证。资料仍适用于需求追溯，不需重做全面竞品研究。下一步由 Owner 选择具体结果/报价/使用验证 |
-| R02 聚宽全文阅读 | “600条源码”有什么实际规则与缺陷？已静态阅读594份正文、557份不同内容，37份精确重复 | [FULL_REVIEW](docs/joinquant-full-review/FULL_REVIEW.md)、[594份索引](docs/joinquant-full-review/file-index.csv)、[合并语义记录](docs/joinquant-full-review/all-reviews.jsonl)、[原始身份清单](docs/joinquant-full-review/source-manifest.json)，均在 main。原始 597 文件位于 F 盘，当前不可访问 | CLOSED_WITH_EVIDENCE / NOT_TESTED（投资效果） | 阅读已结束，不把阶段 progress 当未完成任务。保留最终知识与源身份；年度记录冷归档；269份本机切块/抽取图暂 REVIEW。未验证收益不等于策略被实验否定 |
-| R03 其他四个量化资料库 | 入门、QMT、中转、课程能提供什么？已结构盘点、有限静态抽样，未运行安装包或交易程序 | [本机资料基线](docs/LOCAL_RESEARCH_ASSETS.md)记录路径、编码和样本。五库历史合计877文件/4,282,580,626字节，含 R02；原文件在 F 盘，当前均不可访问 | PARKED / NOT_TESTED | 按具体需求取材即可；无必要为清理补读全部课程、展开二进制或运行源码。历史跨库三组精确重复已有记录，不扩展全盘去重 |
+| R02 聚宽全文阅读 | “600条源码”有什么实际规则与缺陷？已静态阅读594份正文、557份不同内容，37份精确重复 | [FULL_REVIEW](docs/joinquant-full-review/FULL_REVIEW.md)、[594份索引](docs/joinquant-full-review/file-index.csv)、[合并语义记录](docs/joinquant-full-review/all-reviews.jsonl)、[原始身份清单](docs/joinquant-full-review/source-manifest.json)，均在 main。原始库现位于E盘，594正文哈希全部匹配，另3张独立PNG本次未重新核验 | CLOSED_WITH_EVIDENCE / NOT_TESTED（投资效果）；TESTED（原文身份） | 阅读已结束。保留最终知识与原件；年度记录冷归档。269份副本无已证明的长期独立保留必要，处置后置于C01–C05，暂留REVIEW。未验证收益不等于策略被实验否定 |
+| R03 其他四个量化资料库 | 入门、QMT、中转、课程能提供什么？已结构盘点、有限静态抽样，未运行安装包或交易程序 | [本机资料基线](docs/LOCAL_RESEARCH_ASSETS.md)记录历史路径、编码和样本。五库历史合计877文件/4,282,580,626字节，含R02；现E盘五个根均可访问，未重数或核验其他四库内容 | PARKED / NOT_TESTED | 按具体需求取材即可；无必要为清理补读全部课程、展开二进制或运行源码。历史跨库三组精确重复已有记录，不扩展全盘去重 |
 | R04 产品方向与范围演进 | 全天机会发现、策略、诊断、回测与交付形态怎样收敛？初始讨论→R2/R3→R3.2、Owner 决策及修订 | [R3.2范围](docs/MISHI_RADAR_V0_1_SPEC_R3_2_SCOPE_APPROVED_DATA_PENDING_2026-10-16.md)、[运行规格候选](docs/MISHI_RADAR_R3_2_PRODUCT_OPERATING_SPEC_CANDIDATE_2026-10-19.md)、[Owner Decisions](docs/MISHI_RADAR_R3_2_OWNER_DECISIONS_2026-10-19.md)、[修订](docs/MISHI_RADAR_R3_2_OWNER_DECISION_ADDENDUM_2026-10-21.md)，main | DECIDED（已批准部分） / NOT_TESTED（需求与运行经济性） | 八策略、六维、H1、Web、当前扫描和真实现金回测的批准范围继续有效；旧“三种/七种/盘后优先”等建议已被取代。`FULL_DESIGN_NOT_FROZEN`，OD-3 数值仍 UNKNOWN，不重开已批准事项 |
 | R05 DR01 当前池与停复牌资格 | 是否有目标日完整、可追溯证券状态？两轮来源调查保留官方导出、分页、闭市码反例、准上市页面及账本 | [首轮](outputs/dr01-current-2026-10-18/DR01-CURRENT-report.md)、[最终报告](outputs/dr01-current-unblock-2026-10-18/DR01-CURRENT-report.md)、同目录 `evidence/` / `sha256-manifest.json`；main。最终报告既有离线审计176断言，不是消费者功能测试 | INVESTIGATE / INSUFFICIENT_EVIDENCE（深市全量资格）；TESTED（离线一致性） | 沪市缺口已解决；深市 D=2026-10-16 完整停复牌的血缘及采集完成依据仍缺，结论 BLOCKED。零成交与闭市码不能代替状态。首轮被补充而非完全取代，后轮直接引用其原件，整组 KEEP |
 | R06 S08资金来源与成本 | 日资金数值能否使用、覆盖多少、成本如何？固定20股五日样本、4股年度分页、旧 VIPDOC 包络调查 | [资金资格](outputs/s08-fund-universe-investigation-2026-10-17/s08-fund-source-qualification.md)、[全池与成本](outputs/s08-fund-universe-investigation-2026-10-17/s08-universe-and-scan-cost.md)、`evidence/local-input-hashes.json` / 原始响应，main | ACTIONABLE / INSUFFICIENT_EVIDENCE（全池与 PIT）；TESTED（既有定向样本） | DR04-P 后续已接受，旧“无公共无损接口”被取代；M、原始零经济语义与历史可知性未解决。保留原始两股完整年度响应及缺失/过期反例。41.08% 是旧单日包络减幅，不能套给全年并集5552股或当前 SLA |
@@ -37,7 +39,7 @@
 |---|---|---|
 | `C:\Users\Administrator\Documents\竞品分析\` | R01；69 / 37,085,071，其中68原图34,022,804字节，另1个ZIP3,062,267字节 | 原图 KEEP。额外第69项已识别为竞品4 ZIP，包内7张图与保留目录逐字节等价；仅容器 DELETE_CANDIDATE，见 [等价证据](docs/asset-review-2026-10-24/zip-equivalence.json) |
 | `C:\Users\Administrator\Documents\Codex\2026-10-13\3-a-http-124-221-98\outputs\` | R01；186 / 3,432,534 | 已结束批次 ARCHIVE 原位保留；报告与阶段观察是来源身份，不因材料名称/时效而丢弃 |
-| `F:\BaiduNetdiskDownload\2020-2026聚宽600条源码\`及另外四库 | R02/R03；2026-10-23恢复记录为877 / 4,282,580,626 | 当前无 F 盘，NOT_CHECKED，不算正常空结果或已丢失。原始哈希、编码、canonical关系仍在Git。最低核实是挂载保留盘并匹配清单，无需重读全库 |
+| `E:\BaiduNetdiskDownload\2020-2026聚宽600条源码\`及另外四库 | R02/R03；历史记录877 / 4,282,580,626，本次不重数 | Owner确认同一WD盘由F:改为E:；五根可访问，聚宽594正文哈希匹配。旧清单F路径保留历史身份，以相对路径映射到E；原件第二持久副本未验证，无需重读全库 |
 | `C:\Users\Administrator\.codex\visualizations\2026\10\22\01a16446-92f1-7fb1-b25f-112797c67cc7\final-integration-2026-10-23\` | R08；35 / 275,952；`final_state.json`记录整合闭环 | ARCHIVE；Acceptance中的原链接继续保留，不能随worktree一起删除 |
 | `C:\Users\Administrator\.codex\visualizations\2026\10\22\01a163dd-e5fd-7ad0-919e-edf98f203aca\g01-g07-final-reacceptance\` | R08；117 / 1,439,210 | ARCHIVE独立正反例和审查证据；不清理会话或父目录 |
 | `C:\Users\Administrator\.codex\visualizations\2026\10\23\01a16819-10cb-7d40-8978-4957695ac0be\wp-fx01b-independent-review\` | R10；36 / 2,062,908 | KEEP首次审查、失败CSV/小N反例、F5/F6独立证据 |

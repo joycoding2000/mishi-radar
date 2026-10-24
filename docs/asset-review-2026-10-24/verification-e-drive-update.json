@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-10-24T12:13:24.772011+08:00",
+  "scope": "TARGETED_DRIVE_MAPPING_CORRECTION_NO_FULL_AUDIT",
+  "prior_commit": "691a8f8643ae9cf07e537395f02a1b842e81e30b",
+  "source_hashes_matching": 594,
+  "accessible_library_roots": 5,
+  "representative_reconstruction": "PASS_4_CHUNK_SECTIONS_3_FIGURES_379_LINE_TAIL",
+  "reading_copies_still_present": 269,
+  "reading_copies_bytes": 9044280,
+  "c01_c05_targets_and_categories_unchanged": true,
+  "source_manifest_historical_identity_unchanged": true,
+  "main_unchanged": true,
+  "full_audit_rerun": false,
+  "product_tests_rerun": false,
+  "cleanup_executed": false,
+  "review_judgment": "Long-term independent retention not demonstrated; defer exact cleanup qualification and authorization until after C01-C05"
+}

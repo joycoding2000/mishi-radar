@@ -78,7 +78,13 @@ def main():
     result["fx01_identity"] = "32_FILES_12_CHANGED_20_UNCHANGED_19_RECOVERY_MATCHED"
     source = json.loads((OUT / "joinquant-source-check.json").read_text(encoding="utf-8"))
     assert source["status"] == "NOT_CHECKED_SOURCE_ROOT_UNAVAILABLE"
-    result["f_drive"] = source["status"]
+    result["initial_f_path_snapshot"] = source["status"]
+    correction = OUT / "e-drive-source-check.json"
+    if correction.exists():
+        current = json.loads(correction.read_text(encoding="utf-8"))
+        assert current["source_hash_check"]["matching_files"] == 594
+        result["source_root_current"] = current["current_source_root"]
+        result["source_status_current"] = current["source_hash_check"]["status"]
     g = json.loads((OUT / "git-inventory.json").read_text(encoding="utf-8"))
     targets = {"authorization": "NO", "basis": BASE, "exact_membership": "asset-files.csv category=DELETE_CANDIDATE",
                "directories": [], "individual_files": [], "local_branches": [], "remote_branches": []}

@@ -1,21 +1,21 @@
 [
   {
     "path": "RESEARCH_ASSET_INDEX.md",
-    "bytes": 13502,
+    "bytes": 14305,
     "method": "UTF8_LF_NORMALIZED",
-    "sha256": "454d081d3f74b064dbe3f5e4c2a6dbe936f0f66b0e8406a772f43b2d610b8d2c"
+    "sha256": "93875efa4726cfab7c84621ab2d18592076d69654adbd776d51c0728f050cf39"
   },
   {
     "path": "RESEARCH_DECISION_QUEUE.md",
-    "bytes": 7262,
+    "bytes": 7317,
     "method": "UTF8_LF_NORMALIZED",
-    "sha256": "8ca7b10c19c351d056228bbedbbec8aaf779312dbb2292d66575f81fcbedbe4a"
+    "sha256": "2bb6ef3dc750f2cc8047ec2acad5f16d69853cccb5cbfb2b7f69ef22bdda1c43"
   },
   {
     "path": "ASSET_RETENTION_AND_CLEANUP_PLAN.md",
-    "bytes": 17556,
+    "bytes": 18748,
     "method": "UTF8_LF_NORMALIZED",
-    "sha256": "2f8229ad687c23f6edec0a5f80906c08a40fdebba730dd68994ff90c86b6d52c"
+    "sha256": "d7dfacfc584f4e00df68bd749aceca5f3df7352daa45b5fe211000b14098dd2a"
   },
   {
     "path": "docs/asset-review-2026-10-24/.gitattributes",
@@ -39,13 +39,19 @@
     "path": "docs/asset-review-2026-10-24/collect_inventory.py",
     "bytes": 8183,
     "method": "RAW_BYTES",
-    "sha256": "e3c719dd0a04df9b5097d91fb5f72a61bccdc6c6dd255e72b2a557b90d7087b5"
+    "sha256": "b84a2aafee0bc1c12b7e33d7edbb7d4b90961ad390f640d490d4e3cc4fa5aa7c"
   },
   {
     "path": "docs/asset-review-2026-10-24/collection-summary.json",
     "bytes": 1779,
     "method": "RAW_BYTES",
     "sha256": "698353832d32ed24401eba9ef7b979f01722634b7bf92a87762f8510a76f83ad"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/e-drive-source-check.json",
+    "bytes": 3248,
+    "method": "RAW_BYTES",
+    "sha256": "82557bc05c9e300298c238e13b57f843aa17b1cba576e5b65273cbb1c6359d7f"
   },
   {
     "path": "docs/asset-review-2026-10-24/fx01-identity-check.json",
@@ -79,9 +85,9 @@
   },
   {
     "path": "docs/asset-review-2026-10-24/README.md",
-    "bytes": 2392,
+    "bytes": 2681,
     "method": "RAW_BYTES",
-    "sha256": "f69c18cc8a9b36cbd2c42bcb3f2d9b2f9684dbfa592ad8104ef8745d76981096"
+    "sha256": "cc3fa884ae7635416fdfd3b402a71c59c9a9451368f4873b8b75d687f69a1bb8"
   },
   {
     "path": "docs/asset-review-2026-10-24/remote-baseline.json",
@@ -108,6 +114,12 @@
     "sha256": "4ac335ca87298b3a5f1dbe9656730814468f7fec618d6f8791d155d34dac0110"
   },
   {
+    "path": "docs/asset-review-2026-10-24/verification-e-drive-update.json",
+    "bytes": 792,
+    "method": "RAW_BYTES",
+    "sha256": "345a74f07ddaadac79af9f2abaddbb283eae54a0bd226ce8080f79a8ab62b6bb"
+  },
+  {
     "path": "docs/asset-review-2026-10-24/verification.json",
     "bytes": 843,
     "method": "RAW_BYTES",
@@ -115,9 +127,9 @@
   },
   {
     "path": "docs/asset-review-2026-10-24/verify_review.py",
-    "bytes": 7448,
+    "bytes": 7833,
     "method": "RAW_BYTES",
-    "sha256": "37ab077af9798f007f4b3a7e62dabbce68e9d30b3dfc912e9eb6f25325432281"
+    "sha256": "b605bdc72fe9a120e2c8d66e1cef54a3922f0650d85f43295adac0cebbbf5b86"
   },
   {
     "path": "docs/asset-review-2026-10-24/zip-equivalence.json",

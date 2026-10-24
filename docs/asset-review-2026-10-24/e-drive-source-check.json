@@ -1,0 +1,93 @@
+{
+  "observed_at": "2026-10-24T12:10:54.924436+08:00",
+  "owner_correction": "WD My Passport drive letter changed from F: to E:",
+  "current_source_root": "E:\\BaiduNetdiskDownload\\2020-2026聚宽600条源码",
+  "historical_source_root": "F:\\BaiduNetdiskDownload\\2020-2026聚宽600条源码",
+  "source_manifest_sha256": "0357e3d8046b05a30d8a27373f4775ad85e428b7649b369fcc6222770acaec68",
+  "source_hash_check": {
+    "status": "PASS_594_OF_594",
+    "checked_files": 594,
+    "matching_files": 594,
+    "missing_or_mismatched_ids": [],
+    "method": "Raw-byte SHA-256 for each relative path from existing manifest; completed in preceding bounded read-only check; no other libraries hashed"
+  },
+  "library_roots": [
+    {
+      "path": "E:\\BaiduNetdiskDownload\\2020-2026聚宽600条源码",
+      "accessible": true,
+      "count_or_contents_reaudited": false
+    },
+    {
+      "path": "E:\\BaiduNetdiskDownload\\量化交易入门",
+      "accessible": true,
+      "count_or_contents_reaudited": false
+    },
+    {
+      "path": "E:\\BaiduNetdiskDownload\\Qmt策略",
+      "accessible": true,
+      "count_or_contents_reaudited": false
+    },
+    {
+      "path": "E:\\BaiduNetdiskDownload\\聚宽中转 qmt 自动交易",
+      "accessible": true,
+      "count_or_contents_reaudited": false
+    },
+    {
+      "path": "E:\\BaiduNetdiskDownload\\量化交易课程类",
+      "accessible": true,
+      "count_or_contents_reaudited": false
+    }
+  ],
+  "reconstruction_examples": {
+    "chunk": {
+      "path": "reading-inputs/2020年度精选策略/chunk-001.txt",
+      "source_sections": 4,
+      "normalized_text_match": true,
+      "method": "manifest encoding, LF normalization, URL redaction, declared character ranges"
+    },
+    "figures": [
+      {
+        "id": "JQ0351",
+        "file": "JQ0351-figure-1.png",
+        "sha256": "404ffdcb71ba165bc51b2a347f5c06a575f3153e757cad7ce6dd8497b342a62b",
+        "bytes": 101408,
+        "dimensions": [
+          875,
+          279
+        ],
+        "match": true
+      },
+      {
+        "id": "JQ0387",
+        "file": "JQ0387-figure-1.png",
+        "sha256": "24b953af8e6163ccf6810497ab9e96ed98bec8e21f9ad39a9a5348f83d563b14",
+        "bytes": 213624,
+        "dimensions": [
+          850,
+          770
+        ],
+        "match": true
+      },
+      {
+        "id": "JQ0387",
+        "file": "JQ0387-figure-2.png",
+        "sha256": "94cf125ea24dd0a48b726422b4d53cdc3885503908939a16bd6063cf86be38e3",
+        "bytes": 258349,
+        "dimensions": [
+          717,
+          394
+        ],
+        "match": true
+      }
+    ],
+    "tail": {
+      "id": "JQ0594",
+      "numbered_lines": 379,
+      "normalized_text_match": true
+    }
+  },
+  "scope_limit": "Representative reconstruction only; not an exhaustive byte-for-byte reconstruction qualification of all 269 derivatives",
+  "retention_judgment": "No demonstrated need to retain all 269 derivatives permanently once originals and final knowledge are retained; keep in place as deferred REVIEW pending separate post-C01-C05 cleanup qualification and authorization",
+  "c01_c05_scope_unchanged": true,
+  "cleanup_executed": false
+}
