@@ -1,0 +1,215 @@
+{
+  "paused_files": 32,
+  "changed": 12,
+  "unchanged": 20,
+  "recovery_files": 19,
+  "recovery_matches": 19,
+  "paused_file_map": [
+    {
+      "path": "mishi_radar/demo/__init__.py",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/__main__.py",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "mishi_radar/demo/app.py",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/backtest.py",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "mishi_radar/demo/fixtures.py",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/service.py",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/static/app.css",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/static/app.js",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/backtest.html",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/templates/base.html",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/templates/error.html",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/index.html",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/templates/status.html",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/templates/stock.html",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/templates/watch.html",
+      "matches_paused_baseline": false
+    },
+    {
+      "path": "mishi_radar/demo/watch.py",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/browser-watchlist.json",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/browser_check.py",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-01-f1.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-02-f3.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-03-f5.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-04-f6-u3.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-05-f6-failures.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-06-f1-empty.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-07-f1-unknown.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/desktop-08-f7.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-01-f1.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-02-f3.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-03-f5.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-04-f6.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/mobile-05-f1-unknown.png",
+      "matches_paused_baseline": true
+    },
+    {
+      "path": "tests/test_demo_product.py",
+      "matches_paused_baseline": false
+    }
+  ],
+  "recovery_checks": [
+    {
+      "path": "mishi_radar/demo/__init__.py",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/__main__.py",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/app.py",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/backtest.py",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/fixtures.py",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/service.py",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/static/app.css",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/static/app.js",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/backtest.html",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/base.html",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/error.html",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/index.html",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/status.html",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/stock.html",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/templates/watch.html",
+      "match": true
+    },
+    {
+      "path": "mishi_radar/demo/watch.py",
+      "match": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/browser-watchlist.json",
+      "match": true
+    },
+    {
+      "path": "outputs/wp-fx01-fixture-vertical-2026-10-23/browser_check.py",
+      "match": true
+    },
+    {
+      "path": "tests/test_demo_product.py",
+      "match": true
+    }
+  ]
+}

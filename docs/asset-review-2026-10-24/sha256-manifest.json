@@ -1,0 +1,128 @@
+[
+  {
+    "path": "RESEARCH_ASSET_INDEX.md",
+    "bytes": 13502,
+    "method": "UTF8_LF_NORMALIZED",
+    "sha256": "454d081d3f74b064dbe3f5e4c2a6dbe936f0f66b0e8406a772f43b2d610b8d2c"
+  },
+  {
+    "path": "RESEARCH_DECISION_QUEUE.md",
+    "bytes": 7262,
+    "method": "UTF8_LF_NORMALIZED",
+    "sha256": "8ca7b10c19c351d056228bbedbbec8aaf779312dbb2292d66575f81fcbedbe4a"
+  },
+  {
+    "path": "ASSET_RETENTION_AND_CLEANUP_PLAN.md",
+    "bytes": 17556,
+    "method": "UTF8_LF_NORMALIZED",
+    "sha256": "2f8229ad687c23f6edec0a5f80906c08a40fdebba730dd68994ff90c86b6d52c"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/.gitattributes",
+    "bytes": 150,
+    "method": "RAW_BYTES",
+    "sha256": "d70c8aaa4eaa52a2d80cb0661bb3bfc3e22fdafc386fc8ab7acfc1a00f6297d2"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/asset-files.csv",
+    "bytes": 490953,
+    "method": "RAW_BYTES",
+    "sha256": "75e8a2d25ccc7e134598ff3a032daccb8c8576b1c52a960ef2dade4b8cc10524"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/cleanup-targets.json",
+    "bytes": 13553,
+    "method": "RAW_BYTES",
+    "sha256": "cacd8d9e95686d1079108d93588848ef05f6885422a9114f09b3b61753182115"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/collect_inventory.py",
+    "bytes": 8183,
+    "method": "RAW_BYTES",
+    "sha256": "e3c719dd0a04df9b5097d91fb5f72a61bccdc6c6dd255e72b2a557b90d7087b5"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/collection-summary.json",
+    "bytes": 1779,
+    "method": "RAW_BYTES",
+    "sha256": "698353832d32ed24401eba9ef7b979f01722634b7bf92a87762f8510a76f83ad"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/fx01-identity-check.json",
+    "bytes": 5715,
+    "method": "RAW_BYTES",
+    "sha256": "129594f5d1450f539741589ac9965f16f406ec8b1ef1d58541e1ea5968283726"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/git-inventory.json",
+    "bytes": 99982,
+    "method": "RAW_BYTES",
+    "sha256": "cd92f31773ecb7923a1e5ab666be0c25d404bd23ca94a940ec17fa0f630be42b"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/joinquant-source-check.json",
+    "bytes": 222,
+    "method": "RAW_BYTES",
+    "sha256": "a367b0877964e3de526241204a6a37da2c674b14ebd7edb80d2e29fcb2e2df46"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/process-check.json",
+    "bytes": 196,
+    "method": "RAW_BYTES",
+    "sha256": "b87eea8969fae8c3eeb3a1389e7a02335d514d63014ae91466e5bd7d477c6e70"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/qualify_assets.py",
+    "bytes": 8218,
+    "method": "RAW_BYTES",
+    "sha256": "2bf4b37573f2578ab90a2d4526e172bd842b7e38d454f79b67f22c342f66afbf"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/README.md",
+    "bytes": 2392,
+    "method": "RAW_BYTES",
+    "sha256": "f69c18cc8a9b36cbd2c42bcb3f2d9b2f9684dbfa592ad8104ef8745d76981096"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/remote-baseline.json",
+    "bytes": 376,
+    "method": "RAW_BYTES",
+    "sha256": "a400c802c32bc01a4658192bc5491024c34ecef9b453a2f0dfc2405f3b753e96"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/retention-summary.json",
+    "bytes": 3957,
+    "method": "RAW_BYTES",
+    "sha256": "c9a9ab59844ef3af7a6ab0c70476ba67f68e1340e02e25538362b4f78ab766e1"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/source-provenance.json",
+    "bytes": 1432,
+    "method": "RAW_BYTES",
+    "sha256": "0879af38878e1b8a868eacc6e2fc2a2af368f3891237e972a565287483e20161"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/task-snapshot.json",
+    "bytes": 2369,
+    "method": "RAW_BYTES",
+    "sha256": "4ac335ca87298b3a5f1dbe9656730814468f7fec618d6f8791d155d34dac0110"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/verification.json",
+    "bytes": 843,
+    "method": "RAW_BYTES",
+    "sha256": "d7df63634e5a71bbd9b80058f7f4a0f1bb1bc8e2467ec6c4a125960af1ea3cc3"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/verify_review.py",
+    "bytes": 7448,
+    "method": "RAW_BYTES",
+    "sha256": "37ab077af9798f007f4b3a7e62dabbce68e9d30b3dfc912e9eb6f25325432281"
+  },
+  {
+    "path": "docs/asset-review-2026-10-24/zip-equivalence.json",
+    "bytes": 3116,
+    "method": "RAW_BYTES",
+    "sha256": "4336f9a2135570d53379204b414f9d424dc74778d113546b8181226c382a4682"
+  }
+]

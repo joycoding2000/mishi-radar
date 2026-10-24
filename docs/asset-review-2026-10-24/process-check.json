@@ -1,0 +1,5 @@
+{
+  "ObservedAt": "2026-10-24T11:49:39.5312104+08:00",
+  "Matches": [],
+  "Scope": "Known project paths in Python/Node process command lines; does not prove absence of hidden dependencies"
+}

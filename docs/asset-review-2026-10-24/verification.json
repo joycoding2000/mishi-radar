@@ -1,0 +1,22 @@
+{
+  "classification_partition": "PASS_2080_FILES_165166284_BYTES",
+  "candidate_reclaim": {
+    "logical_bytes": 67287613,
+    "allocated_bytes": 68974056,
+    "files": 959,
+    "allocation_errors": [],
+    "external_hardlinks": []
+  },
+  "original_tracked_files_unchanged": 398,
+  "main_and_ssd_backup_unchanged": true,
+  "historical_tips_reachable_from_main": 3,
+  "relative_links_checked": 45,
+  "zip_equivalence": "PASS_7_MEMBERS",
+  "fx01_identity": "32_FILES_12_CHANGED_20_UNCHANGED_19_RECOVERY_MATCHED",
+  "f_drive": "NOT_CHECKED_SOURCE_ROOT_UNAVAILABLE",
+  "worktree_status_qualified_at_census": "3_CLEAN; IGNORED_0_16_14_BYTECODE_ONLY",
+  "acceptance_evidence_readable": true,
+  "product_tests_rerun": false,
+  "cleanup_executed": false,
+  "status": "PASS_FOR_OWNER_CLEANUP_REVIEW_WITH_EXPLICIT_REVIEW_GROUPS"
+}

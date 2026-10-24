@@ -1,0 +1,366 @@
+{
+  "authorization": "NO",
+  "basis": "34c8b4c7cf9236f316ebd661c175e12bdcbc26cb",
+  "exact_membership": "asset-files.csv category=DELETE_CANDIDATE",
+  "directories": [
+    {
+      "path": "C:/Users/Administrator/.codex/worktrees/od1-od2-final-integration/mishi-radar",
+      "group": "worktree-1",
+      "head": "b9a7fba6be9515fc3271eac7a7a97ab65f53e64d",
+      "files": 306,
+      "bytes": 21062843,
+      "condition": "Owner authorization, unchanged clean status, no active dependencies; retain main and external evidence"
+    },
+    {
+      "path": "D:/Dev/Projects/.worktrees/mishi-od1-a",
+      "group": "worktree-2",
+      "head": "a72c67901e1147f3e4c198207dea8dd56d59a542",
+      "files": 305,
+      "bytes": 21074373,
+      "condition": "Owner authorization, unchanged clean status, no active dependencies; retain main and external evidence"
+    },
+    {
+      "path": "D:/Dev/Projects/.worktrees/mishi-od2-b",
+      "group": "worktree-3",
+      "head": "fc02eff5a68b0bc408bc3a60b5b4f0ad272c6758",
+      "files": 303,
+      "bytes": 21067137,
+      "condition": "Owner authorization, unchanged clean status, no active dependencies; retain main and external evidence"
+    }
+  ],
+  "individual_files": [
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/__pycache__/__init__.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 197,
+      "file_id": "14896932707417801159:1407374884415071"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/__pycache__/time_contract.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 5175,
+      "file_id": "14896932707417801159:562949954283336"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/cash_backtest/__pycache__/__init__.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 590,
+      "file_id": "14896932707417801159:562949954283345"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/cash_backtest/__pycache__/accounting.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 3862,
+      "file_id": "14896932707417801159:844424930994003"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/cash_backtest/__pycache__/engine.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 139745,
+      "file_id": "14896932707417801159:562949954283346"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/cash_backtest/__pycache__/model.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 40314,
+      "file_id": "14896932707417801159:562949954283348"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/demo/__pycache__/__init__.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 792,
+      "file_id": "14896932707417801159:3940649674811509"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/demo/__pycache__/__main__.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 1512,
+      "file_id": "14896932707417801159:844424930994083"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/demo/__pycache__/app.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 19262,
+      "file_id": "14896932707417801159:6473924465207487"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/demo/__pycache__/backtest.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 15570,
+      "file_id": "14896932707417801159:844424930994005"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/demo/__pycache__/fixtures.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 2127,
+      "file_id": "14896932707417801159:1688849861126028"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/demo/__pycache__/service.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 71791,
+      "file_id": "14896932707417801159:1125899907704921"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/demo/__pycache__/watch.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 10040,
+      "file_id": "14896932707417801159:2533274791257997"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/result_contract/__pycache__/__init__.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 780,
+      "file_id": "14896932707417801159:562949954283454"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/result_contract/__pycache__/__main__.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 2137,
+      "file_id": "14896932707417801159:1407374884415415"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/result_contract/__pycache__/adapter.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 42431,
+      "file_id": "14896932707417801159:2251799814547396"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/result_contract/__pycache__/fixtures.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 14439,
+      "file_id": "14896932707417801159:1970324837836606"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/strategy_core/__pycache__/__init__.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 952,
+      "file_id": "14896932707417801159:562949954283333"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/strategy_core/__pycache__/config.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 18930,
+      "file_id": "14896932707417801159:562949954283334"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/strategy_core/__pycache__/diagnostics.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 25675,
+      "file_id": "14896932707417801159:562949954283337"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/strategy_core/__pycache__/engine.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 18655,
+      "file_id": "14896932707417801159:844424930993991"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/strategy_core/__pycache__/mathx.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 8437,
+      "file_id": "14896932707417801159:562949954283338"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/strategy_core/__pycache__/model.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 23992,
+      "file_id": "14896932707417801159:844424930993995"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "mishi_radar/strategy_core/__pycache__/strategies.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 106869,
+      "file_id": "14896932707417801159:562949954283340"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/__init__.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 144,
+      "file_id": "14896932707417801159:562949954283408"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/a_fixtures.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 11734,
+      "file_id": "14896932707417801159:562949954283411"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/b_fixtures.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 11020,
+      "file_id": "14896932707417801159:562949954283418"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_a_confirmed_defects.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 25812,
+      "file_id": "14896932707417801159:2533274791257866"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_a_contract.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 5665,
+      "file_id": "14896932707417801159:562949954283412"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_a_exits_determinism.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 24302,
+      "file_id": "14896932707417801159:562949954283414"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_a_math_ranking.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 10709,
+      "file_id": "14896932707417801159:562949954283415"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_a_strategies_advanced.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 33738,
+      "file_id": "14896932707417801159:562949954283416"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_a_strategies_core.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 19077,
+      "file_id": "14896932707417801159:562949954283413"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_cash_model.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 11999,
+      "file_id": "14896932707417801159:562949954283417"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_confirmed_defects.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 48974,
+      "file_id": "14896932707417801159:562949954283419"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_contract.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 3073,
+      "file_id": "14896932707417801159:562949954283420"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_corporate_actions.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 18104,
+      "file_id": "14896932707417801159:562949954283421"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_execution_rules.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 34629,
+      "file_id": "14896932707417801159:562949954283422"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_gate_fixes.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 49119,
+      "file_id": "14896932707417801159:562949954283423"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_partial_stop.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 9390,
+      "file_id": "14896932707417801159:562949954283424"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_signal_timing.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 9769,
+      "file_id": "14896932707417801159:562949954283425"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_b_x01_u1_u2_u3.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 45713,
+      "file_id": "14896932707417801159:562949954283426"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_demo_product.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 45834,
+      "file_id": "14896932707417801159:5348024558365070"
+    },
+    {
+      "root": "D:\\Dev\\Projects\\mishi-radar",
+      "path": "tests/__pycache__/test_result_contract.cpython-314.pyc",
+      "group": "primary-python-bytecode",
+      "bytes": 27914,
+      "file_id": "14896932707417801159:2533274791257920"
+    },
+    {
+      "root": "C:\\Users\\Administrator\\Documents\\竞品分析",
+      "path": "竞品4量化交易选股系统源码58.65.zip",
+      "group": "competitor-4-duplicate-container",
+      "bytes": 3062267,
+      "file_id": "5620403678656625875:40813871623140619"
+    }
+  ],
+  "local_branches": [
+    {
+      "ref": "refs/heads/codex/od1-od2-final-integration",
+      "tip": "b9a7fba6be9515fc3271eac7a7a97ab65f53e64d",
+      "unique_to_main": 0
+    },
+    {
+      "ref": "refs/heads/feature/od1-strategy-core",
+      "tip": "a72c67901e1147f3e4c198207dea8dd56d59a542",
+      "unique_to_main": 0
+    },
+    {
+      "ref": "refs/heads/feature/od2-cash-backtest",
+      "tip": "fc02eff5a68b0bc408bc3a60b5b4f0ad272c6758",
+      "unique_to_main": 0
+    }
+  ],
+  "remote_branches": []
+}

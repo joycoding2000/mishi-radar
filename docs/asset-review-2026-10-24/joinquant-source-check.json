@@ -1,0 +1,7 @@
+{
+  "purpose": "Verify original availability before deleting generated reading inputs",
+  "source_available": false,
+  "manifest_file_count": 594,
+  "status": "NOT_CHECKED_SOURCE_ROOT_UNAVAILABLE",
+  "checks": []
+}

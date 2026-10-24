@@ -1,0 +1,76 @@
+{
+  "observed_at": "2026-10-24T11:46:20.389256+08:00",
+  "scopes": {
+    "competitor-3": {
+      "files": 186,
+      "bytes": 3432534
+    },
+    "competitor-images": {
+      "files": 69,
+      "bytes": 37085071
+    },
+    "fx01b-first-review": {
+      "files": 36,
+      "bytes": 2062908
+    },
+    "fx01b-independent-evidence": {
+      "files": 12,
+      "bytes": 816607
+    },
+    "od-independent-evidence": {
+      "files": 117,
+      "bytes": 1439210
+    },
+    "od-integration-evidence": {
+      "files": 35,
+      "bytes": 275952
+    },
+    "primary": {
+      "files": 711,
+      "bytes": 56849649
+    },
+    "worktree-1": {
+      "files": 306,
+      "bytes": 21062843
+    },
+    "worktree-2": {
+      "files": 305,
+      "bytes": 21074373
+    },
+    "worktree-3": {
+      "files": 303,
+      "bytes": 21067137
+    }
+  },
+  "source_matches": 0,
+  "source_count": 0,
+  "errors": [
+    {
+      "scope": "joinquant-source",
+      "error": "ROOT_UNAVAILABLE",
+      "path": "F:\\BaiduNetdiskDownload\\2020-2026聚宽600条源码"
+    },
+    {
+      "scope": "intro-source",
+      "error": "ROOT_UNAVAILABLE",
+      "path": "F:\\BaiduNetdiskDownload\\量化交易入门"
+    },
+    {
+      "scope": "qmt-source",
+      "error": "ROOT_UNAVAILABLE",
+      "path": "F:\\BaiduNetdiskDownload\\Qmt策略"
+    },
+    {
+      "scope": "qmt-bridge-source",
+      "error": "ROOT_UNAVAILABLE",
+      "path": "F:\\BaiduNetdiskDownload\\聚宽中转 qmt 自动交易"
+    },
+    {
+      "scope": "course-source",
+      "error": "ROOT_UNAVAILABLE",
+      "path": "F:\\BaiduNetdiskDownload\\量化交易课程类"
+    }
+  ],
+  "source_manifest_count": 594,
+  "source_status": "NOT_CHECKED_SOURCE_ROOT_UNAVAILABLE"
+}

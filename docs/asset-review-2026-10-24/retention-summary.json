@@ -1,0 +1,173 @@
+{
+  "groups": {
+    "active-code-contracts-decisions": {
+      "category": "KEEP",
+      "files": 75,
+      "bytes": 1011137
+    },
+    "competitor-3-source-batch": {
+      "category": "ARCHIVE",
+      "files": 186,
+      "bytes": 3432534
+    },
+    "competitor-4-duplicate-container": {
+      "category": "DELETE_CANDIDATE",
+      "files": 1,
+      "bytes": 3062267
+    },
+    "competitor-original-images": {
+      "category": "KEEP",
+      "files": 68,
+      "bytes": 34022804
+    },
+    "dr01-current-2026-10-18": {
+      "category": "KEEP",
+      "files": 50,
+      "bytes": 4851118
+    },
+    "dr01-current-unblock-2026-10-18": {
+      "category": "KEEP",
+      "files": 77,
+      "bytes": 3705927
+    },
+    "dr02-dr06-consolidation-2026-10-19": {
+      "category": "KEEP",
+      "files": 4,
+      "bytes": 4770631
+    },
+    "dr04-m-decision-design": {
+      "category": "KEEP",
+      "files": 1,
+      "bytes": 30778
+    },
+    "fx01b-current-evidence": {
+      "category": "KEEP",
+      "files": 27,
+      "bytes": 13938015
+    },
+    "fx01b-first-review": {
+      "category": "KEEP",
+      "files": 36,
+      "bytes": 2062908
+    },
+    "fx01b-independent-evidence": {
+      "category": "KEEP",
+      "files": 12,
+      "bytes": 816607
+    },
+    "fx01b-recovery-for-owner-review": {
+      "category": "KEEP",
+      "files": 20,
+      "bytes": 185668
+    },
+    "historical-consumer-review": {
+      "category": "ARCHIVE",
+      "files": 14,
+      "bytes": 71462
+    },
+    "joinquant-final-knowledge": {
+      "category": "KEEP",
+      "files": 10,
+      "bytes": 1598415
+    },
+    "joinquant-reading-inputs": {
+      "category": "REVIEW",
+      "files": 269,
+      "bytes": 9044280
+    },
+    "joinquant-stage-records": {
+      "category": "ARCHIVE",
+      "files": 23,
+      "bytes": 589427
+    },
+    "od-independent-evidence": {
+      "category": "ARCHIVE",
+      "files": 117,
+      "bytes": 1439210
+    },
+    "od-integration-evidence": {
+      "category": "ARCHIVE",
+      "files": 35,
+      "bytes": 275952
+    },
+    "paused-fx01-evidence": {
+      "category": "REVIEW",
+      "files": 15,
+      "bytes": 11162284
+    },
+    "primary-python-bytecode": {
+      "category": "DELETE_CANDIDATE",
+      "files": 44,
+      "bytes": 1020993
+    },
+    "s08-fund-universe-investigation-2026-10-17": {
+      "category": "KEEP",
+      "files": 71,
+      "bytes": 4618340
+    },
+    "superseded-product-proposals": {
+      "category": "ARCHIVE",
+      "files": 7,
+      "bytes": 85008
+    },
+    "worktree-1": {
+      "category": "DELETE_CANDIDATE",
+      "files": 306,
+      "bytes": 21062843
+    },
+    "worktree-2": {
+      "category": "DELETE_CANDIDATE",
+      "files": 305,
+      "bytes": 21074373
+    },
+    "worktree-3": {
+      "category": "DELETE_CANDIDATE",
+      "files": 303,
+      "bytes": 21067137
+    },
+    "wp-fx01a-owner-acceptance-2026-10-23": {
+      "category": "KEEP",
+      "files": 1,
+      "bytes": 6476
+    },
+    "wp-fx01a-result-contract-2026-10-23": {
+      "category": "KEEP",
+      "files": 3,
+      "bytes": 159690
+    }
+  },
+  "categories": {
+    "KEEP": {
+      "files": 455,
+      "bytes": 71778514
+    },
+    "ARCHIVE": {
+      "files": 382,
+      "bytes": 5893593
+    },
+    "DELETE_CANDIDATE": {
+      "files": 959,
+      "bytes": 67287613
+    },
+    "REVIEW": {
+      "files": 284,
+      "bytes": 20206564
+    }
+  },
+  "total_files": 2080,
+  "total_bytes": 165166284,
+  "unique_file_ids": 2080,
+  "hardlink_multi_name_ids": 0,
+  "candidate_reclaim": {
+    "logical_bytes": 67287613,
+    "allocated_bytes": 68974056,
+    "files": 959,
+    "allocation_errors": [],
+    "external_hardlinks": []
+  },
+  "historical_missing_f_drive": {
+    "files": 877,
+    "bytes": 4282580626,
+    "status": "2026-10-23_RECORDED_ONLY_NOT_RECOUNTED"
+  }
+}

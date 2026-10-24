@@ -1,0 +1,76 @@
+{
+  "observed_date": "2026-10-24",
+  "source": "Codex list_threads(limit=50); bounded recent page, not exhaustive",
+  "threads": [
+    {
+      "id": "01a16bff-d0ae-7643-a66e-5ab2ecdd0c63",
+      "title": "盘点历史研究与清理冗余资产",
+      "status": "active",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792813465
+    },
+    {
+      "id": "01a168cd-49d5-7c90-b51c-3d081b1fbc71",
+      "title": "冻结项目备份与恢复状态",
+      "status": "idle",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792811839
+    },
+    {
+      "id": "01a16819-10cb-7d40-8978-4957695ac0be",
+      "title": "独立验收 WP-FX01B",
+      "status": "idle",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792813459
+    },
+    {
+      "id": "01a1341c-e10e-73e1-9e1b-12b9aa882573",
+      "title": "调查竞品选股软件功能与收费",
+      "status": "idle",
+      "cwd": "C:\\Users\\Administrator\\Documents\\Codex\\2026-10-13\\3-a-http-124-221-98",
+      "updatedAt": 1792813293
+    },
+    {
+      "id": "01a16763-97fc-71c0-a8df-3edb74e055fa",
+      "title": "验收 WP-FX01A Fixture 适配",
+      "status": "notLoaded",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792736416
+    },
+    {
+      "id": "01a1666a-3205-7602-b9f3-291cb91c432c",
+      "title": "裁决 R3.2 下一工作包",
+      "status": "notLoaded",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792720151
+    },
+    {
+      "id": "01a16446-92f1-7fb1-b25f-112797c67cc7",
+      "title": "核实批准基线并整合 A/B",
+      "status": "notLoaded",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792718320
+    },
+    {
+      "id": "01a163dd-e5fd-7ad0-919e-edf98f203aca",
+      "title": "独立验收 G01–G07 修复",
+      "status": "notLoaded",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792679902
+    },
+    {
+      "id": "01a15c8d-ebfb-7813-86ac-3bfaac1e41ac",
+      "title": "独立验收 D4–D24 修复",
+      "status": "notLoaded",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792669982
+    },
+    {
+      "id": "01a15811-19fc-70b0-af42-13c3b02e50e9",
+      "title": "审查 OD-1/OD-2 验收条件",
+      "status": "notLoaded",
+      "cwd": "D:\\Dev\\Projects\\mishi-radar",
+      "updatedAt": 1792503814
+    }
+  ]
+}

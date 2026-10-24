@@ -1,0 +1,9 @@
+{
+  "observed_date": "2026-10-24",
+  "method": "git ls-remote --heads origin; successful independent remote query",
+  "heads": {
+    "main": "447c0e22edd414abe9ef1efcdfb6ad266c0bcb32",
+    "backup/ssd-migration-2026-10-23": "34c8b4c7cf9236f316ebd661c175e12bdcbc26cb"
+  },
+  "note": "Snapshot before pushing this review branch. These are the only two remote heads returned."
+}

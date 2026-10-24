@@ -1,0 +1,26 @@
+# mishi-radar 研究与资产决策队列
+
+2026-10-24（Asia/Shanghai）；仅归并已有未决项，不增加正式Gate，不启动实验。顺序按决定能否改变下一步、现有证据成熟度与处理成本排列；P0是资料恢复/防误删优先级，不是开发门槛。决定和实验授权分别记录，`Owner Review ready`不等于Owner已经批准。
+
+| ID / 优先级 | 待Owner决定 | 已有最小证据 | 推荐行动及停止条件 | 研究 / 证据状态 |
+|---|---|---|---|---|
+| D01 / P0 | 五个F盘原库及269份阅读输入未来保留在哪里？是否已有迁移副本？ | [恢复说明](docs/SSD-MIGRATION-RECOVERY-2026-10-23.md)记载五库877文件/4,282,580,626字节，当前F盘未挂载；[源身份清单](docs/joinquant-full-review/source-manifest.json)含594正文哈希/编码；本机269份阅读副本共9,044,280字节 | 暂留REVIEW；接回原盘或提供已有备份位置，局部校验并按既有清单核实源身份。找到可读且匹配的原件后，以1份原件库+Git知识索引为常态；只对待清理的副本补足重建例证，不重读源码。没有可靠原件时保留目前切块，不能把旧校验成功当今天仍有原件 | INVESTIGATE / INSUFFICIENT_EVIDENCE（本轮源可用性） |
+| D02 / P1 | 是否批准下一轮一次性移除3个历史worktree、3个对应本地分支、44个字节码文件和1个等价ZIP？ | [清理计划](ASSET_RETENTION_AND_CLEANUP_PLAN.md)及CSV；worktree均干净、无独有提交，0/16/14个忽略文件分别为空或Python缓存；main与备份远端SHA已核对；ZIP7/7成员匹配；限定进程检查无匹配 | 建议批准精确集合及执行前状态重验；保留main、SSD备份、本轮分支及外部验收证据。预计959文件、约65.8MiB本地分配空间，分支删除自身不计对象回收。任一集合出现新成果或活跃依赖，只停止该集合。**本轮 CLEANUP_AUTHORIZED=NO** | ACTIONABLE / TESTED（本轮身份、状态与等价检查） |
+| D03 / P1 | 是否正式接受WP-FX01B固定Fixture切片？如何处置旧暂停证据？ | main含`9f83a2e`；[现有交付](outputs/wp-fx01b-fixture-vertical-2026-10-23/change-record.json)。聊天“独立验收 WP-FX01B”在2026-10-23最终复验`PASS_FOR_OWNER_ACCEPTANCE`，184次执行/零失败；原外部`wp-fx01b-reacceptance/evidence/review-result.json`可读；本轮32文件映射为12改/20未改、恢复19/19匹配 | 建议直接以现有独立证据作Owner决定并将正式接受范围记录归档，明确只覆盖固定Fixture。不重新做整套功能审查。Owner正式收口前保留当前交付、首次失败证据、恢复副本与旧15文件；之后再单列一组旧截图处置，不从清理反推开发授权 | ACTIONABLE / TESTED（既有Fixture复验）；INSUFFICIENT_EVIDENCE（正式Owner接受记录） |
+| D04 / P1 | DR01深市目标日完整停复牌状态如何补足：指定来源/凭证，还是调整交付时间？ | [最终BLOCKED报告](outputs/dr01-current-unblock-2026-10-18/DR01-CURRENT-report.md)已解决沪市日期/持续停牌；深市D=2026-10-16仍缺上游血缘和全量完成依据。第三方列表一致、零成交、闭市码不能证明完整性 | 仅在另获授权后取得一份可追溯全量状态文件或表级血缘/完成凭证。若无法取得，交Owner作来源或时间决定；不重复同类搜索、不降低资格、不自动删策略。停止于该必要事实或准确UNKNOWN | INVESTIGATE / INSUFFICIENT_EVIDENCE（来源资格）；TESTED（既有离线审计） |
+| D05 / P1 | 真正付费需求与首次独立使用，应先验证哪个结果、报价和交付方案？ | [CURRENT_STATE](docs/CURRENT_STATE.md)、[竞品对照](docs/2026-10-15-COMPETITOR_STRATEGY_BACKTEST.md)；竞品存在功能/宣传，缺本产品付款与非程序员独立使用证据。现有Fixture可说明路径，不能证明真实机会或收益 | Owner选择一个具体结果样例/报价与受控使用任务，并单独授权验证；停止于是否愿付费、省了哪一步、首次成功率及售后成本的事实。当前不接触买家、不发送消息、不冒用合成结果作真实投资表现 | ACTIONABLE / NOT_TESTED |
+| D06 / P2 | OD-3运行与权益数值怎样冻结？ | [运行规格候选](docs/MISHI_RADAR_R3_2_PRODUCT_OPERATING_SPEC_CANDIDATE_2026-10-19.md)与Owner Decisions；原则已接受，SLA、发布时间/使用窗、覆盖/零判据、预算、连续批次、并发、配额、试用/价格仍UNKNOWN。S08历史机械成本仅作线索 | 基于可交付范围选一组运行/权益数值，记录未承诺项；不把旧3.98小时或48.29–51.71小时机械推算作为SLA，不因这次盘点增加新Gate。数值经Owner决定后，供下一项单独授权任务使用 | INVESTIGATE / INSUFFICIENT_EVIDENCE |
+| D07 / P2 | DR02/03/04-M/05/06中下一项供应资格工作选什么？ | [综合差距报告](outputs/dr02-dr06-consolidation-2026-10-19/DR02-DR06-consolidated-gap-report.md)、已更新DR03时间语义及消费者合同。P已PASS/CLOSED；M、当前/历史矩阵、原始Amount、逐日估值/旧财报版本、执行全链分别未满足或证据不足 | Owner按当前/历史缺口选择一个有界问题并授权供应方任务。优先复用已有P与样本，分别处理DR03成员合同/历史可知性等独立工作；不把DR01当成一切研究的前置，也不由本仓库替供应方重判最新资格。不重开P，不降八策略/一年+预热的既定范围 | ACTIONABLE / INSUFFICIENT_EVIDENCE |
+| D08 / P3 | 聚宽与其他资料是否还需投入研究？ | [最终阅读报告](docs/joinquant-full-review/FULL_REVIEW.md)已收敛12组候选机制、具体规则和缺陷，594/594正文覆盖；四个其他库仅盘点/抽样。没有相应新需求或运行证据 | 推荐按已批准S01–S08的具体解释/规则问题查JQ ID；其他机制与QMT、课程保持PARKED。只有一个当前交付问题无法由既有结论回答时再申请局部研究；不重新阅读、回测600份或扩建研究平台，不因未测试宣布机制失效 | PARKED / NOT_TESTED（新增投资/产品价值） |
+
+## 合并掉的重复事项
+
+- 买家付款、首次上手、交付方式和售后经济性合为D05；具体运行和权益数值在D06，不反复生成多个“待商业验证”问题。
+- 原“是否实施最小日度资金合同”已经由DR04-P的后续Acceptance解决，不再排队；全池M及历史资格留D07。
+- 聚宽最后一份未读、三种模式数量、是否仅盘后、OD-1/OD-2是否接受等已有决定，不重新提交Owner裁决。
+- 备份分支减少数量不是本项目实际问题：仅一个SSD备份且含独有恢复说明，推荐KEEP_ARCHIVE；不合并main、不另建一套归档标签。
+- H01/H01-B、全球多资产、Carry等属于其他项目，本队列不作结论，也不据此发起跨项目研究。
+
+## 下一轮最小建议
+
+Owner可独立批准D02的明确集合；D01缺原件不影响3个干净worktree的清理判断。研究方面，先完成D03现有证据的正式Owner决定，再由Owner在D04–D07中选择下一项有界任务；本轮到索引、方案、提交与远端SHA核对即停止，不启动任何上述任务。
