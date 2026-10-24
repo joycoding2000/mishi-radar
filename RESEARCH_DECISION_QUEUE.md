@@ -4,8 +4,8 @@
 
 | ID / 优先级 | 待Owner决定 | 已有最小证据 | 推荐行动及停止条件 | 研究 / 证据状态 |
 |---|---|---|---|---|
-| D01 / P3，后置于C01–C05 | 原件已在E盘确认后，何时批准269份阅读输入的单独处置？ | Owner确认WD盘F:改为E:；五库根均可访问。聚宽594正文SHA-256全部匹配，chunk4段、3张内嵌图、JQ0594编号文本已代表性复现，见[局部核实](docs/asset-review-2026-10-24/e-drive-source-check.json)。269副本仍为9,044,280字节 | 原件可用性问题已关闭；不再因旧F路径不可访问而要求长期保留269副本。推荐原件+Git最终知识为常态，先完成C01–C05，再单独确认全集处置所需的等价/重建保障与精确集合并取得授权；本轮原位暂留REVIEW，不删除、不扩展当前959文件候选 | ACTIONABLE / TESTED（原文身份与代表性重建）；全集处置资格尚未完成 |
-| D02 / P1 | 是否批准下一轮一次性移除3个历史worktree、3个对应本地分支、44个字节码文件和1个等价ZIP？ | [清理计划](ASSET_RETENTION_AND_CLEANUP_PLAN.md)及CSV；worktree均干净、无独有提交，0/16/14个忽略文件分别为空或Python缓存；main与备份远端SHA已核对；ZIP7/7成员匹配；限定进程检查无匹配 | 建议批准精确集合及执行前状态重验；保留main、SSD备份、本轮分支及外部验收证据。预计959文件、约65.8MiB本地分配空间，分支删除自身不计对象回收。任一集合出现新成果或活跃依赖，只停止该集合。**本轮 CLEANUP_AUTHORIZED=NO** | ACTIONABLE / TESTED（本轮身份、状态与等价检查） |
+| D01 / P3 CLOSED | 269份聚宽阅读输入是否应保留独立副本？ | [E盘核验](docs/asset-review-2026-10-24/e-drive-source-check.json)及[清理收口](docs/asset-review-2026-10-24/reading-derivative-closeout.json)：594/594正文/代码及3张相关图可由E盘原件与C盘异盘副本恢复；228分块哈希、36份行号文本、3图、2索引批量核验；无独立注释例外 | Owner对有界清理作PASS_BOUNDED授权；269份按精确清单删除，恢复原件及备份清单保留；不再建立清理待办 | CLOSED / TESTED（内容恢复性） |
+| D02 / P1 CLOSED | 是否批准并执行C01–C05历史资产精确清理？ | [清理收口](docs/asset-review-2026-10-24/cleanup-closeout.json)：44缓存、1 ZIP、3 worktree文件集合及3本地分支；执行前状态重验通过，ZIP 7/7图等价，历史提交均可从origin/main恢复 | 已按PASS_BOUNDED授权以非强制方式完成；main、SSD备份、整理分支及远端分支保留 | CLOSED / EXECUTED |
 | D03 / P1 | 是否正式接受WP-FX01B固定Fixture切片？如何处置旧暂停证据？ | main含`9f83a2e`；[现有交付](outputs/wp-fx01b-fixture-vertical-2026-10-23/change-record.json)。聊天“独立验收 WP-FX01B”在2026-10-23最终复验`PASS_FOR_OWNER_ACCEPTANCE`，184次执行/零失败；原外部`wp-fx01b-reacceptance/evidence/review-result.json`可读；本轮32文件映射为12改/20未改、恢复19/19匹配 | 建议直接以现有独立证据作Owner决定并将正式接受范围记录归档，明确只覆盖固定Fixture。不重新做整套功能审查。Owner正式收口前保留当前交付、首次失败证据、恢复副本与旧15文件；之后再单列一组旧截图处置，不从清理反推开发授权 | ACTIONABLE / TESTED（既有Fixture复验）；INSUFFICIENT_EVIDENCE（正式Owner接受记录） |
 | D04 / P1 | DR01深市目标日完整停复牌状态如何补足：指定来源/凭证，还是调整交付时间？ | [最终BLOCKED报告](outputs/dr01-current-unblock-2026-10-18/DR01-CURRENT-report.md)已解决沪市日期/持续停牌；深市D=2026-10-16仍缺上游血缘和全量完成依据。第三方列表一致、零成交、闭市码不能证明完整性 | 仅在另获授权后取得一份可追溯全量状态文件或表级血缘/完成凭证。若无法取得，交Owner作来源或时间决定；不重复同类搜索、不降低资格、不自动删策略。停止于该必要事实或准确UNKNOWN | INVESTIGATE / INSUFFICIENT_EVIDENCE（来源资格）；TESTED（既有离线审计） |
 | D05 / P1 | 真正付费需求与首次独立使用，应先验证哪个结果、报价和交付方案？ | [CURRENT_STATE](docs/CURRENT_STATE.md)、[竞品对照](docs/2026-10-15-COMPETITOR_STRATEGY_BACKTEST.md)；竞品存在功能/宣传，缺本产品付款与非程序员独立使用证据。现有Fixture可说明路径，不能证明真实机会或收益 | Owner选择一个具体结果样例/报价与受控使用任务，并单独授权验证；停止于是否愿付费、省了哪一步、首次成功率及售后成本的事实。当前不接触买家、不发送消息、不冒用合成结果作真实投资表现 | ACTIONABLE / NOT_TESTED |
@@ -23,4 +23,4 @@
 
 ## 下一轮最小建议
 
-执行顺序仍为C01–C05在先、269份阅读副本在后；原件已在E盘核实，不再将旧F路径列为阻断。本次只更新受影响判断，C01–C05的范围与待授权身份不变。研究方面，先完成D03现有证据的正式Owner决定，再由Owner在D04–D07中选择下一项有界任务；不启动上述任务。
+资产清理事项D01/D02已全部收口，当前没有待执行的大规模清理任务。研究决策仍按D03现有证据的Owner收口，再由Owner选择是否授权D04–D07中的单一有界工作；D08保持PARKED。本次不启动这些研究任务。

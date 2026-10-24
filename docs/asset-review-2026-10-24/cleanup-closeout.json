@@ -1,0 +1,141 @@
+{
+  "recorded_at_utc": "2026-10-24T04:38:33.299739+00:00",
+  "project": "mishi-radar",
+  "owner_acceptance": "PASS_BOUNDED",
+  "authoritative_review_commits": [
+    "691a8f8643ae9cf07e537395f02a1b842e81e30b",
+    "1f28290ba2e063e2b09daeac838c8c274a8be0a3"
+  ],
+  "main_unchanged": {
+    "main": "447c0e22edd414abe9ef1efcdfb6ad266c0bcb32",
+    "origin_main": "447c0e22edd414abe9ef1efcdfb6ad266c0bcb32",
+    "equal": true
+  },
+  "ssd_backup_branch_unchanged": {
+    "local": "34c8b4c7cf9236f316ebd661c175e12bdcbc26cb",
+    "remote": "34c8b4c7cf9236f316ebd661c175e12bdcbc26cb",
+    "equal": true
+  },
+  "c01_c05": {
+    "status": "COMPLETED",
+    "main_worktree_bytecode": {
+      "files": 44,
+      "logical_bytes": 1020993,
+      "all_exact_targets_absent": true
+    },
+    "competitor_duplicate_zip": {
+      "files": 1,
+      "logical_bytes": 3062267,
+      "sha256": "81fe01feb09bf6ab0f4e2c51778e228223ee7e1b774f0a0c3f20ba72e28a5d87",
+      "retained_original_images_reverified": "7/7",
+      "zip_absent": true
+    },
+    "historical_worktrees_removed": [
+      {
+        "path": "C:\\Users\\Administrator\\.codex\\worktrees\\od1-od2-final-integration\\mishi-radar",
+        "head": "b9a7fba6be9515fc3271eac7a7a97ab65f53e64d",
+        "local_branch": "codex/od1-od2-final-integration",
+        "files": 306,
+        "logical_bytes": 21062843,
+        "ignored_files": 0
+      },
+      {
+        "path": "D:\\Dev\\Projects\\.worktrees\\mishi-od1-a",
+        "head": "a72c67901e1147f3e4c198207dea8dd56d59a542",
+        "local_branch": "feature/od1-strategy-core",
+        "files": 305,
+        "logical_bytes": 21074373,
+        "ignored_files": 16,
+        "ignored_only_python_bytecode": true
+      },
+      {
+        "path": "D:\\Dev\\Projects\\.worktrees\\mishi-od2-b",
+        "head": "fc02eff5a68b0bc408bc3a60b5b4f0ad272c6758",
+        "local_branch": "feature/od2-cash-backtest",
+        "files": 303,
+        "logical_bytes": 21067137,
+        "ignored_files": 14,
+        "ignored_only_python_bytecode": true
+      }
+    ],
+    "local_branches_removed": [
+      "codex/od1-od2-final-integration",
+      "feature/od1-strategy-core",
+      "feature/od2-cash-backtest"
+    ],
+    "remote_branches_deleted": [],
+    "git_gc_or_prune_run": false,
+    "predelete_candidate_files": 959,
+    "predelete_logical_bytes": 67287613,
+    "measured_file_allocation_bytes": 68974056,
+    "allocation_errors": [],
+    "external_hardlinks": []
+  },
+  "e_drive_source_verification": {
+    "status": "PASS",
+    "root": "E:\\BaiduNetdiskDownload\\2020-2026聚宽600条源码",
+    "manifest_body_or_code_matches": "594/594",
+    "related_standalone_images": "3/3"
+  },
+  "source_second_copy": {
+    "path": "C:\\Users\\Administrator\\Documents\\ResearchArchive\\mishi-radar-joinquant-source-2026-10-24",
+    "backup_manifest": "C:\\Users\\Administrator\\Documents\\ResearchArchive\\mishi-radar-joinquant-source-2026-10-24\\backup-manifest.json",
+    "backup_manifest_sha256": "7cf867390e3cca8579e7284faac5000742bf394ee8ca9667eb26ea867c377a61",
+    "source_physical_disk_number": 2,
+    "destination_physical_disk_number": 1,
+    "different_physical_disks": true,
+    "source_body_or_code_files": 594,
+    "related_original_images": 3,
+    "identity_manifests": 5,
+    "verified_records": 602,
+    "payload_bytes": 8723233,
+    "all_backup_records_reverified": true
+  },
+  "reading_derivatives": {
+    "target": 269,
+    "deleted": 269,
+    "preserved": 0,
+    "logical_bytes_deleted": 9044280,
+    "allocated_bytes_deleted": 9589760,
+    "recoverability_checks": {
+      "chunk_inputs": {
+        "count": 228,
+        "manifest_hash_matches": 228,
+        "hash_method": "UTF-8 text with LF normalization"
+      },
+      "line_numbered_texts": {
+        "count": 36,
+        "source_plus_line_numbers": 8,
+        "url_only_redactions": 26,
+        "embedded_image_placeholders": 2,
+        "unclassified": 0
+      },
+      "extracted_images": {
+        "count": 3,
+        "reconstructed_from_original_sources_or_images": 3
+      },
+      "image_sidecars": {
+        "files": 2,
+        "image_references_verified": 3
+      },
+      "independent_annotations_found": 0,
+      "unrecoverable_exceptions_found": 0
+    },
+    "deleted_records_path": "docs/asset-review-2026-10-24/reading-derivative-closeout.json"
+  },
+  "actual_reclaimed_file_bytes": {
+    "logical_bytes": 76331893,
+    "allocated_bytes": 78563816,
+    "method": "Windows FILE_STANDARD_INFO AllocationSize; sums deleted file allocations, excluding directory metadata"
+  },
+  "important_research_preserved": true,
+  "excluded_assets_untouched": [
+    "main and SSD backup branch",
+    "Owner Acceptance records",
+    "15 paused FX01 historical evidence files",
+    "other research archives",
+    "Codex conversations and visualizations",
+    "E-drive source originals"
+  ],
+  "remote_closeout_sha": "verified after the final closeout commit and push; reported in delivery"
+}

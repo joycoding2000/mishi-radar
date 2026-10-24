@@ -1,0 +1,1934 @@
+{
+  "recorded_at_utc": "2026-10-24T04:33:00.554760+00:00",
+  "target_group": "joinquant-reading-inputs",
+  "authorization": "PASS_BOUNDED",
+  "source_root": "E:\\BaiduNetdiskDownload\\2020-2026聚宽600条源码",
+  "source_backup": "C:\\Users\\Administrator\\Documents\\ResearchArchive\\mishi-radar-joinquant-source-2026-10-24",
+  "source_backup_manifest_sha256": "7cf867390e3cca8579e7284faac5000742bf394ee8ca9667eb26ea867c377a61",
+  "source_backup_manifest_records": 602,
+  "source_backup_reverified": true,
+  "source_manifest_originals": 594,
+  "related_original_images": 3,
+  "identity_manifests": 5,
+  "reading_derivative_target_count": 269,
+  "reading_derivative_target_logical_bytes": 9044280,
+  "deleted_count": 269,
+  "deleted_logical_bytes": 9044280,
+  "deleted_allocated_bytes": 9589760,
+  "deleted_file_count_by_extension": {
+    ".txt": 264,
+    ".png": 3,
+    ".json": 2
+  },
+  "preserved_exception_count": 0,
+  "preserved_exceptions": [],
+  "recoverability_checks": {
+    "chunk_inputs": {
+      "count": 228,
+      "manifest_hash_matches": 228,
+      "hash_method": "UTF-8 text with LF normalization"
+    },
+    "line_numbered_texts": {
+      "count": 36,
+      "source_plus_line_numbers": 8,
+      "url_only_redactions": 26,
+      "embedded_image_placeholders": 2,
+      "unclassified": 0
+    },
+    "extracted_images": {
+      "count": 3,
+      "reconstructed_from_original_sources_or_images": 3
+    },
+    "image_sidecars": {
+      "files": 2,
+      "image_references_verified": 3
+    },
+    "independent_annotations_found": 0,
+    "unrecoverable_exceptions_found": 0
+  },
+  "deleted_records": [
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0581.txt",
+      "bytes": 21850,
+      "file_id": "14896932707417801159:3377699721277144",
+      "sha256": "f362cda36efcd1eb679fa566de325486c832597c7dfab1f0b67e24f9568d19ce",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0583.txt",
+      "bytes": 17075,
+      "file_id": "14896932707417801159:562949954170706",
+      "sha256": "9e6ffcc1d1dd396ade9d083509ccbb1439656acabdd2ade3a7db23a9d8ba2251",
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0584.txt",
+      "bytes": 1956,
+      "file_id": "14896932707417801159:562949954170707",
+      "sha256": "f8bd5e1b60a48dff4e977455647bd8a9644823df81daa863bb963e09680bcdea",
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0585.txt",
+      "bytes": 3787,
+      "file_id": "14896932707417801159:562949954170708",
+      "sha256": "00b24edad305ff6a42208fa6b9073215377c3e9f4fe0b1199531c6ea823ece74",
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0586.txt",
+      "bytes": 12369,
+      "file_id": "14896932707417801159:562949954170709",
+      "sha256": "4e15c4bccb6f04e5c5cd20ade01f7568ebabf564c84f48f067f8da2481f6a3d7",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0587.txt",
+      "bytes": 49262,
+      "file_id": "14896932707417801159:562949954170710",
+      "sha256": "df6be02d7c6082ee6956104376f893ba72a50ef7f0dd7f2008c28e06c460d155",
+      "allocated_bytes": 53248
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0588.txt",
+      "bytes": 4205,
+      "file_id": "14896932707417801159:562949954170711",
+      "sha256": "01bb6b39b41175c2486e6e1442d7af5ef2878f1fdca2735b10c0370bc2b1a358",
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0589.txt",
+      "bytes": 10308,
+      "file_id": "14896932707417801159:562949954170712",
+      "sha256": "4f94133c8381b36ce764eebd36b9000521eee1d95a983783b82720e4f639f63a",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0590.txt",
+      "bytes": 12960,
+      "file_id": "14896932707417801159:562949954170713",
+      "sha256": "f03209bb25c09a84db70b7c05f272c29633ae2d10c363d1d7ac7e68ad89d2dec",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0591.txt",
+      "bytes": 6767,
+      "file_id": "14896932707417801159:562949954170714",
+      "sha256": "7b564c6bc9e22b45750d3af9b2f78fc0547cb6e0a84f296f22ce63fa9ecdac11",
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0592.txt",
+      "bytes": 98638,
+      "file_id": "14896932707417801159:562949954170715",
+      "sha256": "980a73f9fd664c8fe4c12e26730b524d7eff6fa78e53808864051428607b11de",
+      "allocated_bytes": 102400
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0593.txt",
+      "bytes": 15470,
+      "file_id": "14896932707417801159:562949954170716",
+      "sha256": "c257dad76814dd8b09b593f40d16a3d1621ccb6d13f612f8f162d6f3208a4117",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/2026-tail-reading-inputs/JQ0594.txt",
+      "bytes": 17276,
+      "file_id": "14896932707417801159:562949954170717",
+      "sha256": "7d7da745a60776ad0f135b1984c583c92c5165dfcc3f9ef500a3490816cc7adc",
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0351-figure-1.png",
+      "bytes": 101408,
+      "file_id": "14896932707417801159:844424930881247",
+      "sha256": "404ffdcb71ba165bc51b2a347f5c06a575f3153e757cad7ce6dd8497b342a62b",
+      "allocated_bytes": 102400
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0351-figures.json",
+      "bytes": 258,
+      "file_id": "14896932707417801159:562949954170593",
+      "sha256": "8c515ef4bc642266666f33c4c53b9daba271e4090992b56b7f83d45763a143b3",
+      "allocated_bytes": 264
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0351.txt",
+      "bytes": 3788,
+      "file_id": "14896932707417801159:562949954170592",
+      "sha256": "5cefe2b5bcc4798c599aa5193c8f621fb6e0ce9231a58291bcd0e4e53b26652f",
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0352.txt",
+      "bytes": 6952,
+      "file_id": "14896932707417801159:562949954170594",
+      "sha256": "26547f0e516efba95486b5c8ffafa0c7a4510fadc260a20c6f1b52a524704593",
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0353.txt",
+      "bytes": 7265,
+      "file_id": "14896932707417801159:562949954170595",
+      "sha256": "25e99d252ac165fa4b6b21cbd1cc9ba1d710b59a0a78d2e6a740fbb5dbc0a9c9",
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0355.txt",
+      "bytes": 16796,
+      "file_id": "14896932707417801159:562949954170596",
+      "sha256": "1b31bf6ee2a82d8ec4829abdef69c9406fe70fae3c33998facf9e85a2ee97a9b",
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0356.txt",
+      "bytes": 7189,
+      "file_id": "14896932707417801159:562949954170597",
+      "sha256": "db9896a44e53790f66a89b1cbc7c96a3121cf69b91cc5463b33aaf07847aacf3",
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0357.txt",
+      "bytes": 25124,
+      "file_id": "14896932707417801159:562949954170598",
+      "sha256": "3492ce68c3ad306074588202f056a23fd157a076d87f163fc1825b06920deedb",
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0358.txt",
+      "bytes": 9503,
+      "file_id": "14896932707417801159:562949954170599",
+      "sha256": "3dfd1cacc86617fdeada4f94bcdb28a26a325525ed24a5ff314d6f8a9c3f6f57",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0359.txt",
+      "bytes": 36387,
+      "file_id": "14896932707417801159:562949954170600",
+      "sha256": "815c2fbaf9a0aecd9e168e68eb827a25af70b9c304629e9078afabfd880281e8",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0360.txt",
+      "bytes": 7213,
+      "file_id": "14896932707417801159:562949954170601",
+      "sha256": "8d8755f4998924f70a0d580a92561b2f0b5f72ede86850745cf72830ae9fb3b1",
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0361.txt",
+      "bytes": 15793,
+      "file_id": "14896932707417801159:562949954170602",
+      "sha256": "5d8af62c3ae07b590ae3b3c4b1f501dd41abc16e2009d813531fcd8dadd70e38",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0362.txt",
+      "bytes": 11331,
+      "file_id": "14896932707417801159:562949954170603",
+      "sha256": "becc7d159161fba8e7e724efdd35fd4df96179578530b39a0c4f937206adf449",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0363.txt",
+      "bytes": 15302,
+      "file_id": "14896932707417801159:562949954170604",
+      "sha256": "a11bdcae70bd29cd164af188fed93f41ddc138605efb929ab3b600b9b79e1d52",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0364.txt",
+      "bytes": 18238,
+      "file_id": "14896932707417801159:562949954170605",
+      "sha256": "5db15c7d2a06d5e133e5d49a5321634565d29ef4e6fffd869850f89442534583",
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "docs/joinquant-full-review/middle-reading-inputs/JQ0365.txt",
+      "bytes": 2450,
+      "file_id": "14896932707417801159:562949954170606",
+      "sha256": "a6fa421a953de2fc69a7ae6a99f84c37caaa6c76abf5d263e6d36ff8c8d45159",
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-001.txt",
+      "bytes": 40052,
+      "file_id": "14896932707417801159:281474977459416",
+      "sha256": "10f53b472e7a5af87af7b307e503d19a749333db1e58ce3ad7deada37f2065dc",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-002.txt",
+      "bytes": 36205,
+      "file_id": "14896932707417801159:281474977459417",
+      "sha256": "5fd4eb0dbc98c162b22ed78df696be976269559b5c15c5c31f7f7170e328ad3d",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-003.txt",
+      "bytes": 42045,
+      "file_id": "14896932707417801159:281474977459418",
+      "sha256": "e98cfdf50b83c5feaefdebe9e60839b5dd86ad7f472db2b06e6b67dddc420172",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-004.txt",
+      "bytes": 34811,
+      "file_id": "14896932707417801159:281474977459419",
+      "sha256": "f700a3e10b56839693792b7b793a344843e3e66e7c773f8e7c22c1e5b3c85800",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-005.txt",
+      "bytes": 39724,
+      "file_id": "14896932707417801159:281474977459420",
+      "sha256": "e00ccc59d574855279a4b7addfde7ec293aa3784597da651782982f9ac2a98f5",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-006.txt",
+      "bytes": 17482,
+      "file_id": "14896932707417801159:281474977459421",
+      "sha256": "b2a3a831925ffb0a3fed101ba98e9f270b7450a9da71c322988df8a2abbd8c60",
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-007.txt",
+      "bytes": 41116,
+      "file_id": "14896932707417801159:281474977459422",
+      "sha256": "74a667b58383a953921da43781c3c524914c7df5763a26a4d541fab652408298",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-008.txt",
+      "bytes": 42550,
+      "file_id": "14896932707417801159:281474977459423",
+      "sha256": "ae565d2225064eac32b6420f2970f4e8c84a970256cba1ab4e1119918dba3d96",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-009.txt",
+      "bytes": 36339,
+      "file_id": "14896932707417801159:281474977459424",
+      "sha256": "090ab2a04486e69d9beea4651c7efa1cb75b536dfdb0e5a5ec31f7ffb23b8a95",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-010.txt",
+      "bytes": 33840,
+      "file_id": "14896932707417801159:281474977459425",
+      "sha256": "834f0eaa33069bf1602fe868b43189db7b9367859a19a16424d39afad7b06791",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-011.txt",
+      "bytes": 29071,
+      "file_id": "14896932707417801159:281474977459426",
+      "sha256": "361a70cf11612d07cd737a9a2c43a36445e3bfe928a995dcfa1f0055daf07703",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-012.txt",
+      "bytes": 31964,
+      "file_id": "14896932707417801159:281474977459427",
+      "sha256": "5fc12e21cff5577d94604b9abbbea418c47e745a5e234ea9917933d3c099626d",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-013.txt",
+      "bytes": 33386,
+      "file_id": "14896932707417801159:281474977459428",
+      "sha256": "8afc6f5ef598a469fc8261e274a930f2a9f928c9318528207248a6703050e567",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-014.txt",
+      "bytes": 44227,
+      "file_id": "14896932707417801159:281474977459429",
+      "sha256": "b85edd68707b5d682ad85f3b221fdfb013a18ef706a52a6840452358b0048a78",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-015.txt",
+      "bytes": 42255,
+      "file_id": "14896932707417801159:281474977459430",
+      "sha256": "e9f220f6bd4178962312fe44337804796cd9fa75ed4cb21d04f1b4516ca24c0a",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-016.txt",
+      "bytes": 36373,
+      "file_id": "14896932707417801159:281474977459431",
+      "sha256": "1e72fbaae1c827f53f343865bb79b7a3ad89d75e963fe1e05e4cc6d07a2342da",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-017.txt",
+      "bytes": 40494,
+      "file_id": "14896932707417801159:281474977459432",
+      "sha256": "857718ef2863a8bde71d1063a3ad0dd33204ef309f1c837934f88b104a6516f9",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-018.txt",
+      "bytes": 31137,
+      "file_id": "14896932707417801159:281474977459433",
+      "sha256": "467c6618a6827d4f0cc7f3a3e34b971f55d25abb35740857d4e16bd14238406c",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-019.txt",
+      "bytes": 35066,
+      "file_id": "14896932707417801159:281474977459434",
+      "sha256": "bb04babfeb31b958de347c3f7e8b2f04dd666c04aa565084cb5aa23ffff23548",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-020.txt",
+      "bytes": 31823,
+      "file_id": "14896932707417801159:281474977459435",
+      "sha256": "ba48a1459baea36373d7505734c8df2cec05c7a89f7e82486b81c0c58a42e261",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-021.txt",
+      "bytes": 38661,
+      "file_id": "14896932707417801159:281474977459436",
+      "sha256": "0401d76d37ad5156a5380a0051cf040730fba7a1e4a2aaf70d7d41e603fc3cd0",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-022.txt",
+      "bytes": 37571,
+      "file_id": "14896932707417801159:281474977459437",
+      "sha256": "4c0385de249c2ce7c3afc2fa7c18fdd8d10f0c3bc0a9f3aba1141603d8ac23ed",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-023.txt",
+      "bytes": 38200,
+      "file_id": "14896932707417801159:281474977459438",
+      "sha256": "1e1a945e40dad21873a6d79dd3bc85252ff1ac5de11a1c3e490f073b54851240",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-024.txt",
+      "bytes": 32243,
+      "file_id": "14896932707417801159:281474977459439",
+      "sha256": "d9a2f430cc465ac0f849e5a181fdb9376a9efa104bc64e143089b7fd1875e784",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-025.txt",
+      "bytes": 29724,
+      "file_id": "14896932707417801159:281474977459441",
+      "sha256": "a3a52483e28d66a644be9503bf42c9720d7c55fe3a57cd7f48fbf91755a0392c",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-026.txt",
+      "bytes": 42239,
+      "file_id": "14896932707417801159:562949954170096",
+      "sha256": "12f50a231053ecc59312e86227d62b301cdd7fd71e4a88d6c5eff184918c87ed",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-027.txt",
+      "bytes": 38378,
+      "file_id": "14896932707417801159:281474977459442",
+      "sha256": "8faec69f347b152ad92c61da64ba3ae20f217fd2eab5de74d1f7fac56be4a727",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-028.txt",
+      "bytes": 28810,
+      "file_id": "14896932707417801159:281474977459443",
+      "sha256": "a318e583374997c35460c8b8723f94c86fa115a5cc3ddb2623ecc4be3a449dd4",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2020年度精选策略/chunk-029.txt",
+      "bytes": 40612,
+      "file_id": "14896932707417801159:281474977459642",
+      "sha256": "0601dc0ba2b57ead397fcf5a5932f4bc6fb8c7273dd3f8b4c2c15462e97b08b4",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-001.txt",
+      "bytes": 37912,
+      "file_id": "14896932707417801159:281474977459445",
+      "sha256": "19300b5bb2cc8fcfb15616dbb3f22d82310ecaf2cfb73d6fb029ed3323fd291b",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-002.txt",
+      "bytes": 39628,
+      "file_id": "14896932707417801159:281474977459446",
+      "sha256": "edcd3c377ea4cb50761a5792c79b0639f64a8b8e6459e716e56cf26fbeef4451",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-003.txt",
+      "bytes": 31335,
+      "file_id": "14896932707417801159:562949954170103",
+      "sha256": "8a499aa77b36b7b8af160b9b7f2263310d3c8712b26d02107203625cf318aaee",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-004.txt",
+      "bytes": 36687,
+      "file_id": "14896932707417801159:281474977459448",
+      "sha256": "8710f7ce91076b50c004b919d8d0b6ac3b5318b79adc690806a3fff605dedb92",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-005.txt",
+      "bytes": 38914,
+      "file_id": "14896932707417801159:281474977459449",
+      "sha256": "d057c843c3cdd3358c98bc32628451397127484ffda611c76aed270e58a8c33c",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-006.txt",
+      "bytes": 24013,
+      "file_id": "14896932707417801159:281474977459450",
+      "sha256": "2f11254032bbc715acd006714cc0642579bbaaafca5611ccc2484ee718ebbfe0",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-007.txt",
+      "bytes": 35843,
+      "file_id": "14896932707417801159:281474977459451",
+      "sha256": "9ad3ef135cddc4cd425cf6d33d8379a15f3ce83274ffaf821d64048cbf09859f",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-008.txt",
+      "bytes": 34416,
+      "file_id": "14896932707417801159:281474977459452",
+      "sha256": "fcd1e8cdf574283d04656c6c823f4d1195373eded615cb7db28b63942b0cfdae",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-009.txt",
+      "bytes": 36282,
+      "file_id": "14896932707417801159:281474977459453",
+      "sha256": "e333d107e33463bc6f32fe5ddbe2313af7bc1e0ba3ee3655df318c8b24c8bd56",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-010.txt",
+      "bytes": 38764,
+      "file_id": "14896932707417801159:281474977459454",
+      "sha256": "fc0f5c5b545156c7c1f9dfa03a629f04735c454cf0d1055adee62cdcd7b1c0b5",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-011.txt",
+      "bytes": 27329,
+      "file_id": "14896932707417801159:281474977459455",
+      "sha256": "44973efdc346ad5f2ae106b23b31e832237bc1275caacd6f4d6e5be1a38580b8",
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-012.txt",
+      "bytes": 39939,
+      "file_id": "14896932707417801159:281474977459456",
+      "sha256": "ef1e2d883d074c60cbc7cebac8643ff3b6a89a73dcc609b492a88c054e6d393b",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-013.txt",
+      "bytes": 37063,
+      "file_id": "14896932707417801159:281474977459457",
+      "sha256": "58b3b828d26c21f82a177d7e1f5e61943f95522f1316169325f99fad2df0b892",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-014.txt",
+      "bytes": 36851,
+      "file_id": "14896932707417801159:281474977459458",
+      "sha256": "38e59adf34c3770287720cf2ca53a75aa86f9fa8ef0b18bd69ee30a2f2777eca",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-015.txt",
+      "bytes": 35458,
+      "file_id": "14896932707417801159:562949954170115",
+      "sha256": "76325aefe4462976e479950fb4bbd0b1548b0224fbe5c9e4266cfb60e661a264",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-016.txt",
+      "bytes": 35494,
+      "file_id": "14896932707417801159:281474977459460",
+      "sha256": "9b6fb1afc828c23bec2541e40f23fa99c570a1b3fa03a19666f3b66e147f880b",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-017.txt",
+      "bytes": 27784,
+      "file_id": "14896932707417801159:281474977459461",
+      "sha256": "182611b24b2adc192d257d01190f96f36db81776b9586c6862c92f36a430576b",
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-018.txt",
+      "bytes": 37430,
+      "file_id": "14896932707417801159:281474977459462",
+      "sha256": "c4501e6874876b02334d817e3355dcd3e3d06ee4b1ade3fc9eb34502ab65772d",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-019.txt",
+      "bytes": 43252,
+      "file_id": "14896932707417801159:562949954170119",
+      "sha256": "857e697b434374e40e9a616aa6f176c55d58292b545b26a123e2eb6fc8f736a4",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-020.txt",
+      "bytes": 34108,
+      "file_id": "14896932707417801159:281474977459464",
+      "sha256": "df44a73db0e1470daf0f7731747cc54a362e4e60ad22b2c1ffc9748d40219124",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-021.txt",
+      "bytes": 28409,
+      "file_id": "14896932707417801159:281474977459465",
+      "sha256": "74859f370a3c691c9530cf261046f30999920b85e81634f20d603cb930db270a",
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-022.txt",
+      "bytes": 35430,
+      "file_id": "14896932707417801159:281474977459466",
+      "sha256": "10fdebb8ef053b579f5cd9a5751d60e24a77e8b990dda6b067a080ebd9aa124f",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-023.txt",
+      "bytes": 36720,
+      "file_id": "14896932707417801159:281474977459467",
+      "sha256": "2a6410f1f183800b5bfa851296973750bc403ca45cde20fd95b4d2c8437d3071",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-024.txt",
+      "bytes": 35509,
+      "file_id": "14896932707417801159:281474977459468",
+      "sha256": "f8bdc9127758aaad25bdf7e243cd5545c7a3e00eb52f766ff6f93647261aa52d",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-025.txt",
+      "bytes": 40782,
+      "file_id": "14896932707417801159:281474977459469",
+      "sha256": "7e85cbd1b5cb3556a586dd479b88a8145409a70d37d3d43626279fcd0dd40489",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-026.txt",
+      "bytes": 34625,
+      "file_id": "14896932707417801159:281474977459470",
+      "sha256": "b34e276a975f3005227b9c78f2121e1add4c838c50954b9dc8c3d956c6a4593d",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-027.txt",
+      "bytes": 36266,
+      "file_id": "14896932707417801159:281474977459471",
+      "sha256": "ced0ebc81729a5d6cee8b63196f66aedbe53384f14707c0d21005d4be78c8bd3",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-028.txt",
+      "bytes": 41028,
+      "file_id": "14896932707417801159:281474977459472",
+      "sha256": "db9644a6243562ea7e8b0d79004e8be62a135445960e9e3a75cfa89f792b29ac",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-029.txt",
+      "bytes": 32899,
+      "file_id": "14896932707417801159:281474977459473",
+      "sha256": "4a5a5601eff56112c2befcefcf773c0489804ac92e2ba22e68a88f4b1684cceb",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-030.txt",
+      "bytes": 10239,
+      "file_id": "14896932707417801159:281474977459474",
+      "sha256": "612c8175f97a0530c972124cc9918856641db627a24b410a978fd74a19bbb42d",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-031.txt",
+      "bytes": 38693,
+      "file_id": "14896932707417801159:562949954170131",
+      "sha256": "2883a677fb5ea3abd56c3e7bc21a04a6fe88e62a89589d83a26c9f6beda5d27c",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-032.txt",
+      "bytes": 38684,
+      "file_id": "14896932707417801159:281474977459476",
+      "sha256": "df5f2601495dce23e850b6a5759ec55b7bd3056cad3a09b892864b976b69a1b6",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-033.txt",
+      "bytes": 33759,
+      "file_id": "14896932707417801159:281474977459477",
+      "sha256": "61db0f93d3a9e9ce05776ee1ef6884623e3dc67f81dcd69d7f1969e2f2840451",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-034.txt",
+      "bytes": 13292,
+      "file_id": "14896932707417801159:281474977459478",
+      "sha256": "c66941db49356f87c934930b667e56b3e11922494f8480d7224f277fe91935bd",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-035.txt",
+      "bytes": 41441,
+      "file_id": "14896932707417801159:281474977459479",
+      "sha256": "3365339cf479768b7093817a588e43b78296acdeb9f67eb777924505020d94ca",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-036.txt",
+      "bytes": 35827,
+      "file_id": "14896932707417801159:281474977459480",
+      "sha256": "dfe0bdb654621f7451b44a3a8c53d4d7a6b0009f8d0e23ca88761a2695415ac0",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2022年度精选策略/chunk-037.txt",
+      "bytes": 38724,
+      "file_id": "14896932707417801159:281474977459643",
+      "sha256": "c5c16d784014aea4548e49e4678a541c1c57de40bd55354291aaf96f111f3c8a",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-001.txt",
+      "bytes": 34831,
+      "file_id": "14896932707417801159:281474977459482",
+      "sha256": "945ec6ece9826b9d267be2e2fbfe5a6a11680d07fac6aac49322e6b14050323e",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-002.txt",
+      "bytes": 41035,
+      "file_id": "14896932707417801159:281474977459483",
+      "sha256": "1e212c4fe1a317adf5fff2d07e9116128b109b727e77b44e92bba43df77ab084",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-003.txt",
+      "bytes": 29947,
+      "file_id": "14896932707417801159:281474977459484",
+      "sha256": "0823532e0aa6774f50acc4f0acb3f8eded77946ff5522105a50acb713f732b11",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-004.txt",
+      "bytes": 32097,
+      "file_id": "14896932707417801159:281474977459485",
+      "sha256": "a5e831adff92161e44335ec7ef3bd7058f0c3cdf50c6211e1561f16609c80885",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-005.txt",
+      "bytes": 36604,
+      "file_id": "14896932707417801159:281474977459486",
+      "sha256": "576f1869e3a2bf85db415592c53c57ac54ded6836ac0e8399428a35ca78e8bc9",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-006.txt",
+      "bytes": 40404,
+      "file_id": "14896932707417801159:281474977459487",
+      "sha256": "1b97baaa564b0c6c39deef4a9a02c9cc1f96eaae5adcc64bb4b81b4ba78a55bc",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-007.txt",
+      "bytes": 40893,
+      "file_id": "14896932707417801159:281474977459488",
+      "sha256": "bcbcc6e980e36dea1bf8ef574252b39f14bd135198c3d49ff75481debfe80c4f",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-008.txt",
+      "bytes": 41168,
+      "file_id": "14896932707417801159:281474977459489",
+      "sha256": "39c5e5f623226509088496c3d2b7aa0c97f93a4a895c33c96e5e43b7a3ef9d20",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-009.txt",
+      "bytes": 40734,
+      "file_id": "14896932707417801159:281474977459490",
+      "sha256": "aa3b78199229947f8381e928c2c752c5826ca9e7d122ab19b46fee6525fc07d2",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-010.txt",
+      "bytes": 31987,
+      "file_id": "14896932707417801159:281474977459491",
+      "sha256": "03fc0f146972fa6b95ee2d12982a0073fe7cbc1453142e9deacb935093b59d13",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-011.txt",
+      "bytes": 31284,
+      "file_id": "14896932707417801159:281474977459492",
+      "sha256": "9e48db1dda68bc42a6bbe5d5325bbff0306f3e37d68dc8d4a5cd4c17712a6a71",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-012.txt",
+      "bytes": 33644,
+      "file_id": "14896932707417801159:281474977459493",
+      "sha256": "1445ca6cb4398346cf9cccbe39020a4b3f4870027ee62d853a6b4684cf7bfa82",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-013.txt",
+      "bytes": 31633,
+      "file_id": "14896932707417801159:281474977459494",
+      "sha256": "6176879fe464f5f99df9eb910f2ff77a3ca22742af59c021d2350aec6fddf0dc",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-014.txt",
+      "bytes": 13701,
+      "file_id": "14896932707417801159:281474977459495",
+      "sha256": "bf80f9de42c93045e2050d2e56e35f3900aa77eaeddf95bdb72ffe4e2e387e23",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-015.txt",
+      "bytes": 35288,
+      "file_id": "14896932707417801159:281474977459496",
+      "sha256": "aa0bc7f033a978906fbd1d6b99e40af869fde4ae4764ab58cd1e1a09cb7d334f",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-016.txt",
+      "bytes": 40710,
+      "file_id": "14896932707417801159:281474977459497",
+      "sha256": "b07c00be79836b7dff25ca16bf5b29550024c28280f8150a2396017f69c62db3",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-017.txt",
+      "bytes": 38916,
+      "file_id": "14896932707417801159:281474977459498",
+      "sha256": "5415455561c9c177e7006c5a3973d7d6809a1f20b04a0e4bf4e55069291c2025",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-018.txt",
+      "bytes": 43248,
+      "file_id": "14896932707417801159:281474977459499",
+      "sha256": "3f2d9e6e580fbff2ea733f80c689b4e3ee23504c568d4defb77d45bcf9e06c73",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-019.txt",
+      "bytes": 36288,
+      "file_id": "14896932707417801159:281474977459500",
+      "sha256": "6658a05bf141ed7eb1bc84e8341a8e0e172008002cbfc972a5a478aa0c0f7a5d",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-020.txt",
+      "bytes": 38961,
+      "file_id": "14896932707417801159:281474977459501",
+      "sha256": "ff5997895fb363243dc8a953dd2d8179f2697eeb96f22742868106ca8d385e94",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-021.txt",
+      "bytes": 37874,
+      "file_id": "14896932707417801159:281474977459502",
+      "sha256": "42a4d2965f2c55d9a7cbc26e4ee2e6db0bcfd001118e6e313a25823ddf9f3937",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-022.txt",
+      "bytes": 33146,
+      "file_id": "14896932707417801159:281474977459503",
+      "sha256": "0825ae130d0552aadbb268ca9b33149fd977ecaa20bccdff07b0fe80a5dbcede",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-023.txt",
+      "bytes": 21414,
+      "file_id": "14896932707417801159:281474977459504",
+      "sha256": "aa4af562b8de925bbd4232b4e8bc74ea8e1bf4ad24e434ab8d115758b1ec3c68",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-024.txt",
+      "bytes": 45192,
+      "file_id": "14896932707417801159:281474977459505",
+      "sha256": "4ebbbda05ace8de8ae72c9e6ed5250be594fd210700971e51054caf98ec23899",
+      "allocated_bytes": 49152
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-025.txt",
+      "bytes": 27696,
+      "file_id": "14896932707417801159:281474977459506",
+      "sha256": "36e4ec4d55d3d0b91bd84b3a85f636e4ede1769bd77e665a366c6ccf71f5d1cb",
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-026.txt",
+      "bytes": 37293,
+      "file_id": "14896932707417801159:281474977459507",
+      "sha256": "c3d7d8b556853ac8efe4ecb42104f44ce0558cb20f72b1a402728b14e415260f",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-027.txt",
+      "bytes": 39935,
+      "file_id": "14896932707417801159:281474977459508",
+      "sha256": "5b472cbd13c053658bac84423d60b65f8374992952360723a966ee9d8d19d9fa",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-028.txt",
+      "bytes": 23966,
+      "file_id": "14896932707417801159:281474977459509",
+      "sha256": "f92dd020548193daa5f5171b38b94152daa79883e0ba5d119a97f6adb5df84e8",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-029.txt",
+      "bytes": 38195,
+      "file_id": "14896932707417801159:281474977459510",
+      "sha256": "f23b221c82743da55be1786745853d8220923a0ecf384a68f00e4d03c284f052",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2023年度精选策略/chunk-030.txt",
+      "bytes": 28487,
+      "file_id": "14896932707417801159:281474977459644",
+      "sha256": "3e0d505161ee0f14199b1eb91696d7f1a0a7f642a7a72c9783231efa1864ff62",
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-001.txt",
+      "bytes": 29809,
+      "file_id": "14896932707417801159:281474977459512",
+      "sha256": "04e6fcfed72b2ffae94d8db026af8cc1c73654325b42a27834a01229b95b23fc",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-002.txt",
+      "bytes": 30878,
+      "file_id": "14896932707417801159:281474977459513",
+      "sha256": "cbb988143dfb93ce4f1dd0929900b88812a6829c7c96dac5ddbe4b29d45d311b",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-003.txt",
+      "bytes": 37619,
+      "file_id": "14896932707417801159:281474977459514",
+      "sha256": "ae7cf4a13a7aed7986496c9d542bb5dce46ffbd8cbd2b0c32f66fcc15e2b42f1",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-004.txt",
+      "bytes": 33561,
+      "file_id": "14896932707417801159:281474977459515",
+      "sha256": "c456fecf23177e3a07bd4cf31148c062a99688942a1a119a24b0f129c2841389",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-005.txt",
+      "bytes": 34561,
+      "file_id": "14896932707417801159:281474977459516",
+      "sha256": "e72894229933abc5909675d57504a827cbf14ad7f45be20920858e7e9417be0d",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-006.txt",
+      "bytes": 36742,
+      "file_id": "14896932707417801159:281474977459517",
+      "sha256": "5c8ae6c4ab76776d6219e07e5ded92656466ef10b1bbcb11b666905e3d4f73eb",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-007.txt",
+      "bytes": 43802,
+      "file_id": "14896932707417801159:281474977459518",
+      "sha256": "2fca9cd39b034cc4681fb735be14635af82acf4c3ca845e450094b73165ed5f4",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-008.txt",
+      "bytes": 33082,
+      "file_id": "14896932707417801159:281474977459519",
+      "sha256": "71d2110f5643152c63d90f9a98849ed6a6a004f31f9a89de2ddaedb9a4fb4c08",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-009.txt",
+      "bytes": 29312,
+      "file_id": "14896932707417801159:281474977459520",
+      "sha256": "2892be41199c6e302a4a3906ebc2040b1b905c3f7faa375cf1900dda5d342f4b",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-010.txt",
+      "bytes": 40020,
+      "file_id": "14896932707417801159:281474977459521",
+      "sha256": "e0670c89277b1035d6edf030a294165a27a60404d5256d6c95eadffee383a13d",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-011.txt",
+      "bytes": 38677,
+      "file_id": "14896932707417801159:281474977459522",
+      "sha256": "7c449f370f8221fb34bd279f291565502a983b4f1594205e3dd38d39b4d4055f",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-012.txt",
+      "bytes": 37191,
+      "file_id": "14896932707417801159:281474977459523",
+      "sha256": "23464af58d4dc885436974cd9dd08cef9c2f12396bd620b1f04fd983485d4813",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-013.txt",
+      "bytes": 31850,
+      "file_id": "14896932707417801159:281474977459524",
+      "sha256": "4b58536b4471958715a33671cfecef6e9e7a12c9ea9afa42b4e9fb321c42528d",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-014.txt",
+      "bytes": 40344,
+      "file_id": "14896932707417801159:281474977459525",
+      "sha256": "efbe8673ada7da1b2b2963cf352c75ef696c14a83f8fd4ed77334533a7e83f0b",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-015.txt",
+      "bytes": 41486,
+      "file_id": "14896932707417801159:281474977459526",
+      "sha256": "27ed7d03e764317794335a2f622cfad37b9e5c57c5e68b1819c4d8db4aa67fe1",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-016.txt",
+      "bytes": 34818,
+      "file_id": "14896932707417801159:281474977459527",
+      "sha256": "aecb0a7ffe45279d9172221a6824c8d2143012eb2f0fbcd229aa839673e8a989",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-017.txt",
+      "bytes": 17600,
+      "file_id": "14896932707417801159:281474977459528",
+      "sha256": "21c1efec741147ab39b7237509fadf38e8c9bc133464c463c8f4791e2bbba0a5",
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-018.txt",
+      "bytes": 31261,
+      "file_id": "14896932707417801159:281474977459529",
+      "sha256": "bb0f6b0a33b2cd094cb6003537014367ea2bf67c093597e62018c830b7abfdcb",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-019.txt",
+      "bytes": 30169,
+      "file_id": "14896932707417801159:281474977459530",
+      "sha256": "321ba2868b8467d8ec81b79ef0de9a84ea0f0f6b353ed11f43db348b2f6adf6c",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-020.txt",
+      "bytes": 30169,
+      "file_id": "14896932707417801159:281474977459531",
+      "sha256": "7e2e76b6566f17c3fa3e6bf27c51ce211baa92f5a0dd2c569dc8a3b0e95e656d",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-021.txt",
+      "bytes": 30170,
+      "file_id": "14896932707417801159:281474977459532",
+      "sha256": "aa92d2bee3b7f1745af8f5b83f22b70a3c367fa871347e4348fb2fb5608393f9",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-022.txt",
+      "bytes": 30249,
+      "file_id": "14896932707417801159:281474977459533",
+      "sha256": "739a4994b816a0c8cca75247a4f802e4a29d3fd0d0f5a69b398535fe8eb25ab5",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-023.txt",
+      "bytes": 42875,
+      "file_id": "14896932707417801159:562949954170190",
+      "sha256": "9d63ea488342f3d2e8b2c79c4c5bb68685b08cf6a7feb3e05e2e5d191b5a9fb9",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-024.txt",
+      "bytes": 8553,
+      "file_id": "14896932707417801159:281474977459535",
+      "sha256": "ec0f99c753b46572e36ab1b1093eda197e248c638be8b380c430757c6eb46f29",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-025.txt",
+      "bytes": 38763,
+      "file_id": "14896932707417801159:281474977459536",
+      "sha256": "eb33bf06f8a983ee95b87e69f24dd0b1b2e88b379dfc72d49ba8816bf4067397",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-026.txt",
+      "bytes": 37092,
+      "file_id": "14896932707417801159:281474977459537",
+      "sha256": "bbdb81d4693b1a564f919364bd1c7642fc3b2e09cd2e26918118c6e63525058e",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-027.txt",
+      "bytes": 41013,
+      "file_id": "14896932707417801159:281474977459538",
+      "sha256": "a69536dad0fa1f74747d3062d4d2dc7c8f819ce9cbbbf041ee418a951e50d5c0",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-028.txt",
+      "bytes": 40990,
+      "file_id": "14896932707417801159:281474977459539",
+      "sha256": "944182a9b169dc3eeb1f44d549356725ed62c937764fe732cbb678eeda16d3f1",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-029.txt",
+      "bytes": 47117,
+      "file_id": "14896932707417801159:281474977459540",
+      "sha256": "a39276034564aafce5d19652830795d0d6e3dce16b3b9e1311a9c353c44a166a",
+      "allocated_bytes": 49152
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-030.txt",
+      "bytes": 41999,
+      "file_id": "14896932707417801159:281474977459541",
+      "sha256": "d681499a903e631a072580904ff9054525bae5de4fdf010994060440b95b8e3f",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-031.txt",
+      "bytes": 39415,
+      "file_id": "14896932707417801159:281474977459542",
+      "sha256": "b29771041b9e836ba546c1233278365305c06d88b4a07fe7495517abba8a4292",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-032.txt",
+      "bytes": 40820,
+      "file_id": "14896932707417801159:281474977459543",
+      "sha256": "fd58f125083ba14e4c1e826882e215f12c071ea3e450f354915e33ef79827fa2",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-033.txt",
+      "bytes": 36910,
+      "file_id": "14896932707417801159:281474977459544",
+      "sha256": "cef3f67a6e07d5a97639c4fe05832a9cc75cbbb7e7e51ef849a78c1a3cfbcd38",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-034.txt",
+      "bytes": 30328,
+      "file_id": "14896932707417801159:281474977459545",
+      "sha256": "1483d58e43c1e24acd27fab5f14caa464d1f376d03da25d73cfe92c2ff36c6fc",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-035.txt",
+      "bytes": 30130,
+      "file_id": "14896932707417801159:281474977459546",
+      "sha256": "9e369019a59fbc5a46f8bbd95fa6694fdb6226ec889378f62413473dc227f045",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-036.txt",
+      "bytes": 30130,
+      "file_id": "14896932707417801159:281474977459547",
+      "sha256": "855c6383de90bd7f9c8a1539b4a9329ff0c3bc3d62930248291599ed4e9c166c",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-037.txt",
+      "bytes": 30131,
+      "file_id": "14896932707417801159:281474977459548",
+      "sha256": "972433592768bad8727c8b01a573b3d11d0b0554737b2fda7d9ba26be2bacc24",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-038.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459549",
+      "sha256": "1e5ef6e4b8607a055629c6af8cd57cfefacf9648748ea4cf2d745508a6f36006",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-039.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459550",
+      "sha256": "aab11f763e5bf35c61b15e057aaaa6f3610f067f061a698c414fca0d18970ffd",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-040.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459551",
+      "sha256": "5e550e4df9b094b5e6291a065ba4bfb21ac80b3b38bc9b18f5a836f190594226",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-041.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459552",
+      "sha256": "11f534cc0660b84569d804e8e32d710c2d9722bf6088bb944245dc43196a19a2",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-042.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459553",
+      "sha256": "8f5600143bd8cf7385aa6bd0ae76b1a176837e0126f580b693d93d791ef4f64e",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-043.txt",
+      "bytes": 31097,
+      "file_id": "14896932707417801159:281474977459554",
+      "sha256": "c7c28c73e8830915b12ec5a2d3bd018c55f8f5cff964ea481e79a049d56a9e30",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-044.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459555",
+      "sha256": "67a41f5509a031b91af87e16584ea8826d8e074cb6083dd920d7a9bf3c6d381b",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-045.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459556",
+      "sha256": "a52f57a6fde076cc25af8526cff512de0e5653e84bdb36f343e9f7116294364d",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-046.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459557",
+      "sha256": "0db50b976d2584755b923e09712dd294ad233630e2f9a13b9e7d80eb42617fe1",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-047.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459558",
+      "sha256": "53a67ad6c089e35428b80bf601aaecddfabef92b72f5063833e386e722342536",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-048.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459559",
+      "sha256": "15162529469c10065693914ecc0b464168698425f4f021b4d021208963b3c671",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-049.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459560",
+      "sha256": "e26eb088f792d141aa9503bd81bf68398d3018a0f2e9ec657fe9a5669815e036",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-050.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459561",
+      "sha256": "91f85deefe6aa50fe551f1a8f07fc6c4911ea5fbd20e365abd9a88bab22759d5",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-051.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459562",
+      "sha256": "330cde8670cdf3ebcd48962326a688f4a266bf755429397906f672a842c13432",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-052.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459563",
+      "sha256": "0ccf9cc7c944d0436d2237bb027a650ba39da449845ff59ad2044bc48accfe53",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-053.txt",
+      "bytes": 30132,
+      "file_id": "14896932707417801159:281474977459564",
+      "sha256": "59b0962e7d414714685c519d6bb8eb478cd605b0277790306e0835b5a177d9f9",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-054.txt",
+      "bytes": 35487,
+      "file_id": "14896932707417801159:281474977459565",
+      "sha256": "2370dee9aac3956d428c85b20c683eb1aa9b6cac556b4106ed5f16727849ef9d",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-055.txt",
+      "bytes": 46914,
+      "file_id": "14896932707417801159:281474977459566",
+      "sha256": "6b1adef30995df9f5606b2ad8fe1301435e7f39194ff560c665518a5c44996d8",
+      "allocated_bytes": 49152
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-056.txt",
+      "bytes": 20883,
+      "file_id": "14896932707417801159:281474977459567",
+      "sha256": "39caae93514c0a80393d488fd6adb6a837ccd3b6be020f95e854863bb05c9fe9",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-057.txt",
+      "bytes": 34598,
+      "file_id": "14896932707417801159:281474977459568",
+      "sha256": "8e6c3d7d0f27f42d869650a8da05b39a0f75cbaef91a13b34d82cbe2b066f97e",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-058.txt",
+      "bytes": 32505,
+      "file_id": "14896932707417801159:281474977459569",
+      "sha256": "bb1864f17078b57e718b4a627c7e9db6fa76c06ff680a67cf375a75dc3addf8d",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-059.txt",
+      "bytes": 17990,
+      "file_id": "14896932707417801159:281474977459570",
+      "sha256": "9c2b2236c1334d90e4567c6e2f76809c6df28fc1c8aebf20e3d555970f6e079c",
+      "allocated_bytes": 20480
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-060.txt",
+      "bytes": 39814,
+      "file_id": "14896932707417801159:281474977459571",
+      "sha256": "ed0868213117044a29df45720f5fa2de5b86092007870e6831dd7d5312ede8df",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2024年度精选策略1/chunk-061.txt",
+      "bytes": 8529,
+      "file_id": "14896932707417801159:281474977459645",
+      "sha256": "d6affd210c8ef4ed008f7b077d3ebe0c4b7ce62b0d8bbafa5bd19b7d7a158b32",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-001.txt",
+      "bytes": 16151,
+      "file_id": "14896932707417801159:281474977459573",
+      "sha256": "db7cf73b2c19b3ad2b01ee92f0889505f59dfd4afd043458f5bea63740952542",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-002.txt",
+      "bytes": 35310,
+      "file_id": "14896932707417801159:281474977459574",
+      "sha256": "4b61e71408fef5df1d67ef2826e7ff6afcaceccaa468757c2c262c97feed8547",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-003.txt",
+      "bytes": 22078,
+      "file_id": "14896932707417801159:281474977459575",
+      "sha256": "5d9158f633e88af08a935fdb5439e1da12ef26f5afa7690af2c74adf7d7b33c2",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-004.txt",
+      "bytes": 35326,
+      "file_id": "14896932707417801159:281474977459576",
+      "sha256": "29e0e519e7aedf6592b71dc48d2076e43901b61f82000f4ddbc0213a371e2422",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-005.txt",
+      "bytes": 7267,
+      "file_id": "14896932707417801159:281474977459577",
+      "sha256": "8c432fa50066d5ecf8efc3318942cf02f9fc85c8126e19ac0b11ea6b4cd913a4",
+      "allocated_bytes": 8192
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-006.txt",
+      "bytes": 37359,
+      "file_id": "14896932707417801159:281474977459578",
+      "sha256": "f589f46c5c85685dd55322af7132a1b236419ab66e131a6905173f827ece075b",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-007.txt",
+      "bytes": 36816,
+      "file_id": "14896932707417801159:281474977459579",
+      "sha256": "33c30735b572feb640e161b74fc8b8b6d285ae49c4857ddc1d9f1ded909741a7",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-008.txt",
+      "bytes": 30685,
+      "file_id": "14896932707417801159:281474977459580",
+      "sha256": "4dd7d9fd39cfd6dd6e5d961df07cc7b37a9954a4b4d63957fdaffc393eb16fc7",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-009.txt",
+      "bytes": 30537,
+      "file_id": "14896932707417801159:281474977459581",
+      "sha256": "3f157ed945917fe321b50b1ddb32c675826b6a82ca4f9f4ea6372b276008de75",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-010.txt",
+      "bytes": 30660,
+      "file_id": "14896932707417801159:281474977459582",
+      "sha256": "00a75d901faaa9eefb50df15c73afb983b82e5402676b7a4d192b915d5ab7574",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-011.txt",
+      "bytes": 38931,
+      "file_id": "14896932707417801159:281474977459583",
+      "sha256": "13d7893bd47de124f0f813cc43b836a8f6a53df4be823bd157009b4f080e9d52",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-012.txt",
+      "bytes": 42415,
+      "file_id": "14896932707417801159:281474977459584",
+      "sha256": "92526a4f38059baab94cedbc71139fae7f29bde304f83c016ebd1b0843b1b554",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-013.txt",
+      "bytes": 38751,
+      "file_id": "14896932707417801159:281474977459585",
+      "sha256": "fab37653094f0fdf355c27267619c471d0a30c04039f67b739c7b74110ee557e",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-014.txt",
+      "bytes": 38158,
+      "file_id": "14896932707417801159:281474977459586",
+      "sha256": "523b0830c86ac1bfe2da9d78c2fbc8c21c1f67300e8755c201c702f0d45f772b",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-015.txt",
+      "bytes": 30101,
+      "file_id": "14896932707417801159:281474977459587",
+      "sha256": "d28d8eae09e565ad645443263880940ed4d41a1ca09a2620382fe21f302be487",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-016.txt",
+      "bytes": 44243,
+      "file_id": "14896932707417801159:281474977459588",
+      "sha256": "70015a460f2a718c3c8399256c40eeeef31fe177bc843f9dfee7a6f8617bb9b4",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-017.txt",
+      "bytes": 39482,
+      "file_id": "14896932707417801159:281474977459589",
+      "sha256": "4b17921fc7706390e851f4e1bb725124ca1ba40049a296a166b3034ce344fdd1",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-018.txt",
+      "bytes": 40092,
+      "file_id": "14896932707417801159:281474977459590",
+      "sha256": "35c7e672b739a3414edcde9efcb50a73b4e8830d19960c58869866486bcd91d5",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-019.txt",
+      "bytes": 37008,
+      "file_id": "14896932707417801159:281474977459591",
+      "sha256": "7ffc7281211ddea169b287fc6087e91d733e97fe363745ec7c1a7f464c8ca644",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-020.txt",
+      "bytes": 32522,
+      "file_id": "14896932707417801159:281474977459592",
+      "sha256": "1eb75bf27341306c8a92e86b8891b6223047e5b0edfd2462e9632b9078a69ad8",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-021.txt",
+      "bytes": 35250,
+      "file_id": "14896932707417801159:281474977459593",
+      "sha256": "71e122b2ee05403b7ba8f92d63c3a124856407603d9d9cbcedf2ba8ebec0ab95",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-022.txt",
+      "bytes": 33015,
+      "file_id": "14896932707417801159:281474977459594",
+      "sha256": "686d3b2049fcba39374e421f356ad70e211251f75ac9d8f660b30cf94caff64a",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-023.txt",
+      "bytes": 32371,
+      "file_id": "14896932707417801159:281474977459595",
+      "sha256": "56e5a34f0401b2bc8861a096b108306106e76a0e00391d9cf6a5cb3d2dfbd3da",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-024.txt",
+      "bytes": 40677,
+      "file_id": "14896932707417801159:281474977459596",
+      "sha256": "be2f3e5118352baa0bbe3ba761fa1a3d869be63d89fc40c53fc69e6445802961",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-025.txt",
+      "bytes": 14422,
+      "file_id": "14896932707417801159:281474977459597",
+      "sha256": "d754e76f506f8ee96f17f74a02a3ec0dd10c3755786f5a329d071790b2710908",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-026.txt",
+      "bytes": 41535,
+      "file_id": "14896932707417801159:281474977459598",
+      "sha256": "3a4b6b2d71a888049044943f6c4a2ff05445a1a5cc1e8d5cdb25e77960dc68c6",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-027.txt",
+      "bytes": 41775,
+      "file_id": "14896932707417801159:281474977459599",
+      "sha256": "558f22885d8466425be0a5085a20ca523fd8cf0a11eadbf21e702a7f0b253d6c",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-028.txt",
+      "bytes": 30386,
+      "file_id": "14896932707417801159:281474977459600",
+      "sha256": "73014f0852802606d627b99dbe75eac473d7c51871838b8ab5f865e10f03e1ed",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-029.txt",
+      "bytes": 38943,
+      "file_id": "14896932707417801159:281474977459601",
+      "sha256": "fa9090af83adae0ea452b116c86aafde4fadef6e4ababf1252885773641de60f",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-030.txt",
+      "bytes": 34550,
+      "file_id": "14896932707417801159:281474977459602",
+      "sha256": "f0d41015c477c3dfc03546c838e5e4bb694603442ce6b0581e999da203c24bc9",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-031.txt",
+      "bytes": 22928,
+      "file_id": "14896932707417801159:281474977459603",
+      "sha256": "5b6c17322b3a2e8551dac77720872bb5095948531b5ff444a1b12927d7eb01a9",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-032.txt",
+      "bytes": 39880,
+      "file_id": "14896932707417801159:281474977459604",
+      "sha256": "6ca2263fad8e59d6f9c966fec361df74b818504cc1d3d69481ecfa949c6ab7c5",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-033.txt",
+      "bytes": 34643,
+      "file_id": "14896932707417801159:281474977459605",
+      "sha256": "b7732bb01529595ddb462cbfe24cbe3deb77551073989b0460db9cedbc689fed",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-034.txt",
+      "bytes": 38143,
+      "file_id": "14896932707417801159:281474977459606",
+      "sha256": "f42e53c1f9e4766355f8aaabfabcc1f30cd3d2bc0c3b278b0e1b720aa5bd2e91",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-035.txt",
+      "bytes": 43605,
+      "file_id": "14896932707417801159:281474977459607",
+      "sha256": "3b9996683a5e24ac26db78fdf6572b0f832b5a4d16e595db73c7071580e157c3",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-036.txt",
+      "bytes": 35515,
+      "file_id": "14896932707417801159:281474977459608",
+      "sha256": "0a518a50e4bfa1ff563672af7081bc4f74ea74fb728e9f56943ab3250c7d79ce",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-037.txt",
+      "bytes": 40214,
+      "file_id": "14896932707417801159:281474977459609",
+      "sha256": "d09b61f1d3e7d07ef926046327be098404a21b8895b0771b54d0c4ffe43ca85e",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/2025年度精选策略/chunk-038.txt",
+      "bytes": 39827,
+      "file_id": "14896932707417801159:281474977459646",
+      "sha256": "858fcc0bc8837dca17ba1853cd719ba458e2d80847e43600f6e96c7733323cd9",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/ROOT/chunk-001.txt",
+      "bytes": 241,
+      "file_id": "14896932707417801159:281474977459648",
+      "sha256": "50a20051e607a942c759ea78083ab99aec8641989ab01e3adc1a31629eef5ac5",
+      "allocated_bytes": 248
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-001.txt",
+      "bytes": 39014,
+      "file_id": "14896932707417801159:281474977459611",
+      "sha256": "61b06c03bc6bc9764d21c34cd5fd760900b7e41afe6dfe742b00c25858c6d86f",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-002.txt",
+      "bytes": 33317,
+      "file_id": "14896932707417801159:281474977459612",
+      "sha256": "80fe6ba1a5bf277d4634a5ddb2a076b952f50aa365aa9d224c6ce80a37985323",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-003.txt",
+      "bytes": 34716,
+      "file_id": "14896932707417801159:281474977459613",
+      "sha256": "4448414f0f7e8873f43a9ff42b1c5c4f925b0ac811ef9c15f06d09423323b669",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-004.txt",
+      "bytes": 34079,
+      "file_id": "14896932707417801159:281474977459614",
+      "sha256": "ab74daf32afebde255f64e923b079e8e4d4d5c2a0ae6b8531df97f9ffa30d4da",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-005.txt",
+      "bytes": 38374,
+      "file_id": "14896932707417801159:281474977459615",
+      "sha256": "f41f16b153bcc62ee9273cb0099755a523e81927a80445cfaf835140d38b5cae",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-006.txt",
+      "bytes": 37441,
+      "file_id": "14896932707417801159:281474977459616",
+      "sha256": "295463fccaaf94058d7af393ab48f1f824e685a0fb6cb6eeaeacef4898a80cf2",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-007.txt",
+      "bytes": 38532,
+      "file_id": "14896932707417801159:281474977459617",
+      "sha256": "395c50abaf8b6f5458e82b7e48d31ecfc973a66bcc5d560d7fdfb21eee0103d6",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-008.txt",
+      "bytes": 32194,
+      "file_id": "14896932707417801159:281474977459618",
+      "sha256": "743c45ab3789c689d29f7800f7cae3ea0f02bc44e2cbd2915fa37700ca8fd9ad",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-009.txt",
+      "bytes": 21933,
+      "file_id": "14896932707417801159:281474977459619",
+      "sha256": "8ab8f665cffe131ee73af2f0a5c172f98d28e5efabf63f2a4c5ddd69230c2870",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-010.txt",
+      "bytes": 36347,
+      "file_id": "14896932707417801159:281474977459620",
+      "sha256": "e8f5772f731bd845302559bfb8c5470d7e6075939325e4d37e12697182f141b5",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-011.txt",
+      "bytes": 29860,
+      "file_id": "14896932707417801159:281474977459621",
+      "sha256": "e9642fd46eaf90494355a5b4c8bbce81cdd5d8ff53580e35c345cdcc5b00cc1b",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-012.txt",
+      "bytes": 35782,
+      "file_id": "14896932707417801159:281474977459622",
+      "sha256": "f8c41d610bdf687c9356ad6d4e785f41aa6d185da7101b3d81db2940fe3428ec",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-013.txt",
+      "bytes": 35106,
+      "file_id": "14896932707417801159:281474977459623",
+      "sha256": "1a680228f18620c7c287bdc0c58c594d5e082965f3cc12437cc80216a4d7c59b",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-014.txt",
+      "bytes": 28659,
+      "file_id": "14896932707417801159:281474977459624",
+      "sha256": "3bcb9b5fb8f8586bde3bb88c26bc9290b0504d607a23928fca2446667a9e77ed",
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-015.txt",
+      "bytes": 30135,
+      "file_id": "14896932707417801159:281474977459625",
+      "sha256": "2d331099da5c4535ecc89e35351097ede479aa68d2567daf91cbd8e6e62db0b5",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-016.txt",
+      "bytes": 39096,
+      "file_id": "14896932707417801159:281474977459626",
+      "sha256": "a553b4b7f7ca5c67cd102e99fe24808c2f260525e199a2a2cf682cac80c9e9ba",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-017.txt",
+      "bytes": 41901,
+      "file_id": "14896932707417801159:281474977459627",
+      "sha256": "93d9edc30f0e09cf0fbde439dcc20f3e912fe15b53c5ef2a1564e783377aef12",
+      "allocated_bytes": 45056
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-018.txt",
+      "bytes": 32060,
+      "file_id": "14896932707417801159:281474977459628",
+      "sha256": "ae71cab9198d2a93befdafccb1cb12e285cf6f4bb36cdf8bc120260d38958da4",
+      "allocated_bytes": 32768
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-019.txt",
+      "bytes": 36003,
+      "file_id": "14896932707417801159:281474977459629",
+      "sha256": "757f2b30d776af3a15d3b43bb292bd5a8bfd74f5ed21392a966b81ac17877ed8",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-020.txt",
+      "bytes": 26739,
+      "file_id": "14896932707417801159:281474977459630",
+      "sha256": "b659fe597b16dcc9bf7dd50891953bdaef1506f0dec1bfeba9d05993a4bb0a82",
+      "allocated_bytes": 28672
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-021.txt",
+      "bytes": 37840,
+      "file_id": "14896932707417801159:281474977459631",
+      "sha256": "eb64243869ebd0599eaca977e854db9d093d1ba7357f5995212faa548a1e9d01",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-022.txt",
+      "bytes": 37200,
+      "file_id": "14896932707417801159:281474977459632",
+      "sha256": "b1485f915e7e3bd7c300ec6f69ab20c6b9dd94ac00b5d7fe0b00f5609a520b41",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-023.txt",
+      "bytes": 36518,
+      "file_id": "14896932707417801159:281474977459633",
+      "sha256": "d95d88460922398b427845eecf6826d6bdce1a52f3a880c17a3144bc8ea063d1",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-024.txt",
+      "bytes": 22164,
+      "file_id": "14896932707417801159:281474977459634",
+      "sha256": "3b420b52c1da18b9768894784e6389cc325ed7e5da784f895afd3d6a2b1c610d",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-025.txt",
+      "bytes": 39818,
+      "file_id": "14896932707417801159:281474977459635",
+      "sha256": "c3b5d308997b209a7f9e4b17c9eb97c7a27c532cbf3317db7c0b1d3c702c87fc",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-026.txt",
+      "bytes": 40609,
+      "file_id": "14896932707417801159:281474977459636",
+      "sha256": "2520b9fd7220bb35ce772c18e2c0812b5fa04f81e5d38d823dd91f967f405612",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-027.txt",
+      "bytes": 14363,
+      "file_id": "14896932707417801159:281474977459637",
+      "sha256": "ddfeb7157ca45c7ba4f8aed3de93e4a461304fdb1b6941a3d045a5802913f311",
+      "allocated_bytes": 16384
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-028.txt",
+      "bytes": 35078,
+      "file_id": "14896932707417801159:281474977459638",
+      "sha256": "25db331095459f7fbb6a8c401c41752074e974c54bf142b8627464ed9140d71f",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-029.txt",
+      "bytes": 39183,
+      "file_id": "14896932707417801159:281474977459639",
+      "sha256": "ef1310fff7e0ba5322b9ad682ad862c335056089aee3111c70756371937bd2bf",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-030.txt",
+      "bytes": 36643,
+      "file_id": "14896932707417801159:281474977459640",
+      "sha256": "93e63b361c490cd5000d41c71cde1e35aef48ba2188a7de1463cb7f5729efbda",
+      "allocated_bytes": 36864
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-031.txt",
+      "bytes": 39605,
+      "file_id": "14896932707417801159:281474977459641",
+      "sha256": "2e150834b9ea041ccc9c973b4cdd322f6c6a9bf81250a2bf43be21d8ddf306ce",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/reading-inputs/聚宽2026年精选/chunk-032.txt",
+      "bytes": 39979,
+      "file_id": "14896932707417801159:281474977459649",
+      "sha256": "b23de6201268f8dd0b88069f2cb14808faeecc70bb5ec9458104dfdb1c2eb3db",
+      "allocated_bytes": 40960
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0387-figure-1.png",
+      "bytes": 213624,
+      "file_id": "14896932707417801159:562949954170568",
+      "sha256": "24b953af8e6163ccf6810497ab9e96ed98bec8e21f9ad39a9a5348f83d563b14",
+      "allocated_bytes": 217088
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0387-figure-2.png",
+      "bytes": 258349,
+      "file_id": "14896932707417801159:562949954170569",
+      "sha256": "94cf125ea24dd0a48b726422b4d53cdc3885503908939a16bd6063cf86be38e3",
+      "allocated_bytes": 262144
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0387-figures.json",
+      "bytes": 509,
+      "file_id": "14896932707417801159:562949954170571",
+      "sha256": "5ade9d29dd29a4bc0586dce056ec11693568fed3b50cfd1a77c7b5d6d046bd36",
+      "allocated_bytes": 512
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0387.txt",
+      "bytes": 8499,
+      "file_id": "14896932707417801159:562949954170570",
+      "sha256": "a88ef07291e5a98ed43bae5bdd7672d179398b5c637b0fea31feed46cfed6073",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0388.txt",
+      "bytes": 20829,
+      "file_id": "14896932707417801159:562949954170572",
+      "sha256": "df3acb878ae2905e7f0ee73e02e9b078385d023d18ca81103fc32ed952598c36",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0389.txt",
+      "bytes": 11537,
+      "file_id": "14896932707417801159:562949954170573",
+      "sha256": "81e5908862436fbe109fc7d434fc28ea882f21549c5c31c568ca1d076abdfbaa",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0390.txt",
+      "bytes": 22032,
+      "file_id": "14896932707417801159:562949954170574",
+      "sha256": "bcdc68196cc2d8974b2cfb3dcd9e21fba38ab48bcee3dcb14ff2ccaf9a671e3e",
+      "allocated_bytes": 24576
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0391.txt",
+      "bytes": 3869,
+      "file_id": "14896932707417801159:562949954170575",
+      "sha256": "7030a447ada3f9af3362261cd74d093783743427df1505e26b142a1a9e6b7d44",
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0392.txt",
+      "bytes": 11576,
+      "file_id": "14896932707417801159:562949954170576",
+      "sha256": "373f28c81c38ddedc5cb90e7e6856e36ce385ca80a4c0c8078d8612447f16e1b",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0393.txt",
+      "bytes": 9178,
+      "file_id": "14896932707417801159:562949954170577",
+      "sha256": "abd9336b21f330731760d49410ddc3042af5b2f22c8fceffb38fe9c4a034aae0",
+      "allocated_bytes": 12288
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0394.txt",
+      "bytes": 98233,
+      "file_id": "14896932707417801159:562949954170578",
+      "sha256": "d1715aac11df8023d49bfebdff72c56abfac1f3d8a05bec3f618334212346538",
+      "allocated_bytes": 98304
+    },
+    {
+      "path": "docs/joinquant-full-review/tail-reading-inputs/JQ0395.txt",
+      "bytes": 53794,
+      "file_id": "14896932707417801159:844424930881244",
+      "sha256": "6709ac906163b05dc29bf123a5ebc3fe69fb2d0ef2174485ce15693efbdd5606",
+      "allocated_bytes": 57344
+    }
+  ]
+}

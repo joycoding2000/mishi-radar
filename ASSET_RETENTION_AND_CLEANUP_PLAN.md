@@ -1,8 +1,8 @@
 # mishi-radar 资产保留与清理审查方案
 
-2026-10-24（Asia/Shanghai）。**CLEANUP_AUTHORIZED = NO。** 本轮只读取、归纳、统计、提交并推送本整理分支；未删除文件、分支、worktree或stash，未执行gc/prune/reset/clean，未清理Codex会话或工作区，未改变main及正式研究结论。
+审查快照（Owner批准前，2026-10-24 Asia/Shanghai）：当时尚未授权删除，因此只读取、归纳、统计并提交审查材料；未删除文件、分支、worktree或stash，未执行gc/prune/reset/clean，也未清理Codex会话或工作区。当前结果以文末“执行收口”及[机器记录](docs/asset-review-2026-10-24/cleanup-closeout.json)为准。
 
-**同日受影响判断更正**：WD My Passport的盘符已由F:改为E:。`E:\BaiduNetdiskDownload`下五个研究库根均可访问，聚宽594正文原始字节SHA-256全部匹配；代表性chunk、内嵌图与尾部编号文本可由原件恢复，见[核实记录](docs/asset-review-2026-10-24/e-drive-source-check.json)。因此解除“原件不可访问”的保留理由，269副本未显示长期独立保留必要；处置顺序仍在C01–C05之后，本次不删除、不重做全面盘点，也不把269项加入当前候选。原2,080文件分类/容量快照与959文件候选保持原边界。
+**同日受影响判断更正（执行前）**：WD My Passport盘符由F:改为E:；E:\BaiduNetdiskDownload下五个库根可访问，聚宽594份正文原始SHA-256全部匹配，代表性chunk、内嵌图与尾部文本可恢复，见[核实记录](docs/asset-review-2026-10-24/e-drive-source-check.json)。当时将269份副本后置于C01–C05之后；本次授权后的全集核验与执行结果见文末收口。原2,080文件分类/容量快照与959文件基线仍作为历史盘点证据。
 
 ## 基线、范围与计量
 
@@ -46,7 +46,7 @@
 | ARCHIVE `superseded-product-proposals`、`historical-consumer-review` | 21 / 156,470 | CSV精确列出的7个旧提案和`outputs/v0.1-owner-review-2026-10-16/`14文件；由R3.2和新差距报告覆盖当前作用，仍有决策追溯价值。依托已有Git引用，不再复制一份归档目录 |
 | ARCHIVE `competitor-3-source-batch` | 186 / 3,432,534 | 既有C盘竞品3`outputs/`批次；保留原位作冷资料，以R01进入，不重新采集。不声称已备份到GitHub或F盘，不从C盘释放量中计收益 |
 | ARCHIVE OD整合/独立验收底稿 | 152 / 1,715,162 | 索引所列`final-integration-2026-10-23/`35项及`g01-g07-final-reacceptance/`117项；Owner PASS后日常只看Acceptance，但原外部证据与反例需可追溯。原位冷保留，不与worktree一并移除 |
-| REVIEW `joinquant-reading-inputs`（后置处置） | 269 / 9,044,280 | 4个忽略目录：`reading-inputs/`228/7,775,331；`middle-reading-inputs/`16/284,997；`tail-reading-inputs/`12/712,029；`2026-tail-reading-inputs/`13/271,923。E盘594正文身份已匹配，代表性chunk/3图/尾文可恢复，故不再因缺原件要求长期保留。全集精确处置保障与授权留待C01–C05后单独确认，本轮原位保留 |
+| CLOSED joinquant-reading-inputs（已处置） | 269 / 9,044,280（执行前快照） | 执行前分布于4个忽略目录：reading-inputs/228/7,775,331；middle-reading-inputs/16/284,997；tail-reading-inputs/12/712,029；2026-tail-reading-inputs/13/271,923。594份原件和3张相关原图已在E→C异盘复制并通过602项SHA-256回读；228分块、36份行号文本、3图和2索引均批量确认可恢复，无独立注释例外。269项按精确清单删除，逐项记录见[阅读副本收口](docs/asset-review-2026-10-24/reading-derivative-closeout.json)。
 | REVIEW `paused-fx01-evidence` | 15 / 11,162,284 | `outputs/wp-fx01-fixture-vertical-2026-10-23/`旧截图、脚本、演示状态。与FX01B部分内容可能重复，但32文件暂停身份限制及Owner收口尚未处理，不把“旧/暂停”直接变删除资格 |
 
 ARCHIVE是退出日常工作入口的价值决定，不代表立刻删除工作副本。对Git内44项/745,897字节，下一轮若Owner确实希望精简默认checkout，可另批准窄范围导航/移除改动；历史原件仍由现有保留引用到达，不能由本轮授权推导可改main。对外部338项/5,147,696字节，优先利用原位存储及Owner已有SSD迁移备份；如需迁出C盘，先指定唯一归档根、按本CSV相对路径保留批次、导出局部哈希清单并校验后再单独申请释放旧副本。盘符映射使用E:，但此次确认原库可读不证明其他材料已归档，不维护多份同样的日常镜像。
@@ -61,7 +61,7 @@ ARCHIVE是退出日常工作入口的价值决定，不代表立刻删除工作�
 | C04 `worktree-2` | `D:\Dev\Projects\.worktrees\mishi-od1-a` | 305 / 21,074,373 | A已正式接受并整合；289跟踪文件、16忽略字节码，无未提交成果，无独有提交。恢复用A精确SHA，不依赖现有checkout |
 | C05 `worktree-3` | `D:\Dev\Projects\.worktrees\mishi-od2-b` | 303 / 21,067,137 | B已正式接受并整合；289跟踪文件、14忽略字节码，无未提交成果，无独有提交。恢复用B精确SHA |
 
-机器清单为**集合边界**，不是可直接执行的脚本。本轮没有生成或运行删除脚本。3个checkout中的30份字节码已包含在C03–C05，不再加到C01；`.git`指针和共享管理元数据不计候选文件字节。没有因同一历史源被多个文档引用而重复计容量。
+机器清单在Owner授权前仅用于界定集合，不是可直接执行的脚本；审查阶段未生成或运行删除程序。本次仅按精确名单和即时身份复核执行，不递归清理父目录。3个checkout中的30份字节码已包含在C03–C05，不再加到C01；.git指针和共享管理元数据不计候选文件字节。
 
 ## 每个分支与worktree的判定
 
@@ -70,11 +70,11 @@ ARCHIVE是退出日常工作入口的价值决定，不代表立刻删除工作�
 | `main` | `447c0e22edd414abe9ef1efcdfb6ad266c0bcb32` | 0；GitHub同SHA | KEEP_ACTIVE |
 | `backup/ssd-migration-2026-10-23` | `34c8b4c7cf9236f316ebd661c175e12bdcbc26cb` | 1；同名GitHub引用已核对，本轮分支也以其为祖先 | KEEP_ARCHIVE；独有恢复说明及既有恢复链接有价值。只1个备份，无需归并或新增标签 |
 | `codex/research-asset-review-2026-10-24` | 本交付提交，初始基线为`34c8b4c` | 新整理成果；推送后正常保留同名远端 | KEEP_ACTIVE，待Owner清理决策 |
-| `codex/od1-od2-final-integration` | `b9a7fba6be9515fc3271eac7a7a97ab65f53e64d` | 0；main和SSD备份均可达全部历史 | DELETE_CANDIDATE，与C03结对；Acceptance/恢复文档引用此名，用本表tip及main恢复，不丢审查差异 |
-| `feature/od1-strategy-core` | `a72c67901e1147f3e4c198207dea8dd56d59a542` | 0；main和SSD备份均可达全部历史 | DELETE_CANDIDATE，与C04结对；Owner已接受对应精确SHA |
-| `feature/od2-cash-backtest` | `fc02eff5a68b0bc408bc3a60b5b4f0ad272c6758` | 0；main和SSD备份均可达全部历史 | DELETE_CANDIDATE，与C05结对；Owner已接受对应精确SHA |
+| codex/od1-od2-final-integration | b9a7fba6be9515fc3271eac7a7a97ab65f53e64d | 0；main和SSD备份均可达全部历史 | 已按非强制Git流程移除本地分支及C03 worktree；SHA仍可由main恢复，外部验收证据保留 |
+| feature/od1-strategy-core | a72c67901e1147f3e4c198207dea8dd56d59a542 | 0；main和SSD备份均可达全部历史 | 已按非强制Git流程移除本地分支及C04 worktree；SHA仍可由main恢复，Owner Acceptance保留 |
+| feature/od2-cash-backtest | fc02eff5a68b0bc408bc3a60b5b4f0ad272c6758 | 0；main和SSD备份均可达全部历史 | 已按非强制Git流程移除本地分支及C05 worktree；SHA仍可由main恢复，Owner Acceptance保留 |
 
-GitHub本轮开始仅有main、SSD备份2个heads，均KEEP；没有远端历史分支删除候选。`origin/main`与`origin/backup/...`是对应远端的本地跟踪引用，不再当另外2条独立研究分支计数。本轮推送会新增整理分支，完成后为6个本地分支（KEEP3、候选3）、3个远端heads（全部KEEP）。无标签、stash为空，均不作清理。
+GitHub远端保留main、SSD备份和本轮整理分支3个heads；未删除任何远端分支。清理后的本地分支为main、SSD备份及整理分支3个；原三个历史本地分支已移除。
 
 4个登记worktree中，主工作区为KEEP_ACTIVE；3个历史worktree为DELETE_CANDIDATE。资格依据不仅是合并关系：三者状态干净、没有原始阅读副本/隐藏数据，只有A/B的30字节码；对应Owner Review已在OD Acceptance收口，未结FX01B证据在主工作区或单列外部路径；已有永久远端main保留全部提交。以`rev-list <tip> --not <main>`证明各为0，含原来修复/候选差异，见[Git清单](docs/asset-review-2026-10-24/git-inventory.json)。恢复记录按上述SHA重建分支和checkout即可，不需要原`.git`工作区指针。
 
@@ -82,13 +82,13 @@ GitHub本轮开始仅有main、SSD备份2个heads，均KEEP；没有远端历史
 
 ## 下一轮顺序与恢复条件
 
-1. **批准具体集合后，先执行C01–C02。** 重验44字节码身份与ZIP7成员等价；保留原图、JSON映射与清单。小收益约4.08MB逻辑数据，几乎不影响研究恢复。
-2. **再执行C03–C05及对应3个本地分支。** 先查HEAD、tracked/untracked/ignored、任务/运行依赖和main远端可达性；保留本表和恢复说明。只移除精确登记checkout，再移除已解除checkout占用的候选分支；出现新成果则暂停该组，不强制或递归删除父目录。候选checkout逻辑回收63,204,353字节，是本项目主要收益。
-3. **C01–C05完成后，再单独处理269阅读副本。** 原库已按新路径E:找到，594正文哈希匹配；chunk的4段正文、JQ0351/JQ0387共3张内嵌图、JQ0594的379行编号文本已代表性复现，原件可用性条件已满足。推荐长期保留原件+最终知识，不永久维护全部阅读切块。下一轮仅补该集合尚缺的完整处置保障，区分LF文本与原始字节口径，不把代表性例证当全集逐字节重建证明；不能证明可替代的部分仍保留。单独批准精确集合后才处置，不默默纳入本轮959文件。
-4. **FX01B Owner收口后再评估旧FX01证据15文件。** 先证明每项的历史身份和重要反例已被适当保留、恢复副本仍可靠；不把截图与复验的不同批次当字节等价，不改写FX01A具名限制。未满足前保持REVIEW。
+1. **C01–C02已完成。** 执行前重验44个字节码文件身份和ZIP的7/7成员等价；原图、JSON映射与清单均保留。清理约4.08MB逻辑数据。
+2. **C03–C05及3个对应本地分支已完成。** 执行前复核HEAD、tracked/untracked/ignored状态和main可达性；只移除精确登记checkout并用非强制Git删除已解除占用的本地分支，未删远端分支。候选checkout逻辑回收63,204,353字节。
+3. **269份阅读副本的后置处置（已完成）**。已在E盘原件之外建立C盘独立本地副本；594项正文/代码、3张相关原图及5份身份清单共602项全部哈希回读通过。228分块与既有LF规范化清单全部匹配；36份行号文本仅含原文编号、URL遮盖或可重建图片占位；3图可由原始内嵌内容恢复，2份JSON只记录图像身份。269份均按精确清单删除，0例外；E源库和C备份保留。
+4. **FX01B证据保持排除。** 尚待验收的15份历史证据原位保留；本次不处理，也不新建后续清理任务。
 5. **冷归档通过导航减负。** 保留本索引→最终结论→必要原件的路径；默认不再按年读progress或搜索三个旧checkout。Git内旧提案不移动、不合并main；外部单份证据原位冷留。若后续确需迁移外部证据，只验证该组目标后申请处置旧副本，不扫描整个Codex或全盘重复文件。
 
-这些是清理执行前的恢复保障，不是新增产品研发Gate。D01原件可用性限制已解除，处置顺序仍后置于C01–C05；未通过某组核实也不阻断无关集合。参考 [RESEARCH_DECISION_QUEUE](RESEARCH_DECISION_QUEUE.md) D01–D03。
+以上候选与恢复条件记录于Owner授权前；本次已完成C01–C05及269副本处置。原件第二副本、阅读派生内容恢复能力已验证；D01/D02结论以文末收口为准。未通过某组核实也不阻断无关集合。
 
 ## 验证、维护收益与剩余风险
 
@@ -96,7 +96,7 @@ GitHub本轮开始仅有main、SSD备份2个heads，均KEEP；没有远端历史
 
 本项目清理收益主要是减少 **914份重复checkout文件和3个无独有提交的分支入口**；加上缓存和重复ZIP共959文件，减少无效搜索与旧文档误读。日常阅读收敛为本索引、当前权威与聚宽最终10文件；382项冷资料不再冒充待办。仓库本身只有约56.8MB工作区文件，本轮不承诺GB级回收，不把现E盘原库的历史4.28GB资料当可释放空间。
 
-剩余风险：E盘原库可读与594正文身份已验证，但原件第二持久副本及269副本全集精确重建未验证；外部图/调查/独立证据多为仅验证一个存储位置；暂停FX01实施前身份不可证明；FX01B正式Owner Acceptance尚未发现；运行依赖检查是有限快照。上述风险分别保留REVIEW/KEEP或执行前核实条件，不把技术/来源资格不足判为投资机制或产品假设失败。
+剩余排除项：FX01B尚待Owner验收的15份历史证据保持原位；未对其他四个E盘资料库进行内容重审。E盘594项正文/代码与3张相关图的C盘第二副本已核验；269份阅读派生副本已移除且源内容可从E/C恢复。上述边界不影响正常产品与研究主线。
 
 ## 交付摘要
 
@@ -105,19 +105,27 @@ PROJECT = mishi-radar
 CURRENT_BASELINE = main 447c0e22edd414abe9ef1efcdfb6ad266c0bcb32; SSD backup 34c8b4c7cf9236f316ebd661c175e12bdcbc26cb
 RESEARCH_TOPICS_INDEXED = 10
 VALUABLE_UNINDEXED_FINDINGS = 6 groups reconnected to current decisions; no new experiment
-OPEN_RESEARCH_DECISIONS = 8 consolidated decisions (including asset decisions)
+OPEN_RESEARCH_DECISIONS = 6 existing research decisions; D01/D02 cleanup decisions closed
 KEEP_FILES_AND_SIZE = 455 / 71778514 bytes
 ARCHIVE_FILES_AND_SIZE = 382 / 5893593 bytes
-DELETE_CANDIDATE_FILES_AND_SIZE = 959 / 67287613 bytes
-REVIEW_FILES_AND_SIZE = 284 / 20206564 bytes
-LOCAL_RECLAIMABLE_BYTES = 68974056 estimated allocated bytes; 67287613 logical bytes; 0 executed
+DELETE_CANDIDATE_FILES_AND_SIZE = 0 / 0 bytes remaining; 959 / 67,287,613 logical bytes executed in C01–C05
+REVIEW_FILES_AND_SIZE = 15 / 11,162,284 bytes remaining; FX01 historical evidence preserved
+LOCAL_RECLAIMABLE_BYTES = 78,563,816 measured allocated file bytes reclaimed; 76,331,893 logical bytes deleted; directory metadata excluded
 BRANCHES_KEEP = local 3; remote 3 after review push
-BRANCHES_DELETE_CANDIDATE = local 3; remote 0
-WORKTREES_DELETE_CANDIDATE = 3 of 4 registered
-IRREPLACEABLE_DATA_RISKS = E-drive originals verified for 594 texts; second copies and full derivative reconstruction unverified; paused pre-implementation identity unproven
+BRANCHES_DELETE_CANDIDATE = local 0; remote 0; 3 local branches removed
+WORKTREES_DELETE_CANDIDATE = 0 remaining; 3 historical worktrees removed, primary worktree retained
+IRREPLACEABLE_DATA_RISKS = E-drive source and C-drive second copy verified; 269 reading derivatives deleted with source recovery; 15 paused FX01 historical files preserved
 CLEANUP_PLAN = ASSET_RETENTION_AND_CLEANUP_PLAN.md
 RESEARCH_INDEX = RESEARCH_ASSET_INDEX.md
 DECISION_QUEUE = RESEARCH_DECISION_QUEUE.md
-CLEANUP_AUTHORIZED = NO
-OWNER_REVIEW_READY = YES
+CLEANUP_AUTHORIZED = PASS_BOUNDED
+OWNER_REVIEW_READY = COMPLETED
 ```
+
+## 执行收口（2026-10-24）
+
+C01–C05均通过执行前状态、身份和可恢复性复核后完成：44个主工作区.pyc、1个7/7原图等价ZIP、3个干净且tip均可从origin/main恢复的历史worktree，以及3个对应本地分支。worktree忽略项仅为与历史清单逐项一致的字节码缓存；使用非强制Git移除，没有删除远端分支。
+
+聚宽原始库仍在E:\BaiduNetdiskDownload\2020-2026聚宽600条源码。594份正文/代码、3张相关原图和5份身份清单已复制到不同物理盘的C:\Users\Administrator\Documents\ResearchArchive\mishi-radar-joinquant-source-2026-10-24，602项逐文件回读SHA-256通过。269份派生阅读副本已逐项删除，无保留例外；关闭清单和恢复映射见[cleanup-closeout.json](docs/asset-review-2026-10-24/cleanup-closeout.json)与[reading-derivative-closeout.json](docs/asset-review-2026-10-24/reading-derivative-closeout.json)。文件分配空间共回收78,563,816字节（逻辑文件字节76,331,893；不含目录元数据）。
+
+main与SSD备份分支均保持原SHA；正式Owner Acceptance、研究结论、原件及FX01B待验收15份历史证据未修改。
