@@ -1,6 +1,8 @@
 # 当前状态与决策
 
-更新：2026-10-23（保留下方历史状态）。用途：新对话优先读取，区分已批准范围、规则基线、数据资格和实施授权。详细依据见各主题文件；本文件汇总当前仍有效的结论。
+更新：2026-10-24（保留下方历史状态）。用途：新对话优先读取，区分已批准范围、规则基线、数据资格和实施授权。详细依据见各主题文件；本文件汇总当前仍有效的结论。
+
+**2026-10-24 WP-FX01B Owner Acceptance**：Owner 正式接受 WP-FX01B 固定 Fixture Web 纵向切片（F1/F3/F7、F5、F6），验收提交 `9f83a2e03fef771b03d0eea919e0dbd99763cec4`；`OWNER_ACCEPTANCE = PASS`，仅限本次固定 Fixture 范围。独立复验 `PASS_FOR_OWNER_ACCEPTANCE`，184 项测试通过；两项已发现缺陷均已关闭，无确认遗留缺陷。FX01A 原有具名限制继续保留；Chromium 视口验证通过，真实设备未测。F4/F8/H1、真实数据、OD-3 数值及正式发布仍未通过相应 Gate。验收对象为 `9f83a2e`，其后 DR03 文档变更（`447c0e2`）保持不变；详见[WP-FX01B Owner Acceptance](WP_FX01B_OWNER_ACCEPTANCE_2026-10-24.md)。**NEXT_PHASE_AUTHORIZED=NO**。
 
 **2026-10-23 OD-1/OD-2收口**：Owner正式接受 A `a72c67901e1147f3e4c198207dea8dd56d59a542`、B `fc02eff5a68b0bc408bc3a60b5b4f0ad272c6758`，并授权本次受控整合及正常推送。实际merge结果完整组合测试167次执行/165个不同ID/零失败，必要Gate及两项最小修复反例通过；详见[Owner Acceptance与Git整合记录](OD1_OD2_OWNER_ACCEPTANCE_2026-10-23.md)。当前OD-1/OD-2实施及合成验收PASS，Git整合在远端SHA独立确认一致后关闭；下方早期未实施/不推送等描述保留历史身份。冻结合同、真实供数及其它Gate不变，**NEXT_PHASE_AUTHORIZED=NO**。
 
