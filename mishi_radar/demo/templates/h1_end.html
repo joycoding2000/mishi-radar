@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}结束观察 H1{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">H1 静态观察仓 · 主动结束确认</p>
+    <h1>确认结束观察</h1>
+    <p class="lead">结束必须由你主动确认。系统会保存当前版本的数量、平均成本、成本基准日期、参考价及日期或 UNKNOWN、S01 规则状态、结束原因和结束时间；之后该记录只读。</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill pill-warn">只读确认</span>
+    <p class="small">结束后不能更正或再次结束。</p>
+    <p class="small muted">再次观察需要创建新记录，旧记录与版本历史保留。</p>
+  </div>
+</section>
+
+<section class="notice warning">
+  <strong>不是成交</strong>
+  <span>结束观察只关闭这条手工观察记录，不产生卖出、成交、费用或账户权益变动。</span>
+</section>
+
+<article class="watch-card h1-card">
+  <div class="candidate-head">
+    <div>
+      <h3>{{ display.security_name }}</h3>
+      <div class="mono small">{{ display.security_id }} · {{ display.scenario_label }} · {{ observation_id }}</div>
+    </div>
+    <div class="badge-stack">
+      <span class="pill pill-neutral">当前版本 V{{ display.version }}</span>
+      <span class="pill pill-{{ display.exit_tone }}">{{ display.exit_status_label }}</span>
+    </div>
+  </div>
+
+  <div class="h1-grid">
+    <section class="snapshot-box">
+      <h4>将保存的静态估值</h4>
+      <dl class="facts">
+        <div><dt>数量</dt><dd>{{ display.quantity_text }} 股</dd></div>
+        <div><dt>平均成本</dt><dd>{{ display.average_cost_text }} 元/股</dd></div>
+        <div><dt>成本基准日</dt><dd>{{ display.cost_basis_date }}</dd></div>
+        <div><dt>持有交易日</dt><dd>{{ display.holding_days_text }}</dd></div>
+        <div><dt>参考价</dt><dd>{{ display.reference_price_text }}（{{ display.price_status_label }}）</dd></div>
+        <div><dt>参考价日期</dt><dd>{{ display.reference_price_date or 'UNKNOWN' }}（{{ display.price_basis }}）</dd></div>
+        <div><dt>静态市值</dt><dd>{{ display.market_value_text }}</dd></div>
+        <div><dt>参考成本</dt><dd>{{ display.cost_value_text }}</dd></div>
+        <div><dt>静态浮盈</dt><dd>{{ display.unrealized_pnl_text }}</dd></div>
+        <div><dt>浮盈率</dt><dd>{{ display.unrealized_pnl_rate_text }}</dd></div>
+      </dl>
+      <p class="small muted">{{ display.valuation_note }}</p>
+    </section>
+
+    <section class="compare-box">
+      <h4>将保存的 S01 规则状态</h4>
+      <p class="compare-status {{ 'warning-text' if display.exit_tone == 'warn' else '' }}">{{ display.exit_status_label }}</p>
+      <dl class="facts">
+        <div><dt>关联规则</dt><dd class="mono small">{{ display.rule_label }}</dd></div>
+        <div><dt>固定业务日</dt><dd>{{ display.business_date }}</dd></div>
+        <div><dt>规则原因</dt><dd>{{ display.exit_reason_text }}</dd></div>
+        <div><dt>Fixture 身份</dt><dd>{{ display.fixture_id }} · {{ display.fixture_version }}</dd></div>
+      </dl>
+      <p class="small muted">{{ display.exit_note }}</p>
+    </section>
+  </div>
+</article>
+
+<section class="controls">
+  <form method="post" action="/h1/{{ observation_id }}/end" class="h1-form">
+    <div class="form-field">
+      <label for="end-reason">结束原因（必填）</label>
+      <textarea id="end-reason" name="reason" rows="3" maxlength="200" required placeholder="例如 已自行处理，记录归档"></textarea>
+      <small class="muted">最多 200 个字符。原因会与结束时间一起写入只读快照。</small>
+    </div>
+    <div class="form-actions">
+      <button class="button" type="submit">确认结束观察</button>
+      <a class="button button-ghost" href="/h1">返回观察仓</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

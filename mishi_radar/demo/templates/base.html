@@ -12,7 +12,7 @@
 <body>
   <div class="fixture-ribbon" role="note">
     <strong>{{ fixture_marker }}</strong>
-    <span>固定合成数据 · 无网络调用 · F1/F3/F7 复用 {{ contract_version }} · 不构成真实行情、投资建议或收益证据</span>
+    <span>固定合成数据 · 无网络调用 · F1/F3/F7/H1 复用 {{ contract_version }} · 不构成真实行情、投资建议或收益证据</span>
   </div>
   <header class="topbar">
     <div class="brand">
@@ -25,6 +25,7 @@
     <nav class="main-nav" aria-label="主导航">
       <a href="/" class="{{ 'active' if request.url.path == '/' else '' }}">机会榜 F1</a>
       <a href="/watch" class="{{ 'active' if request.url.path == '/watch' else '' }}">关注 F5</a>
+      <a href="/h1" class="{{ 'active' if request.url.path.startswith('/h1') else '' }}">观察仓 H1</a>
       <a href="/backtest" class="{{ 'active' if request.url.path == '/backtest' else '' }}">现金检验 F6</a>
       <a href="/status" class="{{ 'active' if request.url.path == '/status' else '' }}">数据状态 F7</a>
     </nav>
@@ -38,8 +39,8 @@
   </main>
 
   <footer class="footer">
-    <p><strong>边界：</strong>F1/F3/F7 使用已验收 FX01A 结果合同；F5 为最小演示关注；F6 为固定合成现金场景；F2 仅提供策略切换与透明风格显示；F4/H1 保持 Gate，不提供空壳；F8 正式认证与付费权益未实现。</p>
-    <p>F1/F3/F7 不重算规则：<code>mishi_radar.result_contract</code> ← <code>mishi_radar.strategy_core</code>。F6：<code>mishi_radar.cash_backtest.run_backtest</code>。OD-1/OD-2 冻结算法、费用语义与合同未修改。</p>
+    <p><strong>边界：</strong>F1/F3/F7 使用已验收 FX01A 结果合同；F5 为最小演示关注；H1 为固定 Fixture 静态观察仓切片；F6 为固定合成现金场景；F2 仅提供策略切换与透明风格显示；F4 保持 Gate；F8 正式认证与付费权益未实现。</p>
+    <p>F1/F3/F7 不重算规则：<code>mishi_radar.result_contract</code> ← <code>mishi_radar.strategy_core</code>。H1 复用固定原始价与 S01 默认退出判断，独立持久化。F6：<code>mishi_radar.cash_backtest.run_backtest</code>。OD-1/OD-2 冻结算法、费用语义与合同未修改。</p>
   </footer>
   <script src="/static/app.js"></script>
 </body>

@@ -1,0 +1,13 @@
+browser=148.0.7778.96
+desktop H1: empty state, create form and storage-isolation note visible
+desktop H1 active: S01 TRUE hint shown without auto-end
+desktop H1 corrected: version 2 active, version history preserved
+desktop H1 end confirmation: explicit read-only warning and reason field visible
+desktop H1 ended: end snapshot and read-only history visible
+desktop H1 re-observe: new record created while old ended record stays read-only
+desktop H1 stale price: old-price date and UNKNOWN exit visible
+mobile H1 empty: no page-level horizontal overflow
+mobile H1 active: no page-level horizontal overflow
+mobile H1 corrected: no page-level horizontal overflow
+mobile H1 end confirm: no page-level horizontal overflow
+mobile H1 ended: no page-level horizontal overflow

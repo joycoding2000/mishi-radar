@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "user": "fixture-user",
+  "observations": [
+    {
+      "observation_id": "h1-a8cebf4f34f2",
+      "user": "fixture-user",
+      "scenario": "normal",
+      "created_at": "2026-10-24T18:57:28",
+      "versions": [
+        {
+          "version": 1,
+          "security_id": "SYN:000005",
+          "strategy_id": "S01",
+          "quantity": "100",
+          "average_cost": "10",
+          "cost_basis_date": "2026-10-15",
+          "note": "浏览器桌面观察",
+          "created_at": "2026-10-24T18:57:28"
+        },
+        {
+          "version": 2,
+          "security_id": "SYN:000005",
+          "strategy_id": "S01",
+          "quantity": "120",
+          "average_cost": "9.5",
+          "cost_basis_date": "2026-10-15",
+          "note": "浏览器桌面更正",
+          "created_at": "2026-10-24T18:57:29"
+        }
+      ],
+      "status": "ENDED",
+      "ended_at": "2026-10-24T18:57:30",
+      "end_reason": "浏览器桌面主动结束",
+      "end_snapshot": {
+        "version": 2,
+        "security_id": "SYN:000005",
+        "security_name": "合成样本五 · 非真实证券",
+        "scenario": "normal",
+        "scenario_label": "正常固定输入",
+        "strategy_id": "S01",
+        "strategy_label": "S01 趋势强势",
+        "quantity": "120",
+        "average_cost": "9.5",
+        "cost_basis_date": "2026-10-15",
+        "note": "浏览器桌面更正",
+        "created_at": "2026-10-24T18:57:29",
+        "reference_price": "7.723956621449992198407984555",
+        "reference_price_date": "2026-10-16",
+        "price_status": "CURRENT",
+        "valuation_status": "VALUED",
+        "market_value": "926.87",
+        "cost_value": "1140.00",
+        "unrealized_pnl": "-213.13",
+        "unrealized_pnl_rate": "-0.186952",
+        "holding_days": 2,
+        "holding_days_status": "KNOWN",
+        "holding_days_reason": null,
+        "rule_status": "TRUE",
+        "rule_reasons": [
+          "STRATEGY_EXIT:S01_BELOW_MA20"
+        ],
+        "rule_primary_reason": "STRATEGY_EXIT:S01_BELOW_MA20",
+        "rule_id": "S01_DEFAULT/R3.2-2026-10-19-OD1-v1",
+        "fixture_id": "FX01A-SYNTHETIC-MARKET",
+        "fixture_version": "FX01A-2026-10-23-v1",
+        "business_date": "2026-10-16",
+        "price_basis": "SYNTHETIC_RAW_CNY",
+        "contract_version": "FX01A-RESULT-CONTRACT-v1",
+        "marker": "SYNTHETIC / FIXTURE",
+        "reason": "浏览器桌面主动结束",
+        "ended_at": "2026-10-24T18:57:30"
+      }
+    },
+    {
+      "observation_id": "h1-ec3db9e4d38c",
+      "user": "fixture-user",
+      "scenario": "normal",
+      "created_at": "2026-10-24T18:57:31",
+      "versions": [
+        {
+          "version": 1,
+          "security_id": "SYN:000001",
+          "strategy_id": "S01",
+          "quantity": "3",
+          "average_cost": "10",
+          "cost_basis_date": "2026-10-15",
+          "note": "浏览器再次观察",
+          "created_at": "2026-10-24T18:57:31"
+        }
+      ],
+      "status": "ACTIVE",
+      "ended_at": null,
+      "end_reason": null,
+      "end_snapshot": null
+    },
+    {
+      "observation_id": "h1-59618880afeb",
+      "user": "fixture-user",
+      "scenario": "unavailable",
+      "created_at": "2026-10-24T18:57:32",
+      "versions": [
+        {
+          "version": 1,
+          "security_id": "SYN:000001",
+          "strategy_id": "S01",
+          "quantity": "100",
+          "average_cost": "10",
+          "cost_basis_date": "2026-10-13",
+          "note": "浏览器旧价观察",
+          "created_at": "2026-10-24T18:57:32"
+        }
+      ],
+      "status": "ACTIVE",
+      "ended_at": null,
+      "end_reason": null,
+      "end_snapshot": null
+    },
+    {
+      "observation_id": "h1-ec22cc67c5a0",
+      "user": "fixture-user",
+      "scenario": "normal",
+      "created_at": "2026-10-24T18:57:35",
+      "versions": [
+        {
+          "version": 1,
+          "security_id": "SYN:000002",
+          "strategy_id": "S01",
+          "quantity": "5",
+          "average_cost": "10",
+          "cost_basis_date": "2026-10-15",
+          "note": "浏览器手机观察",
+          "created_at": "2026-10-24T18:57:35"
+        },
+        {
+          "version": 2,
+          "security_id": "SYN:000002",
+          "strategy_id": "S01",
+          "quantity": "6",
+          "average_cost": "10",
+          "cost_basis_date": "2026-10-15",
+          "note": "浏览器手机更正",
+          "created_at": "2026-10-24T18:57:37"
+        }
+      ],
+      "status": "ENDED",
+      "ended_at": "2026-10-24T18:57:39",
+      "end_reason": "浏览器手机主动结束",
+      "end_snapshot": {
+        "version": 2,
+        "security_id": "SYN:000002",
+        "security_name": "合成样本二 · 非真实证券",
+        "scenario": "normal",
+        "scenario_label": "正常固定输入",
+        "strategy_id": "S01",
+        "strategy_label": "S01 趋势强势",
+        "quantity": "6",
+        "average_cost": "10",
+        "cost_basis_date": "2026-10-15",
+        "note": "浏览器手机更正",
+        "created_at": "2026-10-24T18:57:37",
+        "reference_price": "20.08307445793665518952082934",
+        "reference_price_date": "2026-10-16",
+        "price_status": "CURRENT",
+        "valuation_status": "VALUED",
+        "market_value": "120.50",
+        "cost_value": "60.00",
+        "unrealized_pnl": "60.50",
+        "unrealized_pnl_rate": "1.008307",
+        "holding_days": 2,
+        "holding_days_status": "KNOWN",
+        "holding_days_reason": null,
+        "rule_status": "FALSE",
+        "rule_reasons": [],
+        "rule_primary_reason": null,
+        "rule_id": "S01_DEFAULT/R3.2-2026-10-19-OD1-v1",
+        "fixture_id": "FX01A-SYNTHETIC-MARKET",
+        "fixture_version": "FX01A-2026-10-23-v1",
+        "business_date": "2026-10-16",
+        "price_basis": "SYNTHETIC_RAW_CNY",
+        "contract_version": "FX01A-RESULT-CONTRACT-v1",
+        "marker": "SYNTHETIC / FIXTURE",
+        "reason": "浏览器手机主动结束",
+        "ended_at": "2026-10-24T18:57:39"
+      }
+    }
+  ]
+}

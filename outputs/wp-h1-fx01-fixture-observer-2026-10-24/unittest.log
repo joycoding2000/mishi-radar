@@ -1,0 +1,22 @@
+test_correction_keeps_old_versions_and_review_flag (tests.test_h1_fixture.H1FixtureTests.test_correction_keeps_old_versions_and_review_flag) ... ok
+test_end_saves_snapshot_and_is_read_only (tests.test_h1_fixture.H1FixtureTests.test_end_saves_snapshot_and_is_read_only) ... ok
+test_fixture_identity_and_page_limits (tests.test_h1_fixture.H1FixtureTests.test_fixture_identity_and_page_limits) ... ok
+test_input_validation (tests.test_h1_fixture.H1FixtureTests.test_input_validation) ... ok
+test_mobile_css_and_viewport_contract (tests.test_h1_fixture.H1FixtureTests.test_mobile_css_and_viewport_contract) ... ok
+test_persistence_reload_and_f5_storage_isolation (tests.test_h1_fixture.H1FixtureTests.test_persistence_reload_and_f5_storage_isolation) ... ok
+test_s01_exit_true_false_max_holding_and_unknown (tests.test_h1_fixture.H1FixtureTests.test_s01_exit_true_false_max_holding_and_unknown) ... ok
+test_stale_and_missing_price_states (tests.test_h1_fixture.H1FixtureTests.test_stale_and_missing_price_states) ... ok
+test_valuation_formula_and_odd_lot (tests.test_h1_fixture.H1FixtureTests.test_valuation_formula_and_odd_lot) ... ok
+test_empty_preview_unknown_and_failed_are_distinct (tests.test_demo_product.FixtureProductTests.test_empty_preview_unknown_and_failed_are_distinct) ... ok
+test_f1_reuses_accepted_contract_and_switches_eight_strategies (tests.test_demo_product.FixtureProductTests.test_f1_reuses_accepted_contract_and_switches_eight_strategies) ... ok
+test_f1_to_f3_carries_contract_identity_and_missing_dimensions (tests.test_demo_product.FixtureProductTests.test_f1_to_f3_carries_contract_identity_and_missing_dimensions) ... ok
+test_f6_uses_od2_kernel_and_reconciles (tests.test_demo_product.FixtureProductTests.test_f6_uses_od2_kernel_and_reconciles) ... ok
+test_fixture_identity_in_pages_apis_and_exports (tests.test_demo_product.FixtureProductTests.test_fixture_identity_in_pages_apis_and_exports) ... ok
+test_responsive_viewport_and_mobile_css (tests.test_demo_product.FixtureProductTests.test_responsive_viewport_and_mobile_css) ... ok
+test_small_n_reaches_beyond_top_n_exact_ranks (tests.test_demo_product.FixtureProductTests.test_small_n_reaches_beyond_top_n_exact_ranks) ... ok
+test_watch_snapshot_immutable_and_removal_history (tests.test_demo_product.FixtureProductTests.test_watch_snapshot_immutable_and_removal_history) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 2.867s
+
+OK

@@ -1,0 +1,291 @@
+{
+  "record": "WP-H1-FX01_FIXTURE_OBSERVER_CHANGE_RECORD",
+  "generated_at": "2026-10-24T18:58:08",
+  "baseline_git_head": "e7a081c3c4ccfd948c80a4956fe5aa7a0a0cd1ba",
+  "branch": "wp-h1-fx01-fixture-observer",
+  "review_status": "OWNER_REVIEW_PENDING",
+  "acceptance_claimed": false,
+  "scope": {
+    "path": "CREATE -> STATIC VALUATION -> CORRECT -> END -> READ-ONLY HISTORY -> RE-OBSERVE",
+    "user": "fixture-user",
+    "data": "FX01A fixed synthetic fixture",
+    "real_market_data": false,
+    "network_used": false,
+    "full_h1_acceptance": false
+  },
+  "changed_files": [
+    {
+      "path": "mishi_radar/demo/__init__.py",
+      "bytes": 995,
+      "sha256": "2ef78e08bd5b3a2d181633e63d7cf8622d3a1f4a44f1d711f8498111981c2169"
+    },
+    {
+      "path": "mishi_radar/demo/app.py",
+      "bytes": 15294,
+      "sha256": "6b5d7bed307872b0efb7cb5f1f9ebf683afe1f14bab5f9879d5994f6b63aded2"
+    },
+    {
+      "path": "mishi_radar/demo/h1.py",
+      "bytes": 9490,
+      "sha256": "d3df0f3b7df98dc268e7c1ac69ba511b57b5965c0063b768e4afead33856049d"
+    },
+    {
+      "path": "mishi_radar/demo/h1_service.py",
+      "bytes": 25448,
+      "sha256": "1bbba0387b629be39ec299da6a3410e876ac02faa864643cfbf6e1fef0f4b241"
+    },
+    {
+      "path": "mishi_radar/demo/service.py",
+      "bytes": 56770,
+      "sha256": "7af35c59a6bc8193e70d4b8f790d948a72c63b279c776a25e53422f0aa956e69"
+    },
+    {
+      "path": "mishi_radar/demo/static/app.css",
+      "bytes": 21280,
+      "sha256": "891368c5b6aaa30ed388e1df284bd6e550b074019c033ee70addc6468ae73e2a"
+    },
+    {
+      "path": "mishi_radar/demo/templates/base.html",
+      "bytes": 2442,
+      "sha256": "bb1d8ec6977828466bf638dd5014089fd4b9b8310b2805a9b5f80a66bd076eb7"
+    },
+    {
+      "path": "mishi_radar/demo/templates/h1.html",
+      "bytes": 18964,
+      "sha256": "32cf0c1a3bcbebacbaeb0aaf62cd335f02dacb18bd4850fa8d7b4594155718ae"
+    },
+    {
+      "path": "mishi_radar/demo/templates/h1_end.html",
+      "bytes": 3915,
+      "sha256": "c1be3f9c74a61acf6da4044b549b2d41e4aa4eaf645396ccd9c9f8cee3ebbecb"
+    },
+    {
+      "path": "tests/test_h1_fixture.py",
+      "bytes": 20760,
+      "sha256": "9b199b49e7ae04df9a92f6f0e761d3fe4da33c5e1dc89c807a46882a3e2ac941"
+    },
+    {
+      "path": "docs/WP_H1_FX01_IMPLEMENTATION_2026-10-24.md",
+      "bytes": 4685,
+      "sha256": "ad453690f0e30efd9f197ffe6b50c7accd1d959ac4b13a3ca1adacfee3151f89"
+    }
+  ],
+  "diff_stat": "docs/WP_H1_FX01_IMPLEMENTATION_2026-10-24.md |  58 +++\n mishi_radar/demo/__init__.py                 |   8 +-\n mishi_radar/demo/app.py                      | 116 ++++-\n mishi_radar/demo/h1.py                       | 279 +++++++++++\n mishi_radar/demo/h1_service.py               | 665 +++++++++++++++++++++++++++\n mishi_radar/demo/service.py                  |   2 +-\n mishi_radar/demo/static/app.css              |  91 ++++\n mishi_radar/demo/templates/base.html         |   7 +-\n mishi_radar/demo/templates/h1.html           | 353 ++++++++++++++\n mishi_radar/demo/templates/h1_end.html       |  79 ++++\n tests/test_h1_fixture.py                     | 465 +++++++++++++++++++\n 11 files changed, 2112 insertions(+), 11 deletions(-)",
+  "diff_patch": "diff.patch",
+  "contract_reuse": {
+    "result_contract_modified": false,
+    "strategy_core_modified": false,
+    "cash_backtest_modified": false,
+    "f5_watch_store_modified": false,
+    "h1_store_independent": true,
+    "fixture_id": "FX01A-SYNTHETIC-MARKET",
+    "fixture_version": "FX01A-2026-10-23-v1",
+    "result_contract_version": "FX01A-RESULT-CONTRACT-v1",
+    "price_basis": "SYNTHETIC_RAW_CNY",
+    "rule": "S01_DEFAULT/R3.2-2026-10-19-OD1-v1"
+  },
+  "storage": {
+    "h1_default": "var/fixture-demo/h1-observations.json",
+    "h1_env_override": "MISHI_H1_STORE",
+    "f5_default": "var/fixture-demo/watchlist.json",
+    "f5_env_override": "MISHI_FIXTURE_STORE",
+    "separate_files": true
+  },
+  "tests": {
+    "command": "python -m unittest tests.test_h1_fixture tests.test_demo_product -v",
+    "total": 17,
+    "result": "OK",
+    "h1_fixture": 9,
+    "fx01b_product": 8,
+    "log": "unittest.log",
+    "accepted_184_tests_rerun": false
+  },
+  "browser_evidence": {
+    "class": "BROWSER_SIMULATION",
+    "browser": "Chromium 148.0.7778.96 headless",
+    "desktop_viewport": "1440x1000",
+    "mobile_viewport": "390x844",
+    "script": "browser_check.py",
+    "log": "browser_check.log",
+    "store": "browser-h1-observer.json",
+    "screenshots": [
+      "desktop-01-h1-empty.png",
+      "desktop-02-h1-active.png",
+      "desktop-03-h1-corrected.png",
+      "desktop-04-h1-end-confirm.png",
+      "desktop-05-h1-ended.png",
+      "desktop-06-h1-reobserve.png",
+      "desktop-07-h1-stale.png",
+      "mobile-01-h1-empty.png",
+      "mobile-02-h1-active.png",
+      "mobile-02b-h1-active-viewport.png",
+      "mobile-03-h1-corrected.png",
+      "mobile-04-h1-end-confirm.png",
+      "mobile-04b-h1-end-confirm-viewport.png",
+      "mobile-05-h1-ended.png",
+      "mobile-05b-h1-ended-viewport.png"
+    ],
+    "real_device_tested": false,
+    "limitation": "No physical Android/iPhone device evidence in this run.",
+    "log_lines": [
+      "browser=148.0.7778.96",
+      "desktop H1: empty state, create form and storage-isolation note visible",
+      "desktop H1 active: S01 TRUE hint shown without auto-end",
+      "desktop H1 corrected: version 2 active, version history preserved",
+      "desktop H1 end confirmation: explicit read-only warning and reason field visible",
+      "desktop H1 ended: end snapshot and read-only history visible",
+      "desktop H1 re-observe: new record created while old ended record stays read-only",
+      "desktop H1 stale price: old-price date and UNKNOWN exit visible",
+      "mobile H1 empty: no page-level horizontal overflow",
+      "mobile H1 active: no page-level horizontal overflow",
+      "mobile H1 corrected: no page-level horizontal overflow",
+      "mobile H1 end confirm: no page-level horizontal overflow",
+      "mobile H1 ended: no page-level horizontal overflow"
+    ]
+  },
+  "review_fixes": [
+    {
+      "id": "H1_ENDED_QUERY_COLLISION",
+      "fix": "The ?ended=1 query flag no longer overwrites the ENDED list in the template context.",
+      "code": "mishi_radar/demo/app.py:h1_index; mishi_radar/demo/templates/h1.html",
+      "test": "tests/test_h1_fixture.py:test_end_saves_snapshot_and_is_read_only"
+    },
+    {
+      "id": "H1_EXTREME_DECIMAL_500",
+      "fix": "Extreme finite quantity/cost values are rejected before display calculations instead of raising InvalidOperation.",
+      "code": "mishi_radar/demo/h1_service.py:_positive_decimal",
+      "test": "tests/test_h1_fixture.py:test_input_validation"
+    }
+  ],
+  "behavior_evidence": {
+    "valuation_formula": "q*P, q*c, q*(P-c), P/c-1",
+    "example": "q=100, c=10, P=12 -> 1200.00, 200.00, 20.00%",
+    "odd_lot_allowed": true,
+    "stale_price_marked": true,
+    "missing_price_unknown": true,
+    "s01_true_false_unknown": true,
+    "correction_versions": true,
+    "end_snapshot_read_only": true,
+    "re_observe_new_record": true,
+    "restart_persistence": true,
+    "f5_isolation": true,
+    "auto_end": false
+  },
+  "known_limitations": [
+    "Full H1 acceptance, real positions, live prices, account equity and trade ledger are not implemented.",
+    "Only the default S01 rule is linked; other strategies, F4, F8 and OD-3 numeric terms are not advanced.",
+    "Trading fees, dividends, splits and other corporate actions are not adjusted.",
+    "Static P&L does not replace the OD-2 unclosed economic P&L stop; the common OD-2 stop is not evaluated.",
+    "Browser evidence is simulated viewport evidence, not real Android/iPhone device acceptance."
+  ],
+  "evidence_files": [
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/browser-h1-observer.json",
+      "bytes": 6250,
+      "sha256": "df95d418a683d57fb6a29cf05e970dc7b4a5c7f4a69911b5f8afa09449a469e7"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/browser_check.log",
+      "bytes": 782,
+      "sha256": "39022e5a763a6aa42d3fac5e6cadc30ebe5f0f8d9b5a05e0f3d66a366fdcee2c"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/browser_check.py",
+      "bytes": 10583,
+      "sha256": "dd9e53a54d0ec331bd806aed0bc2749a1e0609f0dc2d0ef31741be08a238361b"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/desktop-01-h1-empty.png",
+      "bytes": 330432,
+      "sha256": "fb9ba74242430e71655b8cb2498775d3cca5c89f18ee0235cc75261d5dbac1e4"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/desktop-02-h1-active.png",
+      "bytes": 454767,
+      "sha256": "a1bda841ca75aad2ec3a04155b25a5d282bb5eb153b5656053077da7be5339c9"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/desktop-03-h1-corrected.png",
+      "bytes": 462335,
+      "sha256": "b5678008e5f207fc4676aad25b0d74a3ac33e9191fdd95a3db2a6cc64a22a83e"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/desktop-04-h1-end-confirm.png",
+      "bytes": 278266,
+      "sha256": "7529934f1c4fec577eaf16ad028ea37f1abca4a6eb2f93bec04393952a2d9e4a"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/desktop-05-h1-ended.png",
+      "bytes": 438427,
+      "sha256": "5fed758d2dd014268a3d01a26e8bf695880101c38d2c4abd1b6c8707de4fcee8"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/desktop-06-h1-reobserve.png",
+      "bytes": 576921,
+      "sha256": "33e15d089a16691176bea50110697e31a6b3041776722d381c80bc897dd6d2b3"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/desktop-07-h1-stale.png",
+      "bytes": 728081,
+      "sha256": "b6f32db962c1d028141c65247e6b30bfbe7f78376233050a607fe07551c39874"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/diff.patch",
+      "bytes": 99803,
+      "sha256": "66a22cd348596d770e769b293754890511995603b00747ee84809bad76f0dd70"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/make_change_record.py",
+      "bytes": 7478,
+      "sha256": "f5c51b1171cf7d9b5e09d0d832fa8f1c61d1ab395a1368944ca6a13ee32346e0"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/mobile-01-h1-empty.png",
+      "bytes": 1681357,
+      "sha256": "997c1c37bbbee6c553907989c66f6401cec762b378370b944d55883f85f7db05"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/mobile-02-h1-active.png",
+      "bytes": 1988323,
+      "sha256": "b75f863330a5316a758a120e01d961bf14eb835597d77a3a6342703edf84df83"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/mobile-02b-h1-active-viewport.png",
+      "bytes": 306044,
+      "sha256": "5929d4a22493069812273da14b6de89d18917efc8977b4ca5aad6d9078eae20e"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/mobile-03-h1-corrected.png",
+      "bytes": 2005197,
+      "sha256": "e535397ff53775b34d54945b1d7403e0a835c26ad67fb7d628b3b8484fe95cc3"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/mobile-04-h1-end-confirm.png",
+      "bytes": 670208,
+      "sha256": "ec5876856bae51e29bfcfafd4cca12dfa159bc35baa2e5f70d146069e4bd0097"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/mobile-04b-h1-end-confirm-viewport.png",
+      "bytes": 347735,
+      "sha256": "d15b06109eb684ea56fd6ddc5da727f53a8dd00bc2bb84baaf9db61ccb2bc656"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/mobile-05-h1-ended.png",
+      "bytes": 1950022,
+      "sha256": "f0a2104e74ddf70fd0d77326afa735413f11c5fbee2f9410abb8ba3df1ca4d0b"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/mobile-05b-h1-ended-viewport.png",
+      "bytes": 306136,
+      "sha256": "756a855fd0796303c347c596f08b35b08149ec7b8b3f42131da6ef0f0e93db1f"
+    },
+    {
+      "path": "outputs/wp-h1-fx01-fixture-observer-2026-10-24/unittest.log",
+      "bytes": 2477,
+      "sha256": "4c9eecc1166f5b060bd5eaba1baab3351fedb9a8b502079fbde6ce70ecb36f64"
+    }
+  ],
+  "push_or_merge": false,
+  "formal_release": false,
+  "next_phase_authorized": false
+}

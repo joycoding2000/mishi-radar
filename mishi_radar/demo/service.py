@@ -1228,7 +1228,7 @@ def status_data() -> dict[str, Any]:
             {"name": "OD-1 规则内核", "status": "REUSED", "detail": "mishi_radar.strategy_core"},
             {"name": "OD-2 现金内核", "status": "REUSED", "detail": "mishi_radar.cash_backtest.run_backtest"},
             {"name": "F4 市场/行业/资金", "status": "GATED / NOT_IMPLEMENTED", "detail": "本轮不提供空壳页面。"},
-            {"name": "H1 观察仓", "status": "GATED / NOT_IMPLEMENTED", "detail": "本轮仅完成 F5 关注快照。"},
+            {"name": "H1 观察仓", "status": "FIXTURE SLICE / OWNER REVIEW PENDING", "detail": "固定 Fixture 静态观察仓；完整 H1、真实持仓与实时价格未验收。"},
             {"name": "F8 正式认证/付费权益", "status": "NOT_IMPLEMENTED", "detail": "仅固定演示用户入口，不声称权益系统。"},
             {"name": "OD-3 价格/配额/SLA/权限", "status": "UNKNOWN", "detail": "未自行确定，保持 Owner 决策边界。"},
         ],

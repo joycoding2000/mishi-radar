@@ -19,6 +19,15 @@ from . import (
     FIXTURE_VERSION,
     RESULT_CONTRACT_VERSION,
 )
+from .h1 import H1Store
+from .h1_service import (
+    api_h1_data,
+    correct_observation,
+    create_observation,
+    end_observation,
+    h1_data,
+    h1_end_data,
+)
 from .service import (
     BatchMismatch,
     DemoInputError,
@@ -38,6 +47,12 @@ DEFAULT_STORE = Path(
     os.environ.get(
         "MISHI_FIXTURE_STORE",
         BASE_DIR.parents[1] / "var" / "fixture-demo" / "watchlist.json",
+    )
+)
+DEFAULT_H1_STORE = Path(
+    os.environ.get(
+        "MISHI_H1_STORE",
+        BASE_DIR.parents[1] / "var" / "fixture-demo" / "h1-observations.json",
     )
 )
 
@@ -65,15 +80,19 @@ def _fixture_error_payload(message: str) -> dict[str, Any]:
     }
 
 
-def create_app(store_path: Path | str | None = None) -> FastAPI:
+def create_app(
+    store_path: Path | str | None = None,
+    h1_store_path: Path | str | None = None,
+) -> FastAPI:
     app = FastAPI(
-        title="Mishi Radar — WP-FX01 FIXTURE vertical slice",
-        description="Fixed synthetic product path: F1 -> F3 -> F5 -> F6 with FIXTURE markers.",
-        version="FX01-2026-10-23-v1",
+        title="Mishi Radar — WP-FX01/WP-H1-FX01 FIXTURE vertical slice",
+        description="Fixed synthetic product path: F1 -> F3 -> F5 -> H1 -> F6 with FIXTURE markers.",
+        version="FX01B-H1-2026-10-24-v1",
     )
     templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
     app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
     store = WatchStore(store_path or DEFAULT_STORE)
+    h1_store = H1Store(h1_store_path or DEFAULT_H1_STORE)
 
     @app.middleware("http")
     async def fixture_header(request: Request, call_next):
@@ -169,6 +188,91 @@ def create_app(store_path: Path | str | None = None) -> FastAPI:
     def watch_remove(watch_id: str = Form(...)):
         store.remove(watch_id)
         return RedirectResponse("/watch", status_code=303)
+
+    @app.get("/h1", response_class=HTMLResponse)
+    def h1_index(
+        request: Request,
+        created: bool = Query(False),
+        corrected: bool = Query(False),
+        ended: bool = Query(False),
+    ):
+        data = h1_data(h1_store)
+        data.update(
+            {
+                "notice_created": created,
+                "notice_corrected": corrected,
+                "notice_ended": ended,
+            }
+        )
+        return templates.TemplateResponse(request, "h1.html", data)
+
+    @app.post("/h1/create")
+    def h1_create(
+        request: Request,
+        security_id: str = Form(""),
+        scenario: str = Form("normal"),
+        strategy_id: str = Form(""),
+        quantity: str = Form(""),
+        average_cost: str = Form(""),
+        cost_basis_date: str = Form(""),
+        note: str = Form(""),
+    ):
+        try:
+            create_observation(
+                h1_store,
+                security_id=security_id,
+                scenario=scenario,
+                strategy_id=strategy_id,
+                quantity=quantity,
+                average_cost=average_cost,
+                cost_basis_date=cost_basis_date,
+                note=note,
+            )
+        except DemoInputError as exc:
+            return render_error(request, "观察仓输入无效", str(exc), 400)
+        return RedirectResponse("/h1?created=1", status_code=303)
+
+    @app.post("/h1/{observation_id}/correct")
+    def h1_correct(
+        request: Request,
+        observation_id: str,
+        security_id: str = Form(""),
+        strategy_id: str = Form(""),
+        quantity: str = Form(""),
+        average_cost: str = Form(""),
+        cost_basis_date: str = Form(""),
+        note: str = Form(""),
+    ):
+        try:
+            correct_observation(
+                h1_store,
+                observation_id,
+                security_id=security_id,
+                strategy_id=strategy_id,
+                quantity=quantity,
+                average_cost=average_cost,
+                cost_basis_date=cost_basis_date,
+                note=note,
+            )
+        except DemoInputError as exc:
+            return render_error(request, "观察仓更正无效", str(exc), 400)
+        return RedirectResponse("/h1?corrected=1", status_code=303)
+
+    @app.get("/h1/{observation_id}/end", response_class=HTMLResponse)
+    def h1_end_confirm(request: Request, observation_id: str):
+        try:
+            data = h1_end_data(h1_store, observation_id)
+        except DemoInputError as exc:
+            return render_error(request, "无法结束观察", str(exc), 400)
+        return templates.TemplateResponse(request, "h1_end.html", data)
+
+    @app.post("/h1/{observation_id}/end")
+    def h1_end(request: Request, observation_id: str, reason: str = Form("")):
+        try:
+            end_observation(h1_store, observation_id, reason=reason)
+        except DemoInputError as exc:
+            return render_error(request, "无法结束观察", str(exc), 400)
+        return RedirectResponse("/h1?ended=1", status_code=303)
 
     @app.get("/backtest", response_class=HTMLResponse)
     def backtest(request: Request, scenario: str = Query("u3")):
@@ -303,6 +407,10 @@ def create_app(store_path: Path | str | None = None) -> FastAPI:
             return backtest_data(scenario)
         except DemoInputError as exc:
             return JSONResponse(_fixture_error_payload(str(exc)), status_code=400)
+
+    @app.get("/api/h1")
+    def api_h1():
+        return api_h1_data(h1_store)
 
     @app.get("/api/status")
     def api_status():

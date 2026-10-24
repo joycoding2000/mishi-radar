@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+{% block title %}观察仓 H1{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <p class="eyebrow">H1 静态观察仓 · 固定 Fixture</p>
+    <h1>手工持仓观察</h1>
+    <p class="lead">固定演示用户 <code>{{ user }}</code>。输入证券、数量、平均成本与成本基准日期，按合成原始参考价显示静态市值、浮盈与浮盈率；关联规则只验证默认 S01，且不会自动结束记录。</p>
+  </div>
+  <div class="batch-card">
+    <span class="pill pill-good">H1 独立存储</span>
+    <p class="small">H1 与 F5 关注分别使用独立 JSON 文件，互不覆盖。</p>
+    <p class="small muted">更正创建新版本；结束保存当时快照，之后只读。</p>
+    <p class="small mono">{{ fixture.fixture_id }} · {{ fixture.fixture_version }}</p>
+    <p class="small mono">价格口径 {{ fixture.price_basis }} · 业务日 {{ fixture.business_date }}</p>
+  </div>
+</section>
+
+<section class="notice fixture-notice">
+  <strong>{{ display_marker }}</strong>
+  <span>本页只使用固定合成 Fixture 与固定演示用户；不连接券商、不读取实时行情、不声明真实持仓或账户权益。快照身份为 <span class="mono">{{ marker }}</span>。</span>
+</section>
+
+{% if notice_created %}
+<section class="notice"><strong>已创建观察</strong><span>新记录为 ACTIVE；参考价与规则状态按当前固定 Fixture 显示。</span></section>
+{% endif %}
+{% if notice_corrected %}
+<section class="notice"><strong>已保存更正</strong><span>新版本仍为 ACTIVE；旧版本保留在版本历史中，不伪装成成交。</span></section>
+{% endif %}
+{% if notice_ended %}
+<section class="notice"><strong>已结束观察</strong><span>结束快照已保存，记录只读；如需再次观察，请创建新记录。</span></section>
+{% endif %}
+
+<section class="controls">
+  <div class="section-head h1-section-head">
+    <div>
+      <h2>创建观察</h2>
+      <p class="muted">数量与平均成本必须为有限正数；允许不足一手的零股，不套用回测最小买入单位。</p>
+    </div>
+    <span class="pill pill-neutral">固定用户 {{ user }}</span>
+  </div>
+  <form method="post" action="/h1/create" class="h1-form">
+    <div class="h1-form-grid">
+      <div class="form-field">
+        <label for="create-security">证券</label>
+        <select id="create-security" name="security_id" required>
+          {% for option in security_options %}
+            <option value="{{ option.security_id }}" {{ 'selected' if option.selected else '' }}>{{ option.security_id }} · {{ option.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="create-scenario">固定 Fixture 场景</label>
+        <select id="create-scenario" name="scenario" required>
+          {% for option in scenario_options %}
+            <option value="{{ option.value }}" {{ 'selected' if option.selected else '' }}>{{ option.label }}</option>
+          {% endfor %}
+        </select>
+        <small class="muted">场景决定参考价与日终输入；创建后不可更改。</small>
+      </div>
+      <div class="form-field">
+        <label for="create-strategy">关联规则（可选）</label>
+        <select id="create-strategy" name="strategy_id">
+          {% for option in strategy_options %}
+            <option value="{{ option.value }}" {{ 'selected' if option.selected else '' }}>{{ option.label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="create-quantity">数量（股）</label>
+        <input id="create-quantity" name="quantity" type="number" inputmode="decimal" min="0.0001" step="0.0001" required placeholder="例如 100">
+      </div>
+      <div class="form-field">
+        <label for="create-cost">平均成本（元/股）</label>
+        <input id="create-cost" name="average_cost" type="number" inputmode="decimal" min="0.0001" step="0.0001" required placeholder="例如 10">
+      </div>
+      <div class="form-field">
+        <label for="create-basis">成本基准日期</label>
+        <input id="create-basis" name="cost_basis_date" type="date" max="{{ today }}" value="{{ default_basis_date }}" required>
+        <small class="muted">不得在未来；持有交易日按固定 Fixture 日历计数。</small>
+      </div>
+      <div class="form-field h1-form-wide">
+        <label for="create-note">备注（可选）</label>
+        <input id="create-note" name="note" type="text" maxlength="200" placeholder="例如 手工记录，非券商持仓">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="button" type="submit">创建观察</button>
+      <span class="small muted">创建只记录观察，不产生成交、费用或账户权益。</span>
+    </div>
+  </form>
+</section>
+
+<section class="summary-strip">
+  <div><span class="metric-value">{{ active_count }}</span><span class="metric-label">ACTIVE 观察</span></div>
+  <div><span class="metric-value">{{ ended_count }}</span><span class="metric-label">ENDED 只读记录</span></div>
+  <div><span class="metric-value">{{ fixture.business_date }}</span><span class="metric-label">固定业务日</span></div>
+  <div><span class="metric-value">S01</span><span class="metric-label">唯一可选关联规则</span></div>
+</section>
+
+{% if active %}
+<section class="section-head">
+  <div>
+    <h2>当前观察（{{ active_count }}）</h2>
+    <p class="muted">静态估值按固定原始价计算；规则 TRUE 只是提示，不会自动结束记录。</p>
+  </div>
+</section>
+<div class="watch-list">
+  {% for entry in active %}
+    <article class="watch-card h1-card">
+      <div class="candidate-head">
+        <div>
+          <h3>{{ entry.display.security_name }}</h3>
+          <div class="mono small">{{ entry.display.security_id }} · {{ entry.scenario_label }} · {{ entry.display.fixture_id }}</div>
+        </div>
+        <div class="badge-stack">
+          <span class="pill pill-good">{{ entry.status_label }}</span>
+          <span class="pill pill-neutral">版本 {{ entry.display.version }} / {{ entry.version_count }}</span>
+          <span class="pill pill-{{ entry.display.exit_tone }}">{{ entry.display.exit_status_label }}</span>
+        </div>
+      </div>
+
+      {% if entry.display.needs_review %}
+      <div class="notice warning h1-compact-notice">
+        <strong>已更正</strong>
+        <span>{{ entry.display.review_note }}</span>
+      </div>
+      {% endif %}
+
+      <div class="h1-grid">
+        <section class="snapshot-box">
+          <h4>静态估值 · 合成原始参考价</h4>
+          <dl class="facts">
+            <div><dt>当前版本</dt><dd>V{{ entry.display.version }} · 记录于 {{ entry.display.created_at }}</dd></div>
+            <div><dt>数量</dt><dd>{{ entry.display.quantity_text }} 股</dd></div>
+            <div><dt>平均成本</dt><dd>{{ entry.display.average_cost_text }} 元/股</dd></div>
+            <div><dt>成本基准日</dt><dd>{{ entry.display.cost_basis_date }}</dd></div>
+            <div><dt>持有交易日</dt><dd>{{ entry.display.holding_days_text }}</dd></div>
+            <div>
+              <dt>参考价</dt>
+              <dd>
+                {{ entry.display.reference_price_text }}
+                <span class="pill {{ 'pill-warn' if entry.display.price_is_stale else 'pill-bad' if entry.display.price_is_missing else 'pill-good' }}">{{ entry.display.price_status_label }}</span>
+              </dd>
+            </div>
+            <div><dt>参考价日期</dt><dd>{{ entry.display.reference_price_date or 'UNKNOWN' }}（{{ entry.display.price_basis }}）</dd></div>
+            <div><dt>静态市值</dt><dd>{{ entry.display.market_value_text }}</dd></div>
+            <div><dt>参考成本</dt><dd>{{ entry.display.cost_value_text }}</dd></div>
+            <div><dt>静态浮盈</dt><dd class="{{ 'warning-text' if entry.display.unrealized_pnl and entry.display.unrealized_pnl.startswith('-') else '' }}">{{ entry.display.unrealized_pnl_text }}</dd></div>
+            <div><dt>浮盈率</dt><dd>{{ entry.display.unrealized_pnl_rate_text }}</dd></div>
+            <div><dt>估值状态</dt><dd>{{ entry.display.valuation_status_label }}</dd></div>
+          </dl>
+          <p class="small muted">{{ entry.display.price_note }}</p>
+          <p class="small muted">{{ entry.display.valuation_note }}</p>
+        </section>
+
+        <section class="compare-box">
+          <h4>S01 默认退出提示</h4>
+          <p class="compare-status {{ 'warning-text' if entry.display.exit_tone == 'warn' else '' }}">{{ entry.display.exit_status_label }}</p>
+          <dl class="facts">
+            <div><dt>关联规则</dt><dd class="mono small">{{ entry.display.rule_label }}</dd></div>
+            <div><dt>固定业务日</dt><dd>{{ entry.display.business_date }}</dd></div>
+            <div><dt>持有交易日</dt><dd>{{ entry.display.holding_days_text }}</dd></div>
+            <div><dt>主要规则原因</dt><dd>{{ entry.display.primary_reason_label }}</dd></div>
+            <div><dt>全部规则原因</dt><dd>{{ entry.display.exit_reason_text }}</dd></div>
+          </dl>
+          <p class="small muted">{{ entry.display.exit_note }}</p>
+          <p class="small muted">静态浮盈不能替代 OD-2 的未平仓经济损益止损口径。</p>
+        </section>
+      </div>
+
+      {% if entry.display.note %}
+      <p class="h1-note"><b>备注：</b>{{ entry.display.note }}</p>
+      {% endif %}
+
+      <div class="card-actions h1-actions">
+        <details class="h1-correct">
+          <summary class="button button-secondary">更正观察（创建新版本）</summary>
+          <form method="post" action="/h1/{{ entry.observation_id }}/correct" class="h1-form h1-inline-form">
+            <div class="h1-form-grid">
+              <div class="form-field">
+                <label for="correct-security-{{ entry.observation_id }}">证券</label>
+                <select id="correct-security-{{ entry.observation_id }}" name="security_id" required>
+                  {% for option in entry.security_options %}
+                    <option value="{{ option.security_id }}" {{ 'selected' if option.selected else '' }}>{{ option.security_id }} · {{ option.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="correct-strategy-{{ entry.observation_id }}">关联规则（可选）</label>
+                <select id="correct-strategy-{{ entry.observation_id }}" name="strategy_id">
+                  {% for option in entry.strategy_options %}
+                    <option value="{{ option.value }}" {{ 'selected' if option.selected else '' }}>{{ option.label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="correct-quantity-{{ entry.observation_id }}">数量（股）</label>
+                <input id="correct-quantity-{{ entry.observation_id }}" name="quantity" type="number" inputmode="decimal" min="0.0001" step="0.0001" value="{{ entry.display.quantity }}" required>
+              </div>
+              <div class="form-field">
+                <label for="correct-cost-{{ entry.observation_id }}">平均成本（元/股）</label>
+                <input id="correct-cost-{{ entry.observation_id }}" name="average_cost" type="number" inputmode="decimal" min="0.0001" step="0.0001" value="{{ entry.display.average_cost }}" required>
+              </div>
+              <div class="form-field">
+                <label for="correct-basis-{{ entry.observation_id }}">成本基准日期</label>
+                <input id="correct-basis-{{ entry.observation_id }}" name="cost_basis_date" type="date" max="{{ today }}" value="{{ entry.display.cost_basis_date }}" required>
+              </div>
+              <div class="form-field h1-form-wide">
+                <label for="correct-note-{{ entry.observation_id }}">备注（可选）</label>
+                <input id="correct-note-{{ entry.observation_id }}" name="note" type="text" maxlength="200" value="{{ entry.display.note or '' }}">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="button" type="submit">保存更正</button>
+              <span class="small muted">更正会保留旧版本，不产生成交记录。</span>
+            </div>
+          </form>
+        </details>
+        <a class="button button-ghost" href="/h1/{{ entry.observation_id }}/end">结束观察…</a>
+      </div>
+
+      {% if entry.versions|length > 1 %}
+      <details class="h1-history">
+        <summary>版本历史（{{ entry.versions|length }}）</summary>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>版本</th><th>证券</th><th>数量</th><th>平均成本</th><th>基准日</th><th>规则</th><th>备注</th><th>记录时间</th></tr></thead>
+            <tbody>
+              {% for version in entry.versions %}
+              <tr>
+                <td>V{{ version.version }}</td>
+                <td><b>{{ version.security_name }}</b><br><span class="mono small">{{ version.security_id }}</span></td>
+                <td>{{ version.quantity_text }}</td>
+                <td>{{ version.average_cost_text }}</td>
+                <td>{{ version.cost_basis_date }}</td>
+                <td>{{ version.strategy_label }}</td>
+                <td>{{ version.note }}</td>
+                <td class="small">{{ version.created_at }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </details>
+      {% endif %}
+    </article>
+  {% endfor %}
+</div>
+{% elif not ended %}
+<section class="empty-state">
+  <h2>还没有观察记录</h2>
+  <p>使用上方表单创建第一条固定 Fixture 静态观察。H1 与 F5 关注独立存储，创建 H1 不会改写关注快照。</p>
+</section>
+{% endif %}
+
+{% if ended %}
+<section class="section-head">
+  <div>
+    <h2>已结束记录（{{ ended_count }}）· 只读</h2>
+    <p class="muted">以下显示结束时保存的数量、成本、基准日期、参考价/日期或 UNKNOWN、规则状态、原因和结束时间；不再随 Fixture 重新计算。</p>
+  </div>
+</section>
+<div class="watch-list">
+  {% for entry in ended %}
+    <article class="watch-card h1-card h1-ended">
+      <div class="candidate-head">
+        <div>
+          <h3>{{ entry.display.security_name }}</h3>
+          <div class="mono small">{{ entry.display.security_id }} · {{ entry.scenario_label }} · {{ entry.observation_id }}</div>
+        </div>
+        <div class="badge-stack">
+          <span class="pill pill-neutral">{{ entry.status_label }}</span>
+          <span class="pill pill-neutral">结束版本 V{{ entry.display.version }}</span>
+        </div>
+      </div>
+
+      {% if entry.display.needs_review %}
+      <div class="notice warning h1-compact-notice">
+        <strong>已更正</strong>
+        <span>{{ entry.display.review_note }}</span>
+      </div>
+      {% endif %}
+
+      <div class="h1-grid">
+        <section class="snapshot-box">
+          <h4>结束快照 · 静态估值</h4>
+          <dl class="facts">
+            <div><dt>数量</dt><dd>{{ entry.display.quantity_text }} 股</dd></div>
+            <div><dt>平均成本</dt><dd>{{ entry.display.average_cost_text }} 元/股</dd></div>
+            <div><dt>成本基准日</dt><dd>{{ entry.display.cost_basis_date }}</dd></div>
+            <div><dt>持有交易日</dt><dd>{{ entry.display.holding_days_text }}</dd></div>
+            <div><dt>参考价</dt><dd>{{ entry.display.reference_price_text }}（{{ entry.display.price_status_label }}）</dd></div>
+            <div><dt>参考价日期</dt><dd>{{ entry.display.reference_price_date or 'UNKNOWN' }}（{{ entry.display.price_basis }}）</dd></div>
+            <div><dt>静态市值</dt><dd>{{ entry.display.market_value_text }}</dd></div>
+            <div><dt>参考成本</dt><dd>{{ entry.display.cost_value_text }}</dd></div>
+            <div><dt>静态浮盈</dt><dd>{{ entry.display.unrealized_pnl_text }}</dd></div>
+            <div><dt>浮盈率</dt><dd>{{ entry.display.unrealized_pnl_rate_text }}</dd></div>
+          </dl>
+          <p class="small muted">{{ entry.display.valuation_note }}</p>
+        </section>
+
+        <section class="compare-box">
+          <h4>结束快照 · S01 规则状态</h4>
+          <p class="compare-status {{ 'warning-text' if entry.display.exit_tone == 'warn' else '' }}">{{ entry.display.exit_status_label }}</p>
+          <dl class="facts">
+            <div><dt>关联规则</dt><dd class="mono small">{{ entry.display.rule_label }}</dd></div>
+            <div><dt>规则原因</dt><dd>{{ entry.display.exit_reason_text }}</dd></div>
+            <div><dt>结束时间</dt><dd>{{ entry.display.ended_at or entry.ended_at }}</dd></div>
+            <div><dt>结束原因</dt><dd>{{ entry.display.reason or entry.end_reason }}</dd></div>
+            <div><dt>业务日 / Fixture</dt><dd>{{ entry.display.business_date }} · {{ entry.display.fixture_id }}</dd></div>
+          </dl>
+          <p class="small muted">{{ entry.display.exit_note }}</p>
+        </section>
+      </div>
+
+      <details class="h1-history">
+        <summary>版本历史（{{ entry.versions|length }}）</summary>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>版本</th><th>证券</th><th>数量</th><th>平均成本</th><th>基准日</th><th>规则</th><th>备注</th><th>记录时间</th></tr></thead>
+            <tbody>
+              {% for version in entry.versions %}
+              <tr>
+                <td>V{{ version.version }}</td>
+                <td><b>{{ version.security_name }}</b><br><span class="mono small">{{ version.security_id }}</span></td>
+                <td>{{ version.quantity_text }}</td>
+                <td>{{ version.average_cost_text }}</td>
+                <td>{{ version.cost_basis_date }}</td>
+                <td>{{ version.strategy_label }}</td>
+                <td>{{ version.note }}</td>
+                <td class="small">{{ version.created_at }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </article>
+  {% endfor %}
+</div>
+{% endif %}
+
+<section class="controls h1-limitations">
+  <h2>计算局限</h2>
+  <ul class="compact-list">
+    {% for item in limitations %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+  <p class="small muted">固定 Fixture 身份：<span class="mono">{{ fixture.fixture_id }} · {{ fixture.fixture_version }}</span>；合同：<span class="mono">{{ contract_version }}</span>；价格口径：<span class="mono">{{ fixture.price_basis }}</span>。</p>
+</section>
+{% endblock %}

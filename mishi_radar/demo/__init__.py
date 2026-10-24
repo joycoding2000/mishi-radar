@@ -1,8 +1,10 @@
-"""WP-FX01B fixed-fixture Web slice.
+"""WP-FX01B fixed-fixture Web slice with the WP-H1-FX01 observation book.
 
 The F1/F3/F7 pages consume the Owner-accepted ``mishi_radar.result_contract``
-payloads.  F6 runs the accepted OD-2 cash engine on fixed synthetic inputs.
-This package never contacts a market data source.
+payloads.  H1 values manual observations with the same fixed synthetic raw
+closes and reuses the accepted S01 exit decision when inputs are complete.
+F6 runs the accepted OD-2 cash engine on fixed synthetic inputs.  This package
+never contacts a market data source.
 """
 
 from __future__ import annotations
